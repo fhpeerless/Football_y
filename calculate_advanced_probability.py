@@ -543,9 +543,9 @@ def calculate_final_probabilities(home_team, away_team, home_matches, away_match
     # 结合两队的状态矩阵概率（简单平均）
     state_based_probs = (home_full_from_state + away_full_from_home_perspective) / 2
     
-    # 7. 结合泊松分布和状态矩阵概率（加权平均，权重可调）
-    poisson_weight = 0.7  # 泊松分布权重
-    state_weight = 0.3    # 状态矩阵权重
+    # 7. 结合泊松分布和状态矩阵概率（直接相加）
+    poisson_weight = 1  # 泊松分布权重
+    state_weight = 1    # 状态矩阵权重
     
     combined_home_win = poisson_result['win_probability'] * poisson_weight + state_based_probs[0] * state_weight
     combined_draw = poisson_result['draw_probability'] * poisson_weight + state_based_probs[1] * state_weight

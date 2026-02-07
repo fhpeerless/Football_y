@@ -190,10 +190,10 @@ function calculateCombinedProbabilities(basicData, advancedData) {
         const advancedDrawProb = parseProbability(advancedMatch.预测概率?.平 || 0);
         const advancedLoseProb = parseProbability(advancedMatch.预测概率?.[`${basicMatch.客队}胜`] || advancedMatch.预测概率?.负 || 0);
         
-        // 计算加权合并概率 (基础概率 × 0.8 + 高级概率)
-        const combinedWinProb = (basicWinProb * 0.8) + advancedWinProb;
-        const combinedDrawProb = (basicDrawProb * 0.8) + advancedDrawProb;
-        const combinedLoseProb = (basicLoseProb * 0.8) + advancedLoseProb;
+        // 计算合并概率 (基础概率 + 高级概率)
+        const combinedWinProb = basicWinProb + advancedWinProb;
+        const combinedDrawProb = basicDrawProb + advancedDrawProb;
+        const combinedLoseProb = basicLoseProb + advancedLoseProb;
         
         // 归一化
         const total = combinedWinProb + combinedDrawProb + combinedLoseProb;
@@ -312,7 +312,7 @@ async function main() {
                 基础预测文件: basicFile,
                 高级预测文件: advancedFile
             },
-            加权规则: '基础预测概率 × 0.8 + 高级预测概率',
+            加权规则: '基础预测概率 + 高级预测概率',
             计算结果: combinedResults
         };
         

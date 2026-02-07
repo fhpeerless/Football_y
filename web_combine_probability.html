@@ -53,7 +53,7 @@
         
         .main-content {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr;
             gap: 30px;
         }
         
@@ -258,10 +258,6 @@
         }
         
         @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-            
             h1 {
                 font-size: 2rem;
             }
@@ -491,6 +487,18 @@
         
         // 加载Web JSON数据
         async function loadWebData() {
+            // 从输入框读取当前期数
+            const inputPeriod = periodInput.value.trim();
+            if (inputPeriod) {
+                // 提取数字部分（例如从"26027期"中提取"26027"）
+                const periodMatch = inputPeriod.match(/\d+/);
+                if (periodMatch) {
+                    currentPeriod = periodMatch[0];
+                } else {
+                    currentPeriod = inputPeriod;
+                }
+            }
+            
             if (!currentPeriod) {
                 showStatus('请先获取或输入期数', 'error');
                 return null;
@@ -570,61 +578,285 @@
             }
             
             let html = `
-                <div style="margin-bottom: 20px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
-                    <h3 style="color: #00bcd4; margin-bottom: 10px;">数据信息</h3>
-                    <p><strong>期数:</strong> ${webData.期数 || '未知'}</p>
-                    <p><strong>生成时间:</strong> ${webData.生成时间 ? new Date(webData.生成时间).toLocaleString() : '未知'}</p>
-                    <p><strong>数据来源:</strong> ${webData.数据来源 ? `${webData.数据来源.基础预测文件} + ${webData.数据来源.高级预测文件}` : 'web.json文件'}</p>
-                    <p><strong>加权规则:</strong> ${webData.加权规则 || '基础预测概率 × 0.8 + 高级预测概率'}</p>
+                <div style="margin-bottom: 30px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #00bcd4;">
+                    <h3 style="color: #00bcd4; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-info-circle"></i> 数据信息
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">期数</p>
+                            <p style="font-size: 1.2em; font-weight: 600;">${webData.期数 || '未知'}</p>
+                        </div>
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">生成时间</p>
+                            <p>${webData.生成时间 ? new Date(webData.生成时间).toLocaleString() : '未知'}</p>
+                        </div>
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">数据来源</p>
+                            <p style="word-break: break-all;">${webData.数据来源 ? `${webData.数据来源.基础预测文件}<br>${webData.数据来源.高级预测文件}` : 'web.json文件'}</p>
+                        </div>
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">加权规则</p>
+                            <p>${webData.加权规则 || '基础预测概率 + 高级预测概率'}</p>
+                        </div>
+                    </div>
                 </div>
-                <table class="matches-table">
-                    <thead>
-                        <tr>
-                            <th>场次</th>
-                            <th>联赛</th>
-                            <th>主队</th>
-                            <th>客队</th>
-                            <th>比赛时间</th>
-                            <th>合并胜率</th>
-                            <th>合并平率</th>
-                            <th>合并负率</th>
-                            <th>预测结果</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #00bcd4; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-futbol"></i> 比赛预测详情 (${webData.计算结果.length} 场)
+                    </h3>
             `;
             
-            webData.计算结果.forEach(match => {
+            // 显示每场比赛的详细卡片
+            webData.计算结果.forEach((match, index) => {
                 const winPercent = (match.合并概率.胜 * 100).toFixed(1);
                 const drawPercent = (match.合并概率.平 * 100).toFixed(1);
                 const losePercent = (match.合并概率.负 * 100).toFixed(1);
+                const basicWinPercent = (match.基础预测概率.胜 * 100).toFixed(1);
+                const basicDrawPercent = (match.基础预测概率.平 * 100).toFixed(1);
+                const basicLosePercent = (match.基础预测概率.负 * 100).toFixed(1);
+                const advancedWinPercent = (match.高级预测概率.胜 * 100).toFixed(1);
+                const advancedDrawPercent = (match.高级预测概率.平 * 100).toFixed(1);
+                const advancedLosePercent = (match.高级预测概率.负 * 100).toFixed(1);
+                
                 const resultClass = `result-${match.预测结果}`;
                 const resultText = match.预测结果 === 3 ? '主胜(3)' : match.预测结果 === 1 ? '平(1)' : '客胜(0)';
+                const resultColor = match.预测结果 === 3 ? '#4caf50' : match.预测结果 === 1 ? '#ff9800' : '#f44336';
                 
                 html += `
-                    <tr>
-                        <td>${match.场次}</td>
-                        <td>${match.联赛}</td>
-                        <td><strong>${match.主队}</strong></td>
-                        <td>${match.客队}</td>
-                        <td>${match.比赛时间}</td>
-                        <td>${winPercent}%</td>
-                        <td>${drawPercent}%</td>
-                        <td>${losePercent}%</td>
-                        <td class="${resultClass}">${resultText}</td>
-                    </tr>
+                    <div style="margin-bottom: 30px; padding: 25px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <!-- 比赛基本信息 -->
+                        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <div>
+                                    <h4 style="color: #00bcd4; margin-bottom: 5px;">
+                                        第 ${match.场次} 场 · ${match.联赛}
+                                    </h4>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">
+                                        <i class="far fa-clock"></i> ${match.比赛时间}
+                                    </p>
+                                </div>
+                                <div style="background: ${resultColor}20; padding: 8px 16px; border-radius: 20px; border: 1px solid ${resultColor}40;">
+                                    <span class="${resultClass}" style="font-weight: 600; font-size: 1.1em;">${resultText}</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <div style="text-align: center; flex: 1;">
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #00bcd4;">${match.主队}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">主队</p>
+                                </div>
+                                <div style="text-align: center; margin: 0 20px;">
+                                    <p style="font-size: 1.2em; opacity: 0.7;">VS</p>
+                                </div>
+                                <div style="text-align: center; flex: 1;">
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #ff9800;">${match.客队}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">客队</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 概率数据部分 -->
+                        <div style="margin-bottom: 25px;">
+                            <h5 style="color: #bbdefb; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-chart-pie"></i> 概率分析
+                            </h5>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                                <!-- 基础预测概率 -->
+                                <div style="padding: 15px; background: rgba(0, 188, 212, 0.05); border-radius: 8px; border-left: 3px solid #00bcd4;">
+                                    <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.95em;">
+                                        <i class="fas fa-calculator"></i> 基础预测概率
+                                    </h6>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>主胜:</span>
+                                        <span style="font-weight: 600;">${basicWinPercent}%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>平:</span>
+                                        <span style="font-weight: 600;">${basicDrawPercent}%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>客胜:</span>
+                                        <span style="font-weight: 600;">${basicLosePercent}%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 高级预测概率 -->
+                                <div style="padding: 15px; background: rgba(142, 36, 170, 0.05); border-radius: 8px; border-left: 3px solid #8e24aa;">
+                                    <h6 style="color: #8e24aa; margin-bottom: 10px; font-size: 0.95em;">
+                                        <i class="fas fa-chart-line"></i> 高级预测概率
+                                    </h6>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>主胜:</span>
+                                        <span style="font-weight: 600;">${advancedWinPercent}%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>平:</span>
+                                        <span style="font-weight: 600;">${advancedDrawPercent}%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>客胜:</span>
+                                        <span style="font-weight: 600;">${advancedLosePercent}%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 合并概率 -->
+                                <div style="padding: 15px; background: rgba(76, 175, 80, 0.05); border-radius: 8px; border-left: 3px solid #4caf50;">
+                                    <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.95em;">
+                                        <i class="fas fa-balance-scale"></i> 合并概率
+                                    </h6>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>主胜:</span>
+                                        <span style="font-weight: 600; font-size: 1.1em;">${winPercent}%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>平:</span>
+                                        <span style="font-weight: 600; font-size: 1.1em;">${drawPercent}%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>客胜:</span>
+                                        <span style="font-weight: 600; font-size: 1.1em;">${losePercent}%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 详细数据部分 - 有间隔 -->
+                        <div style="margin-top: 30px; padding-top: 25px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
+                            <h5 style="color: #bbdefb; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-chart-bar"></i> 详细数据
+                            </h5>
+                `;
+                
+                // 显示详细数据
+                if (match.预测详细数据 && Object.keys(match.预测详细数据).length > 0) {
+                    html += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">`;
+                    
+                    // 基础数据
+                    if (match.预测详细数据.基础数据) {
+                        html += `
+                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">基础数据</h6>
+                                <div style="font-size: 0.9em;">
+                        `;
+                        for (const [key, value] of Object.entries(match.预测详细数据.基础数据)) {
+                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="opacity: 0.8;">${key}:</span>
+                                        <span>${value}</span>
+                                    </div>`;
+                        }
+                        html += `</div></div>`;
+                    }
+                    
+                    // 攻防效率
+                    if (match.预测详细数据.攻防效率) {
+                        html += `
+                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                                <h6 style="color: #8e24aa; margin-bottom: 10px; font-size: 0.9em;">攻防效率</h6>
+                                <div style="font-size: 0.9em;">
+                        `;
+                        for (const [key, value] of Object.entries(match.预测详细数据.攻防效率)) {
+                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="opacity: 0.8;">${key}:</span>
+                                        <span>${value}</span>
+                                    </div>`;
+                        }
+                        html += `</div></div>`;
+                    }
+                    
+                    // 半全场节奏
+                    if (match.预测详细数据.半全场节奏) {
+                        html += `
+                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                                <h6 style="color: #ff9800; margin-bottom: 10px; font-size: 0.9em;">半全场节奏</h6>
+                                <div style="font-size: 0.9em;">
+                        `;
+                        for (const [key, value] of Object.entries(match.预测详细数据.半全场节奏)) {
+                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="opacity: 0.8;">${key}:</span>
+                                        <span>${value}</span>
+                                    </div>`;
+                        }
+                        html += `</div></div>`;
+                    }
+                    
+                    // 其他详细数据
+                    const otherSections = ['共同对手分析', '预期进球', '计算过程', '最终预测概率'];
+                    otherSections.forEach(section => {
+                        if (match.预测详细数据[section]) {
+                            html += `
+                                <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                                    <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.9em;">${section}</h6>
+                                    <div style="font-size: 0.9em;">
+                            `;
+                            // 处理嵌套对象
+                            const renderObject = (obj, indent = 0) => {
+                                let result = '';
+                                for (const [key, value] of Object.entries(obj)) {
+                                    if (typeof value === 'object' && value !== null) {
+                                        result += `<div style="margin-left: ${indent * 10}px; margin-bottom: 5px;">
+                                                    <span style="opacity: 0.8;">${key}:</span>
+                                                </div>`;
+                                        result += renderObject(value, indent + 1);
+                                    } else {
+                                        result += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px; margin-left: ${indent * 10}px;">
+                                                    <span style="opacity: 0.8;">${key}:</span>
+                                                    <span>${value}</span>
+                                                </div>`;
+                                    }
+                                }
+                                return result;
+                            };
+                            
+                            html += renderObject(match.预测详细数据[section]);
+                            html += `</div></div>`;
+                        }
+                    });
+                    
+                    html += `</div>`;
+                } else {
+                    html += `<p style="text-align: center; opacity: 0.7; padding: 20px;">无详细数据</p>`;
+                }
+                
+                html += `
+                        </div>
+                    </div>
                 `;
             });
             
+            // 预测结果汇总
+            const winCount = webData.计算结果.filter(m => m.预测结果 === 3).length;
+            const drawCount = webData.计算结果.filter(m => m.预测结果 === 1).length;
+            const loseCount = webData.计算结果.filter(m => m.预测结果 === 0).length;
+            
             html += `
-                    </tbody>
-                </table>
-                <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
-                    <h3 style="color: #00bcd4; margin-bottom: 10px;">预测结果汇总</h3>
-                    <p>总场次: ${webData.计算结果.length}</p>
-                    <p>主胜(3): ${webData.计算结果.filter(m => m.预测结果 === 3).length} 场</p>
-                    <p>平(1): ${webData.计算结果.filter(m => m.预测结果 === 1).length} 场</p>
-                    <p>客胜(0): ${webData.计算结果.filter(m => m.预测结果 === 0).length} 场</p>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 25px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #ff9800;">
+                    <h3 style="color: #ff9800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-chart-bar"></i> 预测结果汇总
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="text-align: center; padding: 20px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; border: 1px solid rgba(76, 175, 80, 0.3);">
+                            <p style="font-size: 2.5em; font-weight: 600; color: #4caf50;">${winCount}</p>
+                            <p style="opacity: 0.9;">主胜(3)</p>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(255, 152, 0, 0.1); border-radius: 8px; border: 1px solid rgba(255, 152, 0, 0.3);">
+                            <p style="font-size: 2.5em; font-weight: 600; color: #ff9800;">${drawCount}</p>
+                            <p style="opacity: 0.9;">平(1)</p>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(244, 67, 54, 0.1); border-radius: 8px; border: 1px solid rgba(244, 67, 54, 0.3);">
+                            <p style="font-size: 2.5em; font-weight: 600; color: #f44336;">${loseCount}</p>
+                            <p style="opacity: 0.9;">客胜(0)</p>
+                        </div>
+                        <div style="text-align: center; padding: 20px; background: rgba(33, 150, 243, 0.1); border-radius: 8px; border: 1px solid rgba(33, 150, 243, 0.3);">
+                            <p style="font-size: 2.5em; font-weight: 600; color: #2196f3;">${webData.计算结果.length}</p>
+                            <p style="opacity: 0.9;">总场次</p>
+                        </div>
+                    </div>
                 </div>
             `;
             
@@ -680,14 +912,36 @@
         // 期数输入框支持回车键
         periodInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                currentPeriod = periodInput.value.trim();
-                if (currentPeriod) {
+                const inputValue = periodInput.value.trim();
+                if (inputValue) {
+                    // 提取数字部分（例如从"26027期"中提取"26027"）
+                    const periodMatch = inputValue.match(/\d+/);
+                    if (periodMatch) {
+                        currentPeriod = periodMatch[0];
+                    } else {
+                        currentPeriod = inputValue;
+                    }
                     showStatus(`已手动设置期数为: ${currentPeriod}期`, 'info');
                     // 自动加载数据
                     setTimeout(() => {
                         loadWebDataBtn.click();
                     }, 300);
                 }
+            }
+        });
+        
+        // 期数输入框失去焦点时更新期数（不自动加载）
+        periodInput.addEventListener('blur', () => {
+            const inputValue = periodInput.value.trim();
+            if (inputValue) {
+                // 提取数字部分（例如从"26027期"中提取"26027"）
+                const periodMatch = inputValue.match(/\d+/);
+                if (periodMatch) {
+                    currentPeriod = periodMatch[0];
+                } else {
+                    currentPeriod = inputValue;
+                }
+                showStatus(`已更新期数为: ${currentPeriod}期`, 'info');
             }
         });
         
