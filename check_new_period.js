@@ -302,10 +302,45 @@ async function checkNewPeriod() {
     }
 }
 
+// 设置 GitHub Actions 输出
+function setOutput(name, value) {
+    // GitHub Actions 新语法：写入 GITHUB_OUTPUT 文件
+    const outputFile = process.env.GITHUB_OUTPUT;
+    if (outputFile) {
+        const content = `${name}=${value}\n`;
+        try {
+            require('fs').appendFileSync(outputFile, content, 'utf8');
+            console.log(`设置输出: ${name}=${value}`);
+        } catch (error) {
+            console.error(`写入输出文件失败: ${error.message}`);
+            // 回退到旧语法
+            console.log(`::set-output name=${name}::${value}`);
+        }
+    } else {
+        // 本地环境：输出到控制台
+        console.log(`输出: ${name}=${value}`);
+        // 同时输出旧语法，以便兼容
+        console.log(`::set-output name=${name}::${value}`);
+    }
+}
+
 // 执行主函数
 async function main() {
     const result = await checkNewPeriod();
-    process.exit(result);
+    
+    // 设置输出变量
+    if (result === 2) {
+        setOutput('has_new_period', 'true');
+        setOutput('exit_code', '2');
+        console.log('检测到新期数');
+    } else {
+        setOutput('has_new_period', 'false');
+        setOutput('exit_code', '0');
+        console.log('无新期数');
+    }
+    
+    // 总是成功退出
+    process.exit(0);
 }
 
 // 如果直接运行此脚本
