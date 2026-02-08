@@ -316,8 +316,8 @@ def calculate_detailed_probability(home_team_name, away_team_name,
     expected_home = elo_system.get_expected_score(home_h2h_elo, away_h2h_elo)
     expected_away = 1.0 - expected_home
     
-    # 5. 计算动态平概率
-    strength_gap = abs(home_h2h_elo - away_h2h_elo)
+    # 5. 计算动态平概率（使用基础评分，排除主场加成）
+    strength_gap = abs(home_base_elo - away_base_elo)
     draw_probability = 0.15 + 0.2 * math.exp(-strength_gap / 200)
     
     # 6. 分配胜平负概率
