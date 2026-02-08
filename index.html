@@ -587,10 +587,12 @@
                             <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">期数</p>
                             <p style="font-size: 1.2em; font-weight: 600;">${webData.期数 || '未知'}</p>
                         </div>
+
                         <div>
                             <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">生成时间</p>
                             <p>${webData.生成时间 ? new Date(webData.生成时间).toLocaleString() : '未知'}</p>
                         </div>
+
                         <div>
                             <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">数据来源</p>
                             <p style="word-break: break-all;">${webData.数据来源 ? `${webData.数据来源.基础预测文件}<br>${webData.数据来源.高级预测文件}` : 'web.json文件'}</p>
@@ -656,6 +658,63 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- 共同对手实力分部分 -->
+                        ${match.共同对手实力分 ? `
+                        <div style="margin-top: 30px; padding-top: 25px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
+                            <h5 style="color: #bbdefb; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-handshake"></i> 共同对手实力分
+                            </h5>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                                <!-- 总实力分 -->
+                                <div style="padding: 15px; background: rgba(255, 193, 7, 0.05); border-radius: 8px; border-left: 3px solid #ffc107;">
+                                    <h6 style="color: #ffc107; margin-bottom: 10px; font-size: 0.95em;">
+                                        <i class="fas fa-star"></i> 总实力分
+                                    </h6>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>主队总实力分:</span>
+                                        <span style="font-weight: 600;">${match.共同对手实力分.主队总实力分.toFixed(3)}</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>客队总实力分:</span>
+                                        <span style="font-weight: 600;">${match.共同对手实力分.客队总实力分.toFixed(3)}</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span>共同对手数:</span>
+                                        <span style="font-weight: 600;">${match.共同对手实力分.共同对手数}</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- 相对实力比 -->
+                                <div style="padding: 15px; background: rgba(156, 39, 176, 0.05); border-radius: 8px; border-left: 3px solid #9c27b0;">
+                                    <h6 style="color: #9c27b0; margin-bottom: 10px; font-size: 0.95em;">
+                                        <i class="fas fa-balance-scale-left"></i> 相对实力比
+                                    </h6>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>主队相对实力比:</span>
+                                        <span style="font-weight: 600;">${(match.共同对手实力分.主队相对实力比 * 100).toFixed(1)}%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                        <span>客队相对实力比:</span>
+                                        <span style="font-weight: 600;">${(match.共同对手实力分.客队相对实力比 * 100).toFixed(1)}%</span>
+                                    </div>
+                                    <div style="margin-top: 15px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <span style="font-size: 0.9em; opacity: 0.8;">实力对比:</span>
+                                        </div>
+                                        <div style="height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden;">
+                                            <div style="height: 100%; width: ${match.共同对手实力分.主队相对实力比 * 100}%; background: linear-gradient(90deg, #ffc107, #ff9800); border-radius: 4px 0 0 4px;"></div>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                            <span style="font-size: 0.85em; opacity: 0.8;">主队</span>
+                                            <span style="font-size: 0.85em; opacity: 0.8;">客队</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ` : ''}
                         
                         <!-- 概率数据部分 -->
                         <div style="margin-bottom: 25px;">

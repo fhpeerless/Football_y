@@ -159,9 +159,10 @@ function parseProbability(probStr) {
     return 0;
 }
 
-function calculateCombinedProbabilities(basicData, advancedData) {
+function calculateCombinedProbabilities(basicData, advancedData, strengthData) {
     const basicMatches = basicData['14场对战信息'] || [];
     const advancedMatches = advancedData['14场对战信息'] || [];
+    const strengthMatches = strengthData['14场比赛结果'] || [];
     
     if (basicMatches.length === 0) {
         throw new Error('基础预测概率文件中没有比赛数据');
@@ -169,6 +170,10 @@ function calculateCombinedProbabilities(basicData, advancedData) {
     
     if (advancedMatches.length === 0) {
         throw new Error('高级预测概率文件中没有比赛数据');
+    }
+    
+    if (strengthMatches.length === 0) {
+        console.warn('警告: 共同对手实力分文件中没有比赛数据');
     }
     
     const results = [];
@@ -179,6 +184,11 @@ function calculateCombinedProbabilities(basicData, advancedData) {
         if (!advancedMatch) {
             console.warn(`警告: 场次 ${basicMatch.场次} 在高级预测文件中未找到，跳过`);
             continue;
+        }
+        
+        const strengthMatch = strengthMatches.find(m => m.场次 === basicMatch.场次);
+        if (!strengthMatch) {
+            console.warn(`警告: 场次 ${basicMatch.场次} 在共同对手实力分文件中未找到，将不包含实力分数据`);
         }
         
         // 提取概率
@@ -233,6 +243,13 @@ function calculateCombinedProbabilities(basicData, advancedData) {
                 负: normalizedLoseProb
             },
             预测结果: result,
+            共同对手实力分: strengthMatch ? {
+                主队总实力分: strengthMatch.主队总实力分 || 0,
+                客队总实力分: strengthMatch.客队总实力分 || 0,
+                主队相对实力比: strengthMatch.主队相对实力比 || 0,
+                客队相对实力比: strengthMatch.客队相对实力比 || 0,
+                共同对手数: strengthMatch.共同对手数 || 0
+            } : null,
             预测详细数据: advancedMatch.预测详细数据 || basicMatch.预测详细数据 || {}
         });
     }
@@ -278,10 +295,12 @@ async function main() {
         const resultDir = './result';
         const basicFile = path.join(resultDir, `${period}期_预测概率.json`);
         const advancedFile = path.join(resultDir, `${period}期_高级预测概率.json`);
+        const strengthFile = path.join(resultDir, `${period}期_共同对手实力分.json`);
         const outputFile = path.join(resultDir, `${period}期_web.json`);
         
         console.log(`基础预测文件: ${basicFile}`);
         console.log(`高级预测文件: ${advancedFile}`);
+        console.log(`共同对手实力分文件: ${strengthFile}`);
         console.log(`输出文件: ${outputFile}`);
         
         // 3. 检查文件是否存在
@@ -293,6 +312,10 @@ async function main() {
             throw new Error(`高级预测文件不存在: ${advancedFile}`);
         }
         
+        if (!fs.existsSync(strengthFile)) {
+            throw new Error(`共同对手实力分文件不存在: ${strengthFile}`);
+        }
+        
         // 4. 读取JSON文件
         console.log('正在读取基础预测概率文件...');
         const basicData = readJSONFile(basicFile);
@@ -300,9 +323,12 @@ async function main() {
         console.log('正在读取高级预测概率文件...');
         const advancedData = readJSONFile(advancedFile);
         
+        console.log('正在读取共同对手实力分文件...');
+        const strengthData = readJSONFile(strengthFile);
+        
         // 5. 计算合并概率
         console.log('正在计算合并概率...');
-        const combinedResults = calculateCombinedProbabilities(basicData, advancedData);
+        const combinedResults = calculateCombinedProbabilities(basicData, advancedData, strengthData);
         
         // 6. 构建输出数据
         const outputData = {
