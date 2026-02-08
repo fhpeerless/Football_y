@@ -17,7 +17,7 @@ jobs:
   check-and-process:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write  # 已正确配置写入权限，保留
     
     steps:
     - name: 检出代码
@@ -25,7 +25,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         persist-credentials: true
-        fetch-depth: 0
+        fetch-depth: 0  # 已正确配置完整克隆，保留
       
     - name: 设置 Node.js
       uses: actions/setup-node@v4
@@ -232,8 +232,26 @@ jobs:
     - name: 提交结果到仓库
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
+        # 修复1：使用正确的邮箱格式（官方推荐）
         git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # 添加result目录下的所有文件
         git add result/
-        git commit -m "添加预测结果文件 [skip ci]" || echo "没有更改可提交"
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@${{ github.server_url }}/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+        
+        # 修复2：优化commit容错（避免无更改时报错）
+        git commit -m "添加预测结果文件 [skip ci]" || {
+          echo "没有更改可提交，跳过push步骤"
+          exit 0  # 无更改时正常退出，不影响工作流
+        }
+        
+        # 修复3：使用正确的Git Push URL格式（核心修复）
+        # 格式：https://<token>@github.com/<owner>/<repo>.git
+        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        
+        # 可选：添加push失败重试（增强稳定性）
+        if [ $? -ne 0 ]; then
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        fi
