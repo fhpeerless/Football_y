@@ -101,12 +101,87 @@ function readJSONFile(filePath) {
     }
 }
 
+function writeJSONFile(filePath, data) {
+    try {
+        const dir = path.dirname(filePath);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+    } catch (error) {
+        throw new Error(`写入文件 ${filePath} 失败: ${error.message}`);
+    }
+}
+
 function extractPeriodNumber(periodStr) {
     if (!periodStr) return 0;
     
     // 从字符串中提取数字部分，例如 "26027期" -> 26027
     const match = periodStr.toString().match(/(\d+)/);
     return match ? parseInt(match[1], 10) : 0;
+}
+
+function appendToPresentJson(period, timestamp) {
+    try {
+        const presentFilePath = './present.json';
+        let presentData = [];
+        
+        // 读取现有的present.json文件，如果存在的话
+        if (fs.existsSync(presentFilePath)) {
+            try {
+                presentData = readJSONFile(presentFilePath);
+                if (!Array.isArray(presentData)) {
+                    presentData = []; // 如果不是数组，重置为空数组
+                }
+            } catch (error) {
+                console.warn(`读取present.json失败，将创建新文件: ${error.message}`);
+                presentData = [];
+            }
+        }
+        
+        // 添加新记录
+        presentData.push({
+            period: period,
+            timestamp: timestamp,
+            period_number: extractPeriodNumber(period)
+        });
+        
+        // 写入文件
+        writeJSONFile(presentFilePath, presentData);
+        console.log(`已将期数 ${period} 和时间戳 ${timestamp} 追加到 present.json`);
+        
+        return true;
+    } catch (error) {
+        console.error(`追加到present.json失败: ${error.message}`);
+        return false;
+    }
+}
+
+function getLastPeriodFromPresentJson() {
+    try {
+        const presentFilePath = './present.json';
+        
+        if (!fs.existsSync(presentFilePath)) {
+            console.log('present.json文件不存在');
+            return null;
+        }
+        
+        const presentData = readJSONFile(presentFilePath);
+        
+        if (!Array.isArray(presentData) || presentData.length === 0) {
+            console.log('present.json为空或不是数组');
+            return null;
+        }
+        
+        // 获取最后一条记录
+        const lastRecord = presentData[presentData.length - 1];
+        console.log(`从present.json获取的最后一条记录: 期数 ${lastRecord.period}, 时间 ${lastRecord.timestamp}`);
+        
+        return lastRecord;
+    } catch (error) {
+        console.error(`读取present.json失败: ${error.message}`);
+        return null;
+    }
 }
 
 function getLatestPeriodFromFiles() {
@@ -176,45 +251,44 @@ async function checkNewPeriod() {
         const currentPeriodNum = extractPeriodNumber(currentPeriod);
         console.log(`动态获取的期数: ${currentPeriodNum}期`);
         
-        // 2. 构建文件路径
-        const resultDir = './result';
-        const filePath = path.join(resultDir, `${currentPeriodNum}期.json`);
-        console.log(`检查文件: ${filePath}`);
+        // 2. 从present.json读取最后保存的期数（在追加新记录之前）
+        const lastRecord = getLastPeriodFromPresentJson();
         
-        // 3. 检查文件是否存在
-        if (!fs.existsSync(filePath)) {
-            console.log(`文件不存在: ${filePath}`);
-            console.log('='.repeat(60));
-            console.log('返回结果: 1 (有新期数)');
-            return 1;
+        // 3. 比较期数
+        let hasNewPeriod = false;
+        
+        if (!lastRecord) {
+            // 如果present.json不存在或为空，视为有新期数
+            console.log('present.json不存在或为空，视为有新期数');
+            hasNewPeriod = true;
+        } else {
+            const lastPeriodNum = lastRecord.period_number || extractPeriodNumber(lastRecord.period);
+            console.log(`最后保存的期数: ${lastPeriodNum}期`);
+            
+            if (lastPeriodNum < currentPeriodNum) {
+                console.log(`最后保存期数(${lastPeriodNum}) < 当前期数(${currentPeriodNum})`);
+                hasNewPeriod = true;
+            } else {
+                console.log(`最后保存期数(${lastPeriodNum}) >= 当前期数(${currentPeriodNum})`);
+                hasNewPeriod = false;
+            }
         }
         
-        // 4. 读取文件并提取期数
-        console.log(`正在读取文件: ${filePath}`);
-        let fileData;
-        try {
-            fileData = readJSONFile(filePath);
-        } catch (error) {
-            console.error(`读取文件失败: ${error.message}`);
-            console.log('='.repeat(60));
-            console.log('返回结果: 1 (文件读取失败，视为有新期数)');
-            return 1;
+        // 4. 将当前期数和时间戳追加到present.json（无论是否有新期数都追加）
+        const currentTimestamp = new Date().toISOString();
+        console.log(`当前时间戳: ${currentTimestamp}`);
+        
+        const appendSuccess = appendToPresentJson(currentPeriod, currentTimestamp);
+        if (!appendSuccess) {
+            console.warn('警告: 无法将数据追加到present.json');
         }
         
-        // 5. 提取文件中的期数
-        const filePeriod = fileData.期数;
-        const filePeriodNum = extractPeriodNumber(filePeriod);
-        console.log(`文件中的期数: ${filePeriodNum}期`);
-        
-        // 6. 比较期数
-        if (currentPeriodNum > filePeriodNum) {
-            console.log(`动态期数(${currentPeriodNum}) > 文件期数(${filePeriodNum})`);
-            console.log('='.repeat(60));
+        // 5. 返回结果
+        console.log('='.repeat(60));
+        if (hasNewPeriod) {
             console.log('返回结果: 1 (有新期数)');
             return 1;
         } else {
-            console.log(`动态期数(${currentPeriodNum}) <= 文件期数(${filePeriodNum})`);
-            console.log('='.repeat(60));
             console.log('返回结果: 0 (无新期数)');
             return 0;
         }
@@ -243,5 +317,8 @@ module.exports = {
     getCurrentPeriod,
     checkNewPeriod,
     extractPeriodNumber,
-    getLatestPeriodFromFiles
+    getLatestPeriodFromFiles,
+    appendToPresentJson,
+    getLastPeriodFromPresentJson,
+    writeJSONFile
 };
