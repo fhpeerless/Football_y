@@ -37,8 +37,10 @@ jobs:
         
     - name: 检查是否有新期数
       id: check-period
+      continue-on-error: true
       run: |
         echo "正在检查新期数..."
+        # 运行脚本并捕获退出代码
         node check_new_period.js
         EXIT_CODE=$?
         echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
@@ -47,6 +49,9 @@ jobs:
         else
           echo "无新期数，跳过后续步骤"
         fi
+        echo "期数检查步骤完成，退出代码: $EXIT_CODE"
+        # 步骤总是成功完成，不传播脚本的退出代码
+        exit 0
         
     - name: 环境验证和调试
       if: steps.check-period.outputs.exit_code == '1'
