@@ -72,6 +72,12 @@ jobs:
         echo "正在计算高级预测概率..."
         python calculate_advanced_probability.py
         
+    - name: 计算共同对手实力分
+      if: steps.check-period.outputs.exit_code == '1'
+      run: |
+        echo "正在计算共同对手实力分..."
+        python calculate_common_opponent_strength.py
+        
     - name: 合并预测概率
       if: steps.check-period.outputs.exit_code == '1'
       run: |
