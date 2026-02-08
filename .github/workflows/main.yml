@@ -39,19 +39,11 @@ jobs:
       id: check-period
       run: |
         echo "正在检查新期数..."
-        # 运行脚本并捕获退出代码
+        # 运行脚本，脚本会设置 has_new_period 输出（true/false）
         node check_new_period.js
-        EXIT_CODE=$?
-        echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
-        if [ $EXIT_CODE -eq 2 ]; then
-          echo "检测到新期数，继续执行后续步骤"
-        else
-          echo "无新期数，跳过后续步骤"
-        fi
-        echo "期数检查步骤完成，退出代码: $EXIT_CODE"
         
     - name: 环境验证和调试
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "=== 调试信息开始 ==="
         echo "当前工作目录: $(pwd)"
@@ -75,7 +67,7 @@ jobs:
         echo "=== 调试信息结束 ==="
         
     - name: 运行 API 爬虫 (获取比赛数据)
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "=== API爬虫步骤开始 ==="
         echo "正在运行 API 爬虫获取比赛数据..."
@@ -115,7 +107,7 @@ jobs:
         exit 1
         
     - name: 获取历史交锋数据
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "=== 历史交锋数据步骤开始 ==="
         echo "正在获取历史交锋数据..."
@@ -156,31 +148,31 @@ jobs:
         fi
         
     - name: 计算基础预测概率
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算基础预测概率..."
         python calculate_probability.py
         
     - name: 计算高级预测概率
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算高级预测概率..."
         python calculate_advanced_probability.py
         
     - name: 计算共同对手实力分
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算共同对手实力分..."
         python calculate_common_opponent_strength.py
         
     - name: 合并预测概率
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在合并预测概率..."
         node combine_probability.js
         
     - name: 验证最终结果
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "=== 验证最终结果开始 ==="
         echo "检查所有生成的文件..."
@@ -224,7 +216,7 @@ jobs:
         echo "=== 验证最终结果结束 ==="
         
     - name: 上传结果文件
-      if: steps.check-period.outputs.exit_code == '2'
+      if: steps.check-period.outputs.has_new_period == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: prediction-results
