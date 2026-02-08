@@ -286,8 +286,8 @@ async function checkNewPeriod() {
         // 5. 返回结果
         console.log('='.repeat(60));
         if (hasNewPeriod) {
-            console.log('返回结果: 1 (有新期数)');
-            return 1;
+            console.log('返回结果: 2 (有新期数)');
+            return 2;
         } else {
             console.log('返回结果: 0 (无新期数)');
             return 0;
