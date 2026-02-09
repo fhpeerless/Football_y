@@ -7,6 +7,245 @@ import numpy as np
 from datetime import datetime, timedelta
 from collections import defaultdict
 
+def wilson_score(successes, trials, confidence=0.95):
+    """
+    计算Wilson得分修正的概率
+    :param successes: 成功次数（如胜场数）
+    :param trials: 总尝试次数（如总场数）
+    :param confidence: 置信水平，默认0.95
+    :return: 修正后的概率（使用Wilson区间中心点）
+    """
+    if trials == 0:
+        return 0.5  # 默认返回中性概率
+    
+    # 计算观察比例
+    p = successes / trials
+    
+    # 确定z值（标准正态分布的分位数）
+    # 支持常见置信水平，默认使用95%
+    if confidence == 0.95:
+        z = 1.96
+    elif confidence == 0.99:
+        z = 2.576
+    elif confidence == 0.90:
+        z = 1.645
+    elif confidence == 0.85:
+        z = 1.44
+    elif confidence == 0.80:
+        z = 1.282
+    else:
+        # 对于不常见的置信水平，使用近似值或回退到95%
+        z = 1.96
+    
+    # Wilson得分区间公式
+    denominator = 1 + z**2 / trials
+    center = (p + z**2 / (2 * trials)) / denominator
+    margin = z * ((p * (1 - p) / trials + z**2 / (4 * trials**2)) ** 0.5) / denominator
+    
+    # 返回Wilson区间中心点
+    # 对于小样本，使用Wilson下限更保守：center - margin
+    # 这里使用中心点作为修正后的概率
+    return center
+
+def multinomial_wilson(wins, draws, losses, confidence=0.95):
+    """
+    为多项分布（胜、平、负）计算Wilson修正的概率
+    :param wins: 胜场数
+    :param draws: 平局数
+    :param losses: 负场数
+    :param confidence: 置信水平
+    :return: (win_prob, draw_prob, loss_prob) 修正后的概率元组
+    """
+    total = wins + draws + losses
+    if total == 0:
+        return 0.3333, 0.3333, 0.3333
+    
+    # 对每个类别单独应用Wilson修正（视为二项：该类 vs 其他类）
+    win_prob = wilson_score(wins, total, confidence)
+    draw_prob = wilson_score(draws, total, confidence)
+    loss_prob = wilson_score(losses, total, confidence)
+    
+    # 归一化以确保概率和为1
+    total_prob = win_prob + draw_prob + loss_prob
+    if total_prob > 0:
+        win_prob /= total_prob
+        draw_prob /= total_prob
+        loss_prob /= total_prob
+    
+    return win_prob, draw_prob, loss_prob
+
+def calculate_home_advantage_factor(home_performance, away_performance):
+    """
+    计算主场加成系数（基于统计化约束）
+    默认使用英超平均主场优势1.15，可根据具体联赛数据调整
+    :param home_performance: 主队表现数据
+    :param away_performance: 客队表现数据
+    :return: 主场加成系数
+    """
+    # 默认使用英超历史平均主场优势1.15
+    # 未来可扩展为从数据中动态计算：home_performance['home_attack'] / home_performance['away_attack'] 等
+    return 1.15
+
+def calculate_common_opponent_adjustment(num_common_opponents, common_strength_ratio):
+    """
+    计算共同对手调整系数（基于统计化约束）
+    共同对手越多，调整幅度越大（置信度越高）
+    :param num_common_opponents: 共同对手数量
+    :param common_strength_ratio: 实力对比分数（0-1之间）
+    :return: 调整系数（用于乘以预期进球数）
+    """
+    if num_common_opponents == 0:
+        return 0.0  # 无共同对手时不调整
+    
+    # 基础调整幅度与共同对手数量相关
+    # 使用对数函数：对手越多，调整幅度越大，但边际效应递减
+    max_adjustment = 0.5  # 最大调整幅度（当有大量共同对手时）
+    base_adjustment = max_adjustment * (1 - math.exp(-num_common_opponents / 3))
+    
+    # 根据实力对比分数确定调整方向
+    # common_strength_ratio > 0.5 表示主队优势，<0.5 表示客队优势
+    adjustment = base_adjustment * (common_strength_ratio - 0.5) * 2
+    
+    return adjustment
+
+def constrain_expected_goals(home_goals, away_goals, home_attack_efficiency=None, away_attack_efficiency=None):
+    """
+    对预期进球数应用合理约束
+    :param home_goals: 主队预期进球数
+    :param away_goals: 客队预期进球数
+    :param home_attack_efficiency: 主队进攻效率（可选，用于进一步约束）
+    :param away_attack_efficiency: 客队进攻效率（可选，用于进一步约束）
+    :return: (constrained_home_goals, constrained_away_goals) 约束后的预期进球数
+    """
+    # 1. 基本范围约束
+    # 足球比赛中，单队单场进球数极少超过5个，预期进球数更应保守
+    max_goals_per_team = 3.5  # 最大预期进球数（保守估计）
+    min_goals_per_team = 0.1  # 最小预期进球数
+    
+    # 2. 相对比例约束
+    # 避免出现极端比分（如5:0的预期），现实中较少见
+    max_goal_ratio = 3.0  # 最大进球比例（如3:1）
+    
+    # 3. 基于联赛平均的约束
+    # 英超平均每队每场进球约1.4个，以此为中心进行约束
+    league_average = 1.4
+    
+    # 初步范围约束
+    constrained_home = max(min_goals_per_team, min(home_goals, max_goals_per_team))
+    constrained_away = max(min_goals_per_team, min(away_goals, max_goals_per_team))
+    
+    # 比例约束
+    if constrained_home > 0 and constrained_away > 0:
+        goal_ratio = max(constrained_home, constrained_away) / min(constrained_home, constrained_away)
+        if goal_ratio > max_goal_ratio:
+            # 调整较高的预期进球数，降低比例
+            if constrained_home > constrained_away:
+                constrained_home = constrained_away * max_goal_ratio
+            else:
+                constrained_away = constrained_home * max_goal_ratio
+    
+    # 4. 基于联赛平均的回归约束
+    # 将预期进球数向联赛平均水平拉回（贝叶斯思想：先验信息）
+    # 使用收缩因子：样本量越大，收缩越小；样本量越小，收缩越大
+    # 这里使用简化的收缩因子（可根据实际情况调整）
+    shrinkage_factor = 0.2  # 20%的收缩
+    
+    constrained_home = constrained_home * (1 - shrinkage_factor) + league_average * shrinkage_factor
+    constrained_away = constrained_away * (1 - shrinkage_factor) + league_average * shrinkage_factor
+    
+    # 5. 如果提供了进攻效率，进一步约束
+    if home_attack_efficiency is not None and away_attack_efficiency is not None:
+        # 确保预期进球数与进攻效率大致匹配
+        # 例如，进攻效率高的球队预期进球数不应过低
+        home_efficiency_ratio = constrained_home / (home_attack_efficiency + 0.001)
+        away_efficiency_ratio = constrained_away / (away_attack_efficiency + 0.001)
+        
+        # 如果比例超出合理范围，进行调整
+        efficiency_range = (0.5, 2.0)  # 进攻效率到预期进球数的合理比例范围
+        
+        if home_efficiency_ratio < efficiency_range[0]:
+            constrained_home = home_attack_efficiency * efficiency_range[0]
+        elif home_efficiency_ratio > efficiency_range[1]:
+            constrained_home = home_attack_efficiency * efficiency_range[1]
+            
+        if away_efficiency_ratio < efficiency_range[0]:
+            constrained_away = away_attack_efficiency * efficiency_range[0]
+        elif away_efficiency_ratio > efficiency_range[1]:
+            constrained_away = away_attack_efficiency * efficiency_range[1]
+    
+    return constrained_home, constrained_away
+
+def calculate_transition_matrix_from_matches(matches, team_name):
+    """
+    从比赛记录中计算半场到全场的转移矩阵
+    :param matches: 球队的比赛记录列表
+    :param team_name: 球队名称
+    :return: 3x3转移矩阵，行：半场结果（胜、平、负），列：全场结果（胜、平、负）
+    """
+    # 初始化计数矩阵
+    transition_counts = np.zeros((3, 3), dtype=int)
+    
+    for match in matches:
+        home_team = match.get('homesxname', '')
+        away_team = match.get('awaysxname', '')
+        home_score = match.get('homescore', 0)
+        away_score = match.get('awayscore', 0)
+        home_half_score = match.get('homehalfscore', 0)
+        away_half_score = match.get('awayhalfscore', 0)
+        
+        # 确定球队是主场还是客场
+        is_home = (home_team == team_name)
+        
+        if is_home:
+            # 球队是主场
+            half_score = home_half_score
+            opponent_half_score = away_half_score
+            full_score = home_score
+            opponent_full_score = away_score
+        else:
+            # 球队是客场
+            half_score = away_half_score
+            opponent_half_score = home_half_score
+            full_score = away_score
+            opponent_full_score = home_score
+        
+        # 确定半场结果（从球队视角）
+        if half_score > opponent_half_score:
+            half_result = 0  # 胜
+        elif half_score == opponent_half_score:
+            half_result = 1  # 平
+        else:
+            half_result = 2  # 负
+        
+        # 确定全场结果（从球队视角）
+        if full_score > opponent_full_score:
+            full_result = 0  # 胜
+        elif full_score == opponent_full_score:
+            full_result = 1  # 平
+        else:
+            full_result = 2  # 负
+        
+        # 增加计数
+        transition_counts[half_result, full_result] += 1
+    
+    # 计算转移概率矩阵
+    transition_matrix = np.zeros((3, 3))
+    for i in range(3):
+        row_sum = transition_counts[i].sum()
+        if row_sum > 0:
+            transition_matrix[i] = transition_counts[i] / row_sum
+        else:
+            # 如果没有该半场结果的比赛，使用默认值
+            # 默认：半场胜→全场胜:0.6, 平:0.3, 负:0.1 等（与原固定值相同）
+            if i == 0:  # 半场胜
+                transition_matrix[i] = [0.6, 0.3, 0.1]
+            elif i == 1:  # 半场平
+                transition_matrix[i] = [0.3, 0.4, 0.3]
+            else:  # 半场负
+                transition_matrix[i] = [0.1, 0.3, 0.6]
+    
+    return transition_matrix
+
 def load_history_data(file_path):
     """加载历史交锋数据"""
     try:
@@ -249,15 +488,15 @@ def calculate_team_performance(matches, team_name):
     second_half_attack = second_half_goals_scored / total_matches if total_matches > 0 else 0
     second_half_defense = second_half_goals_conceded / total_matches if total_matches > 0 else 0
     
-    # 半场结果概率
-    first_half_win_prob = first_half_wins / total_matches if total_matches > 0 else 0
-    first_half_draw_prob = first_half_draws / total_matches if total_matches > 0 else 0
-    first_half_loss_prob = first_half_losses / total_matches if total_matches > 0 else 0
+    # 半场结果概率（使用Wilson得分修正）
+    first_half_win_prob, first_half_draw_prob, first_half_loss_prob = multinomial_wilson(
+        first_half_wins, first_half_draws, first_half_losses, confidence=0.95
+    )
     
-    # 全场结果概率
-    win_prob = wins / total_matches if total_matches > 0 else 0
-    draw_prob = draws / total_matches if total_matches > 0 else 0
-    loss_prob = losses / total_matches if total_matches > 0 else 0
+    # 全场结果概率（使用Wilson得分修正）
+    win_prob, draw_prob, loss_prob = multinomial_wilson(
+        wins, draws, losses, confidence=0.95
+    )
     
     return {
         'total_matches': total_matches,
@@ -414,43 +653,93 @@ def calculate_poisson_probability(lambda_home, lambda_away, max_goals=5):
         'loss_probability': loss_prob
     }
 
-def create_half_full_state_matrix(home_performance, away_performance):
+def create_half_full_state_matrix(home_performance, away_performance, home_matches=None, away_matches=None, home_team=None, away_team=None):
     """
-    创建半全场状态转移矩阵
+    创建半全场状态转移矩阵（基于统计化约束）
     :param home_performance: 主队表现数据
     :param away_performance: 客队表现数据
+    :param home_matches: 主队比赛记录（可选，用于计算统计转移矩阵）
+    :param away_matches: 客队比赛记录（可选，用于计算统计转移矩阵）
+    :param home_team: 主队名称（可选，用于统计计算）
+    :param away_team: 客队名称（可选，用于统计计算）
     :return: 半全场状态矩阵
     """
     # 半场结果：胜(W)、平(D)、负(L)
     # 全场结果：胜(W)、平(D)、负(L)
     
-    # 基于历史数据估计转移概率
-    home_first_half_probs = home_performance['first_half_results']
-    away_first_half_probs = away_performance['first_half_results']
+    # 优先使用统计方法计算转移矩阵（如果提供了比赛记录和球队名称）
+    if home_matches is not None and away_matches is not None and home_team is not None and away_team is not None:
+        # 计算主队和客队的转移矩阵
+        home_transition = calculate_transition_matrix_from_matches(home_matches, home_team)
+        away_transition = calculate_transition_matrix_from_matches(away_matches, away_team)
+        
+        # 结合两队转移矩阵（简单平均）
+        state_matrix = (home_transition + away_transition) / 2
+        return state_matrix
     
-    home_full_probs = home_performance['full_time_results']
-    away_full_probs = away_performance['full_time_results']
+    # 如果没有提供比赛记录，尝试从表现数据中估计（简化方法）
+    # 基于半场和全场结果的边际分布估计联合分布（独立性假设）
+    home_first_half_probs = np.array([
+        home_performance['first_half_results']['win'],
+        home_performance['first_half_results']['draw'],
+        home_performance['first_half_results']['loss']
+    ])
     
-    # 简化：假设半场结果独立影响全场结果
-    # 实际应用中应该基于历史半场-全场关系数据
+    away_first_half_probs = np.array([
+        away_performance['first_half_results']['win'],
+        away_performance['first_half_results']['draw'],
+        away_performance['first_half_results']['loss']
+    ])
     
-    # 创建基础矩阵（3x3：半场结果到全场结果）
-    state_matrix = np.zeros((3, 3))
+    home_full_probs = np.array([
+        home_performance['full_time_results']['win'],
+        home_performance['full_time_results']['draw'],
+        home_performance['full_time_results']['loss']
+    ])
     
-    # 半场胜到全场的转移概率
-    state_matrix[0, 0] = 0.6  # 半场胜→全场胜
-    state_matrix[0, 1] = 0.3  # 半场胜→全场平
-    state_matrix[0, 2] = 0.1  # 半场胜→全场负
+    away_full_probs = np.array([
+        away_performance['full_time_results']['win'],
+        away_performance['full_time_results']['draw'],
+        away_performance['full_time_results']['loss']
+    ])
     
-    # 半场平到全场的转移概率
-    state_matrix[1, 0] = 0.3  # 半场平→全场胜
-    state_matrix[1, 1] = 0.4  # 半场平→全场平
-    state_matrix[1, 2] = 0.3  # 半场平→全场负
+    # 使用独立性假设：P(半场,全场) = P(半场) * P(全场)
+    # 这是简化方法，实际应该使用条件概率
+    home_joint = np.outer(home_first_half_probs, home_full_probs)
+    away_joint = np.outer(away_first_half_probs, away_full_probs)
     
-    # 半场负到全场的转移概率
-    state_matrix[2, 0] = 0.1  # 半场负→全场胜
-    state_matrix[2, 1] = 0.3  # 半场负→全场平
-    state_matrix[2, 2] = 0.6  # 半场负→全场负
+    # 归一化每行得到条件概率
+    home_state_matrix = np.zeros((3, 3))
+    away_state_matrix = np.zeros((3, 3))
+    
+    for i in range(3):
+        row_sum_home = home_joint[i].sum()
+        row_sum_away = away_joint[i].sum()
+        
+        if row_sum_home > 0:
+            home_state_matrix[i] = home_joint[i] / row_sum_home
+        else:
+            # 默认值
+            if i == 0:
+                home_state_matrix[i] = [0.6, 0.3, 0.1]
+            elif i == 1:
+                home_state_matrix[i] = [0.3, 0.4, 0.3]
+            else:
+                home_state_matrix[i] = [0.1, 0.3, 0.6]
+        
+        if row_sum_away > 0:
+            away_state_matrix[i] = away_joint[i] / row_sum_away
+        else:
+            # 默认值
+            if i == 0:
+                away_state_matrix[i] = [0.6, 0.3, 0.1]
+            elif i == 1:
+                away_state_matrix[i] = [0.3, 0.4, 0.3]
+            else:
+                away_state_matrix[i] = [0.1, 0.3, 0.6]
+    
+    # 结合两队的状态矩阵
+    state_matrix = (home_state_matrix + away_state_matrix) / 2
     
     return state_matrix
 
@@ -478,25 +767,32 @@ def calculate_final_probabilities(home_team, away_team, home_matches, away_match
     
     # 2. 共同对手实力分析
     common_strength_ratio = analyze_common_opponents_strength(common_data, home_team, away_team)
+    num_common_opponents = len(common_data)
     
-    # 3. 计算预期进球数（考虑主客场优势和共同对手分析）
+    # 3. 计算预期进球数（考虑统计化约束）
     # 基础预期进球 = 攻击效率 × 对手防守效率
-    home_expected_goals = home_performance['home_attack'] * away_performance['away_defense'] * 1.2  # 主场加成
+    home_advantage_factor = calculate_home_advantage_factor(home_performance, away_performance)
+    home_expected_goals = home_performance['home_attack'] * away_performance['away_defense'] * home_advantage_factor
     away_expected_goals = away_performance['away_attack'] * home_performance['home_defense']
     
-    # 根据共同对手分析调整
-    home_expected_goals *= (1.0 + (common_strength_ratio - 0.5) * 0.3)
-    away_expected_goals *= (1.0 + (0.5 - common_strength_ratio) * 0.3)
+    # 根据共同对手分析调整（基于统计化约束）
+    common_opponent_adjustment = calculate_common_opponent_adjustment(num_common_opponents, common_strength_ratio)
+    home_expected_goals *= (1.0 + common_opponent_adjustment)
+    away_expected_goals *= (1.0 - common_opponent_adjustment)
     
-    # 确保合理范围
-    home_expected_goals = max(0.1, min(home_expected_goals, 4.0))
-    away_expected_goals = max(0.1, min(away_expected_goals, 4.0))
+    # 应用合理约束（修复预期进球数的合理约束）
+    home_expected_goals, away_expected_goals = constrain_expected_goals(
+        home_expected_goals, 
+        away_expected_goals,
+        home_attack_efficiency=home_performance['attack_efficiency'],
+        away_attack_efficiency=away_performance['attack_efficiency']
+    )
     
     # 4. 泊松分布计算基础概率
     poisson_result = calculate_poisson_probability(home_expected_goals, away_expected_goals)
     
-    # 5. 半全场状态矩阵调整
-    state_matrix = create_half_full_state_matrix(home_performance, away_performance)
+    # 5. 半全场状态矩阵调整（使用统计化约束）
+    state_matrix = create_half_full_state_matrix(home_performance, away_performance, home_matches, away_matches, home_team, away_team)
     
     # 6. 使用状态矩阵计算基于半场表现的预期全场概率
     # 获取主队半场结果概率
@@ -527,13 +823,22 @@ def calculate_final_probabilities(home_team, away_team, home_matches, away_match
     # 结合两队的状态矩阵概率（简单平均）
     state_based_probs = (home_full_from_state + away_full_from_home_perspective) / 2
     
-    # 7. 结合泊松分布和状态矩阵概率（直接相加）
-    poisson_weight = 1  # 泊松分布权重
-    state_weight = 1    # 状态矩阵权重
+    # 7. 结合泊松分布和状态矩阵概率（加权融合 + 归一化）
+    # 权重分配基于方法可靠性：泊松分布基于预期进球模型（更稳定），状态矩阵基于历史转移（样本可能较小）
+    poisson_weight = 0.7  # 泊松分布权重
+    state_weight = 0.3    # 状态矩阵权重
     
+    # 加权融合
     combined_home_win = poisson_result['win_probability'] * poisson_weight + state_based_probs[0] * state_weight
     combined_draw = poisson_result['draw_probability'] * poisson_weight + state_based_probs[1] * state_weight
     combined_away_win = poisson_result['loss_probability'] * poisson_weight + state_based_probs[2] * state_weight
+    
+    # 归一化确保概率和为1
+    combined_total = combined_home_win + combined_draw + combined_away_win
+    if combined_total > 0:
+        combined_home_win /= combined_total
+        combined_draw /= combined_total
+        combined_away_win /= combined_total
     
     # 8. 考虑半场进攻效率对全场结果的影响（微调）
     home_second_half_factor = home_performance['second_half_attack'] / (home_performance['first_half_attack'] + 0.001)
