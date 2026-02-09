@@ -82,12 +82,12 @@ def get_current_period():
         traceback.print_exc()
         return None
 
-def get_time_decay_factor(match_date, current_date=None, decay_years=1):
+def get_time_decay_factor(match_date, current_date=None, decay_years=1.5):
     """
     优化时间衰减因子（按年衰减，更符合赛事规律）
     :param match_date: 比赛日期（字符串格式：YYYY-MM-DD）
     :param current_date: 当前日期（默认为今天）
-    :param decay_years: 衰减周期（年）
+    :param decay_years: 衰减周期（年），默认1.5年（足球实力惯性通常持续1.5-2年）
     :return: 衰减因子（0-1之间）
     """
     if current_date is None:
@@ -110,7 +110,8 @@ def get_time_decay_factor(match_date, current_date=None, decay_years=1):
     if years_diff < 0:
         return 0.0
     
-    # 指数衰减：1年前的比赛权重≈0.37，2年前≈0.14，3年前≈0.05
+    # 指数衰减：1年前的比赛权重≈0.51，2年前≈0.26，3年前≈0.14
+    # 更符合足球赛事的实力惯性（原设置衰减过快）
     decay_factor = math.exp(-years_diff / decay_years)
     
     return decay_factor
@@ -136,6 +137,59 @@ def calculate_match_score(home_score, away_score):
         return 0.0, 1.0
     else:
         return 0.5, 0.5
+
+def calculate_actual_draw_probability(matches, current_date=None):
+    """
+    根据历史交锋的实际平局次数计算基础平局概率
+    :param matches: 历史比赛列表
+    :param current_date: 当前日期（用于时间衰减）
+    :return: 基于历史数据的实际平局概率（0-1之间）
+    """
+    if not matches:
+        return 0.15  # 默认值，无数据时返回
+    
+    total_weighted_draws = 0.0
+    total_weight = 0.0
+    
+    for match in matches:
+        home_score = match.get('homescore', 0)
+        away_score = match.get('awayscore', 0)
+        match_date = match.get('matchdate', '')
+        is_cup = match.get('iscup', 0)
+        
+        # 计算比赛权重（时间衰减 + 赛事权重）
+        time_decay = get_time_decay_factor(match_date, current_date)
+        event_weight = get_event_weight(is_cup)
+        match_weight = time_decay * event_weight
+        
+        if match_weight < 0.01:
+            continue
+        
+        # 检查是否为平局
+        is_draw = (home_score == away_score)
+        
+        total_weighted_draws += match_weight if is_draw else 0.0
+        total_weight += match_weight
+    
+    if total_weight > 0:
+        # 计算加权平局概率
+        actual_draw_prob = total_weighted_draws / total_weight
+        
+        # 添加平滑处理，避免极端值
+        # 使用贝叶斯平滑：向全局平局概率（如0.25）收缩，尤其是样本量小时
+        global_draw_prob = 0.25  # 足球比赛全局平均平局概率
+        effective_samples = total_weight * 10  # 将权重转换为样本量的估计
+        smoothing_factor = 10.0  # 平滑强度
+        
+        smoothed_prob = (total_weighted_draws + global_draw_prob * smoothing_factor) / (total_weight + smoothing_factor)
+        
+        # 结合实际和平滑概率
+        combined_prob = actual_draw_prob * 0.7 + smoothed_prob * 0.3
+        
+        # 确保在合理范围内
+        return max(0.05, min(0.45, combined_prob))
+    else:
+        return 0.15  # 默认值
 
 def calculate_team_elo_rating(matches, team_name, current_date=None):
     """
@@ -217,6 +271,15 @@ def calculate_team_elo_rating(matches, team_name, current_date=None):
 def calculate_head_to_head_elo_rating(matches, home_team_name, away_team_name, current_date=None):
     """
     修正：基于两队历史交锋计算Elo评分（正确处理主客场+权重）
+    
+    注意：此函数仅基于两队之间的交锋记录计算Elo评分，对手评分仅基于与当前球队的交锋更新，
+    而非其全部比赛（数据限制）。这可能导致评分偏离真实实力。
+    
+    改进建议（如需更准确的Elo评分）：
+    1. 拆分「单队全量比赛Elo计算」和「两队交锋Elo校准」
+    2. 先基于球队所有比赛计算基础Elo评分
+    3. 再用两队交锋记录对基础Elo进行微调
+    
     :param matches: 历史交锋比赛列表
     :param home_team_name: 主队名称
     :param away_team_name: 客队名称
@@ -302,7 +365,17 @@ def calculate_detailed_probability(home_team_name, away_team_name,
     
     # 5. 计算动态平概率（使用基础评分，排除主场加成）
     strength_gap = abs(home_base_elo - away_base_elo)
-    draw_probability = 0.15 + 0.2 * math.exp(-strength_gap / 200)
+    
+    # 5.1 基于历史交锋的实际平局概率
+    base_draw_prob = calculate_actual_draw_probability(head_to_head_matches, current_date)
+    
+    # 5.2 根据实力差距调整平局概率：差距越大，平局概率越低
+    # 当实力差距为0时，衰减因子为1；当差距为400时，衰减因子为0.37
+    gap_adjustment = math.exp(-strength_gap / 400)
+    draw_probability = base_draw_prob * gap_adjustment
+    
+    # 5.3 确保平局概率在合理范围内
+    draw_probability = max(0.05, min(0.45, draw_probability))
     
     # 6. 分配胜平负概率
     win_home = expected_home * (1 - draw_probability)
