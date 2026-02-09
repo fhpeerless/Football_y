@@ -6,7 +6,14 @@ const zlib = require('zlib');
 // 禁用SSL证书验证（仅用于开发环境）
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
+// ========== 核心修改：定义绝对路径 ==========
+// 获取脚本所在目录的绝对路径
+const SCRIPT_DIR = path.resolve(__dirname);
+// present.json 的绝对路径（避免相对路径问题）
+const PRESENT_JSON_PATH = path.join(SCRIPT_DIR, 'present.json');
+
 async function getCurrentPeriod() {
+    // 【原有代码不变】... 保留原逻辑
     return new Promise((resolve, reject) => {
         const apiUrl = "https://ews.500.com/score/zq/info?vtype=sfc";
         const timestamp = Date.now();
@@ -106,8 +113,14 @@ function writeJSONFile(filePath, data) {
         const dir = path.dirname(filePath);
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
+            console.log(`创建目录成功: ${dir}`);
         }
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+        // ========== 新增：设置文件写入权限 ==========
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), { 
+            encoding: 'utf8',
+            mode: 0o644  // 赋予可读可写权限
+        });
+        console.log(`成功写入文件: ${filePath}`);
     } catch (error) {
         throw new Error(`写入文件 ${filePath} 失败: ${error.message}`);
     }
@@ -121,9 +134,13 @@ function extractPeriodNumber(periodStr) {
     return match ? parseInt(match[1], 10) : 0;
 }
 
+// ========== 核心修改：使用绝对路径 + 增强日志 ==========
 function appendToPresentJson(period, timestamp) {
     try {
-        const presentFilePath = './present.json';
+        // 改用绝对路径
+        const presentFilePath = PRESENT_JSON_PATH;
+        console.log(`准备写入present.json，路径: ${presentFilePath}`);
+        
         let presentData = [];
         
         // 读取现有的present.json文件，如果存在的话
@@ -131,24 +148,34 @@ function appendToPresentJson(period, timestamp) {
             try {
                 presentData = readJSONFile(presentFilePath);
                 if (!Array.isArray(presentData)) {
+                    console.warn('present.json内容不是数组，重置为空数组');
                     presentData = []; // 如果不是数组，重置为空数组
                 }
+                console.log(`读取到现有present.json，共 ${presentData.length} 条记录`);
             } catch (error) {
                 console.warn(`读取present.json失败，将创建新文件: ${error.message}`);
                 presentData = [];
             }
+        } else {
+            console.log('present.json文件不存在，将创建新文件');
         }
         
         // 添加新记录
-        presentData.push({
+        const newRecord = {
             period: period,
             timestamp: timestamp,
             period_number: extractPeriodNumber(period)
-        });
+        };
+        presentData.push(newRecord);
+        console.log(`新增记录: ${JSON.stringify(newRecord)}`);
         
         // 写入文件
         writeJSONFile(presentFilePath, presentData);
         console.log(`已将期数 ${period} 和时间戳 ${timestamp} 追加到 present.json`);
+        
+        // ========== 新增：验证写入结果 ==========
+        const verifyData = readJSONFile(presentFilePath);
+        console.log(`验证写入：present.json最后一条记录: ${JSON.stringify(verifyData[verifyData.length-1])}`);
         
         return true;
     } catch (error) {
@@ -157,9 +184,11 @@ function appendToPresentJson(period, timestamp) {
     }
 }
 
+// ========== 核心修改：使用绝对路径 ==========
 function getLastPeriodFromPresentJson() {
     try {
-        const presentFilePath = './present.json';
+        const presentFilePath = PRESENT_JSON_PATH;
+        console.log(`读取present.json，路径: ${presentFilePath}`);
         
         if (!fs.existsSync(presentFilePath)) {
             console.log('present.json文件不存在');
@@ -186,7 +215,9 @@ function getLastPeriodFromPresentJson() {
 
 function getLatestPeriodFromFiles() {
     try {
-        const resultDir = './result';
+        const resultDir = path.join(SCRIPT_DIR, 'result'); // 改用绝对路径
+        console.log(`检查result目录，路径: ${resultDir}`);
+        
         if (!fs.existsSync(resultDir)) {
             console.log('result目录不存在');
             return 0;
@@ -221,6 +252,8 @@ async function checkNewPeriod() {
     try {
         console.log('开始检查新期数...');
         console.log('='.repeat(60));
+        console.log(`脚本目录: ${SCRIPT_DIR}`);
+        console.log(`present.json路径: ${PRESENT_JSON_PATH}`);
         
         // 1. 获取当前期数
         let currentPeriod = null;
@@ -235,16 +268,20 @@ async function checkNewPeriod() {
             console.log('无法获取当前期数，尝试从文件系统获取...');
             const latestFilePeriod = getLatestPeriodFromFiles();
             if (latestFilePeriod > 0) {
-                // 如果无法从API获取，但有本地文件，返回0（没有新期数）
+                // 如果无法从API获取，但有本地文件，返回false（没有新期数）
                 console.log(`使用本地最新期数: ${latestFilePeriod}期`);
                 console.log('='.repeat(60));
                 console.log('返回结果: 0 (无新期数)');
-                return 0;
+                setOutput('has_new_period', 'false');
+                setOutput('exit_code', '0');
+                return false;
             } else {
                 console.log('本地也没有期数文件');
                 console.log('='.repeat(60));
                 console.log('返回结果: 0 (无新期数)');
-                return 0;
+                setOutput('has_new_period', 'false');
+                setOutput('exit_code', '0');
+                return false;
             }
         }
         
@@ -283,14 +320,18 @@ async function checkNewPeriod() {
             console.warn('警告: 无法将数据追加到present.json');
         }
         
-        // 5. 返回结果
+        // 5. 设置输出结果
         console.log('='.repeat(60));
         if (hasNewPeriod) {
             console.log('返回结果: 2 (有新期数)');
-            return 2;
+            setOutput('has_new_period', 'true');
+            setOutput('exit_code', '2');
+            return true;
         } else {
             console.log('返回结果: 0 (无新期数)');
-            return 0;
+            setOutput('has_new_period', 'false');
+            setOutput('exit_code', '0');
+            return false;
         }
         
     } catch (error) {
@@ -298,7 +339,9 @@ async function checkNewPeriod() {
         console.error(error.stack);
         console.log('='.repeat(60));
         console.log('返回结果: 0 (出错时默认返回0)');
-        return 0;
+        setOutput('has_new_period', 'false');
+        setOutput('exit_code', '0');
+        return false;
     }
 }
 
@@ -326,16 +369,12 @@ function setOutput(name, value) {
 
 // 执行主函数
 async function main() {
-    const result = await checkNewPeriod();
+    const hasNewPeriod = await checkNewPeriod();
     
-    // 设置输出变量
-    if (result === 2) {
-        setOutput('has_new_period', 'true');
-        setOutput('exit_code', '2');
+    // 根据结果输出日志
+    if (hasNewPeriod) {
         console.log('检测到新期数');
     } else {
-        setOutput('has_new_period', 'false');
-        setOutput('exit_code', '0');
         console.log('无新期数');
     }
     
