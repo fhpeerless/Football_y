@@ -8,87 +8,40 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 async function getCurrentPeriod() {
     return new Promise((resolve, reject) => {
-        const apiUrl = "https://ews.500.com/score/zq/info?vtype=sfc";
-        const timestamp = Date.now();
-        const fullUrl = `${apiUrl}&expect=&_t=${timestamp}`;
-        
-        console.log(`正在获取当前在售期数: ${fullUrl}`);
-        
-        const headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept": "application/json, text/javascript, */*; q=0.01",
-            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive",
-            "Referer": "https://yllive-m.500.com/home/zq/sfc/cur",
-            "Origin": "https://yllive-m.500.com"
-        };
-        
-        const req = https.get(fullUrl, { headers }, (res) => {
-            const statusCode = res.statusCode;
-            const contentType = res.headers['content-type'];
-            const contentEncoding = res.headers['content-encoding'];
+        try {
+            console.log('从present.json获取最后记录的期数...');
             
-            console.log(`响应状态码: ${statusCode}`);
-            console.log(`Content-Type: ${contentType}`);
-            console.log(`Content-Encoding: ${contentEncoding}`);
+            if (!fs.existsSync('./present.json')) {
+                console.log('present.json文件不存在');
+                resolve(null);
+                return;
+            }
             
-            let data = [];
-            let dataLength = 0;
+            const fileContent = fs.readFileSync('./present.json', 'utf8');
+            const presentData = JSON.parse(fileContent);
             
-            res.on('data', (chunk) => {
-                data.push(chunk);
-                dataLength += chunk.length;
-            });
+            if (!presentData || !Array.isArray(presentData) || presentData.length === 0) {
+                console.log('present.json为空或格式错误');
+                resolve(null);
+                return;
+            }
             
-            res.on('end', () => {
-                try {
-                    const buffer = Buffer.concat(data, dataLength);
-                    
-                    // 处理gzip压缩
-                    let responseData;
-                    if (contentEncoding === 'gzip') {
-                        responseData = zlib.gunzipSync(buffer).toString('utf8');
-                    } else {
-                        responseData = buffer.toString('utf8');
-                    }
-                    
-                    console.log(`响应数据长度: ${responseData.length} 字符`);
-                    console.log(`响应数据前200字符: ${responseData.substring(0, 200)}`);
-                    
-                    const jsonData = JSON.parse(responseData);
-                    const period = jsonData?.data?.curr_expect;
-                    
-                    if (period) {
-                        console.log(`当前在售期数: ${period}期`);
-                        resolve(period.toString());
-                    } else {
-                        console.log('未找到当前在售期数');
-                        resolve(null);
-                    }
-                } catch (error) {
-                    console.error(`解析响应数据失败: ${error.message}`);
-                    console.error(`原始数据: ${buffer ? buffer.toString('utf8').substring(0, 500) : '无数据'}`);
-                    reject(new Error(`解析响应数据失败: ${error.message}`));
-                }
-            });
-        });
-        
-        req.on('error', (error) => {
-            console.error(`HTTP请求失败: ${error.message}`);
-            reject(new Error(`HTTP请求失败: ${error.message}`));
-        });
-        
-        req.setTimeout(20000, () => {
-            req.destroy();
-            reject(new Error('请求超时'));
-        });
-        
-        // 添加请求错误处理
-        req.on('uncaughtException', (error) => {
-            console.error(`未捕获异常: ${error.message}`);
-            reject(error);
-        });
+            const lastRecord = presentData[presentData.length - 1];
+            const period = lastRecord.period;
+            
+            if (!period) {
+                console.log('未找到期数字段');
+                resolve(null);
+                return;
+            }
+            
+            console.log(`当前在售期数: ${period}期`);
+            resolve(period.toString());
+            
+        } catch (error) {
+            console.error(`读取present.json失败: ${error.message}`);
+            resolve(null);
+        }
     });
 }
 

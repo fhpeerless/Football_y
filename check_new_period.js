@@ -28,7 +28,10 @@ async function getCurrentPeriod() {
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
             "Referer": "https://yllive-m.500.com/home/zq/sfc/cur",
-            "Origin": "https://yllive-m.500.com"
+            "Origin": "https://yllive-m.500.com",
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-site"
         };
         
         const req = https.get(fullUrl, { headers }, (res) => {
@@ -39,6 +42,13 @@ async function getCurrentPeriod() {
             console.log(`响应状态码: ${statusCode}`);
             console.log(`Content-Type: ${contentType}`);
             console.log(`Content-Encoding: ${contentEncoding}`);
+            
+            // 检查HTTP状态码
+            if (statusCode !== 200) {
+                res.destroy();
+                reject(new Error(`HTTP状态码错误: ${statusCode}`));
+                return;
+            }
             
             let data = [];
             let dataLength = 0;
@@ -257,11 +267,28 @@ async function checkNewPeriod() {
         
         // 1. 获取当前期数
         let currentPeriod = null;
-        try {
-            currentPeriod = await getCurrentPeriod();
-        } catch (error) {
-            console.warn(`API获取期数失败: ${error.message}`);
-            currentPeriod = null;
+        const maxRetries = 3;
+        
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                console.log(`尝试获取当前期数 (第${attempt}次/${maxRetries})`);
+                currentPeriod = await getCurrentPeriod();
+                if (currentPeriod) {
+                    break; // 成功获取，跳出循环
+                } else {
+                    console.warn(`第${attempt}次尝试：获取期数返回null`);
+                    if (attempt < maxRetries) {
+                        console.log('等待3秒后重试...');
+                        await new Promise(resolve => setTimeout(resolve, 3000));
+                    }
+                }
+            } catch (error) {
+                console.warn(`第${attempt}次尝试：API获取期数失败: ${error.message}`);
+                if (attempt < maxRetries) {
+                    console.log('等待3秒后重试...');
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                }
+            }
         }
         
         if (!currentPeriod) {
@@ -311,13 +338,17 @@ async function checkNewPeriod() {
             }
         }
         
-        // 4. 将当前期数和时间戳追加到present.json（无论是否有新期数都追加）
-        const currentTimestamp = new Date().toISOString();
-        console.log(`当前时间戳: ${currentTimestamp}`);
-        
-        const appendSuccess = appendToPresentJson(currentPeriod, currentTimestamp);
-        if (!appendSuccess) {
-            console.warn('警告: 无法将数据追加到present.json');
+        // 4. 只有当前期数大于最后保存期数时，才将期数和时间戳追加到present.json
+        if (hasNewPeriod) {
+            const currentTimestamp = new Date().toISOString();
+            console.log(`当前时间戳: ${currentTimestamp}`);
+            
+            const appendSuccess = appendToPresentJson(currentPeriod, currentTimestamp);
+            if (!appendSuccess) {
+                console.warn('警告: 无法将数据追加到present.json');
+            }
+        } else {
+            console.log('当前期数不大于最后保存期数，不追加到present.json');
         }
         
         // 5. 设置输出结果

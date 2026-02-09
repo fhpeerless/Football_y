@@ -9,38 +9,22 @@ def get_current_period():
     获取当前在售期数
     :return: 期数字符串（如"26027"）
     """
-    api_url = "https://ews.500.com/score/zq/info?vtype=sfc"
-    
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "application/json, text/javascript, */*; q=0.01",
-        "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Referer": "https://yllive-m.500.com/home/zq/sfc/cur",
-        "Origin": "https://yllive-m.500.com"
-    }
-    
+    print("从present.json获取最后记录的期数...")
     try:
-        timestamp = str(int(time.time() * 1000))
-        full_url = f"{api_url}&expect=&_t={timestamp}"
-        
-        print(f"正在获取当前在售期数: {full_url}")
-        response = requests.get(full_url, headers=headers, timeout=20, verify=False)
-        response.raise_for_status()
-        
-        data = response.json()
-        period = data.get('data', {}).get('curr_expect', None)
-        
-        if period:
-            print(f"当前在售期数: {period}期")
-            return str(period)
-        else:
-            print("未找到当前在售期数")
+        with open('./present.json', 'r', encoding='utf-8') as f:
+            present_data = json.load(f)
+        if not present_data or not isinstance(present_data, list) or len(present_data) == 0:
+            print("present.json为空或格式错误")
             return None
-    
-    except Exception as e:
-        print(f"获取期数错误: {e}")
+        last_record = present_data[-1]
+        period = last_record.get('period')
+        if not period:
+            print("未找到期数字段")
+            return None
+        print(f"当前在售期数: {period}期")
+        return str(period)
+    except (FileNotFoundError, json.JSONDecodeError, IOError) as e:
+        print(f"读取present.json失败: {e}")
         import traceback
         traceback.print_exc()
         return None

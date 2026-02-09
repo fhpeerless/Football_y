@@ -31,28 +31,27 @@ def crawl_football_data_api_final(period=None, max_retries=3):
     session = requests.Session()
     session.headers.update(headers)
     
+    # 如果没有指定期数，从present.json获取最后记录的期数
+    if period is None:
+        print("从present.json获取最后记录的期数...")
+        try:
+            with open('./present.json', 'r', encoding='utf-8') as f:
+                present_data = json.load(f)
+            if not present_data or not isinstance(present_data, list) or len(present_data) == 0:
+                print("present.json为空或格式错误")
+                return None
+            last_record = present_data[-1]
+            period = last_record.get('period')
+            if not period:
+                print("未找到期数字段")
+                return None
+            print(f"从present.json获取的期数: {period}期")
+        except (FileNotFoundError, json.JSONDecodeError, IOError) as e:
+            print(f"读取present.json失败: {e}")
+            return None
+    
     for attempt in range(max_retries):
         try:
-            # 如果没有指定期数，先获取在售期数
-            if period is None:
-                print("获取在售期数...")
-                timestamp = str(int(time.time() * 1000))
-                full_url = f"{api_url}&expect=&_t={timestamp}"
-                
-                print(f"正在请求API: {full_url} (尝试 {attempt + 1}/{max_retries})")
-                response = session.get(full_url, timeout=20, verify=False)
-                response.raise_for_status()
-                
-                data = response.json()
-                # 使用curr_expect字段获取在售期数
-                period = data.get('data', {}).get('curr_expect', None)
-                
-                if period:
-                    print(f"在售期数: {period}期")
-                else:
-                    print("未找到在售期数")
-                    return None
-            
             # 使用期数获取比赛数据
             print(f"获取 {period} 期的比赛数据...")
             timestamp = str(int(time.time() * 1000))
