@@ -588,7 +588,6 @@
     <script>
         // 全局变量
         let currentPeriod = '';
-        let webData = null;
         
         // DOM元素
         const currentPeriodEl = document.getElementById('currentPeriod');
@@ -774,8 +773,8 @@
                 const basicClass = getResultClass(basicResult);
                 
                 html += `
-                    <tr>
-                        <td>${match.场次 || ''}</td>
+                    <tr id="match-${match.场次}">
+                        <td><a href="./index.html#match-${match.场次}" style="color: inherit; text-decoration: none;">${match.场次 || ''}</a></td>
                         <td>${match.联赛 || ''}</td>
                         <td>${match.主队 || ''}</td>
                         <td>${match.客队 || ''}</td>
@@ -789,6 +788,17 @@
             
             resultsBody.innerHTML = html;
             totalMatchesEl.textContent = displayMatches.length;
+            
+            // 检查URL中的锚点并滚动到相应比赛
+            if (window.location.hash) {
+                const matchId = window.location.hash.substring(1); // 去掉#号
+                const targetElement = document.getElementById(matchId);
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
         }
         
         // 更新信息面板
@@ -827,8 +837,6 @@
                     showStatus('无法加载web.json数据', 'error');
                     return;
                 }
-                
-                webData = data;
                 
                 // 3. 更新信息面板
                 updateInfoPanel(data);
