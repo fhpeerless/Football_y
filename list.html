@@ -476,6 +476,59 @@
                 white-space: nowrap;
             }
         }
+        
+        /* 期数选择器样式 */
+        .period-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .period-selector label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            white-space: nowrap;
+        }
+        
+        .period-selector select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(38, 31, 136, 0.3);
+            color: white;
+            font-size: 0.95em;
+            min-width: 120px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .period-selector select:hover {
+            border-color: rgba(0, 188, 212, 0.5);
+            background: rgba(38, 31, 136, 0.4);
+        }
+        
+        .period-selector select:focus {
+            outline: none;
+            border-color: #00bcd4;
+            box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.3);
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .btn-group {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .period-selector {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .period-selector select {
+                flex: 1;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -515,6 +568,14 @@
                 <button id="refreshBtn">
                     <i class="fas fa-sync-alt"></i> 刷新数据
                 </button>
+                <div class="period-selector">
+                    <label for="periodSelect">
+                        <i class="fas fa-calendar-alt"></i> 选择期数:
+                    </label>
+                    <select id="periodSelect">
+                        <option value="">加载中...</option>
+                    </select>
+                </div>
             </div>
             
             <div class="status" id="statusMessage">
@@ -588,6 +649,7 @@
     <script>
         // 全局变量
         let currentPeriod = '';
+        let allPeriods = [];  // 存储所有期数列表
         
         // DOM元素
         const currentPeriodEl = document.getElementById('currentPeriod');
@@ -598,6 +660,7 @@
         const statusMessage = document.getElementById('statusMessage');
         const resultsBody = document.getElementById('resultsBody');
         const refreshBtn = document.getElementById('refreshBtn');
+        const periodSelect = document.getElementById('periodSelect');
         
         // 显示状态消息
         function showStatus(message, type = 'info') {
@@ -681,10 +744,10 @@
             return '';
         }
         
-        // 从present.json获取最新期数
+        // 从present.json获取所有期数并填充选择器
         async function fetchLatestPeriod() {
             try {
-                showStatus('正在获取最新期数...', 'info');
+                showStatus('正在获取期数列表...', 'info');
                 updateProgress(20);
                 
                 const response = await fetch('./present.json');
@@ -698,20 +761,56 @@
                     throw new Error('present.json格式不正确或为空数组');
                 }
                 
-                // 获取最后一个条目的期数（最新期数）
-                const lastEntry = data[data.length - 1];
-                const period = lastEntry.period || lastEntry.period_number?.toString() || '';
+                // 提取所有期数并排序（最新的在前）
+                allPeriods = data.map(entry => ({
+                    period: entry.period || entry.period_number?.toString() || '',
+                    date: entry.date || entry.生成时间 || ''
+                })).filter(item => item.period);  // 过滤掉空期数
                 
-                if (!period) {
-                    throw new Error('无法从present.json获取期数');
+                if (allPeriods.length === 0) {
+                    throw new Error('未找到有效的期数数据');
                 }
                 
+                // 按期数排序（假设期数越大越新）
+                allPeriods.sort((a, b) => parseInt(b.period) - parseInt(a.period));
+                
+                // 填充期数选择器
+                populatePeriodSelector(allPeriods);
+                
+                // 获取最新期数（排序后的第一个）
+                const latestPeriod = allPeriods[0].period;
+                
                 updateProgress(40);
-                return period;
+                return latestPeriod;
             } catch (error) {
                 console.error('获取期数错误:', error);
                 showStatus(`获取期数失败: ${error.message}`, 'error');
                 return null;
+            }
+        }
+        
+        // 填充期数选择器
+        function populatePeriodSelector(periods) {
+            if (!periodSelect) return;
+            
+            // 清空现有选项
+            periodSelect.innerHTML = '';
+            
+            // 添加选项
+            periods.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.period;
+                option.textContent = `${item.period}期`;
+                // 如果有日期信息，添加为提示
+                if (item.date) {
+                    option.title = item.date;
+                }
+                periodSelect.appendChild(option);
+            });
+            
+            // 默认选择第一个（最新期数）
+            if (periods.length > 0) {
+                periodSelect.value = periods[0].period;
             }
         }
         
@@ -815,17 +914,32 @@
             }
         }
         
-        // 主加载函数
-        async function loadData() {
+        // 主加载函数（支持可选期数参数）
+        async function loadData(selectedPeriod = null) {
             try {
                 showStatus('正在加载数据...', 'info');
                 updateProgress(10);
                 
-                // 1. 获取最新期数
-                const period = await fetchLatestPeriod();
+                let period = selectedPeriod;
+                
+                // 1. 确定要加载的期数
                 if (!period) {
-                    showStatus('无法获取期数，请检查present.json文件', 'error');
-                    return;
+                    // 如果没有提供期数，使用选择器的值
+                    if (periodSelect && periodSelect.value) {
+                        period = periodSelect.value;
+                    } else {
+                        // 如果选择器还没有值，获取最新期数
+                        period = await fetchLatestPeriod();
+                        if (!period) {
+                            showStatus('无法获取期数，请检查present.json文件', 'error');
+                            return;
+                        }
+                    }
+                }
+                
+                // 确保选择器选中当前期数
+                if (periodSelect && period) {
+                    periodSelect.value = period;
                 }
                 
                 currentPeriod = period;
@@ -834,7 +948,7 @@
                 // 2. 加载web.json数据
                 const data = await loadWebData(period);
                 if (!data) {
-                    showStatus('无法加载web.json数据', 'error');
+                    showStatus(`无法加载 ${period}期 的web.json数据`, 'error');
                     return;
                 }
                 
@@ -845,7 +959,7 @@
                 renderResults(data);
                 
                 updateProgress(100);
-                showStatus(`数据加载完成，共${data.计算结果?.length || 0}场比赛`, 'success');
+                showStatus(`${period}期数据加载完成，共${data.计算结果?.length || 0}场比赛`, 'success');
             } catch (error) {
                 console.error('加载数据错误:', error);
                 updateProgress(0);
@@ -855,6 +969,15 @@
         
         // 事件监听器
         refreshBtn.addEventListener('click', loadData);
+        
+        // 期数选择器变化时加载对应期数数据
+        if (periodSelect) {
+            periodSelect.addEventListener('change', function() {
+                if (this.value) {
+                    loadData(this.value);
+                }
+            });
+        }
         
         // 页面加载完成后自动加载数据
         document.addEventListener('DOMContentLoaded', () => {
