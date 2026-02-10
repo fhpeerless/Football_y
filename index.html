@@ -939,11 +939,7 @@
         });
         
         downloadBtn.addEventListener('click', () => {
-            if (downloadLink.href && downloadLink.href !== '#') {
-                downloadLink.click();
-            } else {
-                showStatus('请先加载Web数据以生成下载文件', 'error');
-            }
+            window.location.href = './list.html';
         });
         
         // 期数输入框支持回车键
