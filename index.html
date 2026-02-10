@@ -358,62 +358,40 @@
         // 获取当前期数
         async function fetchCurrentPeriod() {
             try {
-                showStatus('正在获取当前期数...', 'info');
+                showStatus('正在从present.json获取当前期数...', 'info');
                 updateProgress(30);
                 
-                // 尝试从API获取期数
-                const timestamp = Date.now();
-                const apiUrl = `https://ews.500.com/score/zq/info?vtype=sfc&expect=&_t=${timestamp}`;
-                
-                // 添加CORS代理以避免跨域问题
-                const proxyUrl = `https://cors-anywhere.herokuapp.com/${apiUrl}`;
-                
                 let period = '';
-                let useProxy = false;
                 
                 try {
-                    // 首先尝试直接调用API（可能因CORS失败）
-                    const response = await fetch(apiUrl, {
-                        headers: {
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                            'Accept': 'application/json, text/javascript, */*; q=0.01',
-                            'Referer': 'https://yllive-m.500.com/home/zq/sfc/cur'
-                        },
-                        mode: 'cors'
-                    });
+                    // 尝试从./present.json文件获取期数
+                    const response = await fetch('./present.json');
                     
                     if (response.ok) {
                         const data = await response.json();
-                        period = data?.data?.curr_expect || '';
-                    }
-                } catch (directError) {
-                    console.log('直接API调用失败，尝试使用CORS代理:', directError.message);
-                    useProxy = true;
-                }
-                
-                // 如果直接调用失败，尝试使用CORS代理
-                if (!period && useProxy) {
-                    try {
-                        const proxyResponse = await fetch(proxyUrl, {
-                            headers: {
-                                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                                'Accept': 'application/json, text/javascript, */*; q=0.01',
-                                'Referer': 'https://yllive-m.500.com/home/zq/sfc/cur',
-                                'Origin': 'https://yllive-m.500.com'
-                            }
-                        });
                         
-                        if (proxyResponse.ok) {
-                            const data = await proxyResponse.json();
-                            period = data?.data?.curr_expect || '';
+                        // 验证数据格式
+                        if (Array.isArray(data) && data.length > 0) {
+                            // 获取最后一个条目的期数（最新期数）
+                            const lastEntry = data[data.length - 1];
+                            period = lastEntry.period || lastEntry.period_number?.toString() || '';
+                            
+                            if (period) {
+                                console.log(`从present.json获取到最新期数: ${period}`);
+                            }
+                        } else {
+                            console.log('present.json格式不正确或为空数组');
                         }
-                    } catch (proxyError) {
-                        console.log('CORS代理也失败:', proxyError.message);
+                    } else {
+                        console.log(`无法读取present.json文件: HTTP ${response.status}`);
                     }
+                } catch (fileError) {
+                    console.log('读取present.json文件失败:', fileError.message);
                 }
                 
-                // 如果API获取失败，检查是否已有web.json文件
+                // 如果从present.json获取失败，检查是否已有web.json文件
                 if (!period) {
+                    console.log('尝试从web.json文件查找最新期数...');
                     // 尝试从26027开始向后查找可用的web.json文件
                     for (let testPeriod = 26027; testPeriod >= 26000; testPeriod--) {
                         const testUrl = `./result/${testPeriod}期_web.json`;
