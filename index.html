@@ -414,8 +414,8 @@
                 // 如果从present.json获取失败，检查是否已有web.json文件
                 if (!period) {
                     console.log('尝试从web.json文件查找最新期数...');
-                    // 尝试从26027开始向后查找可用的web.json文件
-                    for (let testPeriod = 26027; testPeriod >= 26000; testPeriod--) {
+                    // 尝试从26050开始向后查找可用的web.json文件（覆盖26031期及可能的未来期数）
+                    for (let testPeriod = 26050; testPeriod >= 26000; testPeriod--) {
                         const testUrl = `./result/${testPeriod}期_web.json`;
                         try {
                             const testResponse = await fetch(testUrl);
