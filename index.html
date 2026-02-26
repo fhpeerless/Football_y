@@ -314,12 +314,15 @@
                         <button id="loadWebDataBtn">
                             <i class="fas fa-file-import"></i> 加载Web数据
                         </button>
+                        <button id="loadGlmAnalysisBtn" class="secondary">
+                            <i class="fas fa-brain"></i> 加载GLM分析
+                        </button>
                         <button id="downloadBtn" class="secondary">
                             <i class="fas fa-download"></i> 号码结果
                         </button>
                     </div>
                     <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                        将自动加载 ./result/{期数}期_web.json 文件
+                        将自动加载 ./result/{期数}期_web.json 文件，或 ./result/{期数}期_glm分析.json 文件
                     </p>
                 </div>
                 
@@ -341,6 +344,15 @@
                     </p>
                 </div>
                 
+                <div id="glmResultsContainer" style="display: none;">
+                    <h3 class="section-title" style="margin-top: 30px;">
+                        <i class="fas fa-brain"></i> GLM智能分析结果
+                    </h3>
+                    <div id="glmAnalysisContent">
+                        <!-- GLM分析内容将在这里显示 -->
+                    </div>
+                </div>
+                
                 <a href="#" id="downloadLink" class="download-link" style="display: none;">
                     <i class="fas fa-file-download"></i> 下载合并结果 (JSON)
                 </a>
@@ -352,16 +364,20 @@
         // 全局变量
         let currentPeriod = '';
         let webData = null;
+        let glmAnalysisData = null;
         
         // DOM元素
         const periodInput = document.getElementById('periodInput');
         const fetchPeriodBtn = document.getElementById('fetchPeriodBtn');
         const loadWebDataBtn = document.getElementById('loadWebDataBtn');
+        const loadGlmAnalysisBtn = document.getElementById('loadGlmAnalysisBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const downloadLink = document.getElementById('downloadLink');
         const statusMessage = document.getElementById('statusMessage');
         const progressFill = document.getElementById('progressFill');
         const resultsContainer = document.getElementById('resultsContainer');
+        const glmResultsContainer = document.getElementById('glmResultsContainer');
+        const glmAnalysisContent = document.getElementById('glmAnalysisContent');
         
         // 显示状态消息
         function showStatus(message, type = 'info') {
@@ -930,6 +946,280 @@
             }
         }
         
+        // 加载GLM分析数据
+        async function loadGlmAnalysis() {
+            // 从输入框读取当前期数
+            const inputPeriod = periodInput.value.trim();
+            if (inputPeriod) {
+                // 提取数字部分（例如从"26027期"中提取"26027"）
+                const periodMatch = inputPeriod.match(/\d+/);
+                if (periodMatch) {
+                    currentPeriod = periodMatch[0];
+                } else {
+                    currentPeriod = inputPeriod;
+                }
+            }
+            
+            if (!currentPeriod) {
+                showStatus('请先获取或输入期数', 'error');
+                return null;
+            }
+            
+            try {
+                showStatus(`正在加载 ${currentPeriod}期_glm分析.json 文件...`, 'info');
+                updateProgress(40);
+                
+                const fileUrl = `./result/${currentPeriod}期_glm分析.json`;
+                console.log(`正在加载: ${fileUrl}`);
+                
+                const response = await fetch(fileUrl);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error(`文件不存在: ${fileUrl}，请确保已运行GLM分析脚本`);
+                    } else {
+                        throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                    }
+                }
+                
+                const data = await response.json();
+                updateProgress(80);
+                
+                // 验证数据格式
+                if (!data.期数 || !data.分析结果 || !Array.isArray(data.分析结果)) {
+                    throw new Error('glm分析文件格式不正确');
+                }
+                
+                glmAnalysisData = data;
+                updateProgress(100);
+                showStatus(`成功加载 ${data.分析结果.length} 场比赛的GLM分析结果`, 'success');
+                
+                // 显示结果
+                displayGlmAnalysis();
+                
+                return glmAnalysisData;
+            } catch (error) {
+                console.error('加载GLM分析数据错误:', error);
+                updateProgress(0);
+                showStatus(`加载失败: ${error.message}`, 'error');
+                
+                // 如果文件不存在，提示用户
+                if (error.message.includes('文件不存在')) {
+                    showStatus(`请先运行 glm_analysis.py 生成 ${currentPeriod}期_glm分析.json 文件`, 'error');
+                }
+                
+                return null;
+            }
+        }
+        
+        // 显示GLM分析结果
+        function displayGlmAnalysis() {
+            if (!glmAnalysisData || !glmAnalysisData.分析结果 || glmAnalysisData.分析结果.length === 0) {
+                glmAnalysisContent.innerHTML = `
+                    <p style="text-align: center; opacity: 0.7; padding: 40px;">
+                        暂无GLM分析数据，请先加载GLM分析文件
+                    </p>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div style="margin-bottom: 30px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #8e24aa;">
+                    <h3 style="color: #8e24aa; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-info-circle"></i> GLM分析信息
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">期数</p>
+                            <p style="font-size: 1.2em; font-weight: 600;">${glmAnalysisData.期数 || '未知'}</p>
+                        </div>
+
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">生成时间</p>
+                            <p>${glmAnalysisData.生成时间 || '未知'}</p>
+                        </div>
+
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">GLM模型</p>
+                            <p>${glmAnalysisData.GLM配置?.模型 || '未知'}</p>
+                        </div>
+                        <div>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">API端点</p>
+                            <p style="word-break: break-all;">${glmAnalysisData.GLM配置?.API端点 || '未知'}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #8e24aa; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-brain"></i> GLM智能分析详情 (${glmAnalysisData.分析结果.length} 场)
+                    </h3>
+            `;
+            
+            // 显示每场比赛的GLM分析
+            glmAnalysisData.分析结果.forEach((match, index) => {
+                const prediction = match.GLM分析?.预测结果 || '未知';
+                const analysis = match.GLM分析?.分析过程 || '无分析过程';
+                const predictionColor = prediction === '3' ? '#4caf50' : 
+                                      prediction === '1' ? '#ff9800' : 
+                                      prediction === '0' ? '#f44336' :
+                                      prediction === '3,1' ? '#9c27b0' :
+                                      prediction === '0,1' ? '#2196f3' : '#757575';
+                
+                // 预测结果解读
+                let predictionText = '';
+                switch(prediction) {
+                    case '3': predictionText = '主胜(3)'; break;
+                    case '1': predictionText = '平(1)'; break;
+                    case '0': predictionText = '客胜(0)'; break;
+                    case '3,1': predictionText = '主队不败(3或1)'; break;
+                    case '0,1': predictionText = '客队不败(0或1)'; break;
+                    default: predictionText = `未知(${prediction})`;
+                }
+                
+                html += `
+                    <div style="margin-bottom: 30px; padding: 25px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);" id="glm-match-${match.场次}">
+                        <!-- 比赛基本信息 -->
+                        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <div>
+                                    <h4 style="color: #00bcd4; margin-bottom: 5px;">
+                                        第 ${match.场次} 场 · ${match.联赛}
+                                    </h4>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">
+                                        <i class="far fa-clock"></i> ${match.比赛时间}
+                                    </p>
+                                </div>
+                                <div style="background: ${predictionColor}20; padding: 8px 16px; border-radius: 20px; border: 1px solid ${predictionColor}40;">
+                                    <span style="font-weight: 600; font-size: 1.1em; color: ${predictionColor};">${predictionText}</span>
+                                    <br>
+                                    <span style="font-size: 0.9em; opacity: 0.8;">代码: ${prediction}</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                                <div style="text-align: center; flex: 1;">
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #00bcd4;">${match.主队}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">主队</p>
+                                </div>
+                                <div style="text-align: center; margin: 0 20px;">
+                                    <p style="font-size: 1.2em; opacity: 0.7;">VS</p>
+                                </div>
+                                <div style="text-align: center; flex: 1;">
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #ff9800;">${match.客队}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">客队</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 历史交锋数据摘要 -->
+                        ${match.历史交锋 && match.历史交锋.length > 0 ? `
+                        <div style="margin-bottom: 25px;">
+                            <h5 style="color: #bbdefb; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-history"></i> 历史交锋摘要 (最近${Math.min(match.历史交锋.length, 3)}场)
+                            </h5>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                        ` : ''}
+                        
+                        ${match.历史交锋 ? match.历史交锋.slice(0, 3).map(history => `
+                                <div style="padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 3px solid #ffc107;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="font-weight: 600;">${history.比赛日期}</span>
+                                        <span style="color: ${history.结果 === '胜' ? '#4caf50' : history.结果 === '平' ? '#ff9800' : '#f44336'}">${history.结果}</span>
+                                    </div>
+                                    <div style="margin-bottom: 5px;">
+                                        <span>${history.主队} ${history.比分} ${history.客队}</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.9em; opacity: 0.8;">
+                                        <span>亚盘: ${history.亚盘结果}</span>
+                                        <span>大小球: ${history.大小球结果}</span>
+                                    </div>
+                                </div>
+                        `).join('') : ''}
+                        
+                        ${match.历史交锋 && match.历史交锋.length > 0 ? `
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <!-- GLM分析过程 -->
+                        <div style="margin-top: 25px;">
+                            <h5 style="color: #bbdefb; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-chart-line"></i> GLM分析过程
+                            </h5>
+                            <div style="padding: 20px; background: rgba(142, 36, 170, 0.05); border-radius: 8px; border: 1px solid rgba(142, 36, 170, 0.2);">
+                                <div style="white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6;">
+                                    ${analysis.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 预测结果汇总
+            const predictionCounts = {"3": 0, "1": 0, "0": 0, "3,1": 0, "0,1": 0, "其他": 0};
+            glmAnalysisData.分析结果.forEach(match => {
+                const prediction = match.GLM分析?.预测结果 || '';
+                if (prediction in predictionCounts) {
+                    predictionCounts[prediction] += 1;
+                } else {
+                    predictionCounts["其他"] += 1;
+                }
+            });
+            
+            html += `
+                </div>
+                
+                <div style="margin-top: 30px; padding: 25px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #8e24aa;">
+                    <h3 style="color: #8e24aa; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-chart-bar"></i> GLM预测结果汇总
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
+            `;
+            
+            // 添加每个预测结果的统计卡片
+            const predictionCards = [
+                {code: "3", name: "主胜(3)", color: "#4caf50"},
+                {code: "1", name: "平(1)", color: "#ff9800"},
+                {code: "0", name: "客胜(0)", color: "#f44336"},
+                {code: "3,1", name: "主队不败", color: "#9c27b0"},
+                {code: "0,1", name: "客队不败", color: "#2196f3"},
+                {code: "其他", name: "其他", color: "#757575"}
+            ];
+            
+            predictionCards.forEach(card => {
+                const count = predictionCounts[card.code] || 0;
+                if (count > 0) {
+                    html += `
+                        <div style="text-align: center; padding: 15px; background: ${card.color}10; border-radius: 8px; border: 1px solid ${card.color}30;">
+                            <p style="font-size: 2em; font-weight: 600; color: ${card.color};">${count}</p>
+                            <p style="opacity: 0.9; font-size: 0.9em;">${card.name}</p>
+                        </div>
+                    `;
+                }
+            });
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            glmAnalysisContent.innerHTML = html;
+            glmResultsContainer.style.display = 'block';
+            
+            // 检查URL中的锚点并滚动到相应比赛
+            if (window.location.hash && window.location.hash.startsWith('#glm-match-')) {
+                const targetElement = document.getElementById(window.location.hash.substring(1));
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
+        }
+        
         // 事件监听器
         fetchPeriodBtn.addEventListener('click', fetchCurrentPeriod);
         
@@ -938,6 +1228,31 @@
             if (data) {
                 console.log('Web数据加载成功:', data);
             }
+        });
+        
+        loadGlmAnalysisBtn.addEventListener('click', () => {
+            // 获取当前期数
+            const inputPeriod = periodInput.value.trim();
+            let currentPeriodForGlm = '';
+            if (inputPeriod) {
+                // 提取数字部分（例如从"26027期"中提取"26027"）
+                const periodMatch = inputPeriod.match(/\d+/);
+                if (periodMatch) {
+                    currentPeriodForGlm = periodMatch[0];
+                } else {
+                    currentPeriodForGlm = inputPeriod;
+                }
+            } else if (currentPeriod) {
+                currentPeriodForGlm = currentPeriod;
+            }
+            
+            if (!currentPeriodForGlm) {
+                showStatus('请先获取或输入期数', 'error');
+                return;
+            }
+            
+            // 跳转到GLM分析页面，传递期数参数
+            window.location.href = `./glm_analysis.html?period=${currentPeriodForGlm}`;
         });
         
         downloadBtn.addEventListener('click', () => {
