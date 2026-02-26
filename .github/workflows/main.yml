@@ -165,6 +165,62 @@ jobs:
           exit 1
         fi
         
+    - name: GLM智能分析
+      if: steps.check-period.outputs.has_new_period == 'true'
+      env:
+        GLM_API_KEY: ${{ secrets.GLM_API_KEY }}
+      run: |
+        echo "=== GLM智能分析步骤开始 ==="
+        echo "正在运行GLM智能分析..."
+        
+        # 检查GLM API密钥是否设置
+        if [ -z "$GLM_API_KEY" ]; then
+          echo "警告: GLM_API_KEY未设置，跳过GLM分析步骤"
+          echo "如需使用GLM分析功能，请在仓库Secrets中设置GLM_API_KEY"
+          echo "=== GLM智能分析步骤结束 ==="
+          exit 0
+        fi
+        
+        # 检查必要的输入文件
+        echo "检查历史交锋文件..."
+        history_files=$(find ./result -name "*历史交锋.json" -type f)
+        if [ -z "$history_files" ]; then
+          echo "错误: 未找到历史交锋文件，无法进行GLM分析"
+          echo "=== GLM智能分析步骤结束 ==="
+          exit 1
+        fi
+        
+        # 安装GLM分析所需依赖
+        echo "安装GLM分析所需依赖..."
+        pip install --quiet --upgrade zhipuai requests
+        
+        # 运行GLM分析脚本
+        if python glm_analysis.py; then
+          echo "GLM智能分析成功"
+          
+          # 验证输出文件
+          echo "检查生成的GLM分析文件..."
+          if [ -d "./result" ]; then
+            echo "result目录中的GLM分析文件:"
+            find ./result -name "*glm分析.json" -type f | while read file; do
+              echo "  $file"
+              echo "  文件大小: $(wc -c < "$file") 字节"
+            done
+            
+            # 如果没有找到GLM分析文件，可能是API调用失败
+            if ! find ./result -name "*glm分析.json" -type f | grep -q .; then
+              echo "警告: 未找到GLM分析文件，可能是API调用失败或分析未生成结果"
+            fi
+          fi
+          
+          echo "=== GLM智能分析步骤结束 ==="
+          exit 0
+        else
+          echo "GLM智能分析失败"
+          echo "=== GLM智能分析步骤结束 ==="
+          exit 1
+        fi
+        
     - name: 计算基础预测概率
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
@@ -203,7 +259,7 @@ jobs:
           echo "总文件数: $(find ./result -type f | wc -l)"
           
           # 检查关键文件
-          key_files=("*_web.json" "*_预测概率.json" "*_高级预测概率.json" "*_共同对手实力分.json" "*_历史交锋.json" "*.json")
+          key_files=("*_web.json" "*_预测概率.json" "*_高级预测概率.json" "*_共同对手实力分.json" "*_历史交锋.json" "*_glm分析.json" "*.json")
           
           for pattern in "${key_files[@]}"; do
             files=$(find ./result -name "$pattern" -type f)
