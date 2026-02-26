@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLM智能分析结果 - 足球预测系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .period-selector {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .period-selector h2 {
+            color: #bbdefb;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .period-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1em;
+        }
+        
+        .period-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .load-btn {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #8e24aa 0%, #6a1b9a 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .load-btn:hover {
+            background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(142, 36, 170, 0.4);
+        }
+        
+        .load-btn:active {
+            transform: translateY(0);
+        }
+        
+        .load-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #666;
+        }
+        
+        .load-btn.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00bcd4, #0097a7);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        .status {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            border-left: 4px solid #00bcd4;
+        }
+        
+        .status.error {
+            border-left-color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        .status.success {
+            border-left-color: #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .status.info {
+            border-left-color: #2196f3;
+            background: rgba(33, 150, 243, 0.1);
+        }
+        
+        .results-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.7;
+        }
+        
+        .glm-info-section {
+            background: rgba(142, 36, 170, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(142, 36, 170, 0.2);
+            border-left: 4px solid #8e24aa;
+        }
+        
+        .glm-info-section h3 {
+            color: #8e24aa;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .info-item p {
+            margin-bottom: 5px;
+        }
+        
+        .info-label {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        .info-value {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .matches-section {
+            margin-bottom: 40px;
+        }
+        
+        .matches-section h3 {
+            color: #8e24aa;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .match-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .match-info h4 {
+            color: #00bcd4;
+            margin-bottom: 5px;
+            font-size: 1.3em;
+        }
+        
+        .match-time {
+            opacity: 0.8;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .prediction-badge {
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .prediction-text {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .prediction-code {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .teams-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .team {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .team-name {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .team-label {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        .vs-text {
+            font-size: 1.2em;
+            opacity: 0.7;
+            margin: 0 20px;
+        }
+        
+        .home-team {
+            color: #00bcd4;
+        }
+        
+        .away-team {
+            color: #ff9800;
+        }
+        
+        .history-section {
+            margin-bottom: 25px;
+        }
+        
+        .history-section h5 {
+            color: #bbdefb;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .history-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid #ffc107;
+        }
+        
+        .history-date-result {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .history-result {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        
+        .history-result.loss {
+            color: #f44336;
+        }
+        
+        .history-result.draw {
+            color: #ff9800;
+        }
+        
+        .history-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .analysis-section {
+            margin-top: 25px;
+        }
+        
+        .analysis-section h5 {
+            color: #bbdefb;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .analysis-content {
+            padding: 20px;
+            background: rgba(142, 36, 170, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(142, 36, 170, 0.2);
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .summary-section {
+            background: rgba(142, 36, 170, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 1px solid rgba(142, 36, 170, 0.2);
+            border-left: 4px solid #8e24aa;
+        }
+        
+        .summary-section h3 {
+            color: #8e24aa;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        
+        .summary-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .summary-count {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .summary-label {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #00bcd4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .period-input {
+                min-width: 100%;
+            }
+            
+            .teams-display {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .vs-text {
+                margin: 10px 0;
+            }
+            
+            .history-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <i class="fas fa-brain"></i>
+                GLM智能分析结果
+            </h1>
+            <p>基于GLM-4-Plus模型的足球比赛深度分析</p>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                返回主页面
+            </a>
+        </div>
+        
+        <div class="period-selector">
+            <h2><i class="fas fa-search"></i> 选择分析期数</h2>
+            <div class="input-group">
+                <input type="text" id="periodInput" class="period-input" placeholder="输入期数，例如：26031" value="26031">
+                <button id="loadGlmAnalysisBtn" class="load-btn">
+                    <i class="fas fa-brain"></i>
+                    加载GLM分析
+                </button>
+            </div>
+            
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="status" id="statusMessage">
+                <!-- 状态消息将显示在这里 -->
+            </div>
+        </div>
+        
+        <div class="loading" id="loadingIndicator">
+            <div class="loading-spinner"></div>
+            <p>正在加载GLM分析数据...</p>
+        </div>
+        
+        <div class="results-container" id="resultsContainer">
+            <!-- GLM分析内容将在这里显示 -->
+        </div>
+    </div>
+    
+    <script>
+        // DOM元素
+        const periodInput = document.getElementById('periodInput');
+        const loadGlmAnalysisBtn = document.getElementById('loadGlmAnalysisBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const statusMessage = document.getElementById('statusMessage');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        
+        // 从URL获取期数参数
+        function getPeriodFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const period = urlParams.get('period');
+            return period || '';
+        }
+        
+        // 更新进度条
+        function updateProgress(percent) {
+            progressFill.style.width = percent + '%';
+        }
+        
+        // 显示状态消息
+        function showStatus(message, type = 'info') {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status ' + type;
+            statusMessage.style.display = 'block';
+            progressBar.style.display = 'none';
+            
+            // 自动隐藏成功消息
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        // 解析预测结果颜色
+        function getPredictionColor(prediction) {
+            switch(prediction) {
+                case '3': return '#4caf50';
+                case '1': return '#ff9800';
+                case '0': return '#f44336';
+                case '3,1': return '#9c27b0';
+                case '0,1': return '#2196f3';
+                default: return '#757575';
+            }
+        }
+        
+        // 解析预测结果文本
+        function getPredictionText(prediction) {
+            switch(prediction) {
+                case '3': return '主胜(3)';
+                case '1': return '平(1)';
+                case '0': return '客胜(0)';
+                case '3,1': return '主队不败(3或1)';
+                case '0,1': return '客队不败(0或1)';
+                default: return `未知(${prediction})`;
+            }
+        }
+        
+        // 加载GLM分析数据
+        async function loadGlmAnalysis() {
+            const period = periodInput.value.trim();
+            if (!period) {
+                showStatus('请输入期数', 'error');
+                return null;
+            }
+            
+            // 提取数字部分
+            const periodMatch = period.match(/\d+/);
+            const currentPeriod = periodMatch ? periodMatch[0] : period;
+            
+            try {
+                // 显示加载状态
+                loadingIndicator.style.display = 'block';
+                resultsContainer.style.display = 'none';
+                progressBar.style.display = 'block';
+                showStatus(`正在加载 ${currentPeriod}期_glm分析.json 文件...`, 'info');
+                updateProgress(30);
+                
+                const fileUrl = `./result/${currentPeriod}期_glm分析.json`;
+                console.log(`正在加载: ${fileUrl}`);
+                
+                const response = await fetch(fileUrl);
+                updateProgress(60);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error(`文件不存在: ${fileUrl}，请确保已运行GLM分析脚本`);
+                    } else {
+                        throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                    }
+                }
+                
+                const data = await response.json();
+                updateProgress(90);
+                
+                // 验证数据格式
+                if (!data.期数 || !data.分析结果 || !Array.isArray(data.分析结果)) {
+                    throw new Error('glm分析文件格式不正确');
+                }
+                
+                updateProgress(100);
+                loadingIndicator.style.display = 'none';
+                showStatus(`成功加载 ${data.分析结果.length} 场比赛的GLM分析结果`, 'success');
+                
+                // 显示结果
+                displayGlmAnalysis(data);
+                
+                return data;
+            } catch (error) {
+                console.error('加载GLM分析数据错误:', error);
+                loadingIndicator.style.display = 'none';
+                updateProgress(0);
+                showStatus(`加载失败: ${error.message}`, 'error');
+                
+                // 如果文件不存在，提示用户
+                if (error.message.includes('文件不存在')) {
+                    showStatus(`请先运行 glm_analysis.py 生成 ${currentPeriod}期_glm分析.json 文件`, 'error');
+                }
+                
+                return null;
+            }
+        }
+        
+        // 显示GLM分析结果
+        function displayGlmAnalysis(data) {
+            if (!data || !data.分析结果 || data.分析结果.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-data">
+                        <p>暂无GLM分析数据，请先加载GLM分析文件</p>
+                    </div>
+                `;
+                resultsContainer.style.display = 'block';
+                return;
+            }
+            
+            // 构建HTML
+            let html = '';
+            
+            // GLM分析信息部分
+            html += `
+                <div class="glm-info-section">
+                    <h3><i class="fas fa-info-circle"></i> GLM分析信息</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <p class="info-label">期数</p>
+                            <p class="info-value">${data.期数 || '未知'}</p>
+                        </div>
+                        <div class="info-item">
+                            <p class="info-label">生成时间</p>
+                            <p class="info-value">${data.生成时间 || '未知'}</p>
+                        </div>
+                        <div class="info-item">
+                            <p class="info-label">GLM模型</p>
+                            <p class="info-value">${data.GLM配置?.模型 || '未知'}</p>
+                        </div>
+                        <div class="info-item">
+                            <p class="info-label">API端点</p>
+                            <p class="info-value">${data.GLM配置?.API端点 || '未知'}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="matches-section">
+                    <h3><i class="fas fa-brain"></i> GLM智能分析详情 (${data.分析结果.length} 场)</h3>
+            `;
+            
+            // 显示每场比赛的GLM分析
+            data.分析结果.forEach((match, index) => {
+                const prediction = match.GLM分析?.预测结果 || '未知';
+                const analysis = match.GLM分析?.分析过程 || '无分析过程';
+                const predictionColor = getPredictionColor(prediction);
+                const predictionText = getPredictionText(prediction);
+                
+                html += `
+                    <div class="match-card" id="glm-match-${match.场次}">
+                        <!-- 比赛基本信息 -->
+                        <div class="match-header">
+                            <div class="match-info">
+                                <h4>第 ${match.场次} 场 · ${match.联赛}</h4>
+                                <p class="match-time">
+                                    <i class="far fa-clock"></i> ${match.比赛时间}
+                                </p>
+                            </div>
+                            <div class="prediction-badge" style="background: ${predictionColor}20; border: 1px solid ${predictionColor}40;">
+                                <div class="prediction-text" style="color: ${predictionColor};">${predictionText}</div>
+                                <div class="prediction-code">代码: ${prediction}</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 球队信息 -->
+                        <div class="teams-display">
+                            <div class="team home-team">
+                                <div class="team-name">${match.主队}</div>
+                                <div class="team-label">主队</div>
+                            </div>
+                            <div class="vs-text">VS</div>
+                            <div class="team away-team">
+                                <div class="team-name">${match.客队}</div>
+                                <div class="team-label">客队</div>
+                            </div>
+                        </div>
+                `;
+                
+                // 历史交锋数据摘要
+                if (match.历史交锋 && match.历史交锋.length > 0) {
+                    html += `
+                        <div class="history-section">
+                            <h5><i class="fas fa-history"></i> 历史交锋摘要 (最近${Math.min(match.历史交锋.length, 3)}场)</h5>
+                            <div class="history-grid">
+                    `;
+                    
+                    match.历史交锋.slice(0, 3).forEach(history => {
+                        const resultClass = history.结果 === '胜' ? '' : 
+                                          history.结果 === '平' ? 'draw' : 'loss';
+                        
+                        html += `
+                            <div class="history-item">
+                                <div class="history-date-result">
+                                    <span>${history.比赛日期}</span>
+                                    <span class="history-result ${resultClass}">${history.结果}</span>
+                                </div>
+                                <div style="margin-bottom: 5px;">
+                                    ${history.主队} ${history.比分} ${history.客队}
+                                </div>
+                                <div class="history-stats">
+                                    <span>亚盘: ${history.亚盘结果}</span>
+                                    <span>大小球: ${history.大小球结果}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    html += `
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // GLM分析过程
+                html += `
+                        <div class="analysis-section">
+                            <h5><i class="fas fa-chart-line"></i> GLM分析过程</h5>
+                            <div class="analysis-content">
+                                ${analysis.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+            
+            // 预测结果汇总
+            const predictionCounts = {"3": 0, "1": 0, "0": 0, "3,1": 0, "0,1": 0, "其他": 0};
+            data.分析结果.forEach(match => {
+                const prediction = match.GLM分析?.预测结果 || '';
+                if (prediction in predictionCounts) {
+                    predictionCounts[prediction] += 1;
+                } else {
+                    predictionCounts["其他"] += 1;
+                }
+            });
+            
+            // 预测结果卡片
+            const predictionCards = [
+                {code: "3", name: "主胜(3)", color: "#4caf50"},
+                {code: "1", name: "平(1)", color: "#ff9800"},
+                {code: "0", name: "客胜(0)", color: "#f44336"},
+                {code: "3,1", name: "主队不败", color: "#9c27b0"},
+                {code: "0,1", name: "客队不败", color: "#2196f3"},
+                {code: "其他", name: "其他", color: "#757575"}
+            ];
+            
+            let summaryCardsHtml = '';
+            predictionCards.forEach(card => {
+                const count = predictionCounts[card.code] || 0;
+                if (count > 0) {
+                    summaryCardsHtml += `
+                        <div class="summary-card" style="background: ${card.color}10; border-color: ${card.color}30;">
+                            <div class="summary-count" style="color: ${card.color};">${count}</div>
+                            <div class="summary-label">${card.name}</div>
+                        </div>
+                    `;
+                }
+            });
+            
+            html += `
+                <div class="summary-section">
+                    <h3><i class="fas fa-chart-bar"></i> GLM预测结果汇总</h3>
+                    <div class="summary-grid">
+                        ${summaryCardsHtml}
+                    </div>
+                </div>
+            `;
+            
+            resultsContainer.innerHTML = html;
+            resultsContainer.style.display = 'block';
+            
+            // 检查URL中的锚点并滚动到相应比赛
+            if (window.location.hash && window.location.hash.startsWith('#glm-match-')) {
+                const targetElement = document.getElementById(window.location.hash.substring(1));
+                if (targetElement) {
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            }
+        }
+        
+        // 页面加载时从URL获取期数
+        function initFromUrl() {
+            const urlPeriod = getPeriodFromUrl();
+            if (urlPeriod) {
+                periodInput.value = urlPeriod;
+                // 自动加载数据
+                setTimeout(() => {
+                    loadGlmAnalysis();
+                }, 500);
+            }
+        }
+        
+        // 事件监听器
+        loadGlmAnalysisBtn.addEventListener('click', async () => {
+            const data = await loadGlmAnalysis();
+            if (data) {
+                console.log('GLM分析数据加载成功:', data);
+                // 更新URL（不刷新页面）
+                const period = periodInput.value.trim();
+                const periodMatch = period.match(/\d+/);
+                const currentPeriod = periodMatch ? periodMatch[0] : period;
+                const newUrl = window.location.pathname + '?period=' + currentPeriod;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+        });
+        
+        periodInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                loadGlmAnalysisBtn.click();
+            }
+        });
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initFromUrl();
+        });
+    </script>
+</body>
+</html>
