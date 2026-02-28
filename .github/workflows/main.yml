@@ -3,9 +3,10 @@ name: Football Prediction Pipeline
 on:
   schedule:
     # 北京时间 6:00, 12:00, 18:00, 24:00 (0:00) 执行
-    # cron 格式: 分 时 日 月 星期
-    - cron: '0 6,12,18,0 * * *'
-      timezone: 'Asia/Shanghai'
+    # GitHub Actions 使用 UTC 时间，北京时间 = UTC+8
+    # 北京时间 6:00 = UTC 22:00, 12:00 = UTC 4:00, 18:00 = UTC 10:00, 0:00 = UTC 16:00
+    # cron 格式: 分 时 日 月 星期 (UTC 时间)
+    - cron: '0 22,4,10,16 * * *'
   workflow_dispatch:  # 允许手动触发
     inputs:
       period:
