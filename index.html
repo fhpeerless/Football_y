@@ -400,16 +400,25 @@
                 updateProgress(30);
                 
                 try {
-                    // 从./present.json文件获取期数
-                    const response = await fetch('./present.json');
+                    // 添加时间戳防止缓存
+                    const timestamp = Date.now();
+                    const url = `./present.json?t=${timestamp}`;
+                    console.log(`正在请求: ${url}`);
+                    
+                    const response = await fetch(url);
+                    console.log(`响应状态: ${response.status} ${response.statusText}`);
+                    console.log(`响应 URL: ${response.url}`);
                     
                     if (response.ok) {
                         const data = await response.json();
+                        console.log('获取到的数据:', data);
                         
                         // 验证数据格式
                         if (Array.isArray(data) && data.length > 0) {
                             // 获取最后一个条目的期数（最新期数）
                             const lastEntry = data[data.length - 1];
+                            console.log('最后一条记录:', lastEntry);
+                            
                             const period = lastEntry.period || lastEntry.period_number?.toString() || '';
                             
                             if (period) {
@@ -426,7 +435,11 @@
                                 
                                 return currentPeriod;
                             }
+                        } else {
+                            console.error('数据格式错误: 不是数组或数组为空');
                         }
+                    } else {
+                        console.error(`HTTP 错误: ${response.status} ${response.statusText}`);
                     }
                     
                     // 获取失败，提示用户手动输入
@@ -437,10 +450,11 @@
                     return null;
                     
                 } catch (fileError) {
-                    console.log('读取present.json文件失败:', fileError.message);
+                    console.error('读取present.json文件失败:', fileError);
+                    console.error('错误堆栈:', fileError.stack);
                     periodInput.placeholder = '请手动输入期数';
                     updateProgress(0);
-                    showStatus('读取期数文件失败，请手动输入', 'error');
+                    showStatus(`读取期数文件失败: ${fileError.message}`, 'error');
                     return null;
                 }
             } catch (error) {
@@ -1303,3 +1317,4 @@
     </script>
 </body>
 </html>
+
