@@ -4,30 +4,47 @@ import sys
 import time
 from typing import Dict, List, Any, Optional
 
+# 调试：打印 Python 路径
+print(f"Python 版本: {sys.version}")
+print(f"Python 路径: {sys.path}")
+
+ZAI_AVAILABLE = False
+SDK_NAME = None
+ZhipuAiClient = None
+
 try:
-    # 尝试从 zai 导入（旧版本）
-    from zai import ZhipuAiClient
+    # 尝试从 zhipuai 导入 ZhipuAI（新版本推荐）
+    from zhipuai import ZhipuAI
+    ZhipuAiClient = ZhipuAI  # 别名，保持代码一致性
     ZAI_AVAILABLE = True
-    SDK_NAME = "zai"
-except ImportError:
+    SDK_NAME = "zhipuai"
+    print(f"成功导入 zhipuai.ZhipuAI")
+except ImportError as e:
+    print(f"导入 zhipuai.ZhipuAI 失败: {e}")
     try:
-        # 尝试从 zhipuai 导入 ZhipuAI（新版本）
-        from zhipuai import ZhipuAI
-        ZhipuAiClient = ZhipuAI  # 别名，保持代码一致性
+        # 尝试从 zhipuai 导入 ZhipuAiClient（某些版本）
+        from zhipuai import ZhipuAiClient
         ZAI_AVAILABLE = True
         SDK_NAME = "zhipuai"
-    except ImportError:
+        print(f"成功导入 zhipuai.ZhipuAiClient")
+    except ImportError as e2:
+        print(f"导入 zhipuai.ZhipuAiClient 失败: {e2}")
         try:
-            # 尝试从 zhipuai 导入 ZhipuAiClient（某些版本）
-            from zhipuai import ZhipuAiClient
+            # 尝试从 zai 导入（旧版本）
+            from zai import ZhipuAiClient
             ZAI_AVAILABLE = True
-            SDK_NAME = "zhipuai"
-        except ImportError:
-            ZAI_AVAILABLE = False
-            SDK_NAME = None
+            SDK_NAME = "zai"
+            print(f"成功导入 zai.ZhipuAiClient")
+        except ImportError as e3:
+            print(f"导入 zai.ZhipuAiClient 失败: {e3}")
             print("警告: 未安装 GLM SDK，请使用 'pip install zhipuai' 安装")
             # 保留 requests 作为备用
             import requests
+
+if ZAI_AVAILABLE:
+    print(f"GLM SDK 可用，使用: {SDK_NAME}")
+else:
+    print("GLM SDK 不可用，将无法调用 GLM API")
 
 def load_config() -> Dict[str, Any]:
     """
@@ -197,11 +214,12 @@ def build_prompt(match_info: Dict[str, Any]) -> str:
 
 def call_glm_api(prompt: str, config: Dict[str, Any]) -> str:
     """
-    调用GLM API进行分析（使用zai库，支持GLM-5深度思考）
+    调用GLM API进行分析（使用zhipuai库，支持GLM-5深度思考）
     """
     if not ZAI_AVAILABLE:
-        print("错误: 未安装 zai 库，无法调用GLM-5 API")
-        print("请使用 'pip install zhipuai' 安装官方SDK")
+        print("错误: GLM SDK 未正确安装或导入失败")
+        print(f"当前 SDK 状态: {SDK_NAME}")
+        print("请确保已运行: pip install zhipuai")
         return None
     
     try:
