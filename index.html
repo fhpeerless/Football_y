@@ -301,7 +301,7 @@
                 <div class="form-group">
                     <label for="periodInput"><i class="fas fa-calendar-alt"></i> 当前期数</label>
                     <div class="file-input-group">
-                        <input type="text" id="periodInput" placeholder="例如：26027" value="26027">
+                        <input type="text" id="periodInput" placeholder="正在获取最新期数..." value="">
                         <button id="fetchPeriodBtn" class="secondary">
                             <i class="fas fa-sync-alt"></i> 获取期数
                         </button>
@@ -399,10 +399,8 @@
                 showStatus('正在从present.json获取当前期数...', 'info');
                 updateProgress(30);
                 
-                let period = '';
-                
                 try {
-                    // 尝试从./present.json文件获取期数
+                    // 从./present.json文件获取期数
                     const response = await fetch('./present.json');
                     
                     if (response.ok) {
@@ -412,64 +410,44 @@
                         if (Array.isArray(data) && data.length > 0) {
                             // 获取最后一个条目的期数（最新期数）
                             const lastEntry = data[data.length - 1];
-                            period = lastEntry.period || lastEntry.period_number?.toString() || '';
+                            const period = lastEntry.period || lastEntry.period_number?.toString() || '';
                             
                             if (period) {
+                                currentPeriod = period.toString();
+                                periodInput.value = currentPeriod;
+                                updateProgress(100);
+                                showStatus(`成功获取当前期数: ${currentPeriod}期`, 'success');
                                 console.log(`从present.json获取到最新期数: ${period}`);
+                                
+                                // 获取期数后自动加载web.json数据
+                                setTimeout(() => {
+                                    loadWebDataBtn.click();
+                                }, 500);
+                                
+                                return currentPeriod;
                             }
-                        } else {
-                            console.log('present.json格式不正确或为空数组');
                         }
-                    } else {
-                        console.log(`无法读取present.json文件: HTTP ${response.status}`);
                     }
+                    
+                    // 获取失败，提示用户手动输入
+                    console.log('无法从present.json获取期数');
+                    periodInput.placeholder = '请手动输入期数';
+                    updateProgress(0);
+                    showStatus('无法获取期数，请手动输入', 'error');
+                    return null;
+                    
                 } catch (fileError) {
                     console.log('读取present.json文件失败:', fileError.message);
-                }
-                
-                // 如果从present.json获取失败，检查是否已有web.json文件
-                if (!period) {
-                    console.log('尝试从web.json文件查找最新期数...');
-                    // 尝试从26050开始向后查找可用的web.json文件（覆盖26031期及可能的未来期数）
-                    for (let testPeriod = 26050; testPeriod >= 26000; testPeriod--) {
-                        const testUrl = `./result/${testPeriod}期_web.json`;
-                        try {
-                            const testResponse = await fetch(testUrl);
-                            if (testResponse.ok) {
-                                period = testPeriod.toString();
-                                console.log(`从文件系统找到最新期数: ${period}`);
-                                break;
-                            }
-                        } catch (e) {
-                            // 继续尝试下一个期数
-                        }
-                    }
-                }
-                
-                if (period) {
-                    currentPeriod = period.toString();
-                    periodInput.value = currentPeriod;
-                    updateProgress(100);
-                    showStatus(`成功获取当前期数: ${currentPeriod}期`, 'success');
-                    
-                    // 获取期数后自动加载web.json数据
-                    setTimeout(() => {
-                        loadWebDataBtn.click();
-                    }, 500);
-                    
-                    return currentPeriod;
-                } else {
-                    // 使用模拟数据作为最后的手段
-                    currentPeriod = '26027';
-                    periodInput.value = currentPeriod;
-                    updateProgress(100);
-                    showStatus(`使用默认期数: ${currentPeriod}期`, 'info');
-                    return currentPeriod;
+                    periodInput.placeholder = '请手动输入期数';
+                    updateProgress(0);
+                    showStatus('读取期数文件失败，请手动输入', 'error');
+                    return null;
                 }
             } catch (error) {
                 console.error('获取期数错误:', error);
+                periodInput.placeholder = '请手动输入期数';
                 updateProgress(0);
-                showStatus(`获取期数失败: ${error.message}，请手动输入期数`, 'error');
+                showStatus(`获取期数失败: ${error.message}，请手动输入`, 'error');
                 return null;
             }
         }
