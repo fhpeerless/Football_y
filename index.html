@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>足球预测概率查看器（Web JSON数据1）</title>
     <style>
         * {
@@ -405,7 +408,13 @@
                     const url = `./present.json?t=${timestamp}`;
                     console.log(`正在请求: ${url}`);
                     
-                    const response = await fetch(url);
+                    const response = await fetch(url, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache',
+                            'Pragma': 'no-cache'
+                        }
+                    });
                     console.log(`响应状态: ${response.status} ${response.statusText}`);
                     console.log(`响应 URL: ${response.url}`);
                     
@@ -491,10 +500,17 @@
                 showStatus(`正在加载 ${currentPeriod}期_web.json 文件...`, 'info');
                 updateProgress(40);
                 
-                const fileUrl = `./result/${currentPeriod}期_web.json`;
+                const timestamp = Date.now();
+                const fileUrl = `./result/${currentPeriod}期_web.json?t=${timestamp}`;
                 console.log(`正在加载: ${fileUrl}`);
                 
-                const response = await fetch(fileUrl);
+                const response = await fetch(fileUrl, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
                 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -961,10 +977,17 @@
                 showStatus(`正在加载 ${currentPeriod}期_glm分析.json 文件...`, 'info');
                 updateProgress(40);
                 
-                const fileUrl = `./result/${currentPeriod}期_glm分析.json`;
+                const timestamp = Date.now();
+                const fileUrl = `./result/${currentPeriod}期_glm分析.json?t=${timestamp}`;
                 console.log(`正在加载: ${fileUrl}`);
                 
-                const response = await fetch(fileUrl);
+                const response = await fetch(fileUrl, {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
                 
                 if (!response.ok) {
                     if (response.status === 404) {
