@@ -3,9 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <title>足球预测概率查看器（Web JSON数据1）</title>
     <style>
         * {
@@ -308,9 +305,6 @@
                         <button id="fetchPeriodBtn" class="secondary">
                             <i class="fas fa-sync-alt"></i> 获取期数
                         </button>
-                        <button id="forceRefreshBtn" class="secondary" style="background: linear-gradient(135deg, #f44336 0%, #c62828 100%);">
-                            <i class="fas fa-bolt"></i> 强制刷新
-                        </button>
                     </div>
                 </div>
                 
@@ -411,13 +405,7 @@
                     const url = `./present.json?t=${timestamp}`;
                     console.log(`正在请求: ${url}`);
                     
-                    const response = await fetch(url, {
-                        cache: 'no-store',
-                        headers: {
-                            'Cache-Control': 'no-cache',
-                            'Pragma': 'no-cache'
-                        }
-                    });
+                    const response = await fetch(url);
                     console.log(`响应状态: ${response.status} ${response.statusText}`);
                     console.log(`响应 URL: ${response.url}`);
                     
@@ -507,13 +495,7 @@
                 const fileUrl = `./result/${currentPeriod}期_web.json?t=${timestamp}`;
                 console.log(`正在加载: ${fileUrl}`);
                 
-                const response = await fetch(fileUrl, {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
-                    }
-                });
+                const response = await fetch(fileUrl);
                 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -984,13 +966,7 @@
                 const fileUrl = `./result/${currentPeriod}期_glm分析.json?t=${timestamp}`;
                 console.log(`正在加载: ${fileUrl}`);
                 
-                const response = await fetch(fileUrl, {
-                    cache: 'no-store',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache'
-                    }
-                });
+                const response = await fetch(fileUrl);
                 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -1314,26 +1290,6 @@
                 }
             }
         });
-        
-        // 强制刷新按钮 - 清除缓存并重新加载
-        const forceRefreshBtn = document.getElementById('forceRefreshBtn');
-        if (forceRefreshBtn) {
-            forceRefreshBtn.addEventListener('click', () => {
-                showStatus('正在清除缓存并重新加载...', 'info');
-                
-                // 清除所有缓存
-                if ('caches' in window) {
-                    caches.keys().then(names => {
-                        names.forEach(name => {
-                            caches.delete(name);
-                        });
-                    });
-                }
-                
-                // 强制重新加载页面（绕过缓存）
-                window.location.reload(true);
-            });
-        }
         
         // 期数输入框失去焦点时更新期数（不自动加载）
         periodInput.addEventListener('blur', () => {
