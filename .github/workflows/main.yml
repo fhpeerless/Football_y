@@ -317,7 +317,7 @@ jobs:
         git add result/ present.json
         
         # 修复2：优化commit容错（避免无更改时报错）
-        git commit -m "更新预测结果/present.json [skip ci]" || {
+        git commit -m "更新预测结果/present.json" || {
           echo "没有更改可提交，跳过push步骤"
           exit 0  # 无更改时正常退出，不影响工作流
         }
