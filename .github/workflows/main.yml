@@ -40,7 +40,7 @@ jobs:
         
     - name: 安装 Python 依赖
       run: |
-        pip install requests numpy
+        pip install requests numpy zhipuai sniffio
         
     - name: 检查是否有新期数
       id: check-period
