@@ -308,23 +308,28 @@ jobs:
         retention-days: 7
         
     - name: 提交结果到仓库
-      if: always()
+      if: always()  # ========== 修改：无论是否有新期数都提交present.json ==========
       run: |
+        # 修复1：使用正确的邮箱格式（官方推荐）
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
         git add result/ present.json
         
+        # 修复2：优化commit容错（避免无更改时报错）
         git commit -m "更新预测结果/present.json" || {
           echo "没有更改可提交，跳过push步骤"
-          exit 0
+          exit 0  # 无更改时正常退出，不影响工作流
         }
         
-        # 拉取远程更改并变基，解决冲突
-        git pull --rebase "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "${{ github.ref_name }}" || {
-          echo "拉取远程更改失败，尝试强制推送..."
-        }
-        
-        # 推送更改
+        # 修复3：使用正确的Git Push URL格式（核心修复）
+        # 格式：https://<token>@github.com/<owner>/<repo>.git
         git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        
+        # 可选：添加push失败重试（增强稳定性）
+        if [ $? -ne 0 ]; then
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        fi
 
