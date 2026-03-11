@@ -726,7 +726,7 @@ def save_results(period: str, results: List[Dict[str, Any]], config: Dict[str, A
     }
     
     # 保存文件
-    output_file = os.path.join(output_dir, f"{period}期_glm同对手分析.json")
+    output_file = os.path.join(output_dir, f"{period}期_glm分析.json")
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2, default=str)
     
@@ -842,4 +842,5 @@ def main():
     print("="*60)
 
 if __name__ == "__main__":
+
     main()
