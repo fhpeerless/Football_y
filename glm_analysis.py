@@ -63,7 +63,7 @@ def load_config() -> Dict[str, Any]:
         "max_tokens": int(os.environ.get("GLM_MAX_TOKENS", "8000")),
         "temperature": float(os.environ.get("GLM_TEMPERATURE", "0.1")),
         "thinking_enabled": os.environ.get("GLM_THINKING_ENABLED", "true").lower() == "true",
-        "stream": os.environ.get("GLM_STREAM", "false").lower() == "true",
+        "stream": os.environ.get("GLM_STREAM", "false").lower() == "false",
         "top_p": float(os.environ.get("GLM_TOP_P", "0.7")),
         "timeout": int(os.environ.get("GLM_TIMEOUT", "300")),  # 默认300秒（5分钟）超时
     }
@@ -690,40 +690,39 @@ def analyze_single_match(match_info: Dict[str, Any], config: Dict[str, Any]) -> 
 
 def save_results(period: str, results: List[Dict[str, Any]], config: Dict[str, Any]):
     """
-    保存分析结果（兼容旧格式）
+    保存分析结果（优化文件结构）
     """
     script_dir = os.path.dirname(os.path.abspath(__file__))
     output_dir = os.path.join(script_dir, "result")
     os.makedirs(output_dir, exist_ok=True)
     
-    # 构建兼容旧格式的分析结果列表
-    compatible_results = []
-    for r in results:
-        # 复制基本信息
-        compatible_match = {
-            "场次": r.get("场次", 0),
-            "联赛": r.get("联赛", ""),
-            "主队": r.get("主队", ""),
-            "客队": r.get("客队", ""),
-            "比赛时间": r.get("比赛时间", ""),
-            "历史交锋": r.get("历史交锋原始数据", [])[:3],  # 只保留前3条，字段名改为历史交锋
-            "GLM分析": {
-                "分析过程": r.get("GLM分析", {}).get("分析过程", ""),
-                "预测结果": r.get("GLM分析", {}).get("预测结果", ""),
-                "原始响应": r.get("GLM分析", {}).get("原始响应", "")
-            }
-        }
-        compatible_results.append(compatible_match)
+    # 生成统计信息
+    total_matches = len(results)
+    successful_predictions = sum(1 for r in results if r["GLM分析"]["预测结果"])
+    avg_time = sum(r["分析耗时(秒)"] for r in results) / total_matches if total_matches > 0 else 0
     
-    # 构建输出数据（兼容旧格式）
+    prediction_stats = {}
+    for result in results:
+        pred = result["GLM分析"]["预测结果"]
+        if pred:
+            prediction_stats[pred] = prediction_stats.get(pred, 0) + 1
+    
+    # 构建输出数据
     output_data = {
-        "期数": f"{period}期",
-        "生成时间": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "GLM配置": {
-            "模型": config["model"],
-            "API端点": config["api_base"]
+        "元信息": {
+            "期数": f"{period}期",
+            "生成时间": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "总分析场次": total_matches,
+            "有效预测场次": successful_predictions,
+            "平均分析耗时(秒)": round(avg_time, 2),
+            "GLM配置": {
+                "模型": config["model"],
+                "温度系数": config["temperature"],
+                "深度思考": config["thinking_enabled"]
+            },
+            "预测结果统计": prediction_stats
         },
-        "分析结果": compatible_results
+        "比赛分析结果": results
     }
     
     # 保存文件
@@ -843,4 +842,5 @@ def main():
     print("="*60)
 
 if __name__ == "__main__":
+
     main()
