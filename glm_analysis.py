@@ -63,7 +63,7 @@ def load_config() -> Dict[str, Any]:
         "max_tokens": int(os.environ.get("GLM_MAX_TOKENS", "8000")),
         "temperature": float(os.environ.get("GLM_TEMPERATURE", "0.1")),
         "thinking_enabled": os.environ.get("GLM_THINKING_ENABLED", "true").lower() == "true",
-        "stream": os.environ.get("GLM_STREAM", "false").lower() == "false",
+        "stream": os.environ.get("GLM_STREAM", "false").lower() == "true",
         "top_p": float(os.environ.get("GLM_TOP_P", "0.7")),
         "timeout": int(os.environ.get("GLM_TIMEOUT", "300")),  # 默认300秒（5分钟）超时
     }
