@@ -334,6 +334,221 @@ def calculate_h2h_features(home_team: str, away_team: str, history_matches: List
     
     return features
 
+def analyze_common_opponents(home_matches: List[Dict[str, Any]], away_matches: List[Dict[str, Any]], 
+                            home_team: str, away_team: str) -> Dict[str, Any]:
+    """
+    分析主队和客队的共同对手交战数据
+    """
+    analysis = {
+        "共同对手列表": [],
+        "主队对共同对手战绩": {},
+        "客队对共同对手战绩": {},
+        "对比分析": {},
+        "共同对手数量": 0,
+        "主队优势对手": [],
+        "客队优势对手": []
+    }
+    
+    if not home_matches or not away_matches:
+        return analysis
+    
+    # 提取主队和客队近期的对手
+    home_opponents = {}
+    away_opponents = {}
+    
+    # 统计主队对手
+    for match in home_matches:
+        home_name = match.get("homesxname", "")
+        away_name = match.get("awaysxname", "")
+        result = match.get("result1", "")
+        homescore = int(match.get("homescore", 0))
+        awayscore = int(match.get("awayscore", 0))
+        
+        # 判断当前主队是home还是away
+        if home_name == home_team:
+            opponent = away_name
+            is_home_game = True
+            goal_diff = homescore - awayscore
+        elif away_name == home_team:
+            opponent = home_name
+            is_home_game = False
+            goal_diff = awayscore - homescore
+        else:
+            continue
+        
+        if opponent not in home_opponents:
+            home_opponents[opponent] = {
+                "总场次": 0,
+                "胜场": 0,
+                "平场": 0,
+                "负场": 0,
+                "总进球": 0,
+                "总失球": 0,
+                "净胜球": 0,
+                "主场场次": 0,
+                "客战场次": 0
+            }
+        
+        home_opponents[opponent]["总场次"] += 1
+        home_opponents[opponent]["总进球"] += (homescore if is_home_game else awayscore)
+        home_opponents[opponent]["总失球"] += (awayscore if is_home_game else homescore)
+        home_opponents[opponent]["净胜球"] += goal_diff
+        
+        if is_home_game:
+            home_opponents[opponent]["主场场次"] += 1
+        else:
+            home_opponents[opponent]["客战场次"] += 1
+            
+        if result == "胜":
+            home_opponents[opponent]["胜场"] += 1
+        elif result == "平":
+            home_opponents[opponent]["平场"] += 1
+        elif result == "负":
+            home_opponents[opponent]["负场"] += 1
+    
+    # 统计客队对手
+    for match in away_matches:
+        home_name = match.get("homesxname", "")
+        away_name = match.get("awaysxname", "")
+        result = match.get("result1", "")
+        homescore = int(match.get("homescore", 0))
+        awayscore = int(match.get("awayscore", 0))
+        
+        # 判断当前客队是home还是away
+        if home_name == away_team:
+            opponent = away_name
+            is_home_game = True
+            goal_diff = homescore - awayscore
+        elif away_name == away_team:
+            opponent = home_name
+            is_home_game = False
+            goal_diff = awayscore - homescore
+        else:
+            continue
+        
+        if opponent not in away_opponents:
+            away_opponents[opponent] = {
+                "总场次": 0,
+                "胜场": 0,
+                "平场": 0,
+                "负场": 0,
+                "总进球": 0,
+                "总失球": 0,
+                "净胜球": 0,
+                "主场场次": 0,
+                "客战场次": 0
+            }
+        
+        away_opponents[opponent]["总场次"] += 1
+        away_opponents[opponent]["总进球"] += (homescore if is_home_game else awayscore)
+        away_opponents[opponent]["总失球"] += (awayscore if is_home_game else homescore)
+        away_opponents[opponent]["净胜球"] += goal_diff
+        
+        if is_home_game:
+            away_opponents[opponent]["主场场次"] += 1
+        else:
+            away_opponents[opponent]["客战场次"] += 1
+            
+        if result == "胜":
+            away_opponents[opponent]["胜场"] += 1
+        elif result == "平":
+            away_opponents[opponent]["平场"] += 1
+        elif result == "负":
+            away_opponents[opponent]["负场"] += 1
+    
+    # 找出共同对手
+    common_opponents = set(home_opponents.keys()) & set(away_opponents.keys())
+    analysis["共同对手数量"] = len(common_opponents)
+    
+    for opponent in common_opponents:
+        home_stats = home_opponents[opponent]
+        away_stats = away_opponents[opponent]
+        
+        # 计算胜率
+        home_win_rate = home_stats["胜场"] / home_stats["总场次"] if home_stats["总场次"] > 0 else 0
+        away_win_rate = away_stats["胜场"] / away_stats["总场次"] if away_stats["总场次"] > 0 else 0
+        
+        # 计算场均净胜球
+        home_avg_gd = home_stats["净胜球"] / home_stats["总场次"] if home_stats["总场次"] > 0 else 0
+        away_avg_gd = away_stats["净胜球"] / away_stats["总场次"] if away_stats["总场次"] > 0 else 0
+        
+        # 确定哪支球队对该对手更有优势
+        advantage = "平手"
+        if home_win_rate > away_win_rate + 0.1:  # 胜率差大于10%
+            advantage = home_team
+            analysis["主队优势对手"].append(opponent)
+        elif away_win_rate > home_win_rate + 0.1:
+            advantage = away_team
+            analysis["客队优势对手"].append(opponent)
+        
+        common_opponent_info = {
+            "对手名称": opponent,
+            "主队战绩": {
+                "总场次": home_stats["总场次"],
+                "胜场": home_stats["胜场"],
+                "平场": home_stats["平场"],
+                "负场": home_stats["负场"],
+                "胜率": round(home_win_rate, 3),
+                "场均进球": round(home_stats["总进球"] / home_stats["总场次"], 2) if home_stats["总场次"] > 0 else 0,
+                "场均失球": round(home_stats["总失球"] / home_stats["总场次"], 2) if home_stats["总场次"] > 0 else 0,
+                "场均净胜球": round(home_avg_gd, 2)
+            },
+            "客队战绩": {
+                "总场次": away_stats["总场次"],
+                "胜场": away_stats["胜场"],
+                "平场": away_stats["平场"],
+                "负场": away_stats["负场"],
+                "胜率": round(away_win_rate, 3),
+                "场均进球": round(away_stats["总进球"] / away_stats["总场次"], 2) if away_stats["总场次"] > 0 else 0,
+                "场均失球": round(away_stats["总失球"] / away_stats["总场次"], 2) if away_stats["总场次"] > 0 else 0,
+                "场均净胜球": round(away_avg_gd, 2)
+            },
+            "优势方": advantage
+        }
+        
+        analysis["共同对手列表"].append(common_opponent_info)
+        analysis["主队对共同对手战绩"][opponent] = home_stats
+        analysis["客队对共同对手战绩"][opponent] = away_stats
+    
+    # 总结分析
+    if analysis["共同对手数量"] > 0:
+        analysis["对比分析"] = {
+            "主队优势对手数量": len(analysis["主队优势对手"]),
+            "客队优势对手数量": len(analysis["客队优势对手"]),
+            "平手对手数量": analysis["共同对手数量"] - len(analysis["主队优势对手"]) - len(analysis["客队优势对手"]),
+            "整体优势方": "主队" if len(analysis["主队优势对手"]) > len(analysis["客队优势对手"]) else 
+                        "客队" if len(analysis["客队优势对手"]) > len(analysis["主队优势对手"]) else "平手"
+        }
+    
+    return analysis
+
+def analyze_injury_situation(home_team: str, away_team: str, league: str, match_date: str) -> Dict[str, Any]:
+    """
+    分析球队伤病情况（可扩展为网络搜索）
+    """
+    injury_data = {
+        "home_injuries": "未知（需要实时数据）",
+        "away_injuries": "未知（需要实时数据）",
+        "impact_assessment": "伤病数据不足，建议关注赛前球队新闻",
+        "data_source": "placeholder"
+    }
+    
+    # 这里可以扩展为实际网络搜索
+    # 例如：搜索"球队名 + 伤病"或"球队名 + injury"
+    # 但由于网络搜索需要用户确认和可能产生成本，这里使用占位符
+    
+    # 简单的逻辑：根据球队名和联赛生成一些提示性信息
+    if "英超" in league or "England" in league:
+        injury_data["impact_assessment"] = f"英超球队通常有详细的伤病报告，建议查看官方球队新闻"
+    elif "意甲" in league or "Italy" in league:
+        injury_data["impact_assessment"] = f"意甲球队伤病信息相对透明，关注赛前新闻发布会"
+    elif "西甲" in league or "Spain" in league:
+        injury_data["impact_assessment"] = f"西甲球队伤病情况需关注官方公告"
+    else:
+        injury_data["impact_assessment"] = f"建议搜索'{home_team} 伤病'和'{away_team} 伤病'获取最新信息"
+    
+    return injury_data
+
 def extract_match_info(match_data: Dict[str, Any]) -> Dict[str, Any]:
     """
     从单场比赛数据中提取关键信息（包含量化特征）
@@ -345,14 +560,29 @@ def extract_match_info(match_data: Dict[str, Any]) -> Dict[str, Any]:
         "客队": match_data.get("客队", ""),
         "比赛时间": match_data.get("比赛时间", ""),
         "历史交锋原始数据": [],
-        "历史交锋量化特征": {}
+        "历史交锋量化特征": {},
+        "主队近期比赛数据": [],
+        "客队近期比赛数据": [],
+        "直接交锋数据": [],
+        "共同对手分析": {},
+        "伤病情况": {}
     }
     
+    # 1. 提取历史交锋数据（主队和客队近期比赛）
     history_data = match_data.get("历史交锋数据", {})
     if history_data.get("status") == "100":
-        matches = history_data.get("data", {}).get("home", {}).get("matches", [])
-        # 保存原始数据
-        for match in matches[:10]:  # 只取最近10场比赛
+        data = history_data.get("data", {})
+        
+        # 提取主队近期比赛数据
+        home_matches = data.get("home", {}).get("matches", [])
+        match_info["主队近期比赛数据"] = home_matches[:15]  # 取最近15场比赛
+        
+        # 提取客队近期比赛数据
+        away_matches = data.get("away", {}).get("matches", [])
+        match_info["客队近期比赛数据"] = away_matches[:15]  # 取最近15场比赛
+        
+        # 保存原始数据（兼容旧格式，只保存主队数据用于历史交锋分析）
+        for match in home_matches[:10]:  # 只取最近10场比赛
             match_info["历史交锋原始数据"].append({
                 "比赛日期": match.get("matchdate", ""),
                 "主队": match.get("homesxname", ""),
@@ -370,7 +600,28 @@ def extract_match_info(match_data: Dict[str, Any]) -> Dict[str, Any]:
         # 计算量化特征（核心优化）
         home_team = match_info["主队"]
         away_team = match_info["客队"]
-        match_info["历史交锋量化特征"] = calculate_h2h_features(home_team, away_team, matches[:20])
+        match_info["历史交锋量化特征"] = calculate_h2h_features(home_team, away_team, home_matches[:20])
+    
+    # 2. 提取直接交锋数据（交战数据）
+    battle_data = match_data.get("交战数据", {})
+    if battle_data.get("status") == "100":
+        match_info["直接交锋数据"] = battle_data.get("data", {}).get("matches", [])
+    
+    # 3. 分析共同对手
+    match_info["共同对手分析"] = analyze_common_opponents(
+        match_info["主队近期比赛数据"],
+        match_info["客队近期比赛数据"],
+        match_info["主队"],
+        match_info["客队"]
+    )
+    
+    # 4. 分析伤病情况
+    match_info["伤病情况"] = analyze_injury_situation(
+        match_info["主队"],
+        match_info["客队"],
+        match_info["联赛"],
+        match_info["比赛时间"]
+    )
     
     # 添加兼容字段，确保HTML能正确加载
     match_info["历史交锋"] = match_info["历史交锋原始数据"][:]
@@ -379,7 +630,7 @@ def extract_match_info(match_data: Dict[str, Any]) -> Dict[str, Any]:
 
 def build_prompt(match_info: Dict[str, Any]) -> str:
     """
-    构建GLM API的提示词（聚焦同对手分析）
+    构建GLM API的提示词（综合多维度分析）
     """
     match_num = match_info["场次"]
     league = match_info["联赛"]
@@ -387,11 +638,11 @@ def build_prompt(match_info: Dict[str, Any]) -> str:
     away_team = match_info["客队"]
     match_time = match_info["比赛时间"]
     
-    # 格式化量化特征
+    # 1. 格式化量化特征
     features = match_info["历史交锋量化特征"]
     features_text = "\n".join([f"  - {k}: {v}" for k, v in features.items()])
     
-    # 格式化原始交锋记录
+    # 2. 格式化原始交锋记录
     history_text = ""
     for i, history in enumerate(match_info["历史交锋原始数据"]):
         history_text += f"{i+1}. {history['比赛日期']} {history['主队']} vs {history['客队']} "
@@ -401,8 +652,62 @@ def build_prompt(match_info: Dict[str, Any]) -> str:
     if not history_text:
         history_text = "暂无历史交锋数据"
     
-    prompt = f"""你是一位专业的足球比赛数据分析师，擅长基于同对手历史交锋数据进行精准预测。
-请严格基于以下量化特征和历史交锋数据，对本场比赛进行分析和预测，分析必须聚焦于两队的历史交锋规律。
+    # 3. 格式化直接交锋数据
+    direct_battle_text = ""
+    direct_battles = match_info.get("直接交锋数据", [])
+    if direct_battles:
+        direct_battle_text = "# 两队直接交锋历史记录（H2H）\n"
+        for i, battle in enumerate(direct_battles[:10]):  # 最多显示10场
+            home_name = battle.get("homesxname", "")
+            away_name = battle.get("awaysxname", "")
+            homescore = battle.get("homescore", 0)
+            awayscore = battle.get("awayscore", 0)
+            result = battle.get("result1", "")
+            match_date = battle.get("matchdate", "")
+            league_name = battle.get("simplegbname", "")
+            
+            direct_battle_text += f"{i+1}. {match_date} {home_name} {homescore}-{awayscore} {away_name} "
+            direct_battle_text += f"({result}) [{league_name}]\n"
+    else:
+        direct_battle_text = "# 两队直接交锋历史记录\n- 暂无直接交锋数据\n"
+    
+    # 4. 格式化共同对手分析
+    common_analysis = match_info.get("共同对手分析", {})
+    common_text = ""
+    if common_analysis.get("共同对手数量", 0) > 0:
+        common_text = "# 共同对手对比分析\n"
+        common_text += f"- 共同对手数量: {common_analysis['共同对手数量']}\n"
+        common_text += f"- 主队优势对手: {len(common_analysis.get('主队优势对手', []))}个\n"
+        common_text += f"- 客队优势对手: {len(common_analysis.get('客队优势对手', []))}个\n"
+        common_text += f"- 整体优势方: {common_analysis.get('对比分析', {}).get('整体优势方', '平手')}\n\n"
+        
+        common_text += "## 详细共同对手战绩对比:\n"
+        for opponent_info in common_analysis.get("共同对手列表", []):
+            opponent = opponent_info["对手名称"]
+            home_stats = opponent_info["主队战绩"]
+            away_stats = opponent_info["客队战绩"]
+            advantage = opponent_info["优势方"]
+            
+            common_text += f"### 对手: {opponent} (优势方: {advantage})\n"
+            common_text += f"  - {home_team}: {home_stats['胜场']}胜{home_stats['平场']}平{home_stats['负场']}负, "
+            common_text += f"胜率{home_stats['胜率']:.1%}, 场均净胜球{home_stats['场均净胜球']:.2f}\n"
+            common_text += f"  - {away_team}: {away_stats['胜场']}胜{away_stats['平场']}平{away_stats['负场']}负, "
+            common_text += f"胜率{away_stats['胜率']:.1%}, 场均净胜球{away_stats['场均净胜球']:.2f}\n"
+    else:
+        common_text = "# 共同对手对比分析\n- 暂无共同对手数据\n"
+    
+    # 5. 格式化伤病情况
+    injury_text = "# 伤病情况\n"
+    injury_data = match_info.get("伤病情况", {})
+    if injury_data:
+        injury_text += f"- 主队({home_team})伤病: {injury_data.get('home_injuries', '未知')}\n"
+        injury_text += f"- 客队({away_team})伤病: {injury_data.get('away_injuries', '未知')}\n"
+        injury_text += f"- 伤病影响评估: {injury_data.get('impact_assessment', '未知')}\n"
+    else:
+        injury_text += "- 暂无伤病数据（建议结合最新伤病信息进行风险评估）\n"
+    
+    prompt = f"""你是一位专业的足球比赛数据分析师，擅长基于多维数据进行精准预测。
+请严格基于以下数据对本场比赛进行综合分析：
 
 # 比赛基本信息
 - 场次: 第{match_num}场
@@ -410,38 +715,44 @@ def build_prompt(match_info: Dict[str, Any]) -> str:
 - 对阵: {home_team} (主) vs {away_team} (客)
 - 比赛时间: {match_time}
 
-# 同对手历史交锋量化特征（核心分析依据）
+# 历史交锋量化特征（核心分析依据）
 {features_text}
 
-# 同对手历史交锋详细记录（最近10场）
+# 历史交锋详细记录（最近10场）
 {history_text}
+
+{direct_battle_text}
+
+{common_text}
+
+{injury_text}
 
 # 分析要求（必须严格遵守）
 ## 分析框架（按权重从高到低）：
-1. **近期交锋规律（权重40%）**
-   - 近3/6场交锋的胜负走势、进球特征
-   - 时间加权胜率反映的真实实力对比
-   - 最近连胜/连平/连负的延续性分析
-
-2. **攻防数据特征（权重30%）**
-   - 场均进球/失球反映的攻防能力
-   - 大/小球比例、双方都进球比例的规律
-   - 最常见比分的统计学意义
-
-3. **心理与战术因素（权重20%）**
+1. **直接交锋与历史规律（权重35%）**
+   - 两队直接交锋的胜负走势、进球特征
    - 历史交锋中的主客场优势/劣势
-   - 关键比分（绝杀、逆转）反映的心理素质
-   - 战术克制关系（从比分和进球方式分析）
+   - 最近交锋的心理影响
 
-4. **风险因素（权重10%）**
+2. **共同对手对比分析（权重25%）**
+   - 通过共同对手评估两队相对实力
+   - 优势对手数量反映的实力对比
+   - 对共同对手的战绩差异分析
+
+3. **近期状态与攻防数据（权重25%）**
+   - 近期比赛表现反映的状态
+   - 攻防数据（进球/失球）分析
+   - 战术风格匹配度分析
+
+4. **伤病与风险因素（权重15%）**
+   - 伤病情况对阵容的影响
    - 数据样本不足的不确定性
-   - 极端比分对平均值的影响
-   - 可能打破历史规律的特殊因素
+   - 其他可能影响比赛的特殊因素
 
 ## 输出格式要求：
-1. 首先输出"### 量化特征解读"，解读核心量化指标的含义
-2. 然后输出"### 历史交锋规律分析"，分析胜负、进球、比分规律
-3. 接着输出"### 关键影响因素"，列出3-5个最关键的影响因素
+1. 首先输出"### 数据综合分析"，整合所有数据维度进行分析
+2. 然后输出"### 关键影响因素"，列出3-5个最关键的影响因素（必须包含伤病影响评估）
+3. 接着输出"### 风险提示"，说明数据局限性和潜在风险
 4. 最后输出"### 预测结论"，包含明确的预测结果
 
 ## 预测结果格式（必须单独一行，只有把握极度不大的时候才输出不败结果）：
@@ -453,10 +764,10 @@ def build_prompt(match_info: Dict[str, Any]) -> str:
 - 客队不败: 0,1
 
 ## 重要原则：
-- 必须基于提供的历史交锋数据进行分析，避免主观臆断
-- 量化特征是核心依据，分析要数据驱动
+- 必须基于提供的所有数据进行分析，避免主观臆断
+- 数据驱动分析，量化特征和共同对手分析是核心依据
+- 伤病情况必须作为重要风险因素考虑
 - 承认数据的局限性，客观评估预测的可信度
-- 不要编造球员伤病、战术等无数据支撑的信息
 - 分析语言专业、简洁、逻辑清晰
 
 请开始分析："""
