@@ -415,7 +415,7 @@
             }, 5000); // 5秒超时
             
             try {
-                const response = await fetch('./present.json', {
+                const response = await fetch('/present.json', {
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId); // 清除超时计时器
