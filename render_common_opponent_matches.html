@@ -415,7 +415,7 @@
             }, 5000); // 5秒超时
             
             try {
-                const response = await fetch('https://raw.githubusercontent.com/fhpeerless/Football_y/refs/heads/main/present.json', {
+                const response = await fetch('./present.json', {
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId); // 清除超时计时器
