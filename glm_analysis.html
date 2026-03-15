@@ -134,16 +134,7 @@
             transform: translateY(0);
         }
         
-        .load-btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #666;
-        }
-        
-        .load-btn.disabled:hover {
-            transform: none;
-            box-shadow: none;
-        }
+
         
         .progress-bar {
             width: 100%;
@@ -296,6 +287,7 @@
         }
         
         .prediction-badge {
+            position: relative;
             padding: 10px 20px;
             border-radius: 20px;
             text-align: center;
@@ -320,6 +312,25 @@
             margin-bottom: 5px;
             line-height: 1.3;
         }
+        
+        .probability-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+            border: 2px solid white;
+        }
+        
+
         
         .teams-display {
             display: flex;
@@ -645,6 +656,70 @@
             }
         }
         
+        // 从概率字符串中提取最大概率对应的数字
+        function getMaxProbabilityNumber(probabilityStr) {
+            if (!probabilityStr) return null;
+            
+            try {
+                // 解析格式: "主队胜: XX%，平局: XX%，客队胜: XX%"
+                // 支持多种格式变体
+                const patterns = [
+                    /主队胜[：:]\s*([\d.]+)%?/,      // 主队胜: 45.5%
+                    /主胜[：:]\s*([\d.]+)%?/,        // 主胜: 45.5%
+                    /平局[：:]\s*([\d.]+)%?/,        // 平局: 30.2%
+                    /平[：:]\s*([\d.]+)%?/,          // 平: 30.2%
+                    /客队胜[：:]\s*([\d.]+)%?/,      // 客队胜: 24.3%
+                    /客胜[：:]\s*([\d.]+)%?/         // 客胜: 24.3%
+                ];
+                
+                let homeProb = 0;
+                let drawProb = 0;
+                let awayProb = 0;
+                let homeFound = false;
+                let drawFound = false;
+                let awayFound = false;
+                
+                // 提取三个概率值
+                for (let i = 0; i < patterns.length; i++) {
+                    const match = probabilityStr.match(patterns[i]);
+                    if (match && match[1]) {
+                        const prob = parseFloat(match[1]);
+                        // 根据模式类型分配概率值
+                        if (i === 0 || i === 1) { // 主队胜或主胜
+                            homeProb = prob;
+                            homeFound = true;
+                        } else if (i === 2 || i === 3) { // 平局或平
+                            drawProb = prob;
+                            drawFound = true;
+                        } else if (i === 4 || i === 5) { // 客队胜或客胜
+                            awayProb = prob;
+                            awayFound = true;
+                        }
+                    }
+                }
+                
+                // 检查是否找到了足够的概率值
+                if (!homeFound || !drawFound || !awayFound) {
+                    console.warn('概率字符串解析不完整:', probabilityStr);
+                    return null;
+                }
+                
+                // 找出最大概率
+                const maxProb = Math.max(homeProb, drawProb, awayProb);
+                
+                // 如果有多个相等的最大值，优先考虑主胜，然后平局，最后客胜
+                // 但这种情况应该很少见
+                if (maxProb === homeProb) return '3';
+                if (maxProb === drawProb) return '1';
+                if (maxProb === awayProb) return '0';
+                
+                return null;
+            } catch (error) {
+                console.error('解析概率字符串失败:', error, probabilityStr);
+                return null;
+            }
+        }
+        
         // 加载GLM分析数据
         async function loadGlmAnalysis() {
             const period = periodInput.value.trim();
@@ -761,6 +836,27 @@
                 const predictionColor = getPredictionColor(prediction);
                 const predictionText = getPredictionText(prediction);
                 
+                // 获取最大概率对应的数字
+                const maxProbNumber = getMaxProbabilityNumber(predictionProb);
+                let probBadgeHtml = '';
+                
+                if (maxProbNumber) {
+                    // 根据数字设置概率徽章颜色
+                    let probBadgeColor = '';
+                    switch(maxProbNumber) {
+                        case '3': probBadgeColor = '#4caf50'; break;  // 绿色
+                        case '1': probBadgeColor = '#ff9800'; break;  // 橙色
+                        case '0': probBadgeColor = '#f44336'; break;  // 红色
+                        default: probBadgeColor = '#757575'; break;   // 灰色
+                    }
+                    
+                    probBadgeHtml = `
+                        <div class="probability-badge" style="background: ${probBadgeColor}; color: white;">
+                            ${maxProbNumber}
+                        </div>
+                    `;
+                }
+                
                 html += `
                     <div class="match-card" id="glm-match-${match.场次}">
                         <!-- 比赛基本信息 -->
@@ -772,6 +868,7 @@
                                 </p>
                             </div>
                             <div class="prediction-badge" style="background: ${predictionColor}20; border: 1px solid ${predictionColor}40;">
+                                ${probBadgeHtml}
                                 ${predictionProb ? `
                                     <div class="prediction-prob" style="color: ${predictionColor};">
                                         ${predictionProb}
