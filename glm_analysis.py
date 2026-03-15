@@ -1156,6 +1156,7 @@ def save_results(period: str, results: List[Dict[str, Any]], config: Dict[str, A
             "GLM分析": {
                 "分析过程": r.get("GLM分析", {}).get("分析过程", ""),
                 "预测结果": r.get("GLM分析", {}).get("预测结果", ""),
+                "预测概率": r.get("GLM分析", {}).get("预测概率", ""),
                 "原始响应": r.get("GLM分析", {}).get("原始响应", "")
             }
         }
