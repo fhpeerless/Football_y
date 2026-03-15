@@ -19,7 +19,7 @@ backup是旧版，根目录正在应用的则是新版，
 ## 6.计算高级预测概率calculate_advanced_probability.py
 
 | **输入文件** | `result/{期数}期.json`、`result/{期数}期_历史交锋.json` |
-| **输出文件** | `result/{期数}期_高级预测概率.json` |
+| **输出文件** | `result/{期数}期_高级预测概率.json` |result/{期数}期_共同对手比赛.json
 
 ## 7.计算共同对手实力分calculate_common_opponent_strength.py
 
