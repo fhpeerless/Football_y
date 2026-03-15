@@ -408,8 +408,18 @@
         
         // 获取present.json中最后一个期数
         async function getLatestPeriodFromPresent() {
+            // 创建AbortController用于超时控制
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+            }, 5000); // 5秒超时
+            
             try {
-                const response = await fetch('./present.json');
+                const response = await fetch('./present.json', {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId); // 清除超时计时器
+                
                 if (!response.ok) {
                     throw new Error(`HTTP错误: ${response.status}`);
                 }
@@ -423,7 +433,12 @@
                 }
                 return null;
             } catch (error) {
-                console.error('获取present.json失败:', error);
+                clearTimeout(timeoutId); // 确保清理计时器
+                if (error.name === 'AbortError') {
+                    console.error('获取present.json超时（5秒）:', error);
+                } else {
+                    console.error('获取present.json失败:', error);
+                }
                 return null;
             }
         }
@@ -447,8 +462,17 @@
             const existingMatches = matchesContainer.querySelectorAll('.match-card');
             existingMatches.forEach(match => match.remove());
             
+            // 创建AbortController用于超时控制
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => {
+                controller.abort();
+            }, 5000); // 5秒超时
+            
             try {
-                const response = await fetch(`./result/${period}期_共同对手比赛.json`);
+                const response = await fetch(`./result/${period}期_共同对手比赛.json`, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId); // 清除超时计时器
                 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -469,9 +493,15 @@
                 updateURL(period);
                 
             } catch (error) {
+                clearTimeout(timeoutId); // 确保清理计时器
                 console.error('加载数据失败:', error);
                 loadingIndicator.style.display = 'none';
-                errorMessage.textContent = error.message;
+                
+                if (error.name === 'AbortError') {
+                    errorMessage.textContent = `加载数据超时（5秒），请检查网络连接或稍后重试`;
+                } else {
+                    errorMessage.textContent = error.message;
+                }
                 errorIndicator.style.display = 'block';
             }
         }
