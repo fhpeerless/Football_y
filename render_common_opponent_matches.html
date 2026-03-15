@@ -197,7 +197,8 @@
         
         .match-content.expanded {
             padding: 25px;
-            max-height: 2000px;
+            max-height: 800px;
+            overflow-y: auto;
         }
         
         .opponent-section {
@@ -318,6 +319,10 @@
             
             .matches-table {
                 min-width: 800px; /* 确保表格有足够的最小宽度 */
+            }
+            
+            .match-content.expanded {
+                max-height: 500px;
             }
         }
     </style>
