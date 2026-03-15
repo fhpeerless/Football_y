@@ -320,7 +320,7 @@
         <div class="controls">
             <div class="input-group">
                 <label for="period">期数：</label>
-                <input type="number" id="period" placeholder="例如：26040" min="1" value="26040">
+                <input type="number" id="period" placeholder="例如：26040" min="1" value="">
                 <button id="loadBtn">加载数据</button>
             </div>
             <div class="input-group">
@@ -364,7 +364,7 @@
 
     <script>
         // 全局变量
-        let currentPeriod = 26040;
+        let currentPeriod = null;
         let currentData = null;
         
         // DOM元素
@@ -387,6 +387,28 @@
             const params = new URLSearchParams(window.location.search);
             const period = params.get('period');
             return period ? parseInt(period) : null;
+        }
+        
+        // 获取present.json中最后一个期数
+        async function getLatestPeriodFromPresent() {
+            try {
+                const response = await fetch('./present.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP错误: ${response.status}`);
+                }
+                const data = await response.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    // 获取最后一个元素（最新期数）
+                    const lastPeriod = data[data.length - 1];
+                    // 优先使用period字段，如果没有则使用period_number
+                    const period = lastPeriod.period || lastPeriod.period_number;
+                    return parseInt(period);
+                }
+                return null;
+            } catch (error) {
+                console.error('获取present.json失败:', error);
+                return null;
+            }
         }
         
         // 更新URL参数
@@ -733,14 +755,25 @@
             }
         });
         
-        // 初始化：从URL获取期数或使用默认值
-        window.addEventListener('DOMContentLoaded', () => {
+        // 初始化：从URL获取期数或使用present.json最新期数
+        window.addEventListener('DOMContentLoaded', async () => {
             const urlPeriod = getPeriodFromURL();
             if (urlPeriod) {
                 periodInput.value = urlPeriod;
                 loadData(urlPeriod);
             } else {
-                loadData(currentPeriod);
+                // 从present.json获取最新期数
+                const latestPeriod = await getLatestPeriodFromPresent();
+                if (latestPeriod) {
+                    currentPeriod = latestPeriod;
+                    periodInput.value = currentPeriod;
+                    loadData(currentPeriod);
+                } else {
+                    // 如果无法获取present.json，使用默认期数26040
+                    currentPeriod = 26040;
+                    periodInput.value = currentPeriod;
+                    loadData(currentPeriod);
+                }
             }
         });
         
