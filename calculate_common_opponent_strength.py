@@ -399,7 +399,8 @@ def process_single_match(match_info, current_date=None):
             '客队总实力分': 0,
             '主队相对实力比': 0.5,
             '客队相对实力比': 0.5,
-            '错误': '未找到历史交锋数据'
+            '错误': '未找到历史交锋数据',
+            '共同对手比赛数据': {}
         }
     
     # 提取两队比赛记录
@@ -418,7 +419,8 @@ def process_single_match(match_info, current_date=None):
             '客队总实力分': 0,
             '主队相对实力比': 0.5,
             '客队相对实力比': 0.5,
-            '错误': '比赛记录不足'
+            '错误': '比赛记录不足',
+            '共同对手比赛数据': {}
         }
     
     print(f"  主队比赛记录: {len(home_matches)} 场")
@@ -440,7 +442,8 @@ def process_single_match(match_info, current_date=None):
             '客队总实力分': 0,
             '主队相对实力比': 0.5,
             '客队相对实力比': 0.5,
-            '错误': '没有共同对手'
+            '错误': '没有共同对手',
+            '共同对手比赛数据': common_data
         }
     
     # 计算共同对手实力分
@@ -467,6 +470,7 @@ def process_single_match(match_info, current_date=None):
         '主队比赛记录数': len(home_matches),
         '客队比赛记录数': len(away_matches),
         '共同对手数': len(common_data),
+        '共同对手比赛数据': common_data,
         '主队总实力分': round(home_strength, 3),
         '客队总实力分': round(away_strength, 3),
         '主队相对实力比': detailed_calculation['主队相对实力比'],
@@ -511,6 +515,7 @@ def main():
         print(f"使用命令行参数期数: {period}期")
         input_file = f"./result/{period}期_历史交锋.json"
         output_file = f"./result/{period}期_共同对手实力分.json"
+        output_file_matches = f"./result/{period}期_共同对手比赛.json"
         
         if not os.path.exists(input_file):
             print(f"输入文件 {input_file} 不存在")
@@ -535,13 +540,16 @@ def main():
             if match:
                 period = match.group(1)
                 output_file = f"./result/{period}期_共同对手实力分.json"
+                output_file_matches = f"./result/{period}期_共同对手比赛.json"
             else:
                 output_file = "./result/共同对手实力分.json"
+                output_file_matches = "./result/共同对手比赛.json"
                 period = "未知期数"
         else:
             print(f"使用当前在售期数: {period}期")
             input_file = f"./result/{period}期_历史交锋.json"
             output_file = f"./result/{period}期_共同对手实力分.json"
+            output_file_matches = f"./result/{period}期_共同对手比赛.json"
             
             if not os.path.exists(input_file):
                 print(f"当前期数 {period} 的数据文件不存在，尝试查找最新数据文件...")
@@ -559,11 +567,14 @@ def main():
                 if match:
                     period = match.group(1)
                     output_file = f"./result/{period}期_共同对手实力分.json"
+                    output_file_matches = f"./result/{period}期_共同对手比赛.json"
                 else:
                     output_file = "./result/共同对手实力分.json"
+                    output_file_matches = "./result/共同对手比赛.json"
     
     print(f"输入文件: {input_file}")
-    print(f"输出文件: {output_file}")
+    print(f"输出文件 (实力分): {output_file}")
+    print(f"输出文件 (比赛数据): {output_file_matches}")
     print(f"期数: {period}期")
     
     # 加载数据
@@ -595,8 +606,25 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(output_data, f, ensure_ascii=False, indent=2)
     
+    # 保存共同对手比赛数据
+    matches_data = {
+        '期数': data.get('期数', ''),
+        '计算基准日期': current_date,
+        '数据说明': '主队和客队与共同对手的比赛记录',
+        '14场比赛共同对手比赛数据': {}
+    }
+    
+    # 提取每场比赛的共同对手比赛数据
+    for result in results:
+        match_num = result['场次']
+        matches_data['14场比赛共同对手比赛数据'][match_num] = result.get('共同对手比赛数据', {})
+    
+    with open(output_file_matches, 'w', encoding='utf-8') as f:
+        json.dump(matches_data, f, ensure_ascii=False, indent=2)
+    
     print("\n" + "=" * 80)
     print(f"处理完成！结果已保存到: {output_file}")
+    print(f"共同对手比赛数据已保存到: {output_file_matches}")
     
     # 输出统计信息
     total_matches = len(results)

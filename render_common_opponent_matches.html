@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>共同对手比赛数据可视化</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        input[type="number"] {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            width: 150px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        button {
+            padding: 10px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .info-box {
+            background: #e8f4fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .info-box p {
+            margin: 5px 0;
+            color: #2c3e50;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .matches-container {
+            margin-bottom: 30px;
+        }
+        
+        .match-card {
+            background: white;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .match-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .match-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 18px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .match-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+        
+        .match-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .match-info span {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .toggle-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+        
+        .match-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.3s;
+        }
+        
+        .match-content.expanded {
+            padding: 25px;
+            max-height: 2000px;
+        }
+        
+        .opponent-section {
+            margin-bottom: 25px;
+        }
+        
+        .opponent-header {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .opponent-header h4 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .matches-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .matches-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .matches-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .matches-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .result-win {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .result-draw {
+            color: #f39c12;
+            font-weight: bold;
+        }
+        
+        .result-loss {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+        
+        .error {
+            background: #ffeaea;
+            color: #c0392b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c0392b;
+        }
+        
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .match-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .match-info {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 足球共同对手比赛数据分析</h1>
+            <p class="subtitle">可视化展示主队和客队与共同对手的历史交锋记录，支持多期数数据查看</p>
+        </header>
+        
+        <div class="controls">
+            <div class="input-group">
+                <label for="period">期数：</label>
+                <input type="number" id="period" placeholder="例如：26040" min="1" value="26040">
+                <button id="loadBtn">加载数据</button>
+            </div>
+            <div class="input-group">
+                <button id="prevBtn">上一期</button>
+                <button id="nextBtn">下一期</button>
+            </div>
+            <div class="input-group">
+                <button id="exportBtn">导出当前数据</button>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <p><strong>数据说明：</strong> 本页面显示主队和客队与共同对手的历史比赛记录。数据来源于<code>result/{期数}期_共同对手比赛.json</code>文件。</p>
+            <p><strong>使用方法：</strong> 输入期数后点击"加载数据"，或使用"上一期"/"下一期"按钮浏览历史数据。</p>
+        </div>
+        
+        <div id="statsContainer" class="stats" style="display: none;">
+            <!-- 统计数据卡片将通过JS动态生成 -->
+        </div>
+        
+        <div id="matchesContainer" class="matches-container">
+            <div class="loading" id="loadingIndicator">
+                <p>⏳ 正在加载数据，请稍候...</p>
+            </div>
+            <div class="no-data" id="noDataIndicator" style="display: none;">
+                <p>📭 未找到该期数的共同对手比赛数据</p>
+                <p>请检查期数是否正确，或确认已运行计算脚本生成数据文件</p>
+            </div>
+            <div class="error" id="errorIndicator" style="display: none;">
+                <p>❌ 加载数据时出错</p>
+                <p id="errorMessage"></p>
+            </div>
+            <!-- 比赛数据将通过JS动态生成 -->
+        </div>
+        
+        <footer>
+            <p>© 2025 足球数据分析系统 | 共同对手比赛数据可视化页面</p>
+            <p>数据更新时间：<span id="calcDate">--</span> | 总比赛场次：<span id="totalMatches">0</span></p>
+        </footer>
+    </div>
+
+    <script>
+        // 全局变量
+        let currentPeriod = 26040;
+        let currentData = null;
+        
+        // DOM元素
+        const periodInput = document.getElementById('period');
+        const loadBtn = document.getElementById('loadBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const exportBtn = document.getElementById('exportBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const noDataIndicator = document.getElementById('noDataIndicator');
+        const errorIndicator = document.getElementById('errorIndicator');
+        const errorMessage = document.getElementById('errorMessage');
+        const statsContainer = document.getElementById('statsContainer');
+        const matchesContainer = document.getElementById('matchesContainer');
+        const calcDateEl = document.getElementById('calcDate');
+        const totalMatchesEl = document.getElementById('totalMatches');
+        
+        // 从URL获取期数参数
+        function getPeriodFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const period = params.get('period');
+            return period ? parseInt(period) : null;
+        }
+        
+        // 更新URL参数
+        function updateURL(period) {
+            const url = new URL(window.location);
+            url.searchParams.set('period', period);
+            window.history.pushState({}, '', url);
+        }
+        
+        // 加载数据
+        async function loadData(period) {
+            // 显示加载指示器
+            loadingIndicator.style.display = 'block';
+            noDataIndicator.style.display = 'none';
+            errorIndicator.style.display = 'none';
+            statsContainer.style.display = 'none';
+            
+            // 清空现有内容
+            const existingMatches = matchesContainer.querySelectorAll('.match-card');
+            existingMatches.forEach(match => match.remove());
+            
+            try {
+                const response = await fetch(`./result/${period}期_共同对手比赛.json`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error(`找不到第${period}期的数据文件`);
+                    } else {
+                        throw new Error(`HTTP错误: ${response.status}`);
+                    }
+                }
+                
+                const data = await response.json();
+                currentData = data;
+                currentPeriod = period;
+                
+                // 更新UI
+                updateUI(data);
+                
+                // 更新URL
+                updateURL(period);
+                
+            } catch (error) {
+                console.error('加载数据失败:', error);
+                loadingIndicator.style.display = 'none';
+                errorMessage.textContent = error.message;
+                errorIndicator.style.display = 'block';
+            }
+        }
+        
+        // 更新UI
+        function updateUI(data) {
+            loadingIndicator.style.display = 'none';
+            
+            // 更新基本信息
+            calcDateEl.textContent = data.计算基准日期 || '--';
+            
+            const matchesData = data['14场比赛共同对手比赛数据'];
+            const totalMatches = Object.keys(matchesData).length;
+            totalMatchesEl.textContent = totalMatches;
+            
+            if (totalMatches === 0) {
+                noDataIndicator.style.display = 'block';
+                return;
+            }
+            
+            // 计算统计数据
+            calculateStats(matchesData);
+            
+            // 生成比赛卡片
+            Object.entries(matchesData).forEach(([matchNum, matchData]) => {
+                if (Object.keys(matchData).length === 0) {
+                    return; // 跳过空数据
+                }
+                createMatchCard(matchNum, matchData);
+            });
+        }
+        
+        // 计算统计数据
+        function calculateStats(matchesData) {
+            let totalCommonOpponents = 0;
+            let totalMatchesWithCommon = 0;
+            let totalHomeMatches = 0;
+            let totalAwayMatches = 0;
+            
+            Object.values(matchesData).forEach(matchData => {
+                const opponents = Object.keys(matchData);
+                if (opponents.length > 0) {
+                    totalMatchesWithCommon++;
+                    totalCommonOpponents += opponents.length;
+                    
+                    // 计算主客队比赛场次
+                    opponents.forEach(opponent => {
+                        const homeMatches = matchData[opponent]?.home_vs_opponent?.length || 0;
+                        const awayMatches = matchData[opponent]?.away_vs_opponent?.length || 0;
+                        totalHomeMatches += homeMatches;
+                        totalAwayMatches += awayMatches;
+                    });
+                }
+            });
+            
+            // 更新统计卡片
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <h3>${Object.keys(matchesData).length}</h3>
+                    <p>总比赛场次</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalMatchesWithCommon}</h3>
+                    <p>有共同对手的比赛</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalCommonOpponents}</h3>
+                    <p>共同对手总数</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalHomeMatches + totalAwayMatches}</h3>
+                    <p>历史交锋场次</p>
+                </div>
+            `;
+            
+            statsContainer.style.display = 'grid';
+        }
+        
+        // 创建比赛卡片
+        function createMatchCard(matchNum, matchData) {
+            const matchCard = document.createElement('div');
+            matchCard.className = 'match-card';
+            
+            // 从数据中提取比赛信息（需要从实力分文件获取，这里使用占位符）
+            const opponents = Object.keys(matchData);
+            const firstOpponent = opponents[0];
+            const homeTeam = matchData[firstOpponent]?.home_vs_opponent?.[0]?.homesxname || '未知主队';
+            const awayTeam = matchData[firstOpponent]?.away_vs_opponent?.[0]?.awaysxname || '未知客队';
+            
+            // 计算共同对手数量
+            const commonOpponentCount = opponents.length;
+            
+            // 计算总比赛场次
+            let totalMatchesCount = 0;
+            opponents.forEach(opponent => {
+                totalMatchesCount += (matchData[opponent]?.home_vs_opponent?.length || 0);
+                totalMatchesCount += (matchData[opponent]?.away_vs_opponent?.length || 0);
+            });
+            
+            matchCard.innerHTML = `
+                <div class="match-header" onclick="toggleMatchCard(this)">
+                    <div>
+                        <h3>第${matchNum}场: ${homeTeam} 🆚 ${awayTeam}</h3>
+                        <div class="match-info">
+                            <span>共同对手: ${commonOpponentCount}个</span>
+                            <span>历史交锋: ${totalMatchesCount}场</span>
+                        </div>
+                    </div>
+                    <div class="toggle-icon">▶</div>
+                </div>
+                <div class="match-content">
+                    ${opponents.map(opponent => createOpponentSection(opponent, matchData[opponent], homeTeam, awayTeam)).join('')}
+                </div>
+            `;
+            
+            matchesContainer.appendChild(matchCard);
+        }
+        
+        // 创建对手部分
+        function createOpponentSection(opponentName, opponentData, homeTeam, awayTeam) {
+            const homeMatches = opponentData?.home_vs_opponent || [];
+            const awayMatches = opponentData?.away_vs_opponent || [];
+            
+            // 计算统计数据
+            const homeStats = calculateTeamStats(homeMatches, homeTeam);
+            const awayStats = calculateTeamStats(awayMatches, awayTeam);
+            
+            // 确定优势方
+            let advantage = '平手';
+            if (homeStats.winRate > awayStats.winRate + 0.1) {
+                advantage = homeTeam;
+            } else if (awayStats.winRate > homeStats.winRate + 0.1) {
+                advantage = awayTeam;
+            }
+            
+            return `
+                <div class="opponent-section">
+                    <div class="opponent-header">
+                        <h4>共同对手: ${opponentName}</h4>
+                        <p>优势方: <strong>${advantage}</strong> | ${homeTeam}胜率: ${(homeStats.winRate * 100).toFixed(1)}% | ${awayTeam}胜率: ${(awayStats.winRate * 100).toFixed(1)}%</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h5 style="margin-bottom: 10px; color: #3498db;">${homeTeam} 对阵 ${opponentName}</h5>
+                        ${homeMatches.length > 0 ? createMatchesTable(homeMatches, homeTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
+                    </div>
+                    
+                    <div>
+                        <h5 style="margin-bottom: 10px; color: #e74c3c;">${awayTeam} 对阵 ${opponentName}</h5>
+                        ${awayMatches.length > 0 ? createMatchesTable(awayMatches, awayTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // 计算球队统计数据
+        function calculateTeamStats(matches, teamName) {
+            if (matches.length === 0) {
+                return { win: 0, draw: 0, loss: 0, winRate: 0, totalGoalsFor: 0, totalGoalsAgainst: 0 };
+            }
+            
+            let win = 0, draw = 0, loss = 0;
+            let totalGoalsFor = 0, totalGoalsAgainst = 0;
+            
+            matches.forEach(match => {
+                const isHome = match.homesxname === teamName;
+                const goalsFor = isHome ? match.homescore : match.awayscore;
+                const goalsAgainst = isHome ? match.awayscore : match.homescore;
+                
+                totalGoalsFor += goalsFor;
+                totalGoalsAgainst += goalsAgainst;
+                
+                const result = match.result1;
+                
+                if (result === '胜') {
+                    win++;
+                } else if (result === '平') {
+                    draw++;
+                } else if (result === '负') {
+                    loss++;
+                }
+            });
+            
+            const totalMatches = win + draw + loss;
+            const winRate = totalMatches > 0 ? win / totalMatches : 0;
+            
+            return { win, draw, loss, winRate, totalGoalsFor, totalGoalsAgainst };
+        }
+        
+        // 创建比赛表格
+        function createMatchesTable(matches, teamName) {
+            return `
+                <table class="matches-table">
+                    <thead>
+                        <tr>
+                            <th>比赛日期</th>
+                            <th>对阵</th>
+                            <th>比分</th>
+                            <th>结果</th>
+                            <th>联赛</th>
+                            <th>亚盘</th>
+                            <th>大小球</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${matches.map(match => {
+                            const isHome = match.homesxname === teamName;
+                            const opponent = isHome ? match.awaysxname : match.homesxname;
+                            const score = isHome ? 
+                                `${match.homescore}-${match.awayscore}` : 
+                                `${match.awayscore}-${match.homescore}`;
+                            
+                            let resultClass = '';
+                            if (match.result1 === '胜') resultClass = 'result-win';
+                            if (match.result1 === '平') resultClass = 'result-draw';
+                            if (match.result1 === '负') resultClass = 'result-loss';
+                            
+                            return `
+                                <tr>
+                                    <td>${match.matchdate || '--'}</td>
+                                    <td>${isHome ? '主' : '客'} vs ${opponent}</td>
+                                    <td><strong>${score}</strong></td>
+                                    <td class="${resultClass}">${match.result1 || '--'}</td>
+                                    <td>${match.simplegbname || '--'}</td>
+                                    <td>${match.result2 || '--'}</td>
+                                    <td>${match.result3 || '--'}</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+        
+        // 切换比赛卡片展开/收起
+        window.toggleMatchCard = function(header) {
+            const card = header.parentElement;
+            const content = card.querySelector('.match-content');
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▶';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▼';
+            }
+        };
+        
+        // 导出数据
+        function exportData() {
+            if (!currentData) {
+                alert('请先加载数据');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(currentData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentPeriod}期_共同对手比赛_导出.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // 事件监听
+        loadBtn.addEventListener('click', () => {
+            const period = parseInt(periodInput.value);
+            if (!period || period < 1) {
+                alert('请输入有效的期数');
+                return;
+            }
+            loadData(period);
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            const period = parseInt(periodInput.value) - 1;
+            if (period < 1) return;
+            periodInput.value = period;
+            loadData(period);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            const period = parseInt(periodInput.value) + 1;
+            periodInput.value = period;
+            loadData(period);
+        });
+        
+        exportBtn.addEventListener('click', exportData);
+        
+        periodInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                loadBtn.click();
+            }
+        });
+        
+        // 初始化：从URL获取期数或使用默认值
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlPeriod = getPeriodFromURL();
+            if (urlPeriod) {
+                periodInput.value = urlPeriod;
+                loadData(urlPeriod);
+            } else {
+                loadData(currentPeriod);
+            }
+        });
+        
+        // 支持浏览器前进/后退
+        window.addEventListener('popstate', () => {
+            const urlPeriod = getPeriodFromURL();
+            if (urlPeriod) {
+                periodInput.value = urlPeriod;
+                loadData(urlPeriod);
+            }
+        });
+    </script>
+</body>
+</html>
