@@ -217,10 +217,13 @@
             margin-bottom: 8px;
         }
         
+        .matches-table-container {
+            margin-bottom: 20px;
+        }
+        
         .matches-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
         }
         
         .matches-table th {
@@ -306,6 +309,15 @@
             
             .match-info {
                 justify-content: flex-start;
+            }
+            
+            .matches-table-container {
+                overflow-x: auto;
+                margin-bottom: 20px;
+            }
+            
+            .matches-table {
+                min-width: 800px; /* 确保表格有足够的最小宽度 */
             }
         }
     </style>
@@ -665,58 +677,65 @@
         // 创建比赛表格
         function createMatchesTable(matches, teamName) {
             return `
-                <table class="matches-table">
-                    <thead>
-                        <tr>
-                            <th>比赛日期</th>
-                            <th>对阵</th>
-                            <th>比分</th>
-                            <th>结果</th>
-                            <th>联赛</th>
-                            <th>亚盘</th>
-                            <th>大小球</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${matches.map(match => {
-                            const isHome = match.homesxname === teamName;
-                            const opponent = isHome ? match.awaysxname : match.homesxname;
-                            const score = isHome ? 
-                                `${match.homescore}-${match.awayscore}` : 
-                                `${match.awayscore}-${match.homescore}`;
-                            
-                            // 根据球队是否在主场调整结果
-                            let teamResult = match.result1;
-                            let resultClass = '';
-                            
-                            if (!isHome) {
-                                // 球队是客场，需要反转结果
-                                if (match.result1 === '胜') {
-                                    teamResult = '负';
-                                } else if (match.result1 === '负') {
-                                    teamResult = '胜';
+                <div class="matches-table-container">
+                    <table class="matches-table">
+                        <thead>
+                            <tr>
+                                <th>比赛日期</th>
+                                <th>对阵</th>
+                                <th>全场比分</th>
+                                <th>半场比分</th>
+                                <th>结果</th>
+                                <th>联赛</th>
+                                <th>亚盘</th>
+                                <th>大小球</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${matches.map(match => {
+                                const isHome = match.homesxname === teamName;
+                                const opponent = isHome ? match.awaysxname : match.homesxname;
+                                const score = isHome ? 
+                                    `${match.homescore}-${match.awayscore}` : 
+                                    `${match.awayscore}-${match.homescore}`;
+                                const halfScore = isHome ?
+                                    `${match.homehalfscore || '--'}-${match.awayhalfscore || '--'}` :
+                                    `${match.awayhalfscore || '--'}-${match.homehalfscore || '--'}`;
+                                
+                                // 根据球队是否在主场调整结果
+                                let teamResult = match.result1;
+                                let resultClass = '';
+                                
+                                if (!isHome) {
+                                    // 球队是客场，需要反转结果
+                                    if (match.result1 === '胜') {
+                                        teamResult = '负';
+                                    } else if (match.result1 === '负') {
+                                        teamResult = '胜';
+                                    }
+                                    // 平局保持不变
                                 }
-                                // 平局保持不变
-                            }
-                            
-                            if (teamResult === '胜') resultClass = 'result-win';
-                            if (teamResult === '平') resultClass = 'result-draw';
-                            if (teamResult === '负') resultClass = 'result-loss';
-                            
-                            return `
-                                <tr>
-                                    <td>${match.matchdate || '--'}</td>
-                                    <td>${isHome ? '主' : '客'} vs ${opponent}</td>
-                                    <td><strong>${score}</strong></td>
-                                    <td class="${resultClass}">${teamResult || '--'}</td>
-                                    <td>${match.simplegbname || '--'}</td>
-                                    <td>${match.result2 || '--'}</td>
-                                    <td>${match.result3 || '--'}</td>
-                                </tr>
-                            `;
-                        }).join('')}
-                    </tbody>
-                </table>
+                                
+                                if (teamResult === '胜') resultClass = 'result-win';
+                                if (teamResult === '平') resultClass = 'result-draw';
+                                if (teamResult === '负') resultClass = 'result-loss';
+                                
+                                return `
+                                    <tr>
+                                        <td>${match.matchdate || '--'}</td>
+                                        <td>${isHome ? '主' : '客'} vs ${opponent}</td>
+                                        <td><strong>${score}</strong></td>
+                                        <td>${halfScore}</td>
+                                        <td class="${resultClass}">${teamResult || '--'}</td>
+                                        <td>${match.simplegbname || '--'}</td>
+                                        <td>${match.result2 || '--'}</td>
+                                        <td>${match.result3 || '--'}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
             `;
         }
         
