@@ -729,25 +729,30 @@ def build_prompt(match_info: Dict[str, Any]) -> str:
 
 # 分析要求（必须严格遵守）
 ## 分析框架（按权重从高到低）：
-1. **直接交锋与历史规律（权重23%）**
+1. **直接交锋与历史规律（权重24%）**
    - 两队直接交锋的胜负走势、进球特征
    - 历史交锋中的主客场优势/劣势
    - 最近交锋的心理影响
 
-2. **共同对手对比分析（权重53%）**
+2. **共同对手对比分析（权重38%）**
    - 通过共同对手评估两队相对实力
    - 优势对手数量反映的实力对比
    - 对共同对手的战绩差异分析
 
-3. **近期状态与攻防数据（权重12%）**
+3. **近期状态与攻防数据（权重13%）**
    - 近期比赛表现反映的状态
    - 攻防数据（进球/失球）分析
    - 战术风格匹配度分析
 
-4. **伤病与风险因素（权重12%）**
+4. **伤病与风险因素（权重13%）**
    - 伤病情况对阵容的影响
    - 数据样本不足的不确定性
    - 其他可能影响比赛的特殊因素
+
+5. **网上预测结果分析（权重12%）**
+   - 使用联网搜索功能查找最新的网上比赛预测
+   - 综合各大体育媒体、专家分析、赔率变化等信息
+   - 评估网上预测的一致性和可靠性
 
 ## 输出格式要求：
 1. 首先输出"### 数据综合分析"，整合所有数据维度进行分析
@@ -755,13 +760,13 @@ def build_prompt(match_info: Dict[str, Any]) -> str:
 3. 接着输出"### 风险提示"，说明数据局限性和潜在风险
 4. 最后输出"### 预测结论"，包含明确的预测结果
 
-## 预测结果格式（必须单独一行，只有把握极度不大的时候才输出不败结果）：
-预测结果: [代码]
-- 主队胜: 3
-- 平局: 1  
-- 客队胜: 0
-- 主队不败: 3,1
-- 客队不败: 0,1
+## 预测结果格式（必须单独一行）：
+预测概率: 主队胜: XX%，平局: XX%，客队胜: XX%
+- 概率必须基于所有五个分析维度的综合评估，包括网上预测结果分析
+- 三个概率值之和必须为100%
+- 概率值用整数或带一位小数表示，如：45.5%
+- 如果某个结果概率极低（<5%），可以标注为"极小概率"
+- 概率评估应反映综合分析的不确定性程度
 
 ## 重要原则：
 - 必须基于提供的所有数据进行分析，避免主观臆断
@@ -934,46 +939,109 @@ def call_glm_api(prompt: str, config: Dict[str, Any]) -> str:
 
 def parse_glm_response(response_text: str) -> Dict[str, Any]:
     """
-    解析GLM API的响应（优化预测结果提取）
+    解析GLM API的响应（优化预测结果提取，支持概率格式）
     """
     if not response_text:
         print("    警告: 响应文本为空")
         return {
             "分析过程": "GLM API调用失败",
             "预测结果": "",
+            "预测概率": "",
             "原始响应": "",
             "解析状态": "失败"
         }
     
-    # 提取预测结果的核心逻辑
+    # 初始化变量
     prediction_code = ""
+    prediction_prob = ""
     analysis_text = response_text
     
-    # 首先查找标准格式的预测结果行
-    prediction_pattern = r'预测结果[:：]\s*([\d,]+)'
-    matches = re.findall(prediction_pattern, response_text)
+    # 1. 首先尝试提取概率格式
+    prob_patterns = [
+        r'预测概率[:：]\s*主队胜[:：]\s*([\d.]+)%?\s*平局[:：]\s*([\d.]+)%?\s*客队胜[:：]\s*([\d.]+)%',
+        r'主队胜[:：]\s*([\d.]+)%?\s*平局[:：]\s*([\d.]+)%?\s*客队胜[:：]\s*([\d.]+)%',
+        r'胜率[:：]\s*([\d.]+)%?\s*平局概率[:：]\s*([\d.]+)%?\s*负率[:：]\s*([\d.]+)%',
+        r'([\d.]+)%[^%]*([\d.]+)%[^%]*([\d.]+)%'  # 三个百分比值
+    ]
     
-    if matches:
-        prediction_code = matches[-1].strip()  # 取最后一个匹配（避免中间示例干扰）
-        print(f"    找到标准格式预测结果: {prediction_code}")
-    else:
-        # 备用匹配策略
-        loose_patterns = [
-            r'(主胜|平局|客胜|主队不败|客队不败)[：:]\s*([\d,]+)',
-            r'最终预测[:：]\s*([\d,]+)',
-            r'结论[:：]\s*([\d,]+)',
-            r'([310,]+)\s*$'  # 行尾的数字组合
-        ]
+    home_prob = None
+    draw_prob = None
+    away_prob = None
+    
+    for pattern in prob_patterns:
+        matches = re.findall(pattern, response_text)
+        if matches:
+            # 取最后一个匹配（避免中间示例干扰）
+            last_match = matches[-1]
+            if isinstance(last_match, tuple) and len(last_match) >= 3:
+                try:
+                    home_prob = float(last_match[0])
+                    draw_prob = float(last_match[1])
+                    away_prob = float(last_match[2])
+                    
+                    # 验证概率合理性（总和接近100%）
+                    total = home_prob + draw_prob + away_prob
+                    if 95 <= total <= 105:  # 允许5%的误差
+                        # 归一化到100%
+                        scale = 100.0 / total
+                        home_prob = round(home_prob * scale, 1)
+                        draw_prob = round(draw_prob * scale, 1)
+                        away_prob = round(away_prob * scale, 1)
+                        
+                        prediction_prob = f"主队胜: {home_prob}%，平局: {draw_prob}%，客队胜: {away_prob}%"
+                        print(f"    找到概率格式预测: {prediction_prob}")
+                        
+                        # 从概率推导分类代码
+                        # 计算最大概率和次大概率
+                        probs = [("3", home_prob), ("1", draw_prob), ("0", away_prob)]
+                        probs.sort(key=lambda x: x[1], reverse=True)
+                        
+                        max_prob_item = probs[0]
+                        second_prob_item = probs[1]
+                        
+                        # 如果最大概率明显高于其他（差距>15%），则使用单一结果
+                        if max_prob_item[1] - second_prob_item[1] > 15:
+                            prediction_code = max_prob_item[0]
+                        else:
+                            # 概率接近，使用不败组合
+                            if max_prob_item[0] == "3" and second_prob_item[0] == "1":
+                                prediction_code = "3,1"  # 主队不败
+                            elif max_prob_item[0] == "0" and second_prob_item[0] == "1":
+                                prediction_code = "0,1"  # 客队不败
+                            else:
+                                # 其他接近情况，使用最大概率
+                                prediction_code = max_prob_item[0]
+                        break
+                except (ValueError, IndexError) as e:
+                    print(f"    概率解析错误: {e}")
+                    continue
+    
+    # 2. 如果没有找到概率格式，尝试旧的数字代码格式
+    if not prediction_code:
+        prediction_pattern = r'预测结果[:：]\s*([\d,]+)'
+        matches = re.findall(prediction_pattern, response_text)
         
-        for pattern in loose_patterns:
-            loose_matches = re.findall(pattern, response_text)
-            if loose_matches:
-                prediction_code = loose_matches[-1]
-                if isinstance(prediction_code, tuple):
-                    prediction_code = prediction_code[-1]
-                prediction_code = prediction_code.strip()
-                print(f"    备用匹配找到预测结果: {prediction_code}")
-                break
+        if matches:
+            prediction_code = matches[-1].strip()  # 取最后一个匹配（避免中间示例干扰）
+            print(f"    找到标准格式预测结果: {prediction_code}")
+        else:
+            # 备用匹配策略
+            loose_patterns = [
+                r'(主胜|平局|客胜|主队不败|客队不败)[：:]\s*([\d,]+)',
+                r'最终预测[:：]\s*([\d,]+)',
+                r'结论[:：]\s*([\d,]+)',
+                r'([310,]+)\s*$'  # 行尾的数字组合
+            ]
+            
+            for pattern in loose_patterns:
+                loose_matches = re.findall(pattern, response_text)
+                if loose_matches:
+                    prediction_code = loose_matches[-1]
+                    if isinstance(prediction_code, tuple):
+                        prediction_code = prediction_code[-1]
+                    prediction_code = prediction_code.strip()
+                    print(f"    备用匹配找到预测结果: {prediction_code}")
+                    break
     
     # 验证预测代码的有效性
     valid_codes = {"3", "1", "0", "3,1", "0,1", "1,3", "1,0"}
@@ -989,6 +1057,7 @@ def parse_glm_response(response_text: str) -> Dict[str, Any]:
     return {
         "分析过程": analysis_text,
         "预测结果": prediction_code,
+        "预测概率": prediction_prob,
         "原始响应": response_text,
         "解析状态": "成功" if prediction_code else "部分成功"
     }
@@ -1034,9 +1103,21 @@ def analyze_single_match(match_info: Dict[str, Any], config: Dict[str, Any]) -> 
     result = parse_glm_response(response)
     
     # 输出预测结果
-    prediction = result.get("预测结果", "")
-    if prediction:
-        print(f"  ✅ 预测结果: {prediction}")
+    prediction_prob = result.get("预测概率", "")
+    prediction_code = result.get("预测结果", "")
+    
+    if prediction_prob:
+        print(f"  ✅ 预测概率: {prediction_prob}")
+        if prediction_code:
+            # 显示对应的分类代码（供内部参考）
+            code_labels = {
+                "3": "主队胜", "1": "平局", "0": "客队胜",
+                "3,1": "主队不败", "0,1": "客队不败"
+            }
+            label = code_labels.get(prediction_code, prediction_code)
+            print(f"    分类: {label} ({prediction_code})")
+    elif prediction_code:
+        print(f"  ✅ 预测结果: {prediction_code}")
     else:
         print(f"  ⚠️  无有效预测结果")
     
@@ -1211,5 +1292,3 @@ def main():
 if __name__ == "__main__":
 
     main()
-
-
