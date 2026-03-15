@@ -639,8 +639,8 @@
             
             matches.forEach(match => {
                 const isHome = match.homesxname === teamName;
-                const goalsFor = isHome ? match.homescore : match.awayscore;
-                const goalsAgainst = isHome ? match.awayscore : match.homescore;
+                const goalsFor = isHome ? (match.homescore !== undefined ? match.homescore : 0) : (match.awayscore !== undefined ? match.awayscore : 0);
+                const goalsAgainst = isHome ? (match.awayscore !== undefined ? match.awayscore : 0) : (match.homescore !== undefined ? match.homescore : 0);
                 
                 totalGoalsFor += goalsFor;
                 totalGoalsAgainst += goalsAgainst;
@@ -696,11 +696,11 @@
                                 const isHome = match.homesxname === teamName;
                                 const opponent = isHome ? match.awaysxname : match.homesxname;
                                 const score = isHome ? 
-                                    `${match.homescore}-${match.awayscore}` : 
-                                    `${match.awayscore}-${match.homescore}`;
+                                    `${match.homescore !== undefined ? match.homescore : '--'}-${match.awayscore !== undefined ? match.awayscore : '--'}` : 
+                                    `${match.awayscore !== undefined ? match.awayscore : '--'}-${match.homescore !== undefined ? match.homescore : '--'}`;
                                 const halfScore = isHome ?
-                                    `${match.homehalfscore || '--'}-${match.awayhalfscore || '--'}` :
-                                    `${match.awayhalfscore || '--'}-${match.homehalfscore || '--'}`;
+                                    `${match.homehalfscore !== undefined ? match.homehalfscore : '--'}-${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}` :
+                                    `${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}-${match.homehalfscore !== undefined ? match.homehalfscore : '--'}`;
                                 
                                 // 根据球队是否在主场调整结果
                                 let teamResult = match.result1;
