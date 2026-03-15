@@ -617,7 +617,18 @@ def main():
     # 提取每场比赛的共同对手比赛数据
     for result in results:
         match_num = result['场次']
-        matches_data['14场比赛共同对手比赛数据'][match_num] = result.get('共同对手比赛数据', {})
+        match_data = result.get('共同对手比赛数据', {})
+        # 添加元数据以便HTML渲染
+        match_data['_meta'] = {
+            '主队': result.get('主队', ''),
+            '客队': result.get('客队', ''),
+            '比赛时间': result.get('比赛时间', ''),
+            '场次': result.get('场次', ''),
+            '联赛': result.get('联赛', ''),
+            '主队排名': result.get('主队排名', ''),
+            '客队排名': result.get('客队排名', '')
+        }
+        matches_data['14场比赛共同对手比赛数据'][match_num] = match_data
     
     with open(output_file_matches, 'w', encoding='utf-8') as f:
         json.dump(matches_data, f, ensure_ascii=False, indent=2)

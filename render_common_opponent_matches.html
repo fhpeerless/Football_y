@@ -480,7 +480,9 @@
             
             // 生成比赛卡片
             Object.entries(matchesData).forEach(([matchNum, matchData]) => {
-                if (Object.keys(matchData).length === 0) {
+                // 排除_meta字段后检查是否有共同对手数据
+                const opponents = Object.keys(matchData).filter(key => key !== '_meta');
+                if (opponents.length === 0) {
                     return; // 跳过空数据
                 }
                 createMatchCard(matchNum, matchData);
@@ -495,7 +497,8 @@
             let totalAwayMatches = 0;
             
             Object.values(matchesData).forEach(matchData => {
-                const opponents = Object.keys(matchData);
+                // 排除_meta字段
+                const opponents = Object.keys(matchData).filter(key => key !== '_meta');
                 if (opponents.length > 0) {
                     totalMatchesWithCommon++;
                     totalCommonOpponents += opponents.length;
@@ -538,13 +541,15 @@
             const matchCard = document.createElement('div');
             matchCard.className = 'match-card';
             
-            // 从数据中提取比赛信息（需要从实力分文件获取，这里使用占位符）
-            const opponents = Object.keys(matchData);
-            const firstOpponent = opponents[0];
-            const homeTeam = matchData[firstOpponent]?.home_vs_opponent?.[0]?.homesxname || '未知主队';
-            const awayTeam = matchData[firstOpponent]?.away_vs_opponent?.[0]?.awaysxname || '未知客队';
+            // 从_meta字段获取比赛基本信息
+            const meta = matchData._meta || {};
+            const homeTeam = meta.主队 || '未知主队';
+            const awayTeam = meta.客队 || '未知客队';
+            const league = meta.联赛 || '';
+            const matchTime = meta.比赛时间 || '';
             
-            // 计算共同对手数量
+            // 获取共同对手列表（排除_meta字段）
+            const opponents = Object.keys(matchData).filter(key => key !== '_meta');
             const commonOpponentCount = opponents.length;
             
             // 计算总比赛场次
@@ -557,10 +562,11 @@
             matchCard.innerHTML = `
                 <div class="match-header" onclick="toggleMatchCard(this)">
                     <div>
-                        <h3>第${matchNum}场: ${homeTeam} 🆚 ${awayTeam}</h3>
+                        <h3>第${matchNum}场: ${homeTeam} 🆚 ${awayTeam} ${league ? `· ${league}` : ''}</h3>
                         <div class="match-info">
                             <span>共同对手: ${commonOpponentCount}个</span>
                             <span>历史交锋: ${totalMatchesCount}场</span>
+                            ${matchTime ? `<span>比赛时间: ${matchTime}</span>` : ''}
                         </div>
                     </div>
                     <div class="toggle-icon">▶</div>
@@ -627,13 +633,25 @@
                 totalGoalsFor += goalsFor;
                 totalGoalsAgainst += goalsAgainst;
                 
-                const result = match.result1;
+                // result1是主场球队的结果，需要根据球队是否在主场进行调整
+                const homeResult = match.result1;
+                let teamResult = homeResult;
                 
-                if (result === '胜') {
+                if (!isHome) {
+                    // 球队是客场，需要反转结果
+                    if (homeResult === '胜') {
+                        teamResult = '负';  // 主场胜 = 客场负
+                    } else if (homeResult === '负') {
+                        teamResult = '胜';  // 主场负 = 客队胜
+                    }
+                    // 平局保持不变
+                }
+                
+                if (teamResult === '胜') {
                     win++;
-                } else if (result === '平') {
+                } else if (teamResult === '平') {
                     draw++;
-                } else if (result === '负') {
+                } else if (teamResult === '负') {
                     loss++;
                 }
             });
@@ -667,17 +685,30 @@
                                 `${match.homescore}-${match.awayscore}` : 
                                 `${match.awayscore}-${match.homescore}`;
                             
+                            // 根据球队是否在主场调整结果
+                            let teamResult = match.result1;
                             let resultClass = '';
-                            if (match.result1 === '胜') resultClass = 'result-win';
-                            if (match.result1 === '平') resultClass = 'result-draw';
-                            if (match.result1 === '负') resultClass = 'result-loss';
+                            
+                            if (!isHome) {
+                                // 球队是客场，需要反转结果
+                                if (match.result1 === '胜') {
+                                    teamResult = '负';
+                                } else if (match.result1 === '负') {
+                                    teamResult = '胜';
+                                }
+                                // 平局保持不变
+                            }
+                            
+                            if (teamResult === '胜') resultClass = 'result-win';
+                            if (teamResult === '平') resultClass = 'result-draw';
+                            if (teamResult === '负') resultClass = 'result-loss';
                             
                             return `
                                 <tr>
                                     <td>${match.matchdate || '--'}</td>
                                     <td>${isHome ? '主' : '客'} vs ${opponent}</td>
                                     <td><strong>${score}</strong></td>
-                                    <td class="${resultClass}">${match.result1 || '--'}</td>
+                                    <td class="${resultClass}">${teamResult || '--'}</td>
                                     <td>${match.simplegbname || '--'}</td>
                                     <td>${match.result2 || '--'}</td>
                                     <td>${match.result3 || '--'}</td>
