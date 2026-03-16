@@ -870,25 +870,35 @@
         
         // 初始化：从URL获取期数或使用present.json最新期数
         window.addEventListener('DOMContentLoaded', async () => {
+            console.log('=== 页面初始化开始 ===');
             try {
                 const urlPeriod = getPeriodFromURL();
+                console.log(`URL中的期数: ${urlPeriod || '无'}`);
+                
                 if (urlPeriod) {
+                    console.log(`使用URL期数: ${urlPeriod}`);
                     periodInput.value = urlPeriod;
                     await loadData(urlPeriod);
                 } else {
                     // 从present.json获取最新期数
+                    console.log('开始从present.json获取最新期数...');
                     const latestPeriod = await getLatestPeriodFromPresent();
+                    console.log(`获取到的最新期数: ${latestPeriod}`);
+                    
                     if (latestPeriod) {
                         currentPeriod = latestPeriod;
                         periodInput.value = currentPeriod;
+                        console.log(`准备加载期数: ${currentPeriod}`);
                         await loadData(currentPeriod);
                     } else {
                         // 如果无法获取present.json，使用默认期数26040
+                        console.log('无法获取present.json，使用默认期数26040');
                         currentPeriod = 26040;
                         periodInput.value = currentPeriod;
                         await loadData(currentPeriod);
                     }
                 }
+                console.log('=== 页面初始化完成 ===');
             } catch (error) {
                 console.error('初始化过程中发生未捕获的错误:', error);
                 loadingIndicator.style.display = 'none';
