@@ -873,7 +873,7 @@
         });
         
         // 初始化：从URL获取期数或使用present.json最新期数
-        window.addEventListener('DOMContentLoaded', async () => {
+        async function initPage() {
             console.log('=== 页面初始化开始 ===');
             try {
                 const urlPeriod = getPeriodFromURL();
@@ -909,7 +909,15 @@
                 errorMessage.textContent = `页面初始化失败: ${error.message}`;
                 errorIndicator.style.display = 'block';
             }
-        });
+        }
+        
+        // 检查页面状态，如果DOM已加载完成则立即初始化，否则等待DOMContentLoaded事件
+        if (document.readyState === 'loading') {
+            window.addEventListener('DOMContentLoaded', initPage);
+        } else {
+            // DOM已经加载完成，立即初始化
+            initPage();
+        }
         
         // 支持浏览器前进/后退
         window.addEventListener('popstate', () => {
