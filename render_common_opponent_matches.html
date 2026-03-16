@@ -416,8 +416,7 @@
             
             try {
                 const response = await fetch('./present.json', {
-                    signal: controller.signal,
-                    cache: 'no-cache' // 禁用缓存
+                    signal: controller.signal
                 });
                 clearTimeout(timeoutId); // 清除超时计时器
                 
@@ -430,15 +429,16 @@
                     const lastPeriod = data[data.length - 1];
                     // 优先使用period字段，如果没有则使用period_number
                     const period = lastPeriod.period || lastPeriod.period_number;
+                    console.log(`成功从本地获取最新期数: ${period}`);
                     return parseInt(period);
                 }
                 return null;
             } catch (error) {
                 clearTimeout(timeoutId); // 确保清理计时器
                 if (error.name === 'AbortError') {
-                    console.error('从GitHub获取present.json超时（5秒）:', error);
+                    console.error('获取present.json超时（5秒）:', error);
                 } else {
-                    console.error('从GitHub获取present.json失败:', error);
+                    console.error('获取present.json失败:', error);
                 }
                 return null;
             }
@@ -451,206 +451,92 @@
             window.history.pushState({}, '', url);
         }
         
-        // 安全隐藏加载指示器
-        function hideLoadingIndicator() {
-            try {
-                loadingIndicator.style.display = 'none';
-            } catch (e) {
-                console.warn('隐藏加载指示器失败:', e);
-            }
-        }
-        
         // 加载数据
         async function loadData(period) {
-            // 安全检查
-            if (!period || isNaN(period) || period < 1) {
-                hideLoadingIndicator();
-                showError('无效的期数格式');
-                return;
-            }
-            
             // 显示加载指示器
-            try {
-                loadingIndicator.style.display = 'block';
-                noDataIndicator.style.display = 'none';
-                errorIndicator.style.display = 'none';
-                statsContainer.style.display = 'none';
-            } catch (e) {
-                console.error('更新加载状态失败:', e);
-            }
+            loadingIndicator.style.display = 'block';
+            noDataIndicator.style.display = 'none';
+            errorIndicator.style.display = 'none';
+            statsContainer.style.display = 'none';
             
             // 清空现有内容
-            try {
-                const existingMatches = matchesContainer.querySelectorAll('.match-card');
-                existingMatches.forEach(match => match.remove());
-            } catch (e) {
-                console.error('清空现有内容失败:', e);
-            }
+            const existingMatches = matchesContainer.querySelectorAll('.match-card');
+            existingMatches.forEach(match => match.remove());
             
             // 创建AbortController用于超时控制
             const controller = new AbortController();
             const timeoutId = setTimeout(() => {
                 controller.abort();
-            }, 10000); // 延长超时时间到10秒
-            
-            // 定义可能的URL列表（本地和GitHub）
-            const possibleUrls = [
-                `./result/${period}期_共同对手比赛.json`,  // 本地相对路径
-                `https://raw.githubusercontent.com/fhpeerless/Football_y/main/result/${period}期_共同对手比赛.json`  // 简化的GitHub Raw URL
-            ];
-            
-            let lastError = null;
+            }, 5000); // 5秒超时
             
             try {
-                // 尝试每个URL直到成功
-                for (const url of possibleUrls) {
-                    try {
-                        console.log(`尝试加载: ${url}`);
-                        const response = await fetch(url, {
-                            signal: controller.signal,
-                            cache: 'no-cache', // 禁用缓存
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        });
-                        
-                        if (!response.ok) {
-                            if (response.status === 404) {
-                                lastError = new Error(`在 ${url} 找不到第${period}期的数据文件`);
-                                console.warn(lastError.message);
-                                continue; // 尝试下一个URL
-                            } else {
-                                lastError = new Error(`访问 ${url} 时发生HTTP错误: ${response.status}`);
-                                console.error(lastError.message);
-                                continue; // 尝试下一个URL
-                            }
-                        }
-                        
-                        // 验证响应内容类型
-                        const contentType = response.headers.get('content-type');
-                        if (!contentType || !contentType.includes('application/json')) {
-                            lastError = new Error(`URL ${url} 返回的不是JSON数据`);
-                            console.error(lastError.message);
-                            continue;
-                        }
-                        
-                        const data = await response.json();
-                        currentData = data;
-                        currentPeriod = period;
-                        
-                        // 更新UI（包裹在try-catch中）
-                        try {
-                            updateUI(data);
-                        } catch (uiError) {
-                            console.error('更新UI失败:', uiError);
-                            throw new Error(`数据加载成功但UI渲染失败: ${uiError.message}`);
-                        }
-                        
-                        // 更新URL
-                        updateURL(period);
-                        
-                        console.log(`成功从 ${url} 加载数据`);
-                        return; // 成功，退出函数
-                        
-                    } catch (error) {
-                        lastError = error;
-                        
-                        if (error.name === 'AbortError') {
-                            // 超时错误，不再尝试其他URL
-                            console.error('加载数据超时（10秒）:', error);
-                            throw error;
-                        } else {
-                            console.error(`从 ${url} 加载数据失败:`, error);
-                            // 继续尝试下一个URL
-                        }
+                const response = await fetch(`./result/${period}期_共同对手比赛.json`, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId); // 清除超时计时器
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error(`找不到第${period}期的数据文件`);
+                    } else {
+                        throw new Error(`HTTP错误: ${response.status}`);
                     }
                 }
                 
-                // 所有URL都失败
-                throw lastError || new Error('所有数据源都无法加载');
+                const data = await response.json();
+                currentData = data;
+                currentPeriod = period;
+                
+                // 更新UI
+                updateUI(data);
+                
+                // 更新URL
+                updateURL(period);
+                
+                console.log(`成功从本地加载数据`);
                 
             } catch (error) {
-                // 确保隐藏加载指示器
-                hideLoadingIndicator();
+                clearTimeout(timeoutId); // 确保清理计时器
+                console.error('加载数据失败:', error);
+                loadingIndicator.style.display = 'none';
                 
-                // 显示错误信息
                 if (error.name === 'AbortError') {
-                    showError(`加载数据超时（10秒），请检查网络连接或稍后重试`);
-                } else if (error.message.includes('找不到第')) {
-                    // 404错误，显示无数据
-                    showNoData();
+                    errorMessage.textContent = `加载数据超时（5秒），请检查网络连接或稍后重试`;
                 } else {
-                    showError(`无法加载第${period}期数据。错误: ${error.message}`);
+                    errorMessage.textContent = error.message;
                 }
-                console.error('加载数据最终失败:', error);
-                
-            } finally {
-                // 确保清理计时器
-                clearTimeout(timeoutId);
-            }
-        }
-        
-        // 显示错误信息
-        function showError(message) {
-            try {
-                errorMessage.textContent = message;
                 errorIndicator.style.display = 'block';
-                noDataIndicator.style.display = 'none';
-            } catch (e) {
-                console.error('显示错误信息失败:', e);
-            }
-        }
-        
-        // 显示无数据
-        function showNoData() {
-            try {
-                noDataIndicator.style.display = 'block';
-                errorIndicator.style.display = 'none';
-            } catch (e) {
-                console.error('显示无数据信息失败:', e);
             }
         }
         
         // 更新UI
         function updateUI(data) {
-            // 首先隐藏加载指示器
-            hideLoadingIndicator();
+            loadingIndicator.style.display = 'none';
             
-            // 数据验证
-            if (!data || typeof data !== 'object') {
-                throw new Error('无效的数据格式，期望对象类型');
+            // 更新基本信息
+            calcDateEl.textContent = data.计算基准日期 || '--';
+            
+            const matchesData = data['14场比赛共同对手比赛数据'];
+            const totalMatches = Object.keys(matchesData).length;
+            totalMatchesEl.textContent = totalMatches;
+            
+            if (totalMatches === 0) {
+                noDataIndicator.style.display = 'block';
+                return;
             }
             
-            try {
-                // 更新基本信息
-                calcDateEl.textContent = data.计算基准日期 || '--';
-                
-                const matchesData = data['14场比赛共同对手比赛数据'] || {};
-                const totalMatches = Object.keys(matchesData).length;
-                totalMatchesEl.textContent = totalMatches;
-                
-                if (totalMatches === 0) {
-                    showNoData();
-                    return;
+            // 计算统计数据
+            calculateStats(matchesData);
+            
+            // 生成比赛卡片
+            Object.entries(matchesData).forEach(([matchNum, matchData]) => {
+                // 排除_meta字段后检查是否有共同对手数据
+                const opponents = Object.keys(matchData).filter(key => key !== '_meta');
+                if (opponents.length === 0) {
+                    return; // 跳过空数据
                 }
-                
-                // 计算统计数据
-                calculateStats(matchesData);
-                
-                // 生成比赛卡片
-                Object.entries(matchesData).forEach(([matchNum, matchData]) => {
-                    // 排除_meta字段后检查是否有共同对手数据
-                    const opponents = Object.keys(matchData || {}).filter(key => key !== '_meta');
-                    if (opponents.length === 0) {
-                        return; // 跳过空数据
-                    }
-                    createMatchCard(matchNum, matchData);
-                });
-                
-            } catch (error) {
-                console.error('UI更新失败:', error);
-                throw error;
-            }
+                createMatchCard(matchNum, matchData);
+            });
         }
         
         // 计算统计数据
@@ -660,289 +546,249 @@
             let totalHomeMatches = 0;
             let totalAwayMatches = 0;
             
-            try {
-                Object.values(matchesData || {}).forEach(matchData => {
-                    if (!matchData) return;
+            Object.values(matchesData).forEach(matchData => {
+                // 排除_meta字段
+                const opponents = Object.keys(matchData).filter(key => key !== '_meta');
+                if (opponents.length > 0) {
+                    totalMatchesWithCommon++;
+                    totalCommonOpponents += opponents.length;
                     
-                    // 排除_meta字段
-                    const opponents = Object.keys(matchData).filter(key => key !== '_meta');
-                    if (opponents.length > 0) {
-                        totalMatchesWithCommon++;
-                        totalCommonOpponents += opponents.length;
-                        
-                        // 计算主客队比赛场次
-                        opponents.forEach(opponent => {
-                            const homeMatches = matchData[opponent]?.home_vs_opponent?.length || 0;
-                            const awayMatches = matchData[opponent]?.away_vs_opponent?.length || 0;
-                            totalHomeMatches += homeMatches;
-                            totalAwayMatches += awayMatches;
-                        });
-                    }
-                });
-                
-                // 更新统计卡片
-                statsContainer.innerHTML = `
-                    <div class="stat-card">
-                        <h3>${Object.keys(matchesData || {}).length}</h3>
-                        <p>总比赛场次</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>${totalMatchesWithCommon}</h3>
-                        <p>有共同对手的比赛</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>${totalCommonOpponents}</h3>
-                        <p>共同对手总数</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>${totalHomeMatches + totalAwayMatches}</h3>
-                        <p>历史交锋场次</p>
-                    </div>
-                `;
-                
-                statsContainer.style.display = 'grid';
-                
-            } catch (error) {
-                console.error('计算统计数据失败:', error);
-                throw error;
-            }
+                    // 计算主客队比赛场次
+                    opponents.forEach(opponent => {
+                        const homeMatches = matchData[opponent]?.home_vs_opponent?.length || 0;
+                        const awayMatches = matchData[opponent]?.away_vs_opponent?.length || 0;
+                        totalHomeMatches += homeMatches;
+                        totalAwayMatches += awayMatches;
+                    });
+                }
+            });
+            
+            // 更新统计卡片
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <h3>${Object.keys(matchesData).length}</h3>
+                    <p>总比赛场次</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalMatchesWithCommon}</h3>
+                    <p>有共同对手的比赛</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalCommonOpponents}</h3>
+                    <p>共同对手总数</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalHomeMatches + totalAwayMatches}</h3>
+                    <p>历史交锋场次</p>
+                </div>
+            `;
+            
+            statsContainer.style.display = 'grid';
         }
         
         // 创建比赛卡片
         function createMatchCard(matchNum, matchData) {
-            try {
-                const matchCard = document.createElement('div');
-                matchCard.className = 'match-card';
-                
-                // 从_meta字段获取比赛基本信息
-                const meta = matchData?._meta || {};
-                const homeTeam = meta.主队 || '未知主队';
-                const awayTeam = meta.客队 || '未知客队';
-                const league = meta.联赛 || '';
-                const matchTime = meta.比赛时间 || '';
-                
-                // 获取共同对手列表（排除_meta字段）
-                const opponents = Object.keys(matchData || {}).filter(key => key !== '_meta');
-                const commonOpponentCount = opponents.length;
-                
-                // 计算总比赛场次
-                let totalMatchesCount = 0;
-                opponents.forEach(opponent => {
-                    totalMatchesCount += (matchData[opponent]?.home_vs_opponent?.length || 0);
-                    totalMatchesCount += (matchData[opponent]?.away_vs_opponent?.length || 0);
-                });
-                
-                matchCard.innerHTML = `
-                    <div class="match-header" onclick="toggleMatchCard(this)">
-                        <div>
-                            <h3>第${matchNum}场: ${homeTeam} 🆚 ${awayTeam} ${league ? `· ${league}` : ''}</h3>
-                            <div class="match-info">
-                                <span>共同对手: ${commonOpponentCount}个</span>
-                                <span>历史交锋: ${totalMatchesCount}场</span>
-                                ${matchTime ? `<span>比赛时间: ${matchTime}</span>` : ''}
-                            </div>
+            const matchCard = document.createElement('div');
+            matchCard.className = 'match-card';
+            
+            // 从_meta字段获取比赛基本信息
+            const meta = matchData._meta || {};
+            const homeTeam = meta.主队 || '未知主队';
+            const awayTeam = meta.客队 || '未知客队';
+            const league = meta.联赛 || '';
+            const matchTime = meta.比赛时间 || '';
+            
+            // 获取共同对手列表（排除_meta字段）
+            const opponents = Object.keys(matchData).filter(key => key !== '_meta');
+            const commonOpponentCount = opponents.length;
+            
+            // 计算总比赛场次
+            let totalMatchesCount = 0;
+            opponents.forEach(opponent => {
+                totalMatchesCount += (matchData[opponent]?.home_vs_opponent?.length || 0);
+                totalMatchesCount += (matchData[opponent]?.away_vs_opponent?.length || 0);
+            });
+            
+            matchCard.innerHTML = `
+                <div class="match-header" onclick="toggleMatchCard(this)">
+                    <div>
+                        <h3>第${matchNum}场: ${homeTeam} 🆚 ${awayTeam} ${league ? `· ${league}` : ''}</h3>
+                        <div class="match-info">
+                            <span>共同对手: ${commonOpponentCount}个</span>
+                            <span>历史交锋: ${totalMatchesCount}场</span>
+                            ${matchTime ? `<span>比赛时间: ${matchTime}</span>` : ''}
                         </div>
-                        <div class="toggle-icon">▶</div>
                     </div>
-                    <div class="match-content">
-                        ${opponents.map(opponent => createOpponentSection(opponent, matchData[opponent], homeTeam, awayTeam)).join('')}
-                    </div>
-                `;
-                
-                matchesContainer.appendChild(matchCard);
-                
-            } catch (error) {
-                console.error(`创建比赛卡片${matchNum}失败:`, error);
-                // 继续处理其他卡片，不中断整个流程
-            }
+                    <div class="toggle-icon">▶</div>
+                </div>
+                <div class="match-content">
+                    ${opponents.map(opponent => createOpponentSection(opponent, matchData[opponent], homeTeam, awayTeam)).join('')}
+                </div>
+            `;
+            
+            matchesContainer.appendChild(matchCard);
         }
         
         // 创建对手部分
         function createOpponentSection(opponentName, opponentData, homeTeam, awayTeam) {
-            try {
-                const homeMatches = opponentData?.home_vs_opponent || [];
-                const awayMatches = opponentData?.away_vs_opponent || [];
-                
-                // 计算统计数据
-                const homeStats = calculateTeamStats(homeMatches, homeTeam);
-                const awayStats = calculateTeamStats(awayMatches, awayTeam);
-                
-                // 确定优势方
-                let advantage = '平手';
-                if (homeStats.winRate > awayStats.winRate + 0.1) {
-                    advantage = homeTeam;
-                } else if (awayStats.winRate > homeStats.winRate + 0.1) {
-                    advantage = awayTeam;
-                }
-                
-                return `
-                    <div class="opponent-section">
-                        <div class="opponent-header">
-                            <h4>共同对手: ${opponentName}</h4>
-                            <p>优势方: <strong>${advantage}</strong> | ${homeTeam}胜率: ${(homeStats.winRate * 100).toFixed(1)}% | ${awayTeam}胜率: ${(awayStats.winRate * 100).toFixed(1)}%</p>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <h5 style="margin-bottom: 10px; color: #3498db;">${homeTeam} 对阵 ${opponentName}</h5>
-                            ${homeMatches.length > 0 ? createMatchesTable(homeMatches, homeTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
-                        </div>
-                        
-                        <div>
-                            <h5 style="margin-bottom: 10px; color: #e74c3c;">${awayTeam} 对阵 ${opponentName}</h5>
-                            ${awayMatches.length > 0 ? createMatchesTable(awayMatches, awayTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
-                        </div>
-                    </div>
-                `;
-                
-            } catch (error) {
-                console.error(`创建对手部分${opponentName}失败:`, error);
-                return `<div class="error" style="margin: 10px 0;"><p>加载${opponentName}数据失败: ${error.message}</p></div>`;
+            const homeMatches = opponentData?.home_vs_opponent || [];
+            const awayMatches = opponentData?.away_vs_opponent || [];
+            
+            // 计算统计数据
+            const homeStats = calculateTeamStats(homeMatches, homeTeam);
+            const awayStats = calculateTeamStats(awayMatches, awayTeam);
+            
+            // 确定优势方
+            let advantage = '平手';
+            if (homeStats.winRate > awayStats.winRate + 0.1) {
+                advantage = homeTeam;
+            } else if (awayStats.winRate > homeStats.winRate + 0.1) {
+                advantage = awayTeam;
             }
+            
+            return `
+                <div class="opponent-section">
+                    <div class="opponent-header">
+                        <h4>共同对手: ${opponentName}</h4>
+                        <p>优势方: <strong>${advantage}</strong> | ${homeTeam}胜率: ${(homeStats.winRate * 100).toFixed(1)}% | ${awayTeam}胜率: ${(awayStats.winRate * 100).toFixed(1)}%</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h5 style="margin-bottom: 10px; color: #3498db;">${homeTeam} 对阵 ${opponentName}</h5>
+                        ${homeMatches.length > 0 ? createMatchesTable(homeMatches, homeTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
+                    </div>
+                    
+                    <div>
+                        <h5 style="margin-bottom: 10px; color: #e74c3c;">${awayTeam} 对阵 ${opponentName}</h5>
+                        ${awayMatches.length > 0 ? createMatchesTable(awayMatches, awayTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
+                    </div>
+                </div>
+            `;
         }
         
         // 计算球队统计数据
         function calculateTeamStats(matches, teamName) {
-            try {
-                if (!Array.isArray(matches) || matches.length === 0) {
-                    return { win: 0, draw: 0, loss: 0, winRate: 0, totalGoalsFor: 0, totalGoalsAgainst: 0 };
-                }
-                
-                let win = 0, draw = 0, loss = 0;
-                let totalGoalsFor = 0, totalGoalsAgainst = 0;
-                
-                matches.forEach(match => {
-                    if (!match) return;
-                    
-                    const isHome = match.homesxname === teamName;
-                    const goalsFor = isHome ? (match.homescore !== undefined ? match.homescore : 0) : (match.awayscore !== undefined ? match.awayscore : 0);
-                    const goalsAgainst = isHome ? (match.awayscore !== undefined ? match.awayscore : 0) : (match.homescore !== undefined ? match.homescore : 0);
-                    
-                    totalGoalsFor += parseInt(goalsFor) || 0;
-                    totalGoalsAgainst += parseInt(goalsAgainst) || 0;
-                    
-                    // result1是主场球队的结果，需要根据球队是否在主场进行调整
-                    const homeResult = match.result1;
-                    let teamResult = homeResult;
-                    
-                    if (!isHome) {
-                        // 球队是客场，需要反转结果
-                        if (homeResult === '胜') {
-                            teamResult = '负';  // 主场胜 = 客场负
-                        } else if (homeResult === '负') {
-                            teamResult = '胜';  // 主场负 = 客队胜
-                        }
-                        // 平局保持不变
-                    }
-                    
-                    if (teamResult === '胜') {
-                        win++;
-                    } else if (teamResult === '平') {
-                        draw++;
-                    } else if (teamResult === '负') {
-                        loss++;
-                    }
-                });
-                
-                const totalMatches = win + draw + loss;
-                const winRate = totalMatches > 0 ? win / totalMatches : 0;
-                
-                return { win, draw, loss, winRate, totalGoalsFor, totalGoalsAgainst };
-                
-            } catch (error) {
-                console.error('计算球队统计数据失败:', error);
+            if (matches.length === 0) {
                 return { win: 0, draw: 0, loss: 0, winRate: 0, totalGoalsFor: 0, totalGoalsAgainst: 0 };
             }
+            
+            let win = 0, draw = 0, loss = 0;
+            let totalGoalsFor = 0, totalGoalsAgainst = 0;
+            
+            matches.forEach(match => {
+                const isHome = match.homesxname === teamName;
+                const goalsFor = isHome ? (match.homescore !== undefined ? match.homescore : 0) : (match.awayscore !== undefined ? match.awayscore : 0);
+                const goalsAgainst = isHome ? (match.awayscore !== undefined ? match.awayscore : 0) : (match.homescore !== undefined ? match.homescore : 0);
+                
+                totalGoalsFor += goalsFor;
+                totalGoalsAgainst += goalsAgainst;
+                
+                // result1是主场球队的结果，需要根据球队是否在主场进行调整
+                const homeResult = match.result1;
+                let teamResult = homeResult;
+                
+                if (!isHome) {
+                    // 球队是客场，需要反转结果
+                    if (homeResult === '胜') {
+                        teamResult = '负';  // 主场胜 = 客场负
+                    } else if (homeResult === '负') {
+                        teamResult = '胜';  // 主场负 = 客队胜
+                    }
+                    // 平局保持不变
+                }
+                
+                if (teamResult === '胜') {
+                    win++;
+                } else if (teamResult === '平') {
+                    draw++;
+                } else if (teamResult === '负') {
+                    loss++;
+                }
+            });
+            
+            const totalMatches = win + draw + loss;
+            const winRate = totalMatches > 0 ? win / totalMatches : 0;
+            
+            return { win, draw, loss, winRate, totalGoalsFor, totalGoalsAgainst };
         }
         
         // 创建比赛表格
         function createMatchesTable(matches, teamName) {
-            try {
-                return `
-                    <div class="matches-table-container">
-                        <table class="matches-table">
-                            <thead>
-                                <tr>
-                                    <th>比赛日期</th>
-                                    <th>对阵</th>
-                                    <th>全场比分</th>
-                                    <th>半场比分</th>
-                                    <th>结果</th>
-                                    <th>联赛</th>
-                                    <th>亚盘</th>
-                                    <th>大小球</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${matches.map(match => {
-                                    if (!match) return '<tr><td colspan="8">无效的比赛数据</td></tr>';
-                                    
-                                    const isHome = match.homesxname === teamName;
-                                    const opponent = isHome ? match.awaysxname : match.homesxname;
-                                    const score = isHome ? 
-                                        `${match.homescore !== undefined ? match.homescore : '--'}-${match.awayscore !== undefined ? match.awayscore : '--'}` : 
-                                        `${match.awayscore !== undefined ? match.awayscore : '--'}-${match.homescore !== undefined ? match.homescore : '--'}`;
-                                    const halfScore = isHome ?
-                                        `${match.homehalfscore !== undefined ? match.homehalfscore : '--'}-${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}` :
-                                        `${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}-${match.homehalfscore !== undefined ? match.homehalfscore : '--'}`;
-                                    
-                                    // 根据球队是否在主场调整结果
-                                    let teamResult = match.result1;
-                                    let resultClass = '';
-                                    
-                                    if (!isHome) {
-                                        // 球队是客场，需要反转结果
-                                        if (match.result1 === '胜') {
-                                            teamResult = '负';
-                                        } else if (match.result1 === '负') {
-                                            teamResult = '胜';
-                                        }
-                                        // 平局保持不变
+            return `
+                <div class="matches-table-container">
+                    <table class="matches-table">
+                        <thead>
+                            <tr>
+                                <th>比赛日期</th>
+                                <th>对阵</th>
+                                <th>全场比分</th>
+                                <th>半场比分</th>
+                                <th>结果</th>
+                                <th>联赛</th>
+                                <th>亚盘</th>
+                                <th>大小球</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${matches.map(match => {
+                                const isHome = match.homesxname === teamName;
+                                const opponent = isHome ? match.awaysxname : match.homesxname;
+                                const score = isHome ? 
+                                    `${match.homescore !== undefined ? match.homescore : '--'}-${match.awayscore !== undefined ? match.awayscore : '--'}` : 
+                                    `${match.awayscore !== undefined ? match.awayscore : '--'}-${match.homescore !== undefined ? match.homescore : '--'}`;
+                                const halfScore = isHome ?
+                                    `${match.homehalfscore !== undefined ? match.homehalfscore : '--'}-${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}` :
+                                    `${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}-${match.homehalfscore !== undefined ? match.homehalfscore : '--'}`;
+                                
+                                // 根据球队是否在主场调整结果
+                                let teamResult = match.result1;
+                                let resultClass = '';
+                                
+                                if (!isHome) {
+                                    // 球队是客场，需要反转结果
+                                    if (match.result1 === '胜') {
+                                        teamResult = '负';
+                                    } else if (match.result1 === '负') {
+                                        teamResult = '胜';
                                     }
-                                    
-                                    if (teamResult === '胜') resultClass = 'result-win';
-                                    if (teamResult === '平') resultClass = 'result-draw';
-                                    if (teamResult === '负') resultClass = 'result-loss';
-                                    
-                                    return `
-                                        <tr>
-                                            <td>${match.matchdate || '--'}</td>
-                                            <td>${isHome ? '主' : '客'} vs ${opponent || '--'}</td>
-                                            <td><strong>${score}</strong></td>
-                                            <td>${halfScore}</td>
-                                            <td class="${resultClass}">${teamResult || '--'}</td>
-                                            <td>${match.simplegbname || '--'}</td>
-                                            <td>${match.result2 || '--'}</td>
-                                            <td>${match.result3 || '--'}</td>
-                                        </tr>
-                                    `;
-                                }).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-                
-            } catch (error) {
-                console.error('创建比赛表格失败:', error);
-                return `<p style="color: #e74c3c; padding: 10px;">表格生成失败: ${error.message}</p>`;
-            }
+                                    // 平局保持不变
+                                }
+                                
+                                if (teamResult === '胜') resultClass = 'result-win';
+                                if (teamResult === '平') resultClass = 'result-draw';
+                                if (teamResult === '负') resultClass = 'result-loss';
+                                
+                                return `
+                                    <tr>
+                                        <td>${match.matchdate || '--'}</td>
+                                        <td>${isHome ? '主' : '客'} vs ${opponent}</td>
+                                        <td><strong>${score}</strong></td>
+                                        <td>${halfScore}</td>
+                                        <td class="${resultClass}">${teamResult || '--'}</td>
+                                        <td>${match.simplegbname || '--'}</td>
+                                        <td>${match.result2 || '--'}</td>
+                                        <td>${match.result3 || '--'}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
         }
         
         // 切换比赛卡片展开/收起
         window.toggleMatchCard = function(header) {
-            try {
-                const card = header.parentElement;
-                const content = card.querySelector('.match-content');
-                const icon = header.querySelector('.toggle-icon');
-                
-                if (content.classList.contains('expanded')) {
-                    content.classList.remove('expanded');
-                    icon.textContent = '▶';
-                } else {
-                    content.classList.add('expanded');
-                    icon.textContent = '▼';
-                }
-            } catch (error) {
-                console.error('切换卡片状态失败:', error);
+            const card = header.parentElement;
+            const content = card.querySelector('.match-content');
+            const icon = header.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.textContent = '▶';
+            } else {
+                content.classList.add('expanded');
+                icon.textContent = '▼';
             }
         };
         
@@ -953,23 +799,17 @@
                 return;
             }
             
-            try {
-                const dataStr = JSON.stringify(currentData, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                const url = URL.createObjectURL(dataBlob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${currentPeriod}期_共同对手比赛_导出.json`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                
-            } catch (error) {
-                console.error('导出数据失败:', error);
-                alert(`导出失败: ${error.message}`);
-            }
+            const dataStr = JSON.stringify(currentData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentPeriod}期_共同对手比赛_导出.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
         
         // 事件监听
@@ -1005,52 +845,33 @@
         
         // 初始化：从URL获取期数或使用present.json最新期数
         window.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const urlPeriod = getPeriodFromURL();
-                if (urlPeriod) {
-                    periodInput.value = urlPeriod;
-                    loadData(urlPeriod);
+            const urlPeriod = getPeriodFromURL();
+            if (urlPeriod) {
+                periodInput.value = urlPeriod;
+                loadData(urlPeriod);
+            } else {
+                // 从present.json获取最新期数
+                const latestPeriod = await getLatestPeriodFromPresent();
+                if (latestPeriod) {
+                    currentPeriod = latestPeriod;
+                    periodInput.value = currentPeriod;
+                    loadData(currentPeriod);
                 } else {
-                    // 从present.json获取最新期数
-                    const latestPeriod = await getLatestPeriodFromPresent();
-                    if (latestPeriod) {
-                        currentPeriod = latestPeriod;
-                        periodInput.value = currentPeriod;
-                        loadData(currentPeriod);
-                    } else {
-                        // 如果无法获取present.json，使用默认期数26040
-                        currentPeriod = 26040;
-                        periodInput.value = currentPeriod;
-                        loadData(currentPeriod);
-                    }
+                    // 如果无法获取present.json，使用默认期数26040
+                    currentPeriod = 26040;
+                    periodInput.value = currentPeriod;
+                    loadData(currentPeriod);
                 }
-            } catch (error) {
-                console.error('初始化失败:', error);
-                // 降级处理：使用默认期数
-                currentPeriod = 26040;
-                periodInput.value = currentPeriod;
-                loadData(currentPeriod);
             }
         });
         
         // 支持浏览器前进/后退
         window.addEventListener('popstate', () => {
-            try {
-                const urlPeriod = getPeriodFromURL();
-                if (urlPeriod) {
-                    periodInput.value = urlPeriod;
-                    loadData(urlPeriod);
-                }
-            } catch (error) {
-                console.error('处理popstate失败:', error);
+            const urlPeriod = getPeriodFromURL();
+            if (urlPeriod) {
+                periodInput.value = urlPeriod;
+                loadData(urlPeriod);
             }
-        });
-        
-        // 添加全局错误处理
-        window.addEventListener('error', (event) => {
-            console.error('全局错误:', event.error);
-            hideLoadingIndicator();
-            showError(`发生未预期的错误: ${event.error?.message || '未知错误'}`);
         });
     </script>
 </body>
