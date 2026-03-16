@@ -681,14 +681,16 @@
                         <p>优势方: <strong>${advantage}</strong> | ${homeTeam}胜率: ${(homeStats.winRate * 100).toFixed(1)}% | ${awayTeam}胜率: ${(awayStats.winRate * 100).toFixed(1)}%</p>
                     </div>
                     
-                    <div style="margin-bottom: 20px;">
-                        <h5 style="margin-bottom: 10px; color: #3498db;">${homeTeam} 对阵 ${opponentName}</h5>
-                        ${homeMatches.length > 0 ? createMatchesTable(homeMatches, homeTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
-                    </div>
-                    
-                    <div>
-                        <h5 style="margin-bottom: 10px; color: #e74c3c;">${awayTeam} 对阵 ${opponentName}</h5>
-                        ${awayMatches.length > 0 ? createMatchesTable(awayMatches, awayTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <div style="flex: 1;">
+                            <h5 style="margin-bottom: 10px; color: #3498db;">${homeTeam} 对阵 ${opponentName}</h5>
+                            ${homeMatches.length > 0 ? createMatchesTable(homeMatches, homeTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
+                        </div>
+                        
+                        <div style="flex: 1;">
+                            <h5 style="margin-bottom: 10px; color: #e74c3c;">${awayTeam} 对阵 ${opponentName}</h5>
+                            ${awayMatches.length > 0 ? createMatchesTable(awayMatches, awayTeam) : '<p style="color: #7f8c8d; padding: 10px;">暂无比赛记录</p>'}
+                        </div>
                     </div>
                 </div>
             `;
@@ -761,12 +763,9 @@
                             ${matches.map(match => {
                                 const isHome = match.homesxname === teamName;
                                 const opponent = isHome ? match.awaysxname : match.homesxname;
-                                const score = isHome ? 
-                                    `${match.homescore !== undefined ? match.homescore : '--'}-${match.awayscore !== undefined ? match.awayscore : '--'}` : 
-                                    `${match.awayscore !== undefined ? match.awayscore : '--'}-${match.homescore !== undefined ? match.homescore : '--'}`;
-                                const halfScore = isHome ?
-                                    `${match.homehalfscore !== undefined ? match.homehalfscore : '--'}-${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}` :
-                                    `${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}-${match.homehalfscore !== undefined ? match.homehalfscore : '--'}`;
+                                // 总是按照主队-客队的顺序显示比分
+                                const score = `${match.homescore !== undefined ? match.homescore : '--'}-${match.awayscore !== undefined ? match.awayscore : '--'}`;
+                                const halfScore = `${match.homehalfscore !== undefined ? match.homehalfscore : '--'}-${match.awayhalfscore !== undefined ? match.awayhalfscore : '--'}`;
                                 
                                 // 根据球队是否在主场调整结果
                                 let teamResult = match.result1;
@@ -789,7 +788,7 @@
                                 return `
                                     <tr>
                                         <td>${match.matchdate || '--'}</td>
-                                        <td>${isHome ? '主' : '客'} vs ${opponent}</td>
+                                        <td>${match.homesxname || '--'} vs ${match.awaysxname || '--'}</td>
                                         <td><strong>${score}</strong></td>
                                         <td>${halfScore}</td>
                                         <td class="${resultClass}">${teamResult || '--'}</td>
