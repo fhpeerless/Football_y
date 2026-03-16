@@ -380,8 +380,6 @@
     </div>
 
     <script>
-        console.log('JavaScript脚本开始执行');
-        
         // 全局错误处理
         window.addEventListener('error', (event) => {
             console.error('全局错误捕获:', event.error || event.message, event);
@@ -409,8 +407,6 @@
         const calcDateEl = document.getElementById('calcDate');
         const totalMatchesEl = document.getElementById('totalMatches');
         
-        console.log('DOM元素初始化完成');
-        
         // 从URL获取期数参数
         function getPeriodFromURL() {
             const params = new URLSearchParams(window.location.search);
@@ -427,29 +423,23 @@
             }, 5000); // 5秒超时
             
             try {
-                console.log('正在从本地获取present.json...');
                 const response = await fetch('./present.json', {
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId); // 清除超时计时器
                 
-                console.log(`present.json响应状态: ${response.status} ${response.statusText}`);
-                
                 if (!response.ok) {
                     throw new Error(`HTTP错误: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log('present.json解析成功');
                 
                 if (Array.isArray(data) && data.length > 0) {
                     // 获取最后一个元素（最新期数）
                     const lastPeriod = data[data.length - 1];
                     // 优先使用period字段，如果没有则使用period_number
                     const period = lastPeriod.period || lastPeriod.period_number;
-                    console.log(`成功从本地获取最新期数: ${period}`);
                     return parseInt(period);
                 }
-                console.log('present.json数据格式不正确或为空');
                 return null;
             } catch (error) {
                 clearTimeout(timeoutId); // 确保清理计时器
@@ -489,16 +479,11 @@
             
             try {
                 const url = `./result/${period}期_共同对手比赛.json`;
-                const fullUrl = new URL(url, window.location.href).href;
-                console.log(`正在从 ${url} 加载数据...`);
-                console.log(`完整URL: ${fullUrl}`);
                 
                 const response = await fetch(url, {
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId); // 清除超时计时器
-                
-                console.log(`响应状态: ${response.status} ${response.statusText}`);
                 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -509,7 +494,6 @@
                 }
                 
                 const data = await response.json();
-                console.log('数据解析成功，开始更新UI');
                 currentData = data;
                 currentPeriod = period;
                 
@@ -518,8 +502,6 @@
                 
                 // 更新URL
                 updateURL(period);
-                
-                console.log(`成功从本地加载数据`);
                 
             } catch (error) {
                 clearTimeout(timeoutId); // 确保清理计时器
@@ -539,10 +521,10 @@
         function updateUI(data) {
             try {
                 loadingIndicator.style.display = 'none';
+                errorIndicator.style.display = 'none';
                 
                 // 更新基本信息
                 calcDateEl.textContent = data.计算基准日期 || '--';
-                console.log(`计算基准日期: ${data.计算基准日期 || '--'}`);
                 
                 const matchesData = data['14场比赛共同对手比赛数据'];
                 if (!matchesData) {
@@ -551,11 +533,9 @@
                 
                 const totalMatches = Object.keys(matchesData).length;
                 totalMatchesEl.textContent = totalMatches;
-                console.log(`总比赛场次: ${totalMatches}`);
                 
                 if (totalMatches === 0) {
                     noDataIndicator.style.display = 'block';
-                    console.log('没有比赛数据，显示无数据提示');
                     return;
                 }
                 
@@ -579,8 +559,6 @@
                     totalOpponents += opponents.length;
                     createMatchCard(matchNum, matchData);
                 });
-                
-                console.log(`UI更新完成: 生成${cardsCreated}张比赛卡片，跳过${skippedMatches}场无共同对手的比赛，总共${totalOpponents}个共同对手`);
             } catch (error) {
                 console.error('更新UI时发生错误:', error);
                 loadingIndicator.style.display = 'none';
@@ -895,58 +873,25 @@
         
         // 初始化：从URL获取期数或使用present.json最新期数
         async function initPage() {
-            console.log('=== 页面初始化开始 ===');
             try {
                 const urlPeriod = getPeriodFromURL();
-                console.log(`URL中的期数: ${urlPeriod || '无'}`);
-                
                 if (urlPeriod) {
-                    console.log(`使用URL期数: ${urlPeriod}`);
                     periodInput.value = urlPeriod;
                     await loadData(urlPeriod);
                 } else {
                     // 从present.json获取最新期数
-                    console.log('开始从present.json获取最新期数...');
                     const latestPeriod = await getLatestPeriodFromPresent();
-                    console.log(`获取到的最新期数: ${latestPeriod}`);
-                    
                     if (latestPeriod) {
                         currentPeriod = latestPeriod;
                         periodInput.value = currentPeriod;
-                        console.log(`准备加载期数: ${currentPeriod}`);
                         await loadData(currentPeriod);
                     } else {
                         // 如果无法获取present.json，使用默认期数26040
-                        console.log('无法获取present.json，使用默认期数26040');
                         currentPeriod = 26040;
                         periodInput.value = currentPeriod;
                         await loadData(currentPeriod);
                     }
                 }
-                console.log('=== 页面初始化完成 ===');
-                
-                // 最终检查：验证页面状态
-                setTimeout(() => {
-                    console.log('最终状态检查:');
-                    console.log(`- 当前期数: ${currentPeriod}`);
-                    console.log(`- 数据加载: ${currentData ? '成功' : '失败'}`);
-                    console.log(`- 比赛卡片数量: ${document.querySelectorAll('.match-card').length}`);
-                    console.log(`- 加载指示器显示: ${loadingIndicator.style.display}`);
-                    console.log(`- 错误指示器显示: ${errorIndicator.style.display}`);
-                    console.log(`- 无数据指示器显示: ${noDataIndicator.style.display}`);
-                    
-                    // 检查是否有任何错误元素可见
-                    const visibleErrors = [];
-                    if (errorIndicator.style.display !== 'none') visibleErrors.push('错误指示器');
-                    if (noDataIndicator.style.display !== 'none') visibleErrors.push('无数据指示器');
-                    if (loadingIndicator.style.display !== 'none') visibleErrors.push('加载指示器仍然显示');
-                    
-                    if (visibleErrors.length > 0) {
-                        console.warn(`检测到可能的问题: ${visibleErrors.join(', ')}`);
-                    } else {
-                        console.log('页面状态正常，所有检查通过');
-                    }
-                }, 500);
             } catch (error) {
                 console.error('初始化过程中发生未捕获的错误:', error);
                 loadingIndicator.style.display = 'none';
@@ -956,27 +901,19 @@
         }
         
         // 检查页面状态，如果DOM已加载完成则立即初始化，否则等待DOMContentLoaded事件
-        console.log(`document.readyState: ${document.readyState}`);
-        console.log(`window load status: ${window.performance.timing.loadEventEnd ? 'loaded' : 'loading'}`);
-        console.log(`当前时间戳: ${Date.now()}`);
-        console.log(`window.location.href: ${window.location.href}`);
-        
+
         let initialized = false;
         const initPageWrapper = () => {
             if (initialized) {
-                console.log('initPageWrapper: 已经初始化过，跳过');
                 return;
             }
             initialized = true;
-            console.log('initPageWrapper: 开始初始化');
             initPage();
         };
         
         // 设置一个超时作为回退，确保初始化最终会被调用（缩短到2秒）
         const fallbackTimeout = setTimeout(() => {
-            console.log('fallbackTimeout: 2秒超时已触发，检查初始化状态');
             if (!initialized) {
-                console.warn('fallbackTimeout: 初始化未完成，强制调用initPageWrapper');
                 initPageWrapper();
             }
         }, 2000);
@@ -984,55 +921,43 @@
         // 清理超时的函数
         const clearFallbackTimeout = () => {
             clearTimeout(fallbackTimeout);
-            console.log('fallbackTimeout已清除');
         };
         
         // 多个事件监听器，确保至少一个会触发
         const setupEventListeners = () => {
-            console.log('设置事件监听器...');
-            
             // DOMContentLoaded事件
             window.addEventListener('DOMContentLoaded', () => {
-                console.log('DOMContentLoaded事件触发');
                 clearFallbackTimeout();
                 initPageWrapper();
             });
             
             // load事件作为备选（当所有资源加载完成）
             window.addEventListener('load', () => {
-                console.log('load事件触发');
                 clearFallbackTimeout();
                 initPageWrapper();
             });
             
             // 如果document已经有readystatechange事件监听器，也添加
             document.addEventListener('readystatechange', () => {
-                console.log(`readystatechange事件触发，readyState: ${document.readyState}`);
                 if (document.readyState === 'interactive' || document.readyState === 'complete') {
                     clearFallbackTimeout();
                     initPageWrapper();
                 }
             });
-            
-            console.log('事件监听器设置完成');
         };
         
         // 立即尝试初始化，同时设置事件监听器
-        console.log('立即检查并设置初始化...');
         if (document.readyState === 'loading') {
-            console.log('DOM还在加载，设置事件监听器...');
             setupEventListeners();
             
             // 同时尝试立即初始化（针对某些环境）
             setTimeout(() => {
                 if (!initialized && document.readyState !== 'loading') {
-                    console.log('延迟检查：DOM可能已加载，尝试初始化');
                     initPageWrapper();
                 }
             }, 100);
         } else {
             // DOM已经加载完成，立即初始化
-            console.log('DOM已加载完成，立即初始化...');
             clearFallbackTimeout();
             initPageWrapper();
         }
