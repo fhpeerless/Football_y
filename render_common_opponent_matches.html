@@ -415,15 +415,20 @@
             }, 5000); // 5秒超时
             
             try {
+                console.log('正在从本地获取present.json...');
                 const response = await fetch('./present.json', {
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId); // 清除超时计时器
                 
+                console.log(`present.json响应状态: ${response.status} ${response.statusText}`);
+                
                 if (!response.ok) {
                     throw new Error(`HTTP错误: ${response.status}`);
                 }
                 const data = await response.json();
+                console.log('present.json解析成功');
+                
                 if (Array.isArray(data) && data.length > 0) {
                     // 获取最后一个元素（最新期数）
                     const lastPeriod = data[data.length - 1];
@@ -432,6 +437,7 @@
                     console.log(`成功从本地获取最新期数: ${period}`);
                     return parseInt(period);
                 }
+                console.log('present.json数据格式不正确或为空');
                 return null;
             } catch (error) {
                 clearTimeout(timeoutId); // 确保清理计时器
@@ -470,10 +476,15 @@
             }, 5000); // 5秒超时
             
             try {
-                const response = await fetch(`./result/${period}期_共同对手比赛.json`, {
+                const url = `./result/${period}期_共同对手比赛.json`;
+                console.log(`正在从 ${url} 加载数据...`);
+                
+                const response = await fetch(url, {
                     signal: controller.signal
                 });
                 clearTimeout(timeoutId); // 清除超时计时器
+                
+                console.log(`响应状态: ${response.status} ${response.statusText}`);
                 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -484,6 +495,7 @@
                 }
                 
                 const data = await response.json();
+                console.log('数据解析成功，开始更新UI');
                 currentData = data;
                 currentPeriod = period;
                 
@@ -511,32 +523,45 @@
         
         // 更新UI
         function updateUI(data) {
-            loadingIndicator.style.display = 'none';
-            
-            // 更新基本信息
-            calcDateEl.textContent = data.计算基准日期 || '--';
-            
-            const matchesData = data['14场比赛共同对手比赛数据'];
-            const totalMatches = Object.keys(matchesData).length;
-            totalMatchesEl.textContent = totalMatches;
-            
-            if (totalMatches === 0) {
-                noDataIndicator.style.display = 'block';
-                return;
-            }
-            
-            // 计算统计数据
-            calculateStats(matchesData);
-            
-            // 生成比赛卡片
-            Object.entries(matchesData).forEach(([matchNum, matchData]) => {
-                // 排除_meta字段后检查是否有共同对手数据
-                const opponents = Object.keys(matchData).filter(key => key !== '_meta');
-                if (opponents.length === 0) {
-                    return; // 跳过空数据
+            try {
+                loadingIndicator.style.display = 'none';
+                
+                // 更新基本信息
+                calcDateEl.textContent = data.计算基准日期 || '--';
+                
+                const matchesData = data['14场比赛共同对手比赛数据'];
+                if (!matchesData) {
+                    throw new Error('数据格式错误：缺少"14场比赛共同对手比赛数据"字段');
                 }
-                createMatchCard(matchNum, matchData);
-            });
+                
+                const totalMatches = Object.keys(matchesData).length;
+                totalMatchesEl.textContent = totalMatches;
+                
+                if (totalMatches === 0) {
+                    noDataIndicator.style.display = 'block';
+                    return;
+                }
+                
+                // 计算统计数据
+                calculateStats(matchesData);
+                
+                // 生成比赛卡片
+                Object.entries(matchesData).forEach(([matchNum, matchData]) => {
+                    // 排除_meta字段后检查是否有共同对手数据
+                    const opponents = Object.keys(matchData).filter(key => key !== '_meta');
+                    if (opponents.length === 0) {
+                        return; // 跳过空数据
+                    }
+                    createMatchCard(matchNum, matchData);
+                });
+                
+                console.log('UI更新完成');
+            } catch (error) {
+                console.error('更新UI时发生错误:', error);
+                loadingIndicator.style.display = 'none';
+                errorMessage.textContent = `数据格式错误: ${error.message}`;
+                errorIndicator.style.display = 'block';
+            }
         }
         
         // 计算统计数据
@@ -845,23 +870,30 @@
         
         // 初始化：从URL获取期数或使用present.json最新期数
         window.addEventListener('DOMContentLoaded', async () => {
-            const urlPeriod = getPeriodFromURL();
-            if (urlPeriod) {
-                periodInput.value = urlPeriod;
-                loadData(urlPeriod);
-            } else {
-                // 从present.json获取最新期数
-                const latestPeriod = await getLatestPeriodFromPresent();
-                if (latestPeriod) {
-                    currentPeriod = latestPeriod;
-                    periodInput.value = currentPeriod;
-                    loadData(currentPeriod);
+            try {
+                const urlPeriod = getPeriodFromURL();
+                if (urlPeriod) {
+                    periodInput.value = urlPeriod;
+                    await loadData(urlPeriod);
                 } else {
-                    // 如果无法获取present.json，使用默认期数26040
-                    currentPeriod = 26040;
-                    periodInput.value = currentPeriod;
-                    loadData(currentPeriod);
+                    // 从present.json获取最新期数
+                    const latestPeriod = await getLatestPeriodFromPresent();
+                    if (latestPeriod) {
+                        currentPeriod = latestPeriod;
+                        periodInput.value = currentPeriod;
+                        await loadData(currentPeriod);
+                    } else {
+                        // 如果无法获取present.json，使用默认期数26040
+                        currentPeriod = 26040;
+                        periodInput.value = currentPeriod;
+                        await loadData(currentPeriod);
+                    }
                 }
+            } catch (error) {
+                console.error('初始化过程中发生未捕获的错误:', error);
+                loadingIndicator.style.display = 'none';
+                errorMessage.textContent = `页面初始化失败: ${error.message}`;
+                errorIndicator.style.display = 'block';
             }
         });
         
