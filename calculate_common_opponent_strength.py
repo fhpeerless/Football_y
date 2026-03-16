@@ -74,7 +74,7 @@ def extract_team_matches(data, team_name):
 
 def find_common_opponents(home_matches, away_matches, home_team_name, away_team_name):
     """
-    找出两队共同的对手
+    找出两队共同的对手，包括主队和客队之间的直接对战
     参考 calculate_advanced_probability.py 中的实现
     :param home_matches: 主队比赛记录
     :param away_matches: 客队比赛记录
@@ -134,6 +134,40 @@ def find_common_opponents(home_matches, away_matches, home_team_name, away_team_
         common_data[opponent] = {
             'home_vs_opponent': home_opponents[opponent],
             'away_vs_opponent': away_opponents[opponent]
+        }
+    
+    # 找出主队和客队之间的直接对战
+    direct_matches_home_perspective = []  # 主队作为主队或客队与客队的比赛
+    direct_matches_away_perspective = []  # 客队作为主队或客队与主队的比赛
+    
+    # 从主队比赛中找出与客队的直接对战
+    for match in home_matches:
+        home_team_in_match = match.get('homesxname', '')
+        away_team_in_match = match.get('awaysxname', '')
+        
+        # 检查是否是主队与客队的直接对战
+        if (home_team_in_match == home_team_name and away_team_in_match == away_team_name) or \
+           (home_team_in_match == away_team_name and away_team_in_match == home_team_name):
+            direct_matches_home_perspective.append(match)
+    
+    # 从客队比赛中找出与主队的直接对战
+    for match in away_matches:
+        home_team_in_match = match.get('homesxname', '')
+        away_team_in_match = match.get('awaysxname', '')
+        
+        # 检查是否是客队与主队的直接对战
+        if (home_team_in_match == away_team_name and away_team_in_match == home_team_name) or \
+           (home_team_in_match == home_team_name and away_team_in_match == away_team_name):
+            direct_matches_away_perspective.append(match)
+    
+    # 如果存在直接对战，将其作为一个特殊的共同对手添加到结果中
+    if direct_matches_home_perspective or direct_matches_away_perspective:
+        # 使用一个更友好的键来表示直接对战
+        direct_opponent_key = f"直接对战({home_team_name} vs {away_team_name})"
+        common_data[direct_opponent_key] = {
+            'home_vs_opponent': direct_matches_home_perspective,
+            'away_vs_opponent': direct_matches_away_perspective,
+            '_is_direct_match': True  # 标记这是直接对战
         }
     
     return common_data
