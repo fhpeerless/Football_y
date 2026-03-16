@@ -468,42 +468,73 @@
                 controller.abort();
             }, 5000); // 5秒超时
             
-            try {
-                const response = await fetch(`./result/${period}期_共同对手比赛.json`, {
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId); // 清除超时计时器
-                
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        throw new Error(`找不到第${period}期的数据文件`);
+            // 定义可能的URL列表（本地和GitHub）
+            const possibleUrls = [
+                `./result/${period}期_共同对手比赛.json`,  // 本地相对路径
+                `https://raw.githubusercontent.com/fhpeerless/Football_y/refs/heads/main/result/${period}期_共同对手比赛.json`  // GitHub Raw URL
+            ];
+            
+            let lastError = null;
+            
+            // 尝试每个URL直到成功
+            for (const url of possibleUrls) {
+                try {
+                    const response = await fetch(url, {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId); // 清除超时计时器
+                    
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            lastError = new Error(`在 ${url} 找不到第${period}期的数据文件`);
+                            continue; // 尝试下一个URL
+                        } else {
+                            lastError = new Error(`访问 ${url} 时发生HTTP错误: ${response.status}`);
+                            continue; // 尝试下一个URL
+                        }
+                    }
+                    
+                    const data = await response.json();
+                    currentData = data;
+                    currentPeriod = period;
+                    
+                    // 更新UI
+                    updateUI(data);
+                    
+                    // 更新URL
+                    updateURL(period);
+                    
+                    console.log(`成功从 ${url} 加载数据`);
+                    return; // 成功，退出函数
+                    
+                } catch (error) {
+                    clearTimeout(timeoutId); // 确保清理计时器
+                    lastError = error;
+                    
+                    if (error.name === 'AbortError') {
+                        // 超时错误，不再尝试其他URL
+                        console.error('加载数据超时（5秒）:', error);
+                        break;
                     } else {
-                        throw new Error(`HTTP错误: ${response.status}`);
+                        console.error(`从 ${url} 加载数据失败:`, error);
+                        // 继续尝试下一个URL
                     }
                 }
-                
-                const data = await response.json();
-                currentData = data;
-                currentPeriod = period;
-                
-                // 更新UI
-                updateUI(data);
-                
-                // 更新URL
-                updateURL(period);
-                
-            } catch (error) {
-                clearTimeout(timeoutId); // 确保清理计时器
-                console.error('加载数据失败:', error);
-                loadingIndicator.style.display = 'none';
-                
-                if (error.name === 'AbortError') {
+            }
+            
+            // 所有URL都失败
+            loadingIndicator.style.display = 'none';
+            
+            if (lastError) {
+                if (lastError.name === 'AbortError') {
                     errorMessage.textContent = `加载数据超时（5秒），请检查网络连接或稍后重试`;
                 } else {
-                    errorMessage.textContent = error.message;
+                    errorMessage.textContent = `无法加载第${period}期数据。请确保数据文件存在。错误: ${lastError.message}`;
                 }
-                errorIndicator.style.display = 'block';
+            } else {
+                errorMessage.textContent = `无法加载第${period}期数据。请确保数据文件存在。`;
             }
+            errorIndicator.style.display = 'block';
         }
         
         // 更新UI
