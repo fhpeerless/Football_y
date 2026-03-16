@@ -382,6 +382,14 @@
     <script>
         console.log('JavaScript脚本开始执行');
         
+        // 全局错误处理
+        window.addEventListener('error', (event) => {
+            console.error('全局错误捕获:', event.error || event.message, event);
+        });
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('未处理的Promise拒绝:', event.reason);
+        });
+        
         // 全局变量
         let currentPeriod = null;
         let currentData = null;
@@ -481,7 +489,9 @@
             
             try {
                 const url = `./result/${period}期_共同对手比赛.json`;
+                const fullUrl = new URL(url, window.location.href).href;
                 console.log(`正在从 ${url} 加载数据...`);
+                console.log(`完整URL: ${fullUrl}`);
                 
                 const response = await fetch(url, {
                     signal: controller.signal
@@ -912,11 +922,42 @@
         }
         
         // 检查页面状态，如果DOM已加载完成则立即初始化，否则等待DOMContentLoaded事件
+        console.log(`document.readyState: ${document.readyState}`);
+        console.log(`window load status: ${window.performance.timing.loadEventEnd ? 'loaded' : 'loading'}`);
+        console.log(`当前时间戳: ${Date.now()}`);
+        
+        let initialized = false;
+        const initPageWrapper = () => {
+            if (initialized) {
+                console.log('initPageWrapper: 已经初始化过，跳过');
+                return;
+            }
+            initialized = true;
+            console.log('initPageWrapper: 开始初始化');
+            initPage();
+        };
+        
+        // 设置一个超时作为回退，确保初始化最终会被调用
+        const fallbackTimeout = setTimeout(() => {
+            console.log('fallbackTimeout: 5秒超时已触发，检查初始化状态');
+            if (!initialized) {
+                console.warn('fallbackTimeout: 初始化未完成，强制调用initPageWrapper');
+                initPageWrapper();
+            }
+        }, 5000);
+        
         if (document.readyState === 'loading') {
-            window.addEventListener('DOMContentLoaded', initPage);
+            console.log('DOM还在加载，等待DOMContentLoaded事件...');
+            window.addEventListener('DOMContentLoaded', () => {
+                console.log('DOMContentLoaded事件触发');
+                clearTimeout(fallbackTimeout);
+                initPageWrapper();
+            });
         } else {
             // DOM已经加载完成，立即初始化
-            initPage();
+            console.log('DOM已加载完成，立即初始化...');
+            clearTimeout(fallbackTimeout);
+            initPageWrapper();
         }
         
         // 支持浏览器前进/后退
