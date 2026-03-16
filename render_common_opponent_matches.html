@@ -380,6 +380,8 @@
     </div>
 
     <script>
+        console.log('JavaScript脚本开始执行');
+        
         // 全局变量
         let currentPeriod = null;
         let currentData = null;
@@ -398,6 +400,8 @@
         const matchesContainer = document.getElementById('matchesContainer');
         const calcDateEl = document.getElementById('calcDate');
         const totalMatchesEl = document.getElementById('totalMatches');
+        
+        console.log('DOM元素初始化完成');
         
         // 从URL获取期数参数
         function getPeriodFromURL() {
