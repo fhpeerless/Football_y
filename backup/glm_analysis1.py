@@ -500,7 +500,7 @@ def main():
         print("请设置环境变量 GLM_API_KEY 或创建 glm_config.json 文件")
         print("glm_config.json 格式示例:")
         print('''{
-  "api_key": "0c1972e9fc3f492ca0e24f6c809d9739.u91tmYhrq8rAw7pj",
+  "api_key": "0c",
   "api_base": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
   "model": "glm-5",
   "max_tokens": 8000,
