@@ -480,9 +480,33 @@ def process_single_match(match_info, current_date=None):
             '共同对手比赛数据': common_data
         }
     
+    # 过滤掉_meta等非对手数据（如果存在）
+    filtered_common_data = {}
+    for opponent_key, opponent_data in common_data.items():
+        if opponent_key.startswith('_'):
+            # 跳过元数据
+            continue
+        filtered_common_data[opponent_key] = opponent_data
+    
+    if len(filtered_common_data) == 0:
+        print(f"  过滤后没有共同对手数据")
+        return {
+            '场次': match_info.get('场次'),
+            '主队': home_team,
+            '客队': away_team,
+            '比赛时间': match_date,
+            '共同对手数': 0,
+            '主队总实力分': 0,
+            '客队总实力分': 0,
+            '主队相对实力比': 0.5,
+            '客队相对实力比': 0.5,
+            '错误': '过滤后没有共同对手数据',
+            '共同对手比赛数据': common_data
+        }
+    
     # 计算共同对手实力分
     home_strength, away_strength, detailed_calculation = calculate_common_opponent_strength(
-        common_data, home_team, away_team, current_date
+        filtered_common_data, home_team, away_team, current_date
     )
     
     # 输出简要结果
@@ -514,6 +538,112 @@ def process_single_match(match_info, current_date=None):
     
     return result
 
+def extract_common_opponent_matches(match_info, current_date=None):
+    """
+    提取单场比赛的共同对手比赛数据（不计算实力分）
+    :param match_info: 比赛信息
+    :param current_date: 当前日期
+    :return: 共同对手比赛数据
+    """
+    home_team = match_info.get('主队', '')
+    away_team = match_info.get('客队', '')
+    match_date = match_info.get('比赛时间', '')
+    
+    if not current_date:
+        # 如果没有提供当前日期，使用比赛日期
+        current_date = match_date.split(' ')[0] if ' ' in match_date else match_date
+    
+    print(f"\n提取比赛数据: {home_team} vs {away_team}")
+    print(f"比赛日期: {match_date}")
+    print(f"计算基准日期: {current_date}")
+    
+    # 获取历史交锋数据
+    history_data = match_info.get('历史交锋数据', {})
+    if not history_data or 'data' not in history_data:
+        print(f"  未找到历史交锋数据")
+        return {
+            '场次': match_info.get('场次'),
+            '主队': home_team,
+            '客队': away_team,
+            '比赛时间': match_date,
+            '共同对手数': 0,
+            '错误': '未找到历史交锋数据',
+            '共同对手比赛数据': {}
+        }
+    
+    # 提取两队比赛记录
+    home_matches = history_data['data'].get('home', {}).get('matches', [])
+    away_matches = history_data['data'].get('away', {}).get('matches', [])
+    
+    if not home_matches or not away_matches:
+        print(f"  比赛记录不足")
+        return {
+            '场次': match_info.get('场次'),
+            '主队': home_team,
+            '客队': away_team,
+            '比赛时间': match_date,
+            '共同对手数': 0,
+            '错误': '比赛记录不足',
+            '共同对手比赛数据': {}
+        }
+    
+    print(f"  主队比赛记录: {len(home_matches)} 场")
+    print(f"  客队比赛记录: {len(away_matches)} 场")
+    
+    # 找出共同对手
+    common_data = find_common_opponents(home_matches, away_matches, home_team, away_team)
+    print(f"  找到共同对手: {len(common_data)} 个")
+    
+    if len(common_data) == 0:
+        print(f"  没有共同对手")
+        return {
+            '场次': match_info.get('场次'),
+            '主队': home_team,
+            '客队': away_team,
+            '比赛时间': match_date,
+            '共同对手数': 0,
+            '错误': '没有共同对手',
+            '共同对手比赛数据': common_data
+        }
+    
+    # 构建结果（只包含比赛数据，不计算实力分）
+    result = {
+        '场次': match_info.get('场次'),
+        '联赛': match_info.get('联赛'),
+        '主队': home_team,
+        '主队排名': match_info.get('主队排名'),
+        '客队': away_team,
+        '客队排名': match_info.get('客队排名'),
+        '比赛时间': match_date,
+        '计算基准日期': current_date,
+        '主队比赛记录数': len(home_matches),
+        '客队比赛记录数': len(away_matches),
+        '共同对手数': len(common_data),
+        '共同对手比赛数据': common_data
+    }
+    
+    return result
+
+def extract_all_matches(data, current_date=None):
+    """
+    提取所有14场比赛的共同对手比赛数据（不计算实力分）
+    :param data: 历史交锋数据
+    :param current_date: 当前日期
+    :return: 所有比赛的共同对手比赛数据
+    """
+    results = []
+    
+    for match_info in data.get('14场对战信息', []):
+        print(f"\n处理第 {match_info.get('场次')} 场比赛")
+        print(f"  联赛: {match_info.get('联赛')}")
+        print(f"  主队: {match_info.get('主队')} (排名: {match_info.get('主队排名')})")
+        print(f"  客队: {match_info.get('客队')} (排名: {match_info.get('客队排名')})")
+        
+        result = extract_common_opponent_matches(match_info, current_date)
+        results.append(result)
+    
+    return results
+
 def process_all_matches(data, current_date=None):
     """
     处理所有14场比赛
@@ -533,6 +663,199 @@ def process_all_matches(data, current_date=None):
         results.append(result)
     
     return results
+
+def calculate_strength_from_match_data(match_data, current_date=None):
+    """
+    从单场比赛的共同对手比赛数据计算实力分
+    :param match_data: 比赛数据（包含共同对手比赛数据）
+    :param current_date: 当前日期
+    :return: 实力分计算结果
+    """
+    home_team = match_data.get('主队', '')
+    away_team = match_data.get('客队', '')
+    match_date = match_data.get('比赛时间', '')
+    
+    if not current_date:
+        # 如果没有提供当前日期，使用比赛日期
+        current_date = match_data.get('计算基准日期', '')
+        if not current_date:
+            current_date = match_date.split(' ')[0] if ' ' in match_date else match_date
+    
+    print(f"\n计算实力分: {home_team} vs {away_team}")
+    print(f"比赛日期: {match_date}")
+    print(f"计算基准日期: {current_date}")
+    
+    # 获取共同对手比赛数据
+    common_data = match_data.get('共同对手比赛数据', {})
+    if not common_data:
+        print(f"  没有共同对手数据")
+        return {
+            '场次': match_data.get('场次'),
+            '主队': home_team,
+            '客队': away_team,
+            '比赛时间': match_date,
+            '共同对手数': 0,
+            '主队总实力分': 0,
+            '客队总实力分': 0,
+            '主队相对实力比': 0.5,
+            '客队相对实力比': 0.5,
+            '错误': '没有共同对手数据'
+        }
+    
+    print(f"  共同对手数: {len(common_data)} 个")
+    
+    # 过滤掉_meta等非对手数据
+    filtered_common_data = {}
+    for opponent_key, opponent_data in common_data.items():
+        if opponent_key.startswith('_'):
+            # 跳过元数据
+            continue
+        filtered_common_data[opponent_key] = opponent_data
+    
+    if len(filtered_common_data) == 0:
+        print(f"  过滤后没有共同对手数据")
+        return {
+            '场次': match_data.get('场次'),
+            '主队': home_team,
+            '客队': away_team,
+            '比赛时间': match_date,
+            '共同对手数': 0,
+            '主队总实力分': 0,
+            '客队总实力分': 0,
+            '主队相对实力比': 0.5,
+            '客队相对实力比': 0.5,
+            '错误': '过滤后没有共同对手数据'
+        }
+    
+    # 计算共同对手实力分
+    home_strength, away_strength, detailed_calculation = calculate_common_opponent_strength(
+        filtered_common_data, home_team, away_team, current_date
+    )
+    
+    # 输出简要结果
+    print(f"  主队总实力分: {home_strength:.3f}")
+    print(f"  客队总实力分: {away_strength:.3f}")
+    print(f"  主队相对实力比: {detailed_calculation['主队相对实力比']:.3f}")
+    print(f"  客队相对实力比: {detailed_calculation['客队相对实力比']:.3f}")
+    
+    # 构建结果
+    result = {
+        '场次': match_data.get('场次'),
+        '联赛': match_data.get('联赛'),
+        '主队': home_team,
+        '主队排名': match_data.get('主队排名'),
+        '客队': away_team,
+        '客队排名': match_data.get('客队排名'),
+        '比赛时间': match_date,
+        '计算基准日期': current_date,
+        '主队比赛记录数': match_data.get('主队比赛记录数', 0),
+        '客队比赛记录数': match_data.get('客队比赛记录数', 0),
+        '共同对手数': len(common_data),
+        '主队总实力分': round(home_strength, 3),
+        '客队总实力分': round(away_strength, 3),
+        '主队相对实力比': detailed_calculation['主队相对实力比'],
+        '客队相对实力比': detailed_calculation['客队相对实力比'],
+        '详细计算数据': detailed_calculation
+    }
+    
+    return result
+
+def calculate_strength_from_all_matches(matches_data, current_date=None):
+    """
+    从所有比赛的共同对手比赛数据计算实力分
+    :param matches_data: 所有比赛的共同对手比赛数据
+    :param current_date: 当前日期
+    :return: 所有比赛的实力分计算结果
+    """
+    results = []
+    
+    for match_data in matches_data.get('14场比赛共同对手比赛数据', {}).values():
+        print(f"\n处理第 {match_data.get('场次')} 场比赛")
+        print(f"  联赛: {match_data.get('联赛', '')}")
+        print(f"  主队: {match_data.get('主队', '')} (排名: {match_data.get('主队排名', '')})")
+        print(f"  客队: {match_data.get('客队', '')} (排名: {match_data.get('客队排名', '')})")
+        
+        result = calculate_strength_from_match_data(match_data, current_date)
+        results.append(result)
+    
+    return results
+
+def load_matches_data(file_path):
+    """
+    加载共同对手比赛数据文件
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        return data
+    except Exception as e:
+        print(f"加载文件错误: {e}")
+        return None
+
+def calculate_strength_from_matches_file(matches_file_path, output_file_path=None, current_date=None):
+    """
+    从共同对手比赛数据文件计算实力分并保存结果
+    :param matches_file_path: 比赛数据文件路径
+    :param output_file_path: 输出文件路径（可选）
+    :param current_date: 当前日期（可选）
+    :return: 计算结果
+    """
+    print(f"加载比赛数据文件: {matches_file_path}")
+    matches_data = load_matches_data(matches_file_path)
+    if not matches_data:
+        print("加载比赛数据失败")
+        return None
+    
+    if not current_date:
+        current_date = matches_data.get('计算基准日期', datetime.now().strftime("%Y-%m-%d"))
+    
+    print(f"计算基准日期: {current_date}")
+    print(f"期数: {matches_data.get('期数', '')}")
+    
+    print(f"\n开始计算实力分...")
+    print("=" * 80)
+    
+    # 计算实力分
+    results = calculate_strength_from_all_matches(matches_data, current_date)
+    
+    # 如果没有提供输出文件路径，则基于输入文件生成
+    if not output_file_path:
+        # 从比赛数据文件路径推导期数
+        import re
+        match = re.search(r'(\d+)期', matches_file_path)
+        if match:
+            period = match.group(1)
+            output_file_path = f"./result/{period}期_共同对手实力分.json"
+        else:
+            output_file_path = "./result/共同对手实力分.json"
+    
+    # 保存结果
+    output_data = {
+        '期数': matches_data.get('期数', ''),
+        '计算基准日期': current_date,
+        '计算方法': '共同对手实力分计算（时间衰减加权，仅计算最近一场比赛）',
+        '计算公式': '实力分 = 得分差值 × (1 - 时间差/7 × 1%)，时间差 = (当前日期 - 比赛日期)',
+        '计算规则': '对于每个共同对手，主队和客队分别只计算距离当前日期最近的一场比赛',
+        '数据来源文件': matches_file_path,
+        '14场比赛结果': results
+    }
+    
+    with open(output_file_path, 'w', encoding='utf-8') as f:
+        json.dump(output_data, f, ensure_ascii=False, indent=2)
+    
+    print(f"\n实力分计算结果已保存到: {output_file_path}")
+    
+    # 输出统计信息
+    total_matches = len(results)
+    matches_with_common_opponents = sum(1 for r in results if r.get('共同对手数', 0) > 0)
+    matches_without_common_opponents = total_matches - matches_with_common_opponents
+    
+    print(f"\n统计信息:")
+    print(f"  总比赛数: {total_matches}")
+    print(f"  有共同对手的比赛: {matches_with_common_opponents}")
+    print(f"  无共同对手的比赛: {matches_without_common_opponents}")
+    
+    return output_data
 
 def main():
     """主函数"""
@@ -624,23 +947,11 @@ def main():
     print(f"\n开始处理 {data.get('期数', '')} 的 {len(data.get('14场对战信息', []))} 场比赛...")
     print("=" * 80)
     
-    # 处理所有比赛
-    results = process_all_matches(data, current_date)
+    print("\n=== 第一阶段：提取共同对手比赛数据 ===")
+    # 提取所有比赛的共同对手比赛数据（不计算实力分）
+    matches_results = extract_all_matches(data, current_date)
     
-    # 保存结果
-    output_data = {
-        '期数': data.get('期数', ''),
-        '计算基准日期': current_date,
-        '计算方法': '共同对手实力分计算（时间衰减加权，仅计算最近一场比赛）',
-        '计算公式': '实力分 = 得分差值 × (1 - 时间差/7 × 1%)，时间差 = (当前日期 - 比赛日期)',
-        '计算规则': '对于每个共同对手，主队和客队分别只计算距离当前日期最近的一场比赛',
-        '14场比赛结果': results
-    }
-    
-    with open(output_file, 'w', encoding='utf-8') as f:
-        json.dump(output_data, f, ensure_ascii=False, indent=2)
-    
-    # 保存共同对手比赛数据
+    # 构建比赛数据文件
     matches_data = {
         '期数': data.get('期数', ''),
         '计算基准日期': current_date,
@@ -649,7 +960,7 @@ def main():
     }
     
     # 提取每场比赛的共同对手比赛数据
-    for result in results:
+    for result in matches_results:
         match_num = result['场次']
         match_data = result.get('共同对手比赛数据', {})
         # 添加元数据以便HTML渲染
@@ -662,18 +973,39 @@ def main():
             '主队排名': result.get('主队排名', ''),
             '客队排名': result.get('客队排名', '')
         }
-        matches_data['14场比赛共同对手比赛数据'][match_num] = match_data
+        # 也包含其他基本信息以便第二阶段使用
+        result_without_common_data = {k: v for k, v in result.items() if k != '共同对手比赛数据'}
+        matches_data['14场比赛共同对手比赛数据'][match_num] = {
+            **result_without_common_data,
+            '共同对手比赛数据': match_data
+        }
     
+    # 保存共同对手比赛数据到文件
     with open(output_file_matches, 'w', encoding='utf-8') as f:
         json.dump(matches_data, f, ensure_ascii=False, indent=2)
     
+    print(f"\n第一阶段完成！共同对手比赛数据已保存到: {output_file_matches}")
+    
+    print("\n=== 第二阶段：从比赛数据计算共同对手实力分 ===")
+    # 从比赛数据文件计算实力分
+    strength_data = calculate_strength_from_matches_file(
+        matches_file_path=output_file_matches,
+        output_file_path=output_file,
+        current_date=current_date
+    )
+    
+    if not strength_data:
+        print("计算实力分失败")
+        exit(1)
+    
     print("\n" + "=" * 80)
-    print(f"处理完成！结果已保存到: {output_file}")
-    print(f"共同对手比赛数据已保存到: {output_file_matches}")
+    print(f"处理完成！共同对手比赛数据已保存到: {output_file_matches}")
+    print(f"共同对手实力分计算结果已保存到: {output_file}")
     
     # 输出统计信息
-    total_matches = len(results)
-    matches_with_common_opponents = sum(1 for r in results if r.get('共同对手数', 0) > 0)
+    strength_results = strength_data.get('14场比赛结果', [])
+    total_matches = len(strength_results)
+    matches_with_common_opponents = sum(1 for r in strength_results if r.get('共同对手数', 0) > 0)
     matches_without_common_opponents = total_matches - matches_with_common_opponents
     
     print(f"\n统计信息:")
@@ -683,7 +1015,7 @@ def main():
     
     # 输出前3场比赛的简要结果
     print(f"\n前3场比赛结果:")
-    for i, result in enumerate(results[:3]):
+    for i, result in enumerate(strength_results[:3]):
         if i >= 3:
             break
         print(f"  第{result['场次']}场: {result['主队']} vs {result['客队']}")
