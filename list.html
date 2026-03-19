@@ -616,9 +616,9 @@
                         <h4>实力分分析 <span class="method-badge method-strength">实力分</span></h4>
                         <p>
                             计算主队实力分与客队实力分的差值：<br>
-                            • 差值绝对值 &lt; 3 → 待定<br>
-                            • 差值 &gt; 3 → 主胜 (3)<br>
-                            • 差值 &lt; -3 → 客胜 (0)
+                            • 差值绝对值 &lt; 0.51 → 待定<br>
+                            • 差值 &gt; 0.51 → 主胜 (3)<br>
+                            • 差值 &lt; -0.51 → 客胜 (0)
                         </p>
                     </div>
                     <div class="method-card advanced">
@@ -684,13 +684,19 @@
             const awayStrength = strengthData.客队总实力分 || 0;
             const diff = homeStrength - awayStrength;
             
-            if (Math.abs(diff) < 3) {
+            // 差值绝对值小于0.5则输出待定
+            if (Math.abs(diff) < 0.5) {
                 return '待定';
-            } else if (diff > 3) {
+            }
+            // 差值大于0.51则主胜输出3
+            if (diff > 0.51) {
                 return '3';
-            } else if (diff < -3) {
+            }
+            // 差值小于-0.51则主负输出0
+            if (diff < -0.51) {
                 return '0';
             }
+            // 其他情况（差值在0.5-0.51之间或-0.51到-0.5之间）也输出待定
             return '待定';
         }
         
@@ -820,18 +826,71 @@
                 showStatus(`正在加载 ${period}期_web.json 数据...`, 'info');
                 updateProgress(60);
                 
-                const fileUrl = `./result/${period}期_web.json`;
-                const response = await fetch(fileUrl);
+                const webFileUrl = `./result/${period}期_web.json`;
+                const strengthFileUrl = `./result/${period}期_共同对手实力分.json`;
                 
-                if (!response.ok) {
-                    throw new Error(`文件不存在或无法读取: ${fileUrl}`);
+                // 并行加载两个文件
+                const [webResponse, strengthResponse] = await Promise.all([
+                    fetch(webFileUrl),
+                    fetch(strengthFileUrl)
+                ]);
+                
+                if (!webResponse.ok) {
+                    throw new Error(`文件不存在或无法读取: ${webFileUrl}`);
                 }
                 
-                const data = await response.json();
+                const data = await webResponse.json();
                 
                 // 验证数据格式
                 if (!data.期数 || !data.计算结果 || !Array.isArray(data.计算结果)) {
                     throw new Error('web.json文件格式不正确');
+                }
+                
+                updateProgress(70);
+                
+                // 加载共同对手实力分数据
+                if (strengthResponse.ok) {
+                    const strengthData = await strengthResponse.json();
+                    
+                    // 验证实力分数据格式
+                    if (strengthData.期数 && strengthData['14场比赛结果'] && Array.isArray(strengthData['14场比赛结果'])) {
+                        // 创建场次到实力分数据的映射
+                        const strengthMap = {};
+                        strengthData['14场比赛结果'].forEach(strengthMatch => {
+                            const matchNum = String(strengthMatch.场次); // 确保转换为字符串
+                            strengthMap[matchNum] = {
+                                主队总实力分: strengthMatch.主队总实力分 || 0,
+                                客队总实力分: strengthMatch.客队总实力分 || 0,
+                                主队相对实力比: strengthMatch.主队相对实力比 || 0,
+                                客队相对实力比: strengthMatch.客队相对实力比 || 0,
+                                共同对手数: strengthMatch.共同对手数 || 0,
+                                详细计算数据: strengthMatch.详细计算数据 || {}
+                            };
+                        });
+                        
+                        // 将实力分数据合并到web数据中
+                        data.计算结果.forEach(webMatch => {
+                            const matchNum = String(webMatch.场次);
+                            if (strengthMap[matchNum]) {
+                                webMatch.共同对手实力分 = strengthMap[matchNum];
+                            } else {
+                                // 如果没有找到对应的实力分数据，设置为null
+                                webMatch.共同对手实力分 = null;
+                            }
+                        });
+                        
+                        console.log(`成功合并 ${Object.keys(strengthMap).length} 场比赛的实力分数据`);
+                    } else {
+                        console.warn('共同对手实力分文件格式不正确，跳过数据合并');
+                        data.计算结果.forEach(match => {
+                            match.共同对手实力分 = null;
+                        });
+                    }
+                } else {
+                    console.warn(`共同对手实力分文件不存在或无法读取: ${strengthFileUrl}`);
+                    data.计算结果.forEach(match => {
+                        match.共同对手实力分 = null;
+                    });
                 }
                 
                 updateProgress(80);
