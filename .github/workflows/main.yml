@@ -257,6 +257,12 @@ jobs:
         echo "正在计算高级预测概率..."
         python calculate_advanced_probability.py
         
+    - name: 提取共同对手比赛数据
+      if: steps.check-period.outputs.has_new_period == 'true'
+      run: |
+        echo "正在提取共同对手比赛数据..."
+        python extract_common_opponent_matches.py
+        
     - name: 计算共同对手实力分
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
