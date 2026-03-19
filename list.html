@@ -616,7 +616,7 @@
                         <h4>实力分分析 <span class="method-badge method-strength">实力分</span></h4>
                         <p>
                             计算主队实力分与客队实力分的差值：<br>
-                            • 差值绝对值 &lt; 0.51 → 待定<br>
+                            • 差值绝对值 &lt; 0.5 → 待定<br>
                             • 差值 &gt; 0.51 → 主胜 (3)<br>
                             • 差值 &lt; -0.51 → 客胜 (0)
                         </p>
@@ -930,13 +930,21 @@
                 const advancedClass = getResultClass(advancedResult);
                 const basicClass = getResultClass(basicResult);
                 
+                // 获取实力分数据
+                const homeStrength = (match.共同对手实力分 && match.共同对手实力分.主队总实力分) || 0;
+                const awayStrength = (match.共同对手实力分 && match.共同对手实力分.客队总实力分) || 0;
+                const hasStrengthData = match.共同对手实力分 !== null && match.共同对手实力分 !== undefined;
+                
                 html += `
                     <tr id="match-${match.场次}">
                         <td><a href="./index.html#match-${match.场次}" style="color: inherit; text-decoration: none;">${match.场次 || ''}</a></td>
                         <td>${match.联赛 || ''}</td>
                         <td>${match.主队 || ''}</td>
                         <td>${match.客队 || ''}</td>
-                        <td class="${strengthClass}">${strengthResult}</td>
+                        <td class="${strengthClass}">
+                            ${strengthResult}
+                            ${hasStrengthData ? `<br><small style="opacity: 0.8; font-size: 0.85em;">主队: ${homeStrength.toFixed(2)} 客队: ${awayStrength.toFixed(2)}</small>` : ''}
+                        </td>
                         <td class="${advancedClass}">${advancedResult}</td>
                         <td class="${basicClass}">${basicResult}</td>
                         <td>${match.比赛时间 || ''}</td>
