@@ -616,9 +616,9 @@
                         <h4>实力分分析 <span class="method-badge method-strength">实力分</span></h4>
                         <p>
                             计算主队实力分与客队实力分的差值：<br>
-                            • 差值绝对值 &lt; 0.5 → 待定<br>
-                            • 差值 &gt; 0.51 → 主胜 (3)<br>
-                            • 差值 &lt; -0.51 → 客胜 (0)
+                            • 差值绝对值 &lt; 0.78 → 待定<br>
+                            • 差值 &gt; 0.78 → 主胜 (3)<br>
+                            • 差值 &lt; -0.78 → 客胜 (0)
                         </p>
                     </div>
                     <div class="method-card advanced">
@@ -684,19 +684,19 @@
             const awayStrength = strengthData.客队总实力分 || 0;
             const diff = homeStrength - awayStrength;
             
-            // 差值绝对值小于0.5则输出待定
-            if (Math.abs(diff) < 0.5) {
+            // 差值绝对值小于0.78则输出待定
+            if (Math.abs(diff) < 0.78) {
                 return '待定';
             }
-            // 差值大于0.51则主胜输出3
-            if (diff > 0.51) {
+            // 差值大于0.78则主胜输出3
+            if (diff > 0.78) {
                 return '3';
             }
-            // 差值小于-0.51则主负输出0
-            if (diff < -0.51) {
+            // 差值小于-0.78则主负输出0
+            if (diff < -0.78) {
                 return '0';
             }
-            // 其他情况（差值在0.5-0.51之间或-0.51到-0.5之间）也输出待定
+            // 其他情况也输出待定
             return '待定';
         }
         
