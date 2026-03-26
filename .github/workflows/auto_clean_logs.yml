@@ -1,0 +1,23 @@
+name: Auto Clean Actions Logs (Fixed Schedule)
+
+# 周一、周三、周五、周日 北京时间 09:00 自动清理
+on:
+  schedule:
+    - cron: '0 1 * * 1'  # 周一 北京时间 09:00
+    - cron: '0 1 * * 3'  # 周三 北京时间 09:00
+    - cron: '0 1 * * 5'  # 周五 北京时间 09:00
+    - cron: '0 1 * * 0'  # 周日 北京时间 09:00
+  workflow_dispatch:     # 允许手动立即执行
+
+jobs:
+  clean-logs:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Delete old workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 0            # 不按天数限制
+          keep_minimum_runs: 10     # ✅ 只保留最近 10 条日志
+          delete_artifacts: false   # ✅ 不删除构建产物（完全保留）
