@@ -16,7 +16,7 @@ backup是旧版，根目录正在应用的则是新版，
 | **输出文件** | `result/{期数}期_glm分析.json` |
 
 # 三，probability文件夹-(开始计算概率)--------------------
-## 5.运行**calculate_probability.py**
+## 5.运行**calculate_probability.py
 | **输入文件** | `result/{期数}期.json`、`result/{期数}期_历史交锋.json` |
 | **输出文件** | `result/{期数}期_预测概率.json` | 为基础概率
 
@@ -26,8 +26,8 @@ backup是旧版，根目录正在应用的则是新版，
 | **输入文件** | `result/{期数}期.json`、`result/{期数}期_历史交锋.json` |
 | **输出文件** | `result/{期数}期_高级预测概率.json` |result/{期数}期_共同对手比赛.json
 
-## 7.获取共同对手比赛extract_common_opponent_matches.py       │
-│    → 提取共同对手比赛数据                                    │
+## 7.获取共同对手比赛extract_common_opponent_matches.py  
+│    → 提取共同对手比赛数据        │
 │    → 输出: result/{期数}期_共同对手比赛.json  
 
 ## 8.计算共同对手实力分calculate_common_opponent_strength.py
