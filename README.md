@@ -1,6 +1,8 @@
 # Football_y
 backup是旧版，根目录正在应用的则是新版，
-## 1.用check_new_period.js
+# match_data文件夹------------------------------------------------------
+## 1.用check_new_period.js更新期数
+
 检查期数，如果新期数更新，则更新期数到present.json
 
 ## 2.用api_crawler_final.py获取对战信息
@@ -9,12 +11,17 @@ backup是旧版，根目录正在应用的则是新版，
 ## 3.用get_history_data.py获取14场对战数据
 获取14场比赛。输出14场的近期信息result/{期数}期_历史交锋.json，做基础的分析数据
 
+# GLm文件夹--------------------------------------------------------------
 ## 4.调用glm分析14场比赛的对战数据glm_analysis.py
 | **输入文件** | `result/{期数}期_历史交锋.json` |
 | **输出文件** | `result/{期数}期_glm分析.json` |
+
+# probability文件夹-------------------------------------------------------
 ## 5.运行**calculate_probability.py**
 | **输入文件** | `result/{期数}期.json`、`result/{期数}期_历史交锋.json` |
 | **输出文件** | `result/{期数}期_预测概率.json` | 为基础概率
+
+
 
 ## 6.计算高级预测概率calculate_advanced_probability.py
 
