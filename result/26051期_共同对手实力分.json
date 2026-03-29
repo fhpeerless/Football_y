@@ -1298,105 +1298,6 @@
             }
           ]
         },
-        "意大利": {
-          "home_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 19,
-              "awayid": 31,
-              "homescore": 1,
-              "awayscore": 4,
-              "league_id": 118,
-              "win": 2.16,
-              "draw": 3.54,
-              "lost": 3.18,
-              "iscup": 1,
-              "homestanding": 2,
-              "awaystanding": 1,
-              "status": 5,
-              "matchdate": "2025-11-17",
-              "fid": 1197539,
-              "homesxname": "意大利",
-              "awaysxname": "挪威",
-              "simplegbname": "世外欧洲",
-              "seasonid": 7386,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "handicapball": 2.75,
-              "handicapline": "-0.25",
-              "handicaplinename": "平手/半球",
-              "cornernum": 8,
-              "hcornernum": 6,
-              "acornernum": 2
-            },
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 31,
-              "awayid": 19,
-              "homescore": 3,
-              "awayscore": 0,
-              "league_id": 118,
-              "win": 2.64,
-              "draw": 3.3,
-              "lost": 2.64,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-06-07",
-              "fid": 1197532,
-              "homesxname": "挪威",
-              "awaysxname": "意大利",
-              "simplegbname": "世外欧洲",
-              "seasonid": 7386,
-              "homehalfscore": 3,
-              "awayhalfscore": 0,
-              "handicapball": 2.5,
-              "handicapline": "0",
-              "handicaplinename": "平手",
-              "cornernum": 8,
-              "hcornernum": 6,
-              "acornernum": 2
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "走",
-              "homeid": 46,
-              "awayid": 19,
-              "homescore": 2,
-              "awayscore": 0,
-              "league_id": 105,
-              "win": 3.24,
-              "draw": 2.83,
-              "lost": 2.58,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2024-06-30",
-              "fid": 1144450,
-              "homesxname": "瑞士",
-              "awaysxname": "意大利",
-              "simplegbname": "欧洲杯",
-              "seasonid": 6729,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "handicapball": 2.0,
-              "handicapline": "+0.25",
-              "handicaplinename": "受平手/半球",
-              "cornernum": 10,
-              "hcornernum": 4,
-              "acornernum": 6
-            }
-          ]
-        },
         "斯洛文尼亚": {
           "home_vs_opponent": [
             {
@@ -1526,6 +1427,105 @@
               "acornernum": 2
             }
           ]
+        },
+        "意大利": {
+          "home_vs_opponent": [
+            {
+              "result1": "胜",
+              "result2": "赢",
+              "result3": "大",
+              "homeid": 19,
+              "awayid": 31,
+              "homescore": 1,
+              "awayscore": 4,
+              "league_id": 118,
+              "win": 2.16,
+              "draw": 3.54,
+              "lost": 3.18,
+              "iscup": 1,
+              "homestanding": 2,
+              "awaystanding": 1,
+              "status": 5,
+              "matchdate": "2025-11-17",
+              "fid": 1197539,
+              "homesxname": "意大利",
+              "awaysxname": "挪威",
+              "simplegbname": "世外欧洲",
+              "seasonid": 7386,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "handicapball": 2.75,
+              "handicapline": "-0.25",
+              "handicaplinename": "平手/半球",
+              "cornernum": 8,
+              "hcornernum": 6,
+              "acornernum": 2
+            },
+            {
+              "result1": "胜",
+              "result2": "赢",
+              "result3": "大",
+              "homeid": 31,
+              "awayid": 19,
+              "homescore": 3,
+              "awayscore": 0,
+              "league_id": 118,
+              "win": 2.64,
+              "draw": 3.3,
+              "lost": 2.64,
+              "iscup": 1,
+              "homestanding": 0,
+              "awaystanding": 0,
+              "status": 5,
+              "matchdate": "2025-06-07",
+              "fid": 1197532,
+              "homesxname": "挪威",
+              "awaysxname": "意大利",
+              "simplegbname": "世外欧洲",
+              "seasonid": 7386,
+              "homehalfscore": 3,
+              "awayhalfscore": 0,
+              "handicapball": 2.5,
+              "handicapline": "0",
+              "handicaplinename": "平手",
+              "cornernum": 8,
+              "hcornernum": 6,
+              "acornernum": 2
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "result1": "胜",
+              "result2": "赢",
+              "result3": "走",
+              "homeid": 46,
+              "awayid": 19,
+              "homescore": 2,
+              "awayscore": 0,
+              "league_id": 105,
+              "win": 3.24,
+              "draw": 2.83,
+              "lost": 2.58,
+              "iscup": 1,
+              "homestanding": 0,
+              "awaystanding": 0,
+              "status": 5,
+              "matchdate": "2024-06-30",
+              "fid": 1144450,
+              "homesxname": "瑞士",
+              "awaysxname": "意大利",
+              "simplegbname": "欧洲杯",
+              "seasonid": 6729,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "handicapball": 2.0,
+              "handicapline": "+0.25",
+              "handicaplinename": "受平手/半球",
+              "cornernum": 10,
+              "hcornernum": 4,
+              "acornernum": 6
+            }
+          ]
         }
       },
       "主队总实力分": 3.343,
@@ -1586,31 +1586,6 @@
             "计算说明": "只计算距离当前日期最近的一场比赛"
           },
           {
-            "共同对手": "意大利",
-            "主队比赛数": 2,
-            "客队比赛数": 1,
-            "有效比赛数": "1/1",
-            "主队对该对手总实力分": 2.434,
-            "客队对该对手总实力分": 0.18,
-            "主队比赛详情": [
-              {
-                "比赛日期": "2025-11-17",
-                "比分": "意大利 1-4 挪威",
-                "实力分": 2.434,
-                "备注": "最近一场比赛"
-              }
-            ],
-            "客队比赛详情": [
-              {
-                "比赛日期": "2024-06-30",
-                "比分": "瑞士 2-0 意大利",
-                "实力分": 0.18,
-                "备注": "最近一场比赛"
-              }
-            ],
-            "计算说明": "只计算距离当前日期最近的一场比赛"
-          },
-          {
             "共同对手": "斯洛文尼亚",
             "主队比赛数": 2,
             "客队比赛数": 2,
@@ -1630,6 +1605,31 @@
                 "比赛日期": "2025-10-14",
                 "比分": "斯洛文尼亚 0-0 瑞士",
                 "实力分": 0.0,
+                "备注": "最近一场比赛"
+              }
+            ],
+            "计算说明": "只计算距离当前日期最近的一场比赛"
+          },
+          {
+            "共同对手": "意大利",
+            "主队比赛数": 2,
+            "客队比赛数": 1,
+            "有效比赛数": "1/1",
+            "主队对该对手总实力分": 2.434,
+            "客队对该对手总实力分": 0.18,
+            "主队比赛详情": [
+              {
+                "比赛日期": "2025-11-17",
+                "比分": "意大利 1-4 挪威",
+                "实力分": 2.434,
+                "备注": "最近一场比赛"
+              }
+            ],
+            "客队比赛详情": [
+              {
+                "比赛日期": "2024-06-30",
+                "比分": "瑞士 2-0 意大利",
+                "实力分": 0.18,
                 "备注": "最近一场比赛"
               }
             ],
@@ -1852,105 +1852,6 @@
       "客队比赛记录数": 0,
       "共同对手数": 2,
       "共同对手比赛数据": {
-        "法国": {
-          "home_vs_opponent": [
-            {
-              "result1": "负",
-              "result2": "输",
-              "result3": "大",
-              "homeid": 11,
-              "awayid": 10,
-              "homescore": 1,
-              "awayscore": 2,
-              "league_id": 65,
-              "win": 2.9,
-              "draw": 3.52,
-              "lost": 2.22,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2026-03-27",
-              "fid": 1393527,
-              "homesxname": "巴西",
-              "awaysxname": "法国",
-              "simplegbname": "友谊赛",
-              "seasonid": 19472,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "handicapball": 2.75,
-              "handicapline": "+0.25",
-              "handicaplinename": "受平手/半球",
-              "cornernum": 0,
-              "hcornernum": 0,
-              "acornernum": 0
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "负",
-              "result2": "输",
-              "result3": "小",
-              "homeid": 10,
-              "awayid": 36,
-              "homescore": 2,
-              "awayscore": 0,
-              "league_id": 676,
-              "win": 1.43,
-              "draw": 4.63,
-              "lost": 7.23,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-03-24",
-              "fid": 1177963,
-              "homesxname": "法国",
-              "awaysxname": "克罗地亚",
-              "simplegbname": "欧国联",
-              "seasonid": 7304,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "handicapball": 2.75,
-              "handicapline": "-1.25",
-              "handicaplinename": "一球/球半",
-              "cornernum": 16,
-              "hcornernum": 16,
-              "acornernum": 0
-            },
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "小",
-              "homeid": 36,
-              "awayid": 10,
-              "homescore": 2,
-              "awayscore": 0,
-              "league_id": 676,
-              "win": 4.07,
-              "draw": 3.34,
-              "lost": 1.96,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-03-21",
-              "fid": 1177956,
-              "homesxname": "克罗地亚",
-              "awaysxname": "法国",
-              "simplegbname": "欧国联",
-              "seasonid": 7304,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "handicapball": 2.25,
-              "handicapline": "+0.5",
-              "handicaplinename": "受半球",
-              "cornernum": 12,
-              "hcornernum": 3,
-              "acornernum": 9
-            }
-          ]
-        },
         "哥伦比亚": {
           "home_vs_opponent": [
             {
@@ -2049,6 +1950,105 @@
               "acornernum": 0
             }
           ]
+        },
+        "法国": {
+          "home_vs_opponent": [
+            {
+              "result1": "负",
+              "result2": "输",
+              "result3": "大",
+              "homeid": 11,
+              "awayid": 10,
+              "homescore": 1,
+              "awayscore": 2,
+              "league_id": 65,
+              "win": 2.9,
+              "draw": 3.52,
+              "lost": 2.22,
+              "iscup": 1,
+              "homestanding": 0,
+              "awaystanding": 0,
+              "status": 5,
+              "matchdate": "2026-03-27",
+              "fid": 1393527,
+              "homesxname": "巴西",
+              "awaysxname": "法国",
+              "simplegbname": "友谊赛",
+              "seasonid": 19472,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "handicapball": 2.75,
+              "handicapline": "+0.25",
+              "handicaplinename": "受平手/半球",
+              "cornernum": 0,
+              "hcornernum": 0,
+              "acornernum": 0
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "result1": "负",
+              "result2": "输",
+              "result3": "小",
+              "homeid": 10,
+              "awayid": 36,
+              "homescore": 2,
+              "awayscore": 0,
+              "league_id": 676,
+              "win": 1.43,
+              "draw": 4.63,
+              "lost": 7.23,
+              "iscup": 1,
+              "homestanding": 0,
+              "awaystanding": 0,
+              "status": 5,
+              "matchdate": "2025-03-24",
+              "fid": 1177963,
+              "homesxname": "法国",
+              "awaysxname": "克罗地亚",
+              "simplegbname": "欧国联",
+              "seasonid": 7304,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "handicapball": 2.75,
+              "handicapline": "-1.25",
+              "handicaplinename": "一球/球半",
+              "cornernum": 16,
+              "hcornernum": 16,
+              "acornernum": 0
+            },
+            {
+              "result1": "胜",
+              "result2": "赢",
+              "result3": "小",
+              "homeid": 36,
+              "awayid": 10,
+              "homescore": 2,
+              "awayscore": 0,
+              "league_id": 676,
+              "win": 4.07,
+              "draw": 3.34,
+              "lost": 1.96,
+              "iscup": 1,
+              "homestanding": 0,
+              "awaystanding": 0,
+              "status": 5,
+              "matchdate": "2025-03-21",
+              "fid": 1177956,
+              "homesxname": "克罗地亚",
+              "awaysxname": "法国",
+              "simplegbname": "欧国联",
+              "seasonid": 7304,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "handicapball": 2.25,
+              "handicapline": "+0.5",
+              "handicaplinename": "受半球",
+              "cornernum": 12,
+              "hcornernum": 3,
+              "acornernum": 9
+            }
+          ]
         }
       },
       "主队总实力分": -0.53,
@@ -2058,31 +2058,6 @@
       "详细计算数据": {
         "共同对手总数": 2,
         "共同对手详情": [
-          {
-            "共同对手": "法国",
-            "主队比赛数": 1,
-            "客队比赛数": 2,
-            "有效比赛数": "1/1",
-            "主队对该对手总实力分": -0.997,
-            "客队对该对手总实力分": -0.943,
-            "主队比赛详情": [
-              {
-                "比赛日期": "2026-03-27",
-                "比分": "巴西 1-2 法国",
-                "实力分": -0.997,
-                "备注": "最近一场比赛"
-              }
-            ],
-            "客队比赛详情": [
-              {
-                "比赛日期": "2025-03-24",
-                "比分": "法国 2-0 克罗地亚",
-                "实力分": -0.943,
-                "备注": "最近一场比赛"
-              }
-            ],
-            "计算说明": "只计算距离当前日期最近的一场比赛"
-          },
           {
             "共同对手": "哥伦比亚",
             "主队比赛数": 2,
@@ -2103,6 +2078,31 @@
                 "比赛日期": "2026-03-27",
                 "比分": "哥伦比亚 1-2 克罗地亚",
                 "实力分": 0.997,
+                "备注": "最近一场比赛"
+              }
+            ],
+            "计算说明": "只计算距离当前日期最近的一场比赛"
+          },
+          {
+            "共同对手": "法国",
+            "主队比赛数": 1,
+            "客队比赛数": 2,
+            "有效比赛数": "1/1",
+            "主队对该对手总实力分": -0.997,
+            "客队对该对手总实力分": -0.943,
+            "主队比赛详情": [
+              {
+                "比赛日期": "2026-03-27",
+                "比分": "巴西 1-2 法国",
+                "实力分": -0.997,
+                "备注": "最近一场比赛"
+              }
+            ],
+            "客队比赛详情": [
+              {
+                "比赛日期": "2025-03-24",
+                "比分": "法国 2-0 克罗地亚",
+                "实力分": -0.943,
                 "备注": "最近一场比赛"
               }
             ],
