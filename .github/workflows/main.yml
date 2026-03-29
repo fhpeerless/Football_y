@@ -219,7 +219,7 @@ jobs:
         python -c "from zhipuai import ZhipuAI; print('ZhipuAI 导入成功')" || echo "ZhipuAI 导入失败"
         
         # 运行GLM分析脚本
-        if python glm_analysis.py; then
+        if python glm/glm_analysis.py; then
           echo "GLM智能分析成功"
           
           # 验证输出文件
