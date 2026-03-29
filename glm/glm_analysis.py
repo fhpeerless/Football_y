@@ -1,0 +1,1301 @@
+import json
+import os
+import sys
+import time
+import re
+from typing import Dict, List, Any, Optional
+from datetime import datetime
+
+# 调试：打印 Python 路径
+print(f"Python 版本: {sys.version}")
+print(f"Python 路径: {sys.path}")
+
+ZAI_AVAILABLE = False
+SDK_NAME = None
+ZhipuAiClient = None
+
+try:
+    # 尝试从 zhipuai 导入 ZhipuAI（新版本推荐）
+    from zhipuai import ZhipuAI
+    ZhipuAiClient = ZhipuAI  # 别名，保持代码一致性
+    ZAI_AVAILABLE = True
+    SDK_NAME = "zhipuai"
+    print(f"成功导入 zhipuai.ZhipuAI")
+except ImportError as e:
+    print(f"导入 zhipuai.ZhipuAI 失败: {e}")
+    try:
+        # 尝试从 zhipuai 导入 ZhipuAiClient（某些版本）
+        from zhipuai import ZhipuAiClient
+        ZAI_AVAILABLE = True
+        SDK_NAME = "zhipuai"
+        print(f"成功导入 zhipuai.ZhipuAiClient")
+    except ImportError as e2:
+        print(f"导入 zhipuai.ZhipuAiClient 失败: {e2}")
+        try:
+            # 尝试从 zai 导入（旧版本）
+            from zai import ZhipuAiClient
+            ZAI_AVAILABLE = True
+            SDK_NAME = "zai"
+            print(f"成功导入 zai.ZhipuAiClient")
+        except ImportError as e3:
+            print(f"导入 zai.ZhipuAiClient 失败: {e3}")
+            print("警告: 未安装 GLM SDK，请使用 'pip install zhipuai' 安装")
+            # 保留 requests 作为备用
+            import requests
+
+if ZAI_AVAILABLE:
+    print(f"GLM SDK 可用，使用: {SDK_NAME}")
+else:
+    print("GLM SDK 不可用，将无法调用 GLM API")
+
+def load_config() -> Dict[str, Any]:
+    """
+    加载GLM API配置
+    优先从环境变量读取，其次从glm_config.json文件读取
+    """
+    # 获取脚本所在目录的绝对路径
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    config = {
+        "api_key": os.environ.get("GLM_API_KEY", ""),
+        "api_base": os.environ.get("GLM_API_BASE", "https://open.bigmodel.cn/api/paas/v4/chat/completions"),
+        "model": os.environ.get("GLM_MODEL", "glm-5"),
+        "max_tokens": int(os.environ.get("GLM_MAX_TOKENS", "8000")),
+        "temperature": float(os.environ.get("GLM_TEMPERATURE", "0.1")),
+        "thinking_enabled": os.environ.get("GLM_THINKING_ENABLED", "true").lower() == "true",
+        "stream": os.environ.get("GLM_STREAM", "false").lower() == "true",
+        "top_p": float(os.environ.get("GLM_TOP_P", "0.7")),
+        "timeout": int(os.environ.get("GLM_TIMEOUT", "300")),  # 默认300秒（5分钟）超时
+        "api_delay": int(os.environ.get("GLM_API_DELAY", "3")),  # API调用间隔（秒），避免频率限制
+    }
+    
+    # 尝试从配置文件读取（基于脚本目录）
+    config_file = os.path.join(script_dir, "glm_config.json")
+    if os.path.exists(config_file):
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                file_config = json.load(f)
+                config.update(file_config)
+        except Exception as e:
+            print(f"警告: 读取配置文件失败: {e}")
+    
+    return config
+
+def get_project_root() -> str:
+    """
+    获取项目根目录（脚本目录的父目录）
+    """
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.dirname(script_dir)
+
+def load_history_data(period: str) -> Dict[str, Any]:
+    """
+    加载指定期数的历史交锋数据
+    """
+    project_root = get_project_root()
+    history_file = os.path.join(project_root, "result", f"{period}期_历史交锋.json")
+    if not os.path.exists(history_file):
+        raise FileNotFoundError(f"历史交锋文件不存在: {history_file}")
+    
+    with open(history_file, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def parse_match_date(date_str: str) -> Optional[datetime]:
+    """
+    解析比赛日期字符串为datetime对象
+    支持常见格式：YYYY-MM-DD, YYYY/MM/DD, MM/DD/YYYY等
+    """
+    if not date_str:
+        return None
+    
+    date_formats = [
+        "%Y-%m-%d", "%Y/%m/%d", "%m-%d-%Y", "%m/%d/%Y",
+        "%Y年%m月%d日", "%Y.%m.%d"
+    ]
+    
+    for fmt in date_formats:
+        try:
+            return datetime.strptime(date_str, fmt)
+        except ValueError:
+            continue
+    
+    # 尝试提取数字并解析
+    try:
+        nums = re.findall(r'\d+', date_str)
+        if len(nums) >= 3:
+            year, month, day = int(nums[0]), int(nums[1]), int(nums[2])
+            return datetime(year, month, day)
+    except:
+        pass
+    
+    return None
+
+def calculate_h2h_features(home_team: str, away_team: str, history_matches: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    计算同对手交锋的量化特征（核心优化点）
+    """
+    features = {
+        # 基础统计
+        "总交锋场次": 0,
+        "主队总胜率": 0.0,
+        "客队总胜率": 0.0,
+        "平局率": 0.0,
+        
+        # 近期交锋（权重更高）
+        "近3场交锋场次": 0,
+        "近3场主队胜率": 0.0,
+        "近3场客队胜率": 0.0,
+        "近6场交锋场次": 0,
+        "近6场主队胜率": 0.0,
+        "近6场客队胜率": 0.0,
+        
+        # 进球/比分特征
+        "场均总进球": 0.0,
+        "大2.5球比例": 0.0,
+        "双方都进球比例": 0.0,
+        "主队场均进球": 0.0,
+        "主队场均失球": 0.0,
+        "客队场均进球": 0.0,
+        "客队场均失球": 0.0,
+        
+        # 最近交锋
+        "上一次交锋结果": "",  # 主胜/平/客胜
+        "上一次交锋净胜球": 0,
+        "最近连胜场次": 0,
+        "最近连胜方": "",  # 主队/客队/无
+        
+        # 时间加权特征
+        "时间加权主队胜率": 0.0,
+        "时间加权总进球": 0.0,
+        
+        # 常见比分
+        "最常见比分": "",
+        "出现次数最多的比分": 0,
+        
+        # 原始数据
+        "有效交锋记录": []
+    }
+    
+    if not history_matches:
+        return features
+    
+    # 过滤有效记录并按日期排序
+    valid_matches = []
+    for match in history_matches:
+        # 提取关键信息
+        match_home = match.get("homesxname", "").strip()
+        match_away = match.get("awaysxname", "").strip()
+        home_score = int(match.get("homescore", 0))
+        away_score = int(match.get("awayscore", 0))
+        result = match.get("result1", "").strip()
+        match_date = parse_match_date(match.get("matchdate", ""))
+        
+        # 验证数据有效性
+        if not match_home or not match_away or match_date is None:
+            continue
+        
+        # 标准化主队/客队（确保和当前比赛一致）
+        is_same_pair = (
+            (match_home == home_team and match_away == away_team) or
+            (match_home == away_team and match_away == home_team)
+        )
+        
+        if not is_same_pair:
+            continue
+        
+        # 统一视角：以当前比赛的主队/客队为基准
+        if match_home == away_team and match_away == home_team:
+            # 交换比分和结果
+            home_score, away_score = away_score, home_score
+            if result == "胜":
+                result = "负"
+            elif result == "负":
+                result = "胜"
+        
+        valid_matches.append({
+            "date": match_date,
+            "home_team": home_team,
+            "away_team": away_team,
+            "home_score": home_score,
+            "away_score": away_score,
+            "result": result,
+            "score_str": f"{home_score}-{away_score}",
+            "total_goals": home_score + away_score,
+            "goal_diff": home_score - away_score,
+            "btts": 1 if home_score > 0 and away_score > 0 else 0,
+            "over_2_5": 1 if (home_score + away_score) > 2.5 else 0
+        })
+    
+    # 按日期降序排序（最新的在前）
+    valid_matches.sort(key=lambda x: x["date"], reverse=True)
+    features["有效交锋记录"] = valid_matches
+    total_matches = len(valid_matches)
+    
+    if total_matches == 0:
+        return features
+    
+    # 1. 基础统计
+    home_wins = sum(1 for m in valid_matches if m["result"] == "胜")
+    away_wins = sum(1 for m in valid_matches if m["result"] == "负")
+    draws = sum(1 for m in valid_matches if m["result"] == "平")
+    
+    features["总交锋场次"] = total_matches
+    features["主队总胜率"] = home_wins / total_matches if total_matches > 0 else 0.0
+    features["客队总胜率"] = away_wins / total_matches if total_matches > 0 else 0.0
+    features["平局率"] = draws / total_matches if total_matches > 0 else 0.0
+    
+    # 2. 近期交锋统计（近3场、近6场）
+    recent_3 = valid_matches[:3]
+    recent_6 = valid_matches[:6]
+    
+    # 近3场
+    features["近3场交锋场次"] = len(recent_3)
+    if len(recent_3) > 0:
+        home_wins_3 = sum(1 for m in recent_3 if m["result"] == "胜")
+        features["近3场主队胜率"] = home_wins_3 / len(recent_3)
+    
+    # 近6场
+    features["近6场交锋场次"] = len(recent_6)
+    if len(recent_6) > 0:
+        home_wins_6 = sum(1 for m in recent_6 if m["result"] == "胜")
+        features["近6场主队胜率"] = home_wins_6 / len(recent_6)
+    
+    # 3. 进球特征
+    total_goals_list = [m["total_goals"] for m in valid_matches]
+    features["场均总进球"] = sum(total_goals_list) / total_matches if total_matches > 0 else 0.0
+    
+    btts_count = sum(1 for m in valid_matches if m["btts"] == 1)
+    features["双方都进球比例"] = btts_count / total_matches if total_matches > 0 else 0.0
+    
+    over_2_5_count = sum(1 for m in valid_matches if m["over_2_5"] == 1)
+    features["大2.5球比例"] = over_2_5_count / total_matches if total_matches > 0 else 0.0
+    
+    # 4. 攻防数据
+    home_goals = sum(m["home_score"] for m in valid_matches)
+    home_concede = sum(m["away_score"] for m in valid_matches)
+    away_goals = sum(m["away_score"] for m in valid_matches)
+    away_concede = sum(m["home_score"] for m in valid_matches)
+    
+    features["主队场均进球"] = home_goals / total_matches if total_matches > 0 else 0.0
+    features["主队场均失球"] = home_concede / total_matches if total_matches > 0 else 0.0
+    features["客队场均进球"] = away_goals / total_matches if total_matches > 0 else 0.0
+    features["客队场均失球"] = away_concede / total_matches if total_matches > 0 else 0.0
+    
+    # 5. 最近交锋详情
+    latest_match = valid_matches[0]
+    features["上一次交锋结果"] = latest_match["result"]
+    features["上一次交锋净胜球"] = latest_match["goal_diff"]
+    
+    # 6. 连胜统计
+    current_streak = 1
+    streak_winner = ""
+    if len(valid_matches) > 1:
+        first_result = valid_matches[0]["result"]
+        for m in valid_matches[1:]:
+            if m["result"] == first_result:
+                current_streak += 1
+            else:
+                break
+        
+        if first_result == "胜":
+            streak_winner = home_team
+        elif first_result == "负":
+            streak_winner = away_team
+    
+    features["最近连胜场次"] = current_streak
+    features["最近连胜方"] = streak_winner
+    
+    # 7. 时间加权特征（越近权重越高）
+    today = datetime.now()
+    weighted_win_sum = 0.0
+    weighted_goals_sum = 0.0
+    weight_sum = 0.0
+    
+    for i, match in enumerate(valid_matches):
+        # 权重：最近1场=1.0，第2场=0.8，第3场=0.6，第4场=0.4，第5场=0.2，之后=0.1
+        weight = max(1.0 - (i * 0.2), 0.1)
+        
+        # 加权胜率
+        if match["result"] == "胜":
+            weighted_win_sum += weight
+        
+        # 加权进球
+        weighted_goals_sum += match["total_goals"] * weight
+        weight_sum += weight
+    
+    if weight_sum > 0:
+        features["时间加权主队胜率"] = weighted_win_sum / weight_sum
+        features["时间加权总进球"] = weighted_goals_sum / weight_sum
+    
+    # 8. 最常见比分
+    score_counts = {}
+    for m in valid_matches:
+        score = m["score_str"]
+        score_counts[score] = score_counts.get(score, 0) + 1
+    
+    if score_counts:
+        most_common = max(score_counts.items(), key=lambda x: x[1])
+        features["最常见比分"] = most_common[0]
+        features["出现次数最多的比分"] = most_common[1]
+    
+    return features
+
+def analyze_common_opponents(home_matches: List[Dict[str, Any]], away_matches: List[Dict[str, Any]], 
+                            home_team: str, away_team: str) -> Dict[str, Any]:
+    """
+    分析主队和客队的共同对手交战数据
+    """
+    analysis = {
+        "共同对手列表": [],
+        "主队对共同对手战绩": {},
+        "客队对共同对手战绩": {},
+        "对比分析": {},
+        "共同对手数量": 0,
+        "主队优势对手": [],
+        "客队优势对手": []
+    }
+    
+    if not home_matches or not away_matches:
+        return analysis
+    
+    # 提取主队和客队近期的对手
+    home_opponents = {}
+    away_opponents = {}
+    
+    # 统计主队对手
+    for match in home_matches:
+        home_name = match.get("homesxname", "")
+        away_name = match.get("awaysxname", "")
+        result = match.get("result1", "")
+        homescore = int(match.get("homescore", 0))
+        awayscore = int(match.get("awayscore", 0))
+        
+        # 判断当前主队是home还是away
+        if home_name == home_team:
+            opponent = away_name
+            is_home_game = True
+            goal_diff = homescore - awayscore
+        elif away_name == home_team:
+            opponent = home_name
+            is_home_game = False
+            goal_diff = awayscore - homescore
+        else:
+            continue
+        
+        if opponent not in home_opponents:
+            home_opponents[opponent] = {
+                "总场次": 0,
+                "胜场": 0,
+                "平场": 0,
+                "负场": 0,
+                "总进球": 0,
+                "总失球": 0,
+                "净胜球": 0,
+                "主场场次": 0,
+                "客战场次": 0
+            }
+        
+        home_opponents[opponent]["总场次"] += 1
+        home_opponents[opponent]["总进球"] += (homescore if is_home_game else awayscore)
+        home_opponents[opponent]["总失球"] += (awayscore if is_home_game else homescore)
+        home_opponents[opponent]["净胜球"] += goal_diff
+        
+        if is_home_game:
+            home_opponents[opponent]["主场场次"] += 1
+        else:
+            home_opponents[opponent]["客战场次"] += 1
+            
+        if result == "胜":
+            home_opponents[opponent]["胜场"] += 1
+        elif result == "平":
+            home_opponents[opponent]["平场"] += 1
+        elif result == "负":
+            home_opponents[opponent]["负场"] += 1
+    
+    # 统计客队对手
+    for match in away_matches:
+        home_name = match.get("homesxname", "")
+        away_name = match.get("awaysxname", "")
+        result = match.get("result1", "")
+        homescore = int(match.get("homescore", 0))
+        awayscore = int(match.get("awayscore", 0))
+        
+        # 判断当前客队是home还是away
+        if home_name == away_team:
+            opponent = away_name
+            is_home_game = True
+            goal_diff = homescore - awayscore
+        elif away_name == away_team:
+            opponent = home_name
+            is_home_game = False
+            goal_diff = awayscore - homescore
+        else:
+            continue
+        
+        if opponent not in away_opponents:
+            away_opponents[opponent] = {
+                "总场次": 0,
+                "胜场": 0,
+                "平场": 0,
+                "负场": 0,
+                "总进球": 0,
+                "总失球": 0,
+                "净胜球": 0,
+                "主场场次": 0,
+                "客战场次": 0
+            }
+        
+        away_opponents[opponent]["总场次"] += 1
+        away_opponents[opponent]["总进球"] += (homescore if is_home_game else awayscore)
+        away_opponents[opponent]["总失球"] += (awayscore if is_home_game else homescore)
+        away_opponents[opponent]["净胜球"] += goal_diff
+        
+        if is_home_game:
+            away_opponents[opponent]["主场场次"] += 1
+        else:
+            away_opponents[opponent]["客战场次"] += 1
+            
+        if result == "胜":
+            away_opponents[opponent]["胜场"] += 1
+        elif result == "平":
+            away_opponents[opponent]["平场"] += 1
+        elif result == "负":
+            away_opponents[opponent]["负场"] += 1
+    
+    # 找出共同对手
+    common_opponents = set(home_opponents.keys()) & set(away_opponents.keys())
+    analysis["共同对手数量"] = len(common_opponents)
+    
+    for opponent in common_opponents:
+        home_stats = home_opponents[opponent]
+        away_stats = away_opponents[opponent]
+        
+        # 计算胜率
+        home_win_rate = home_stats["胜场"] / home_stats["总场次"] if home_stats["总场次"] > 0 else 0
+        away_win_rate = away_stats["胜场"] / away_stats["总场次"] if away_stats["总场次"] > 0 else 0
+        
+        # 计算场均净胜球
+        home_avg_gd = home_stats["净胜球"] / home_stats["总场次"] if home_stats["总场次"] > 0 else 0
+        away_avg_gd = away_stats["净胜球"] / away_stats["总场次"] if away_stats["总场次"] > 0 else 0
+        
+        # 确定哪支球队对该对手更有优势
+        advantage = "平手"
+        if home_win_rate > away_win_rate + 0.1:  # 胜率差大于10%
+            advantage = home_team
+            analysis["主队优势对手"].append(opponent)
+        elif away_win_rate > home_win_rate + 0.1:
+            advantage = away_team
+            analysis["客队优势对手"].append(opponent)
+        
+        common_opponent_info = {
+            "对手名称": opponent,
+            "主队战绩": {
+                "总场次": home_stats["总场次"],
+                "胜场": home_stats["胜场"],
+                "平场": home_stats["平场"],
+                "负场": home_stats["负场"],
+                "胜率": round(home_win_rate, 3),
+                "场均进球": round(home_stats["总进球"] / home_stats["总场次"], 2) if home_stats["总场次"] > 0 else 0,
+                "场均失球": round(home_stats["总失球"] / home_stats["总场次"], 2) if home_stats["总场次"] > 0 else 0,
+                "场均净胜球": round(home_avg_gd, 2)
+            },
+            "客队战绩": {
+                "总场次": away_stats["总场次"],
+                "胜场": away_stats["胜场"],
+                "平场": away_stats["平场"],
+                "负场": away_stats["负场"],
+                "胜率": round(away_win_rate, 3),
+                "场均进球": round(away_stats["总进球"] / away_stats["总场次"], 2) if away_stats["总场次"] > 0 else 0,
+                "场均失球": round(away_stats["总失球"] / away_stats["总场次"], 2) if away_stats["总场次"] > 0 else 0,
+                "场均净胜球": round(away_avg_gd, 2)
+            },
+            "优势方": advantage
+        }
+        
+        analysis["共同对手列表"].append(common_opponent_info)
+        analysis["主队对共同对手战绩"][opponent] = home_stats
+        analysis["客队对共同对手战绩"][opponent] = away_stats
+    
+    # 总结分析
+    if analysis["共同对手数量"] > 0:
+        analysis["对比分析"] = {
+            "主队优势对手数量": len(analysis["主队优势对手"]),
+            "客队优势对手数量": len(analysis["客队优势对手"]),
+            "平手对手数量": analysis["共同对手数量"] - len(analysis["主队优势对手"]) - len(analysis["客队优势对手"]),
+            "整体优势方": "主队" if len(analysis["主队优势对手"]) > len(analysis["客队优势对手"]) else 
+                        "客队" if len(analysis["客队优势对手"]) > len(analysis["主队优势对手"]) else "平手"
+        }
+    
+    return analysis
+
+def analyze_injury_situation(home_team: str, away_team: str, league: str, match_date: str) -> Dict[str, Any]:
+    """
+    分析球队伤病情况（可扩展为网络搜索）
+    """
+    injury_data = {
+        "home_injuries": "未知（需要实时数据）",
+        "away_injuries": "未知（需要实时数据）",
+        "impact_assessment": "伤病数据不足，建议关注赛前球队新闻",
+        "data_source": "placeholder"
+    }
+    
+    # 这里可以扩展为实际网络搜索
+    # 例如：搜索"球队名 + 伤病"或"球队名 + injury"
+    # 但由于网络搜索需要用户确认和可能产生成本，这里使用占位符
+    
+    # 简单的逻辑：根据球队名和联赛生成一些提示性信息
+    if "英超" in league or "England" in league:
+        injury_data["impact_assessment"] = f"英超球队通常有详细的伤病报告，建议查看官方球队新闻"
+    elif "意甲" in league or "Italy" in league:
+        injury_data["impact_assessment"] = f"意甲球队伤病信息相对透明，关注赛前新闻发布会"
+    elif "西甲" in league or "Spain" in league:
+        injury_data["impact_assessment"] = f"西甲球队伤病情况需关注官方公告"
+    else:
+        injury_data["impact_assessment"] = f"建议搜索'{home_team} 伤病'和'{away_team} 伤病'获取最新信息"
+    
+    return injury_data
+
+def extract_match_info(match_data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    从单场比赛数据中提取关键信息（包含量化特征）
+    """
+    match_info = {
+        "场次": match_data.get("场次", 0),
+        "联赛": match_data.get("联赛", ""),
+        "主队": match_data.get("主队", ""),
+        "客队": match_data.get("客队", ""),
+        "比赛时间": match_data.get("比赛时间", ""),
+        "历史交锋原始数据": [],
+        "历史交锋量化特征": {},
+        "主队近期比赛数据": [],
+        "客队近期比赛数据": [],
+        "直接交锋数据": [],
+        "共同对手分析": {},
+        "伤病情况": {}
+    }
+    
+    # 1. 提取历史交锋数据（主队和客队近期比赛）
+    history_data = match_data.get("历史交锋数据", {})
+    if history_data.get("status") == "100":
+        data = history_data.get("data", {})
+        
+        # 提取主队近期比赛数据
+        home_matches = data.get("home", {}).get("matches", [])
+        match_info["主队近期比赛数据"] = home_matches[:15]  # 取最近15场比赛
+        
+        # 提取客队近期比赛数据
+        away_matches = data.get("away", {}).get("matches", [])
+        match_info["客队近期比赛数据"] = away_matches[:15]  # 取最近15场比赛
+        
+        # 保存原始数据（兼容旧格式，只保存主队数据用于历史交锋分析）
+        for match in home_matches[:10]:  # 只取最近10场比赛
+            match_info["历史交锋原始数据"].append({
+                "比赛日期": match.get("matchdate", ""),
+                "主队": match.get("homesxname", ""),
+                "客队": match.get("awaysxname", ""),
+                "比分": f"{match.get('homescore', 0)}-{match.get('awayscore', 0)}",
+                "结果": match.get("result1", ""),  # 胜/平/负
+                "亚盘结果": match.get("result2", ""),  # 赢/输/走
+                "大小球结果": match.get("result3", ""),  # 大/小
+                "主队赔率": match.get("win", 0.0),
+                "平局赔率": match.get("draw", 0.0),
+                "客队赔率": match.get("lost", 0.0),
+                "联赛": match.get("simplegbname", ""),
+            })
+        
+        # 计算量化特征（核心优化）
+        home_team = match_info["主队"]
+        away_team = match_info["客队"]
+        match_info["历史交锋量化特征"] = calculate_h2h_features(home_team, away_team, home_matches[:20])
+    
+    # 2. 提取直接交锋数据（交战数据）
+    battle_data = match_data.get("交战数据", {})
+    if battle_data.get("status") == "100":
+        match_info["直接交锋数据"] = battle_data.get("data", {}).get("matches", [])
+    
+    # 3. 分析共同对手
+    match_info["共同对手分析"] = analyze_common_opponents(
+        match_info["主队近期比赛数据"],
+        match_info["客队近期比赛数据"],
+        match_info["主队"],
+        match_info["客队"]
+    )
+    
+    # 4. 分析伤病情况
+    match_info["伤病情况"] = analyze_injury_situation(
+        match_info["主队"],
+        match_info["客队"],
+        match_info["联赛"],
+        match_info["比赛时间"]
+    )
+    
+    # 添加兼容字段，确保HTML能正确加载
+    match_info["历史交锋"] = match_info["历史交锋原始数据"][:]
+    
+    return match_info
+
+def build_prompt(match_info: Dict[str, Any]) -> str:
+    """
+    构建GLM API的提示词（综合多维度分析）
+    """
+    match_num = match_info["场次"]
+    league = match_info["联赛"]
+    home_team = match_info["主队"]
+    away_team = match_info["客队"]
+    match_time = match_info["比赛时间"]
+    
+    # 1. 格式化量化特征
+    features = match_info["历史交锋量化特征"]
+    features_text = "\n".join([f"  - {k}: {v}" for k, v in features.items()])
+    
+    # 2. 格式化原始交锋记录
+    history_text = ""
+    for i, history in enumerate(match_info["历史交锋原始数据"]):
+        history_text += f"{i+1}. {history['比赛日期']} {history['主队']} vs {history['客队']} "
+        history_text += f"比分: {history['比分']}, 结果: {history['结果']}, "
+        history_text += f"亚盘: {history['亚盘结果']}, 大小球: {history['大小球结果']}\n"
+    
+    if not history_text:
+        history_text = "暂无历史交锋数据"
+    
+    # 3. 格式化直接交锋数据
+    direct_battle_text = ""
+    direct_battles = match_info.get("直接交锋数据", [])
+    if direct_battles:
+        direct_battle_text = "# 两队直接交锋历史记录（H2H）\n"
+        for i, battle in enumerate(direct_battles[:10]):  # 最多显示10场
+            home_name = battle.get("homesxname", "")
+            away_name = battle.get("awaysxname", "")
+            homescore = battle.get("homescore", 0)
+            awayscore = battle.get("awayscore", 0)
+            result = battle.get("result1", "")
+            match_date = battle.get("matchdate", "")
+            league_name = battle.get("simplegbname", "")
+            
+            direct_battle_text += f"{i+1}. {match_date} {home_name} {homescore}-{awayscore} {away_name} "
+            direct_battle_text += f"({result}) [{league_name}]\n"
+    else:
+        direct_battle_text = "# 两队直接交锋历史记录\n- 暂无直接交锋数据\n"
+    
+    # 4. 格式化共同对手分析
+    common_analysis = match_info.get("共同对手分析", {})
+    common_text = ""
+    if common_analysis.get("共同对手数量", 0) > 0:
+        common_text = "# 共同对手对比分析\n"
+        common_text += f"- 共同对手数量: {common_analysis['共同对手数量']}\n"
+        common_text += f"- 主队优势对手: {len(common_analysis.get('主队优势对手', []))}个\n"
+        common_text += f"- 客队优势对手: {len(common_analysis.get('客队优势对手', []))}个\n"
+        common_text += f"- 整体优势方: {common_analysis.get('对比分析', {}).get('整体优势方', '平手')}\n\n"
+        
+        common_text += "## 详细共同对手战绩对比:\n"
+        for opponent_info in common_analysis.get("共同对手列表", []):
+            opponent = opponent_info["对手名称"]
+            home_stats = opponent_info["主队战绩"]
+            away_stats = opponent_info["客队战绩"]
+            advantage = opponent_info["优势方"]
+            
+            common_text += f"### 对手: {opponent} (优势方: {advantage})\n"
+            common_text += f"  - {home_team}: {home_stats['胜场']}胜{home_stats['平场']}平{home_stats['负场']}负, "
+            common_text += f"胜率{home_stats['胜率']:.1%}, 场均净胜球{home_stats['场均净胜球']:.2f}\n"
+            common_text += f"  - {away_team}: {away_stats['胜场']}胜{away_stats['平场']}平{away_stats['负场']}负, "
+            common_text += f"胜率{away_stats['胜率']:.1%}, 场均净胜球{away_stats['场均净胜球']:.2f}\n"
+    else:
+        common_text = "# 共同对手对比分析\n- 暂无共同对手数据\n"
+    
+    # 5. 格式化伤病情况
+    injury_text = "# 伤病情况\n"
+    injury_data = match_info.get("伤病情况", {})
+    if injury_data:
+        injury_text += f"- 主队({home_team})伤病: {injury_data.get('home_injuries', '未知')}\n"
+        injury_text += f"- 客队({away_team})伤病: {injury_data.get('away_injuries', '未知')}\n"
+        injury_text += f"- 伤病影响评估: {injury_data.get('impact_assessment', '未知')}\n"
+    else:
+        injury_text += "- 暂无伤病数据（建议结合最新伤病信息进行风险评估）\n"
+    
+    prompt = f"""你是一位专业的足球比赛数据分析师，擅长基于多维数据进行精准预测。
+请严格基于以下数据对本场比赛进行综合分析：
+
+# 比赛基本信息
+- 场次: 第{match_num}场
+- 联赛: {league}
+- 对阵: {home_team} (主) vs {away_team} (客)
+- 比赛时间: {match_time}
+
+# 历史交锋量化特征（核心分析依据）
+{features_text}
+
+# 历史交锋详细记录（最近10场）
+{history_text}
+
+{direct_battle_text}
+
+{common_text}
+
+{injury_text}
+
+# 分析要求（必须严格遵守）
+## 分析框架（按权重从高到低）：
+1. **直接交锋与历史规律（权重24%）**
+   - 两队直接交锋的胜负走势、进球特征
+   - 历史交锋中的主客场优势/劣势
+   - 最近交锋的心理影响
+
+2. **共同对手对比分析（权重38%）**
+   - 通过共同对手评估两队相对实力
+   - 优势对手数量反映的实力对比
+   - 对共同对手的战绩差异分析
+
+3. **近期状态与攻防数据（权重13%）**
+   - 近期比赛表现反映的状态
+   - 攻防数据（进球/失球）分析
+   - 战术风格匹配度分析
+
+4. **伤病与风险因素（权重13%）**
+   - 伤病情况对阵容的影响
+   - 数据样本不足的不确定性
+   - 其他可能影响比赛的特殊因素
+
+5. **网上预测结果分析（权重12%）**
+   - 使用联网搜索功能查找最新的网上比赛预测
+   - 综合各大体育媒体、专家分析、赔率变化等信息
+   - 评估网上预测的一致性和可靠性
+
+## 输出格式要求：
+1. 首先输出"### 数据综合分析"，整合所有数据维度进行分析
+2. 然后输出"### 关键影响因素"，列出3-5个最关键的影响因素（必须包含伤病影响评估）
+3. 接着输出"### 风险提示"，说明数据局限性和潜在风险
+4. 最后输出"### 预测结论"，包含明确的预测结果
+
+## 预测结果格式（必须单独一行）：
+预测概率: 主队胜: XX%，平局: XX%，客队胜: XX%
+- 概率必须基于所有五个分析维度的综合评估，包括网上预测结果分析
+- 三个概率值之和必须为100%
+- 概率值用整数或带一位小数表示，如：45.5%
+- 如果某个结果概率极低（<5%），可以标注为"极小概率"
+- 概率评估应反映综合分析的不确定性程度
+
+## 重要原则：
+- 必须基于提供的所有数据进行分析，避免主观臆断
+- 数据驱动分析，量化特征和共同对手分析是核心依据
+- 伤病情况必须作为重要风险因素考虑
+- 承认数据的局限性，客观评估预测的可信度
+- 分析语言专业、简洁、逻辑清晰
+
+请开始分析："""
+    
+    return prompt
+
+def call_glm_api(prompt: str, config: Dict[str, Any]) -> str:
+    """
+    调用GLM API进行分析（优化异常处理，增加重试机制）
+    """
+    if not ZAI_AVAILABLE:
+        print("错误: GLM SDK 未正确安装或导入失败")
+        print(f"当前 SDK 状态: {SDK_NAME}")
+        print("请确保已运行: pip install zhipuai")
+        return None
+    
+    # 检查API密钥
+    if not config.get("api_key"):
+        print("错误: API密钥未设置")
+        return None
+    
+    max_retries = 3
+    retry_delays = [2, 5, 10]  # 每次重试前的等待时间（秒）
+    
+    for attempt in range(max_retries):
+        try:
+            # 调试信息
+            api_key_preview = config["api_key"][:8] + "..." + config["api_key"][-4:] if config["api_key"] else "未设置"
+            print(f"    API密钥: {api_key_preview}")
+            print(f"    模型: {config.get('model', 'glm-5')}")
+            print(f"    深度思考: {config.get('thinking_enabled', True)}")
+            print(f"    流式输出: {config.get('stream', False)}")
+            
+            # 创建客户端
+            client = ZhipuAiClient(api_key=config["api_key"])
+            
+            # 构建请求参数
+            request_params = {
+                "model": config["model"],
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                "temperature": config["temperature"],
+                "max_tokens": config["max_tokens"],
+                "top_p": config["top_p"],
+                "stream": config["stream"],
+                "timeout": config["timeout"],  # 使用配置的超时时间
+            }
+            
+            # 如果启用深度思考，添加thinking参数
+            if config.get("thinking_enabled", True):
+                request_params["thinking"] = {"type": "enabled"}
+            
+            # 调用API（尝试带timeout参数，如果不支持则重试）
+            try:
+                response = client.chat.completions.create(**request_params)
+            except TypeError as e:
+                if "timeout" in str(e).lower():
+                    print(f"  注意: 当前zhipuai版本不支持timeout参数，移除后重试")
+                    # 移除timeout参数重试
+                    request_params.pop("timeout", None)
+                    response = client.chat.completions.create(**request_params)
+                else:
+                    raise e
+            
+            # 收集响应内容
+            full_response = ""
+            reasoning_content = ""
+            
+            if config["stream"]:
+                # 流式输出，收集推理内容和最终内容
+                start_time = time.time()
+                chunk_count = 0
+                last_chunk_time = time.time()
+                
+                for chunk in response:
+                    chunk_count += 1
+                    last_chunk_time = time.time()
+                    
+                    # 安全检查：确保choices存在且不为空
+                    if not hasattr(chunk, 'choices') or not chunk.choices:
+                        continue
+                    
+                    # 确保choice有delta属性
+                    choice = chunk.choices[0]
+                    if not hasattr(choice, 'delta'):
+                        continue
+                    
+                    delta = choice.delta
+                    
+                    # 收集推理内容
+                    if hasattr(delta, 'reasoning_content') and delta.reasoning_content:
+                        reasoning_content += delta.reasoning_content
+                    
+                    # 收集最终内容
+                    if hasattr(delta, 'content') and delta.content:
+                        full_response += delta.content
+                    
+                    # 进度指示：每10个chunk打印一个点
+                    if chunk_count % 10 == 0:
+                        print(".", end="", flush=True)
+                    
+                    # 检查是否超时（超过配置的超时时间）
+                    current_time = time.time()
+                    if current_time - start_time > config["timeout"]:
+                        print(f"\n警告: API流式响应超时（{config['timeout']}秒）")
+                        break
+                    if current_time - last_chunk_time > 30:
+                        print(f"\n警告: 流式响应停滞超过30秒")
+                        break
+                
+                if chunk_count > 0 and chunk_count % 10 != 0:
+                    print(".", end="", flush=True)
+                if chunk_count > 0:
+                    print(f" ({chunk_count} chunks)")
+                else:
+                    print(" (无数据接收)")
+            else:
+                # 非流式输出
+                result = response
+                # 安全检查：确保choices存在且不为空，且message存在
+                if (hasattr(result, 'choices') and result.choices and 
+                    hasattr(result.choices[0], 'message') and 
+                    hasattr(result.choices[0].message, 'content')):
+                    full_response = result.choices[0].message.content
+                else:
+                    print("警告: 非流式响应格式不正确")
+                    full_response = ""
+                # 非流式输出可能不包含推理内容
+            
+            # 合并推理内容
+            if reasoning_content:
+                full_response = f"【深度思考推理过程】\n{reasoning_content}\n\n【最终分析结果】\n{full_response}"
+            
+            # 检查响应是否为空
+            if not full_response:
+                print(f"警告: GLM API返回空响应")
+                raise ValueError("API返回空响应")
+            
+            print(f"    API调用成功 (第{attempt+1}次尝试)")
+            return full_response
+            
+        except Exception as e:
+            error_msg = str(e)
+            print(f"    GLM API调用失败 (第{attempt+1}次尝试): {error_msg}")
+            
+            # 如果是最后一次尝试，打印详细错误信息
+            if attempt == max_retries - 1:
+                print(f"    ❌ 已达到最大重试次数({max_retries})，放弃重试")
+                import traceback
+                traceback.print_exc()
+                return None
+            
+            # 计算等待时间
+            wait_time = retry_delays[attempt] if attempt < len(retry_delays) else retry_delays[-1]
+            print(f"    ⏳ {wait_time}秒后重试...")
+            time.sleep(wait_time)
+    
+    # 理论上不会执行到这里
+    return None
+
+def parse_glm_response(response_text: str) -> Dict[str, Any]:
+    """
+    解析GLM API的响应（优化预测结果提取，支持概率格式）
+    """
+    if not response_text:
+        print("    警告: 响应文本为空")
+        return {
+            "分析过程": "GLM API调用失败",
+            "预测结果": "",
+            "预测概率": "",
+            "原始响应": "",
+            "解析状态": "失败"
+        }
+    
+    # 初始化变量
+    prediction_code = ""
+    prediction_prob = ""
+    analysis_text = response_text
+    
+    # 1. 首先尝试提取概率格式
+    prob_patterns = [
+        r'预测概率[:：]\s*主队胜[:：]\s*([\d.]+)%?\s*平局[:：]\s*([\d.]+)%?\s*客队胜[:：]\s*([\d.]+)%',
+        r'主队胜[:：]\s*([\d.]+)%?\s*平局[:：]\s*([\d.]+)%?\s*客队胜[:：]\s*([\d.]+)%',
+        r'胜率[:：]\s*([\d.]+)%?\s*平局概率[:：]\s*([\d.]+)%?\s*负率[:：]\s*([\d.]+)%',
+        r'([\d.]+)%[^%]*([\d.]+)%[^%]*([\d.]+)%'  # 三个百分比值
+    ]
+    
+    home_prob = None
+    draw_prob = None
+    away_prob = None
+    
+    for pattern in prob_patterns:
+        matches = re.findall(pattern, response_text)
+        if matches:
+            # 取最后一个匹配（避免中间示例干扰）
+            last_match = matches[-1]
+            if isinstance(last_match, tuple) and len(last_match) >= 3:
+                try:
+                    home_prob = float(last_match[0])
+                    draw_prob = float(last_match[1])
+                    away_prob = float(last_match[2])
+                    
+                    # 验证概率合理性（总和接近100%）
+                    total = home_prob + draw_prob + away_prob
+                    if 95 <= total <= 105:  # 允许5%的误差
+                        # 归一化到100%
+                        scale = 100.0 / total
+                        home_prob = round(home_prob * scale, 1)
+                        draw_prob = round(draw_prob * scale, 1)
+                        away_prob = round(away_prob * scale, 1)
+                        
+                        prediction_prob = f"主队胜: {home_prob}%，平局: {draw_prob}%，客队胜: {away_prob}%"
+                        print(f"    找到概率格式预测: {prediction_prob}")
+                        
+                        # 从概率推导分类代码
+                        # 计算最大概率和次大概率
+                        probs = [("3", home_prob), ("1", draw_prob), ("0", away_prob)]
+                        probs.sort(key=lambda x: x[1], reverse=True)
+                        
+                        max_prob_item = probs[0]
+                        second_prob_item = probs[1]
+                        
+                        # 如果最大概率明显高于其他（差距>15%），则使用单一结果
+                        if max_prob_item[1] - second_prob_item[1] > 15:
+                            prediction_code = max_prob_item[0]
+                        else:
+                            # 概率接近，使用不败组合
+                            if max_prob_item[0] == "3" and second_prob_item[0] == "1":
+                                prediction_code = "3,1"  # 主队不败
+                            elif max_prob_item[0] == "0" and second_prob_item[0] == "1":
+                                prediction_code = "0,1"  # 客队不败
+                            else:
+                                # 其他接近情况，使用最大概率
+                                prediction_code = max_prob_item[0]
+                        break
+                except (ValueError, IndexError) as e:
+                    print(f"    概率解析错误: {e}")
+                    continue
+    
+    # 2. 如果没有找到概率格式，尝试旧的数字代码格式
+    if not prediction_code:
+        prediction_pattern = r'预测结果[:：]\s*([\d,]+)'
+        matches = re.findall(prediction_pattern, response_text)
+        
+        if matches:
+            prediction_code = matches[-1].strip()  # 取最后一个匹配（避免中间示例干扰）
+            print(f"    找到标准格式预测结果: {prediction_code}")
+        else:
+            # 备用匹配策略
+            loose_patterns = [
+                r'(主胜|平局|客胜|主队不败|客队不败)[：:]\s*([\d,]+)',
+                r'最终预测[:：]\s*([\d,]+)',
+                r'结论[:：]\s*([\d,]+)',
+                r'([310,]+)\s*$'  # 行尾的数字组合
+            ]
+            
+            for pattern in loose_patterns:
+                loose_matches = re.findall(pattern, response_text)
+                if loose_matches:
+                    prediction_code = loose_matches[-1]
+                    if isinstance(prediction_code, tuple):
+                        prediction_code = prediction_code[-1]
+                    prediction_code = prediction_code.strip()
+                    print(f"    备用匹配找到预测结果: {prediction_code}")
+                    break
+    
+    # 验证预测代码的有效性
+    valid_codes = {"3", "1", "0", "3,1", "0,1", "1,3", "1,0"}
+    if prediction_code not in valid_codes:
+        # 清理格式（如空格、全角逗号）
+        clean_code = prediction_code.replace("，", ",").replace(" ", "").strip()
+        if clean_code in valid_codes:
+            prediction_code = clean_code
+        else:
+            print(f"    警告: 预测结果格式不合法: {prediction_code}")
+            prediction_code = ""
+    
+    return {
+        "分析过程": analysis_text,
+        "预测结果": prediction_code,
+        "预测概率": prediction_prob,
+        "原始响应": response_text,
+        "解析状态": "成功" if prediction_code else "部分成功"
+    }
+
+def analyze_single_match(match_info: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    分析单场比赛（优化日志和结果返回）
+    """
+    home_team = match_info["主队"]
+    away_team = match_info["客队"]
+    match_num = match_info["场次"]
+    
+    print(f"\n{'='*20} 分析第{match_num}场: {home_team} vs {away_team} {'='*20}")
+    print(f"  比赛时间: {match_info.get('比赛时间', '未知')}")
+    
+    # 打印历史交锋数据统计
+    history_raw = match_info.get("历史交锋原始数据", [])
+    print(f"  历史交锋记录: {len(history_raw)} 条")
+    
+    # 打印核心量化特征（便于调试）
+    features = match_info["历史交锋量化特征"]
+    if features.get("总交锋场次", 0) > 0:
+        print(f"  核心特征: 总交锋{features['总交锋场次']}场 | 主队胜率{features['主队总胜率']:.2f} | "
+              f"近3场胜率{features['近3场主队胜率']:.2f} | 场均进球{features['场均总进球']:.2f}")
+    else:
+        print(f"  警告: 无有效历史交锋数据")
+    
+    # 构建提示词
+    prompt = build_prompt(match_info)
+    
+    # 调用GLM API
+    print(f"  调用GLM API (模型: {config.get('model', 'glm-5')})...")
+    start_time = time.time()
+    response = call_glm_api(prompt, config)
+    elapsed_time = time.time() - start_time
+    
+    if response is None:
+        print(f"  警告: GLM API调用失败 (耗时: {elapsed_time:.2f}秒)")
+    else:
+        print(f"  GLM API调用完成 (耗时: {elapsed_time:.2f}秒, 响应长度: {len(response)}字符)")
+    
+    # 解析响应
+    result = parse_glm_response(response)
+    
+    # 输出预测结果
+    prediction_prob = result.get("预测概率", "")
+    prediction_code = result.get("预测结果", "")
+    
+    if prediction_prob:
+        print(f"  ✅ 预测概率: {prediction_prob}")
+        if prediction_code:
+            # 显示对应的分类代码（供内部参考）
+            code_labels = {
+                "3": "主队胜", "1": "平局", "0": "客队胜",
+                "3,1": "主队不败", "0,1": "客队不败"
+            }
+            label = code_labels.get(prediction_code, prediction_code)
+            print(f"    分类: {label} ({prediction_code})")
+    elif prediction_code:
+        print(f"  ✅ 预测结果: {prediction_code}")
+    else:
+        print(f"  ⚠️  无有效预测结果")
+    
+    # 合并结果
+    match_result = {
+        **match_info,
+        "GLM分析": result,
+        "分析耗时(秒)": round(elapsed_time, 2)
+    }
+    
+    # 精简保存的原始数据
+    if "历史交锋原始数据" in match_result:
+        match_result["历史交锋原始数据"] = match_result["历史交锋原始数据"][:5]
+    
+    return match_result
+
+def save_results(period: str, results: List[Dict[str, Any]], config: Dict[str, Any]):
+    """
+    保存分析结果（兼容旧格式）
+    """
+    project_root = get_project_root()
+    output_dir = os.path.join(project_root, "result")
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # 构建兼容旧格式的分析结果列表
+    compatible_results = []
+    for r in results:
+        # 复制基本信息
+        compatible_match = {
+            "场次": r.get("场次", 0),
+            "联赛": r.get("联赛", ""),
+            "主队": r.get("主队", ""),
+            "客队": r.get("客队", ""),
+            "比赛时间": r.get("比赛时间", ""),
+            "历史交锋": r.get("历史交锋", [])[:3],  # 使用历史交锋字段（已从历史交锋原始数据复制）
+            "GLM分析": {
+                "分析过程": r.get("GLM分析", {}).get("分析过程", ""),
+                "预测结果": r.get("GLM分析", {}).get("预测结果", ""),
+                "预测概率": r.get("GLM分析", {}).get("预测概率", ""),
+                "原始响应": r.get("GLM分析", {}).get("原始响应", "")
+            }
+        }
+        compatible_results.append(compatible_match)
+    
+    # 构建输出数据（兼容旧格式）
+    output_data = {
+        "期数": f"{period}期",
+        "生成时间": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "GLM配置": {
+            "模型": config["model"],
+            "API端点": config["api_base"]
+        },
+        "分析结果": compatible_results
+    }
+    
+    # 保存文件
+    output_file = os.path.join(output_dir, f"{period}期_glm分析.json")
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(output_data, f, ensure_ascii=False, indent=2, default=str)
+    
+    print(f"\n分析结果已保存到: {output_file}")
+    return output_file
+
+def main():
+    """
+    主函数（优化流程和错误处理）
+    """
+    print("=" * 60)
+    print("GLM足球同对手交锋分析工具 (优化版)")
+    print("=" * 60)
+    
+    # 1. 加载配置
+    config = load_config()
+    
+    # 检查API密钥
+    if not config["api_key"]:
+        print("❌ 错误: 未设置GLM API密钥")
+        print("请通过以下方式之一设置:")
+        print("  1. 环境变量: export GLM_API_KEY='你的密钥'")
+        print("  2. 配置文件: 创建glm_config.json并添加api_key字段")
+        sys.exit(1)
+    
+    # 2. 获取期数
+    period = None
+    if len(sys.argv) > 1:
+        period = sys.argv[1]
+        print(f"📅 使用命令行期数: {period}")
+    else:
+        # 尝试从present.json获取
+        try:
+            project_root = get_project_root()
+            present_file = os.path.join(project_root, 'present.json')
+            if os.path.exists(present_file):
+                with open(present_file, 'r', encoding='utf-8') as f:
+                    present_data = json.load(f)
+                if present_data and isinstance(present_data, list) and len(present_data) > 0:
+                    period = present_data[-1].get('period', '')
+                    print(f"📅 从present.json获取期数: {period}")
+        except Exception as e:
+            print(f"⚠️  读取present.json失败: {e}")
+    
+    if not period:
+        print("❌ 错误: 无法确定期数")
+        print("使用方法: python glm_analysis.py <期数>")
+        print("示例: python glm_analysis.py 26031")
+        sys.exit(1)
+    
+    # 3. 加载历史数据
+    try:
+        print(f"📊 加载{period}期历史交锋数据...")
+        history_data = load_history_data(period)
+    except Exception as e:
+        print(f"❌ 加载数据失败: {e}")
+        sys.exit(1)
+    
+    # 4. 提取比赛信息
+    matches = history_data.get("14场对战信息", [])
+    if not matches:
+        print("❌ 错误: 未找到比赛信息")
+        sys.exit(1)
+    
+    print(f"✅ 成功加载 {len(matches)} 场比赛数据")
+    
+    # 5. 逐场分析
+    all_results = []
+    api_delay = config.get("api_delay", 3)  # API调用间隔（秒），避免频率限制
+    print(f"📊 API调用间隔: {api_delay}秒")
+    for i, match_data in enumerate(matches):
+        try:
+            match_info = extract_match_info(match_data)
+            match_result = analyze_single_match(match_info, config)
+            all_results.append(match_result)
+            
+            # 最后一场不延迟
+            if i < len(matches) - 1:
+                print(f"⏳ 等待{api_delay}秒后继续下一场分析...")
+                time.sleep(api_delay)
+                
+        except Exception as e:
+            print(f"❌ 分析第{i+1}场比赛失败: {e}")
+            import traceback
+            traceback.print_exc()
+            continue
+    
+    # 6. 保存结果
+    output_file = save_results(period, all_results, config)
+    
+    # 7. 输出汇总报告
+    print("\n" + "="*60)
+    print("📊 分析完成汇总")
+    print("="*60)
+    print(f"总场次: {len(matches)} | 成功分析: {len(all_results)} | 失败: {len(matches)-len(all_results)}")
+    
+    # 预测结果统计
+    pred_stats = {}
+    for result in all_results:
+        pred = result["GLM分析"]["预测结果"]
+        pred_stats[pred] = pred_stats.get(pred, 0) + 1
+    
+    print("🎯 预测结果分布:")
+    for code, count in sorted(pred_stats.items()):
+        if code:
+            label_map = {
+                "3": "主胜", "1": "平局", "0": "客胜",
+                "3,1": "主队不败", "0,1": "客队不败"
+            }
+            label = label_map.get(code, f"其他({code})")
+            print(f"  {label}: {count}场 ({count/len(all_results)*100:.1f}%)")
+    
+    print(f"📁 结果文件: {output_file}")
+    print("="*60)
+
+if __name__ == "__main__":
+
+    main()
