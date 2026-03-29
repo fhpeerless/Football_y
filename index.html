@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>密码验证</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .hint-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .hint-label {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .hint-letters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .letter {
+            background: linear-gradient(145deg, #e94560, #ff6b6b);
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 24px;
+            text-align: center;
+            letter-spacing: 8px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .password-input:focus {
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(145deg, #e94560, #ff6b6b);
+            color: #fff;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.5);
+        }
+
+        .btn-refresh {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .btn-refresh:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .error-msg {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .error-msg.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .loading {
+            display: none;
+            color: #fff;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>密码验证</h1>
+        
+        <div class="hint-box">
+            <div class="hint-label">请根据以下字母输入对应密码</div>
+            <div class="hint-letters" id="hintLetters">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="password">输入密码</label>
+            <input type="password" id="password" class="password-input" placeholder="请输入数字密码" autocomplete="off">
+        </div>
+
+        <button class="btn btn-submit" onclick="verifyPassword()">验证密码</button>
+        <button class="btn btn-refresh" onclick="refreshHint()">刷新提示</button>
+
+        <div class="error-msg" id="errorMsg">密码错误，请重新输入！</div>
+        <div class="loading" id="loading">加载中...</div>
+    </div>
+
+    <script>
+        let config = null;
+        let currentHintLetters = [];
+
+        async function loadConfig() {
+            try {
+                document.getElementById('loading').style.display = 'block';
+                const response = await fetch('password_config.json');
+                config = await response.json();
+                document.getElementById('loading').style.display = 'none';
+                generateHint();
+            } catch (error) {
+                console.error('加载配置文件失败:', error);
+                document.getElementById('errorMsg').textContent = '加载配置文件失败';
+                document.getElementById('errorMsg').classList.add('show');
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function generateHint() {
+            if (!config) return;
+
+            const letters = Object.keys(config.passwordMapping);
+            const passwordLength = config.passwordLength || 4;
+            
+            currentHintLetters = [];
+            for (let i = 0; i < passwordLength; i++) {
+                const randomIndex = Math.floor(Math.random() * letters.length);
+                currentHintLetters.push(letters[randomIndex]);
+            }
+
+            const hintContainer = document.getElementById('hintLetters');
+            hintContainer.innerHTML = '';
+            
+            currentHintLetters.forEach(letter => {
+                const letterDiv = document.createElement('div');
+                letterDiv.className = 'letter';
+                letterDiv.textContent = letter;
+                hintContainer.appendChild(letterDiv);
+            });
+        }
+
+        function getCorrectPassword() {
+            return currentHintLetters.map(letter => config.passwordMapping[letter]).join('');
+        }
+
+        function verifyPassword() {
+            const inputPassword = document.getElementById('password').value.trim();
+            const correctPassword = getCorrectPassword();
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (inputPassword === correctPassword) {
+                errorMsg.classList.remove('show');
+                window.location.href = config.redirectUrl || 'fenxi.html';
+            } else {
+                errorMsg.classList.add('show');
+                document.getElementById('password').value = '';
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                }, 2000);
+            }
+        }
+
+        function refreshHint() {
+            generateHint();
+            document.getElementById('password').value = '';
+            document.getElementById('errorMsg').classList.remove('show');
+        }
+
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+
+        window.onload = loadConfig;
+    </script>
+</body>
+</html>
