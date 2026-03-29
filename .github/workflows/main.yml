@@ -65,7 +65,7 @@ jobs:
         echo "当前工作目录: $(pwd)"
         echo "脚本目录: $(dirname $(which node))"
         # 运行脚本，脚本会设置 has_new_period 输出（true/false）
-        node check_new_period.js
+        node match_data/check_new_period.js
         # ========== 新增：调试present.json状态 ==========
         echo "=== present.json 状态检查 ==="
         if [ -f "./present.json" ]; then
@@ -110,7 +110,7 @@ jobs:
         # 尝试最多3次
         for i in {1..3}; do
           echo "第 $i 次尝试..."
-          if python api_crawler_final.py; then
+          if python match_data/api_crawler_final.py; then
             echo "API爬虫执行成功"
             
             # 检查是否生成了文件
@@ -152,7 +152,7 @@ jobs:
         ls -la ./result/ 2>/dev/null || echo "result目录不存在"
         
         # 运行脚本
-        if python get_history_data.py; then
+        if python match_data/get_history_data.py; then
           echo "历史交锋数据获取成功"
           
           # 验证输出文件
