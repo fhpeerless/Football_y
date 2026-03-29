@@ -249,31 +249,31 @@ jobs:
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算基础预测概率..."
-        python calculate_probability.py
+        python probability/calculate_probability.py
         
     - name: 计算高级预测概率
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算高级预测概率..."
-        python calculate_advanced_probability.py
+        python probability/calculate_advanced_probability.py
         
     - name: 提取共同对手比赛数据
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在提取共同对手比赛数据..."
-        python extract_common_opponent_matches.py
+        python probability/extract_common_opponent_matches.py
         
     - name: 计算共同对手实力分
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算共同对手实力分..."
-        python calculate_common_opponent_strength.py
+        python probability/calculate_common_opponent_strength.py
         
     - name: 合并预测概率
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在合并预测概率..."
-        node combine_probability.js
+        node probability/combine_probability.js
         
     - name: 验证最终结果
       if: steps.check-period.outputs.has_new_period == 'true'
