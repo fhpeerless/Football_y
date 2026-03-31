@@ -320,6 +320,9 @@
                         <button id="downloadBtn" class="secondary">
                             <i class="fas fa-download"></i> 号码结果
                         </button>
+                        <button id="commonMatchesBtn" class="secondary">
+                            <i class="fas fa-handshake"></i> 共同对手
+                        </button>
                     </div>
                     <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
                         将自动加载 ./result/{期数}期_web.json 文件，或 ./result/{期数}期_glm分析.json 文件
@@ -1251,6 +1254,27 @@
         
         downloadBtn.addEventListener('click', () => {
             window.location.href = './list.html';
+        });
+        
+        commonMatchesBtn.addEventListener('click', () => {
+            const inputPeriod = periodInput.value.trim();
+            let periodForUrl = '';
+            if (inputPeriod) {
+                const periodMatch = inputPeriod.match(/\d+/);
+                if (periodMatch) {
+                    periodForUrl = periodMatch[0];
+                } else {
+                    periodForUrl = inputPeriod;
+                }
+            } else if (currentPeriod) {
+                periodForUrl = currentPeriod;
+            }
+            
+            if (periodForUrl) {
+                window.location.href = `./common_matches.html?period=${periodForUrl}`;
+            } else {
+                window.location.href = './common_matches.html';
+            }
         });
         
         // 比赛按钮跳转
