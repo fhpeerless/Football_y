@@ -707,7 +707,7 @@
                                 <!-- 基础预测概率 -->
                                 <div style="padding: 15px; background: rgba(0, 188, 212, 0.05); border-radius: 8px; border-left: 3px solid #00bcd4;">
                                     <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.95em;">
-                                        <i class="fas fa-calculator"></i> 基础预测概率
+                                        <i class="fas fa-calculator"></i> 基础预测概率（Elo+泊松）
                                     </h6>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                                         <span>主胜:</span>
@@ -787,6 +787,66 @@
                                         <span>${value}</span>
                                     </div>`;
                         }
+                        html += `</div></div>`;
+                    }
+                    
+                    // 埃罗评分
+                    if (match.预测详细数据.埃罗评分) {
+                        html += `
+                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">埃罗评分</h6>
+                                <div style="font-size: 0.9em;">
+                        `;
+                        for (const [key, value] of Object.entries(match.预测详细数据.埃罗评分)) {
+                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="opacity: 0.8;">${key}:</span>
+                                        <span>${value}</span>
+                                    </div>`;
+                        }
+                        html += `</div></div>`;
+                    }
+                    
+                    // 权重统计
+                    if (match.预测详细数据.权重统计) {
+                        html += `
+                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                                <h6 style="color: #9c27b0; margin-bottom: 10px; font-size: 0.9em;">权重统计</h6>
+                                <div style="font-size: 0.9em;">
+                        `;
+                        for (const [key, value] of Object.entries(match.预测详细数据.权重统计)) {
+                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <span style="opacity: 0.8;">${key}:</span>
+                                        <span>${value}</span>
+                                    </div>`;
+                        }
+                        html += `</div></div>`;
+                    }
+                    
+                    // 泊松推理
+                    if (match.预测详细数据.泊松推理) {
+                        html += `
+                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
+                                <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.9em;">泊松推理</h6>
+                                <div style="font-size: 0.9em;">
+                        `;
+                        const renderPoissonObject = (obj, indent = 0) => {
+                            let result = '';
+                            for (const [key, value] of Object.entries(obj)) {
+                                if (typeof value === 'object' && value !== null) {
+                                    result += `<div style="margin-left: ${indent * 10}px; margin-bottom: 5px;">
+                                                <span style="opacity: 0.8;">${key}:</span>
+                                            </div>`;
+                                    result += renderPoissonObject(value, indent + 1);
+                                } else {
+                                    result += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px; margin-left: ${indent * 10}px;">
+                                                <span style="opacity: 0.8;">${key}:</span>
+                                                <span>${value}</span>
+                                            </div>`;
+                                }
+                            }
+                            return result;
+                        };
+                        html += renderPoissonObject(match.预测详细数据.泊松推理);
                         html += `</div></div>`;
                     }
                     

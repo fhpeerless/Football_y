@@ -586,7 +586,7 @@
         <div class="results-panel">
             <h2 class="section-title"><i class="fas fa-futbol"></i> 预测结果列表</h2>
             <p style="margin-bottom: 20px; opacity: 0.8;">
-                显示14场比赛的预测结果，基于三种方法：实力分分析、高级预测概率、基础预测概率
+                显示14场比赛的预测结果，基于三种方法：实力分分析、高级预测概率、基础预测概率（Elo+泊松推理）
             </p>
             
             <table class="matches-table" id="resultsTable">
@@ -634,7 +634,9 @@
                     <div class="method-card basic">
                         <h4>基础预测概率 <span class="method-badge method-basic">基础</span></h4>
                         <p>
-                            比较主胜、平、客胜概率：<br>
+                            基于两队直接交锋记录的Elo+泊松推理：<br>
+                            • Elo评分计算期望得分 → 映射预期进球<br>
+                            • 泊松分布推导胜平负概率<br>
                             • 最大与次大相差 &lt; 3% → 待定<br>
                             • 主胜最大 → 主胜 (3)<br>
                             • 客胜最大 → 客胜 (0)<br>
