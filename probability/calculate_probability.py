@@ -40,28 +40,20 @@ class EloRatingSystem:
     
     def calculate_win_probability(self, rating_home, rating_away):
         """
-        计算主队胜、平、负的概率（动态平概率）
+        计算主队胜、平、负的概率（泊松推理模型）
         :param rating_home: 主队Elo评分（已加主场加成）
         :param rating_away: 客队Elo评分
         :return: (胜概率, 平概率, 负概率)
         """
-        # 基础胜/负概率
         expected_home = self.get_expected_score(rating_home, rating_away)
         expected_away = 1.0 - expected_home
         
-        # 动态平概率：实力差距越小，平局概率越高
-        strength_gap = abs(rating_home - rating_away)
-        draw_probability = 0.15 + 0.2 * math.exp(-strength_gap / 200)  # 差距越大，平局概率越低
+        average_total_goals = 2.6
+        home_proportion = expected_home / (expected_home + expected_away) if (expected_home + expected_away) > 0 else 0.5
+        home_expected_goals = average_total_goals * home_proportion
+        away_expected_goals = average_total_goals * (1 - home_proportion)
         
-        # 分配胜平负概率（确保总和为1）
-        win_home = expected_home * (1 - draw_probability)
-        win_away = expected_away * (1 - draw_probability)
-        
-        # 归一化处理
-        total = win_home + draw_probability + win_away
-        win_home /= total
-        draw_probability /= total
-        win_away /= total
+        win_home, draw_probability, win_away = calculate_poisson_probability(home_expected_goals, away_expected_goals)
         
         return win_home, draw_probability, win_away
 
@@ -92,12 +84,12 @@ def get_current_period():
         traceback.print_exc()
         return None
 
-def get_time_decay_factor(match_date, current_date=None, decay_years=1.5):
+def get_time_decay_factor(match_date, current_date=None, weekly_decay=0.03):
     """
-    优化时间衰减因子（按年衰减，更符合赛事规律）
+    时间衰减因子（每周衰减0.03，即每周权重乘以0.97）
     :param match_date: 比赛日期（字符串格式：YYYY-MM-DD）
     :param current_date: 当前日期（默认为今天）
-    :param decay_years: 衰减周期（年），默认1.5年（足球实力惯性通常持续1.5-2年）
+    :param weekly_decay: 每周衰减率，默认0.03
     :return: 衰减因子（0-1之间）
     """
     if current_date is None:
@@ -115,14 +107,13 @@ def get_time_decay_factor(match_date, current_date=None, decay_years=1.5):
                 return 0.0
     
     days_diff = (current_date - match_date).days
-    years_diff = days_diff / 365.0
+    weeks_diff = days_diff / 7.0
     
-    if years_diff < 0:
+    if weeks_diff < 0:
         return 0.0
     
-    # 指数衰减：1年前的比赛权重≈0.51，2年前≈0.26，3年前≈0.14
-    # 更符合足球赛事的实力惯性（原设置衰减过快）
-    decay_factor = math.exp(-years_diff / decay_years)
+    # 每周衰减0.03：1个月前≈0.88，3个月前≈0.69，6个月前≈0.48，1年前≈0.21
+    decay_factor = (1 - weekly_decay) ** weeks_diff
     
     return decay_factor
 
@@ -148,58 +139,38 @@ def calculate_match_score(home_score, away_score):
     else:
         return 0.5, 0.5
 
-def calculate_actual_draw_probability(matches, current_date=None):
+def calculate_poisson_probability(lambda_home, lambda_away, max_goals=5):
     """
-    根据历史交锋的实际平局次数计算基础平局概率
-    :param matches: 历史比赛列表
-    :param current_date: 当前日期（用于时间衰减）
-    :return: 基于历史数据的实际平局概率（0-1之间）
+    使用泊松分布计算比分概率，推导胜平负概率
+    :param lambda_home: 主队预期进球数
+    :param lambda_away: 客队预期进球数
+    :param max_goals: 最大进球数限制
+    :return: (胜概率, 平概率, 负概率)
     """
-    if not matches:
-        return 0.15  # 默认值，无数据时返回
+    win_prob = 0.0
+    draw_prob = 0.0
+    loss_prob = 0.0
     
-    total_weighted_draws = 0.0
-    total_weight = 0.0
+    for i in range(max_goals + 1):
+        for j in range(max_goals + 1):
+            p_home = (math.exp(-lambda_home) * (lambda_home ** i)) / math.factorial(i)
+            p_away = (math.exp(-lambda_away) * (lambda_away ** j)) / math.factorial(j)
+            prob = p_home * p_away
+            
+            if i > j:
+                win_prob += prob
+            elif i == j:
+                draw_prob += prob
+            else:
+                loss_prob += prob
     
-    for match in matches:
-        home_score = match.get('homescore', 0)
-        away_score = match.get('awayscore', 0)
-        match_date = match.get('matchdate', '')
-        is_cup = match.get('iscup', 0)
-        
-        # 计算比赛权重（时间衰减 + 赛事权重）
-        time_decay = get_time_decay_factor(match_date, current_date)
-        event_weight = get_event_weight(is_cup)
-        match_weight = time_decay * event_weight
-        
-        if match_weight < 0.01:
-            continue
-        
-        # 检查是否为平局
-        is_draw = (home_score == away_score)
-        
-        total_weighted_draws += match_weight if is_draw else 0.0
-        total_weight += match_weight
+    total = win_prob + draw_prob + loss_prob
+    if total > 0:
+        win_prob /= total
+        draw_prob /= total
+        loss_prob /= total
     
-    if total_weight > 0:
-        # 计算加权平局概率
-        actual_draw_prob = total_weighted_draws / total_weight
-        
-        # 添加平滑处理，避免极端值
-        # 使用贝叶斯平滑：向全局平局概率（如0.25）收缩，尤其是样本量小时
-        global_draw_prob = 0.25  # 足球比赛全局平均平局概率
-        effective_samples = total_weight * 10  # 将权重转换为样本量的估计
-        smoothing_factor = 10.0  # 平滑强度
-        
-        smoothed_prob = (total_weighted_draws + global_draw_prob * smoothing_factor) / (total_weight + smoothing_factor)
-        
-        # 结合实际和平滑概率
-        combined_prob = actual_draw_prob * 0.7 + smoothed_prob * 0.3
-        
-        # 确保在合理范围内
-        return max(0.05, min(0.45, combined_prob))
-    else:
-        return 0.15  # 默认值
+    return win_prob, draw_prob, loss_prob
 
 def calculate_team_elo_rating(matches, team_name, current_date=None):
     """
@@ -373,31 +344,16 @@ def calculate_detailed_probability(home_team_name, away_team_name,
     expected_home = elo_system.get_expected_score(home_h2h_elo, away_h2h_elo)
     expected_away = 1.0 - expected_home
     
-    # 5. 计算动态平概率（使用基础评分，排除主场加成）
-    strength_gap = abs(home_base_elo - away_base_elo)
+    # 5. 基于Elo评分计算预期进球数
+    average_total_goals = 2.6
+    home_proportion = expected_home / (expected_home + expected_away) if (expected_home + expected_away) > 0 else 0.5
+    home_expected_goals = average_total_goals * home_proportion
+    away_expected_goals = average_total_goals * (1 - home_proportion)
     
-    # 5.1 基于历史交锋的实际平局概率
-    base_draw_prob = calculate_actual_draw_probability(head_to_head_matches, current_date)
+    # 6. 泊松分布计算胜平负概率
+    win_home, draw_probability, win_away = calculate_poisson_probability(home_expected_goals, away_expected_goals)
     
-    # 5.2 根据实力差距调整平局概率：差距越大，平局概率越低
-    # 当实力差距为0时，衰减因子为1；当差距为400时，衰减因子为0.37
-    gap_adjustment = math.exp(-strength_gap / 400)
-    draw_probability = base_draw_prob * gap_adjustment
-    
-    # 5.3 确保平局概率在合理范围内
-    draw_probability = max(0.05, min(0.45, draw_probability))
-    
-    # 6. 分配胜平负概率
-    win_home = expected_home * (1 - draw_probability)
-    win_away = expected_away * (1 - draw_probability)
-    
-    # 7. 归一化处理
-    total = win_home + draw_probability + win_away
-    win_home /= total
-    draw_probability /= total
-    win_away /= total
-    
-    # 8. 计算平均权重信息
+    # 7. 计算平均权重信息
     time_decays = []
     event_weights = []
     
@@ -416,7 +372,9 @@ def calculate_detailed_probability(home_team_name, away_team_name,
     avg_time_decay = sum(time_decays) / len(time_decays) if time_decays else 0
     avg_event_weight = sum(event_weights) / len(event_weights) if event_weights else 0
     
-    # 9. 构建详细结果
+    # 8. 构建详细结果
+    strength_gap = abs(home_base_elo - away_base_elo)
+    
     result = {
         '基础数据': {
             '主队名称': home_team_name,
@@ -438,10 +396,12 @@ def calculate_detailed_probability(home_team_name, away_team_name,
             '平均赛事权重': round(avg_event_weight, 3),
             '总权重因子': round(avg_time_decay * avg_event_weight, 3)
         },
-        '概率计算': {
+        '泊松推理': {
             '主队期望得分': round(expected_home, 4),
             '客队期望得分': round(expected_away, 4),
-            '动态平概率基准': round(draw_probability, 4),
+            '主队预期进球': round(home_expected_goals, 3),
+            '客队预期进球': round(away_expected_goals, 3),
+            '场均总进球基准': average_total_goals,
             '最终胜平负概率': {
                 '胜': round(win_home, 4),
                 '平': round(draw_probability, 4),
@@ -521,10 +481,12 @@ def process_history_data(input_file_path, output_file_path):
                             '平均赛事权重': 0,
                             '总权重因子': 0
                         },
-                        '概率计算': {
+                        '泊松推理': {
                             '主队期望得分': 0,
                             '客队期望得分': 0,
-                            '动态平概率基准': 0,
+                            '主队预期进球': 0,
+                            '客队预期进球': 0,
+                            '场均总进球基准': 0,
                             '最终胜平负概率': {
                                 '胜': 0,
                                 '平': 0,
@@ -576,10 +538,12 @@ def process_history_data(input_file_path, output_file_path):
                             '平均赛事权重': 0,
                             '总权重因子': 0
                         },
-                        '概率计算': {
+                        '泊松推理': {
                             '主队期望得分': 0,
                             '客队期望得分': 0,
-                            '动态平概率基准': 0,
+                            '主队预期进球': 0,
+                            '客队预期进球': 0,
+                            '场均总进球基准': 0,
                             '最终胜平负概率': {
                                 '胜': 0,
                                 '平': 0,
@@ -600,9 +564,9 @@ def process_history_data(input_file_path, output_file_path):
                 match_date
             )
             
-            win_home = detailed_result['概率计算']['最终胜平负概率']['胜']
-            draw = detailed_result['概率计算']['最终胜平负概率']['平']
-            win_away = detailed_result['概率计算']['最终胜平负概率']['负']
+            win_home = detailed_result['泊松推理']['最终胜平负概率']['胜']
+            draw = detailed_result['泊松推理']['最终胜平负概率']['平']
+            win_away = detailed_result['泊松推理']['最终胜平负概率']['负']
             
             print(f"  预测概率:")
             print(f"    {home_team}胜: {win_home:.2%}")
