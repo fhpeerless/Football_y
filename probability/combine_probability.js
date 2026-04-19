@@ -145,7 +145,7 @@ function calculateCombinedProbabilities(basicData, advancedData, strengthData) {
             continue;
         }
         
-        const strengthMatch = strengthMatches.find(m => m.场次 === basicMatch.场次);
+        const strengthMatch = strengthMatches.find(m => String(m.场次) === String(basicMatch.场次));
         if (!strengthMatch) {
             console.warn(`警告: 场次 ${basicMatch.场次} 在共同对手实力分文件中未找到，将不包含实力分数据`);
         }
@@ -203,11 +203,17 @@ function calculateCombinedProbabilities(basicData, advancedData, strengthData) {
             },
             预测结果: result,
             共同对手实力分: strengthMatch ? {
-                主队总实力分: strengthMatch.主队总实力分 || 0,
-                客队总实力分: strengthMatch.客队总实力分 || 0,
-                主队相对实力比: strengthMatch.主队相对实力比 || 0,
-                客队相对实力比: strengthMatch.客队相对实力比 || 0,
-                共同对手数: strengthMatch.共同对手数 || 0
+                主队预期进球: strengthMatch.主队预期进球 || 0,
+                客队预期进球: strengthMatch.客队预期进球 || 0,
+                胜概率: strengthMatch.胜概率 || 0,
+                平概率: strengthMatch.平概率 || 0,
+                负概率: strengthMatch.负概率 || 0,
+                预测结果: strengthMatch.预测结果,
+                共同对手数: strengthMatch.共同对手数 || 0,
+                主队攻击力: strengthMatch.主队攻击力 || 0,
+                主队防守力: strengthMatch.主队防守力 || 0,
+                客队攻击力: strengthMatch.客队攻击力 || 0,
+                客队防守力: strengthMatch.客队防守力 || 0
             } : null,
             预测详细数据: advancedMatch.预测详细数据 || basicMatch.预测详细数据 || {}
         });

@@ -586,7 +586,7 @@
         <div class="results-panel">
             <h2 class="section-title"><i class="fas fa-futbol"></i> 预测结果列表</h2>
             <p style="margin-bottom: 20px; opacity: 0.8;">
-                显示14场比赛的预测结果，基于三种方法：实力分分析、高级预测概率、基础预测概率（Elo+泊松推理）
+                显示14场比赛的预测结果，基于三种方法：共同对手泊松模型、高级预测概率、近期战绩泊松模型
             </p>
             
             <table class="matches-table" id="resultsTable">
@@ -596,9 +596,9 @@
                         <th>联赛</th>
                         <th>主队</th>
                         <th>客队</th>
-                        <th>实力分分析</th>
+                        <th>共同对手泊松</th>
                         <th>高级预测</th>
-                        <th>基础预测</th>
+                        <th>直接交锋泊松</th>
                         <th>比赛时间</th>
                     </tr>
                 </thead>
@@ -613,34 +613,36 @@
                 </h3>
                 <div class="method-grid">
                     <div class="method-card strength">
-                        <h4>实力分分析 <span class="method-badge method-strength">实力分</span></h4>
+                        <h4>实力分分析 <span class="method-badge method-strength">泊松</span></h4>
                         <p>
-                            计算主队实力分与客队实力分的差值：<br>
-                            • 差值绝对值 &lt; 0.78 → 待定<br>
-                            • 差值 &gt; 0.78 → 主胜 (3)<br>
-                            • 差值 &lt; -0.78 → 客胜 (0)
+                            基于共同对手数据的泊松模型：<br>
+                            • 时间衰减加权计算攻击力/防守力<br>
+                            • 综合攻防估算预期进球(lambda)<br>
+                            • 泊松分布推导胜平负概率<br>
+                            • 主胜概率最大 → 3<br>
+                            • 平概率最大 → 1<br>
+                            • 客胜概率最大 → 0
                         </p>
                     </div>
                     <div class="method-card advanced">
                         <h4>高级预测概率 <span class="method-badge method-advanced">高级</span></h4>
                         <p>
                             比较主胜、平、客胜概率：<br>
-                            • 最大与次大相差 &lt; 3% → 待定<br>
-                            • 主胜最大 → 主胜 (3)<br>
-                            • 客胜最大 → 客胜 (0)<br>
-                            • 平最大 → 平 (1)
+                            • 主胜概率最大 → 3<br>
+                            • 平概率最大 → 1<br>
+                            • 客胜概率最大 → 0
                         </p>
                     </div>
                     <div class="method-card basic">
-                        <h4>基础预测概率 <span class="method-badge method-basic">基础</span></h4>
+                        <h4>直接交锋泊松 <span class="method-badge method-basic">泊松</span></h4>
                         <p>
-                            基于两队直接交锋记录的Elo+泊松推理：<br>
-                            • Elo评分计算期望得分 → 映射预期进球<br>
+                            基于两队直接交锋记录的泊松模型：<br>
+                            • 时间衰减加权计算主客场攻击力<br>
+                            • 实力接近时平局概率自动提升<br>
                             • 泊松分布推导胜平负概率<br>
-                            • 最大与次大相差 &lt; 3% → 待定<br>
-                            • 主胜最大 → 主胜 (3)<br>
-                            • 客胜最大 → 客胜 (0)<br>
-                            • 平最大 → 平 (1)
+                            • 主胜概率最大 → 3<br>
+                            • 平概率最大 → 1<br>
+                            • 客胜概率最大 → 0
                         </p>
                     </div>
                 </div>
@@ -682,24 +684,28 @@
         function calculateStrengthResult(strengthData) {
             if (!strengthData) return '待定';
             
-            const homeStrength = strengthData.主队总实力分 || 0;
-            const awayStrength = strengthData.客队总实力分 || 0;
-            const diff = homeStrength - awayStrength;
+            const homeWinProb = strengthData.胜概率 || 0;
+            const drawProb = strengthData.平概率 || 0;
+            const awayWinProb = strengthData.负概率 || 0;
             
-            // 差值绝对值小于0.78则输出待定
-            if (Math.abs(diff) < 0.78) {
+            if (homeWinProb === 0 && drawProb === 0 && awayWinProb === 0) {
                 return '待定';
             }
-            // 差值大于0.78则主胜输出3
-            if (diff > 0.78) {
+            
+            if (homeWinProb > drawProb && homeWinProb > awayWinProb) {
                 return '3';
             }
-            // 差值小于-0.78则主负输出0
-            if (diff < -0.78) {
+            if (awayWinProb > homeWinProb && awayWinProb > drawProb) {
                 return '0';
             }
-            // 其他情况也输出待定
-            return '待定';
+            if (drawProb > homeWinProb && drawProb > awayWinProb) {
+                return '1';
+            }
+            
+            const maxProb = Math.max(homeWinProb, drawProb, awayWinProb);
+            if (maxProb === homeWinProb) return '3';
+            if (maxProb === awayWinProb) return '0';
+            return '1';
         }
         
         // 计算预测概率结果
@@ -713,34 +719,24 @@
             const drawProb = probData.平 || 0;
             const loseProb = probData.负 || 0;
             
-            // 找出最大值和次大值
-            const probs = [
-                {type: '胜', value: winProb},
-                {type: '平', value: drawProb},
-                {type: '负', value: loseProb}
-            ];
-            
-            // 排序，从大到小
-            probs.sort((a, b) => b.value - a.value);
-            
-            const maxProb = probs[0];
-            const secondProb = probs[1];
-            
-            // 检查最大与次大相差是否小于3%
-            if ((maxProb.value - secondProb.value) < 0.03) {
+            if (winProb === 0 && drawProb === 0 && loseProb === 0) {
                 return '待定';
             }
             
-            // 根据最大概率类型返回结果
-            if (maxProb.type === '胜') {
+            if (winProb > drawProb && winProb > loseProb) {
                 return '3';
-            } else if (maxProb.type === '平') {
-                return '1';
-            } else if (maxProb.type === '负') {
+            }
+            if (loseProb > winProb && loseProb > drawProb) {
                 return '0';
             }
+            if (drawProb > winProb && drawProb > loseProb) {
+                return '1';
+            }
             
-            return '待定';
+            const maxProb = Math.max(winProb, drawProb, loseProb);
+            if (maxProb === winProb) return '3';
+            if (maxProb === loseProb) return '0';
+            return '1';
         }
         
         // 获取CSS类名用于样式
@@ -861,11 +857,17 @@
                         strengthData['14场比赛结果'].forEach(strengthMatch => {
                             const matchNum = String(strengthMatch.场次); // 确保转换为字符串
                             strengthMap[matchNum] = {
-                                主队总实力分: strengthMatch.主队总实力分 || 0,
-                                客队总实力分: strengthMatch.客队总实力分 || 0,
-                                主队相对实力比: strengthMatch.主队相对实力比 || 0,
-                                客队相对实力比: strengthMatch.客队相对实力比 || 0,
+                                主队预期进球: strengthMatch.主队预期进球 || 0,
+                                客队预期进球: strengthMatch.客队预期进球 || 0,
+                                胜概率: strengthMatch.胜概率 || 0,
+                                平概率: strengthMatch.平概率 || 0,
+                                负概率: strengthMatch.负概率 || 0,
+                                预测结果: strengthMatch.预测结果,
                                 共同对手数: strengthMatch.共同对手数 || 0,
+                                主队攻击力: strengthMatch.主队攻击力 || 0,
+                                主队防守力: strengthMatch.主队防守力 || 0,
+                                客队攻击力: strengthMatch.客队攻击力 || 0,
+                                客队防守力: strengthMatch.客队防守力 || 0,
                                 详细计算数据: strengthMatch.详细计算数据 || {}
                             };
                         });
@@ -933,9 +935,17 @@
                 const basicClass = getResultClass(basicResult);
                 
                 // 获取实力分数据
-                const homeStrength = (match.共同对手实力分 && match.共同对手实力分.主队总实力分) || 0;
-                const awayStrength = (match.共同对手实力分 && match.共同对手实力分.客队总实力分) || 0;
+                const homeWinProb = (match.共同对手实力分 && match.共同对手实力分.胜概率) || 0;
+                const drawProb = (match.共同对手实力分 && match.共同对手实力分.平概率) || 0;
+                const awayWinProb = (match.共同对手实力分 && match.共同对手实力分.负概率) || 0;
+                const lambdaHome = (match.共同对手实力分 && match.共同对手实力分.主队预期进球) || 0;
+                const lambdaAway = (match.共同对手实力分 && match.共同对手实力分.客队预期进球) || 0;
                 const hasStrengthData = match.共同对手实力分 !== null && match.共同对手实力分 !== undefined;
+                
+                const basicWinProb = (match.基础预测概率 && match.基础预测概率.胜) || 0;
+                const basicDrawProb = (match.基础预测概率 && match.基础预测概率.平) || 0;
+                const basicLoseProb = (match.基础预测概率 && match.基础预测概率.负) || 0;
+                const hasBasicData = match.基础预测概率 !== null && match.基础预测概率 !== undefined;
                 
                 html += `
                     <tr id="match-${match.场次}">
@@ -945,10 +955,13 @@
                         <td>${match.客队 || ''}</td>
                         <td class="${strengthClass}">
                             ${strengthResult}
-                            ${hasStrengthData ? `<br><small style="opacity: 0.8; font-size: 0.85em;">主队: ${homeStrength.toFixed(2)} 客队: ${awayStrength.toFixed(2)}</small>` : ''}
+                            ${hasStrengthData && homeWinProb > 0 ? `<br><small style="opacity: 0.8; font-size: 0.85em;">胜${(homeWinProb*100).toFixed(0)}% 平${(drawProb*100).toFixed(0)}% 负${(awayWinProb*100).toFixed(0)}%</small>` : ''}
                         </td>
                         <td class="${advancedClass}">${advancedResult}</td>
-                        <td class="${basicClass}">${basicResult}</td>
+                        <td class="${basicClass}">
+                            ${basicResult}
+                            ${hasBasicData && basicWinProb > 0 ? `<br><small style="opacity: 0.8; font-size: 0.85em;">胜${(basicWinProb*100).toFixed(0)}% 平${(basicDrawProb*100).toFixed(0)}% 负${(basicLoseProb*100).toFixed(0)}%</small>` : ''}
+                        </td>
                         <td>${match.比赛时间 || ''}</td>
                     </tr>
                 `;
