@@ -82,6 +82,104 @@ def time_decay_weight(match_date_str, current_date, half_life_days=180):
     weight = 1.0 - tier * 0.1
     return max(weight, 0.1)
 
+def bayesian_blend(estimate, prior, sample_count, confidence=0.95):
+    effective_sample = min(sample_count, 20)
+    weight = effective_sample / (effective_sample + 10)
+    return estimate * weight + prior * (1 - weight)
+
+def calculate_form_factor(matches, team_name, window=5):
+    recent = matches[-window:]
+    
+    points = []
+    for match in recent:
+        is_home = (match.get('homesxname') == team_name)
+        home_score = match.get('homescore', 0)
+        away_score = match.get('awayscore', 0)
+        
+        if is_home:
+            if home_score > away_score:
+                points.append(3)
+            elif home_score == away_score:
+                points.append(1)
+            else:
+                points.append(0)
+        else:
+            if away_score > home_score:
+                points.append(3)
+            elif away_score == home_score:
+                points.append(1)
+            else:
+                points.append(0)
+    
+    avg_points = sum(points) / len(points) if points else 1.0
+    std_dev = (sum((p - avg_points)**2 for p in points) / len(points)) ** 0.5 if points else 0
+    
+    form_factor = (avg_points / 3.0) * (1 + 0.1 * (1 - std_dev / 3.0))
+    return form_factor
+
+def calculate_fixture_fatigue(matches, team_name):
+    if len(matches) < 2:
+        return 1.0
+    
+    recent = matches[-3:]
+    fatigue_score = 0
+    
+    for i in range(1, len(recent)):
+        prev_home = (recent[i-1].get('homesxname') == team_name)
+        curr_home = (recent[i].get('homesxname') == team_name)
+        
+        if prev_home != curr_home:
+            fatigue_score -= 0.05
+        else:
+            fatigue_score += 0.05
+    
+    return max(0.85, min(1.15, 1.0 + fatigue_score))
+
+def calculate_kelly_optimal_odds(predictions):
+    results = {'胜': 0, '平': 0, '负': 0}
+    for pred in predictions:
+        max_result = max(
+            ('胜', pred.get('胜', 0)),
+            ('平', pred.get('平', 0)),
+            ('负', pred.get('负', 0)),
+            key=lambda x: x[1]
+        )[0]
+        results[max_result] += 1
+    total = sum(results.values())
+    if total == 0:
+        return {'胜': 0.3333, '平': 0.3333, '负': 0.3333}
+    return {k: v / total for k, v in results.items()}
+
+def backtest_predictions(historical_results, predictions):
+    correct_count = 0
+    total_count = len(predictions)
+    
+    for pred, actual in zip(predictions, historical_results):
+        pred_result = max(
+            ('胜', pred.get('胜', 0)),
+            ('平', pred.get('平', 0)),
+            ('负', pred.get('负', 0)),
+            key=lambda x: x[1]
+        )[0]
+        
+        if pred_result == actual:
+            correct_count += 1
+    
+    accuracy = correct_count / total_count if total_count > 0 else 0
+    
+    brier_score = sum(
+        (pred.get('胜', 0) - (1 if actual == '胜' else 0))**2 +
+        (pred.get('平', 0) - (1 if actual == '平' else 0))**2 +
+        (pred.get('负', 0) - (1 if actual == '负' else 0))**2
+        for pred, actual in zip(predictions, historical_results)
+    ) / total_count
+    
+    return {
+        'accuracy': accuracy,
+        'brier_score': brier_score,
+        'kelly_criterion': calculate_kelly_optimal_odds(predictions)
+    }
+
 def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
     HOME_ADVANTAGE = 1.10
     DEFAULT_LAMBDA = 1.3
@@ -161,21 +259,29 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
 
     if home_when_home_weight > 0 and home_when_away_weight > 0:
         home_attack = home_home_attack * 0.7 + home_away_attack * 0.3
-        away_defense = home_home_defense * 0.7 + home_away_defense * 0.3
+        home_defense = home_home_defense * 0.7 + home_away_defense * 0.3
+        away_attack = home_home_defense * 0.7 + home_away_defense * 0.3
+        away_defense = home_home_attack * 0.7 + home_away_attack * 0.3
     else:
         home_attack = home_avg
-        away_defense = away_avg
-
-    away_attack = away_avg
-    home_defense = away_avg
+        home_defense = away_avg
+        away_attack = away_avg
+        away_defense = home_avg
 
     lambda_home = (home_attack + away_defense) / 2.0 * HOME_ADVANTAGE
-    lambda_away = away_attack
+    lambda_away = (away_attack + home_defense) / 2.0
 
     if match_count < MIN_SAMPLE:
-        blend = match_count / MIN_SAMPLE
-        lambda_home = lambda_home * blend + DEFAULT_LAMBDA * HOME_ADVANTAGE * (1 - blend)
-        lambda_away = lambda_away * blend + DEFAULT_LAMBDA * (1 - blend)
+        lambda_home = bayesian_blend(
+            lambda_home,
+            DEFAULT_LAMBDA * HOME_ADVANTAGE,
+            match_count
+        )
+        lambda_away = bayesian_blend(
+            lambda_away,
+            DEFAULT_LAMBDA,
+            match_count
+        )
 
     home_win, draw, away_win = calculate_win_draw_lose(lambda_home, lambda_away)
 
@@ -195,6 +301,10 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
         'match_count': match_count,
         'home_avg': round(home_avg, 3),
         'away_avg': round(away_avg, 3),
+        'home_attack': round(home_attack, 3),
+        'home_defense': round(home_defense, 3),
+        'away_attack': round(away_attack, 3),
+        'away_defense': round(away_defense, 3),
         'home_home_attack': round(home_home_attack, 3) if home_when_home_weight > 0 else None,
         'home_away_attack': round(home_away_attack, 3) if home_when_away_weight > 0 else None,
         'lambda_home': round(lambda_home, 3),
@@ -234,7 +344,24 @@ def process_history_data(input_file_path, output_file_path):
             if jz_data and 'data' in jz_data:
                 h2h_matches = jz_data['data'].get('matches', [])
 
+            history_data = match.get('历史交锋数据', {})
+            home_team_matches = []
+            away_team_matches = []
+            if history_data and 'data' in history_data:
+                home_team_matches = history_data['data'].get('home', {}).get('matches', [])
+                away_team_matches = history_data['data'].get('away', {}).get('matches', [])
+
             print(f"  直接交锋记录: {len(h2h_matches)} 场")
+            print(f"  主队近期比赛: {len(home_team_matches)} 场")
+            print(f"  客队近期比赛: {len(away_team_matches)} 场")
+
+            home_form = calculate_form_factor(home_team_matches, home_team) if home_team_matches else 1.0
+            away_form = calculate_form_factor(away_team_matches, away_team) if away_team_matches else 1.0
+            home_fatigue = calculate_fixture_fatigue(home_team_matches, home_team) if home_team_matches else 1.0
+            away_fatigue = calculate_fixture_fatigue(away_team_matches, away_team) if away_team_matches else 1.0
+
+            print(f"  主队状态系数: {home_form:.3f}, 疲劳系数: {home_fatigue:.3f}")
+            print(f"  客队状态系数: {away_form:.3f}, 疲劳系数: {away_fatigue:.3f}")
 
             h2h_result = calculate_h2h_poisson(h2h_matches, home_team, away_team, match_date)
 
@@ -261,6 +388,12 @@ def process_history_data(input_file_path, output_file_path):
                             '直接交锋记录数': 0,
                             '比赛预测日期': match_date
                         },
+                        '状态特征': {
+                            '主队状态系数': round(home_form, 3),
+                            '客队状态系数': round(away_form, 3),
+                            '主队疲劳系数': round(home_fatigue, 3),
+                            '客队疲劳系数': round(away_fatigue, 3)
+                        },
                         '泊松推理': {
                             '主队预期进球': 0,
                             '客队预期进球': 0,
@@ -271,16 +404,35 @@ def process_history_data(input_file_path, output_file_path):
                 results.append(match_result)
                 continue
 
+            lambda_home = h2h_result['lambda_home'] * home_form * home_fatigue
+            lambda_away = h2h_result['lambda_away'] * away_form * away_fatigue
+
+            home_win, draw, away_win = calculate_win_draw_lose(lambda_home, lambda_away)
+
+            DRAW_BOOST_MAX = 0.15
+            max_lambda = max(lambda_home, lambda_away, 0.01)
+            closeness = 1 - abs(lambda_home - lambda_away) / max_lambda
+            draw_boost = closeness * DRAW_BOOST_MAX
+
+            if home_win + away_win > 0:
+                home_transfer = home_win * draw_boost
+                away_transfer = away_win * draw_boost
+                draw += home_transfer + away_transfer
+                home_win -= home_transfer
+                away_win -= away_transfer
+
             print(f"  主队场均进球: {h2h_result['home_avg']}")
             print(f"  客队场均进球: {h2h_result['away_avg']}")
-            print(f"  主队预期进球(lambda): {h2h_result['lambda_home']}")
-            print(f"  客队预期进球(lambda): {h2h_result['lambda_away']}")
-            print(f"  实力接近度: {h2h_result['closeness']:.2f}")
-            print(f"  平局概率提升: {h2h_result['draw_boost']:.2f}")
+            print(f"  H2H主队预期进球: {h2h_result['lambda_home']}")
+            print(f"  H2H客队预期进球: {h2h_result['lambda_away']}")
+            print(f"  调整后主队预期进球: {lambda_home:.3f}")
+            print(f"  调整后客队预期进球: {lambda_away:.3f}")
+            print(f"  实力接近度: {closeness:.2f}")
+            print(f"  平局概率提升: {draw_boost:.2f}")
             print(f"  预测概率:")
-            print(f"    {home_team}胜: {h2h_result['胜']:.2%}")
-            print(f"    平: {h2h_result['平']:.2%}")
-            print(f"    {away_team}胜: {h2h_result['负']:.2%}")
+            print(f"    {home_team}胜: {home_win:.2%}")
+            print(f"    平: {draw:.2%}")
+            print(f"    {away_team}胜: {away_win:.2%}")
 
             match_result = {
                 '场次': match.get('场次'),
@@ -292,9 +444,9 @@ def process_history_data(input_file_path, output_file_path):
                 '比赛时间': match.get('比赛时间'),
                 '直接交锋记录数': h2h_result['match_count'],
                 '预测概率': {
-                    '胜': h2h_result['胜'],
-                    '平': h2h_result['平'],
-                    '负': h2h_result['负']
+                    '胜': round(home_win, 4),
+                    '平': round(draw, 4),
+                    '负': round(away_win, 4)
                 },
                 '预测详细数据': {
                     '基础数据': {
@@ -306,19 +458,31 @@ def process_history_data(input_file_path, output_file_path):
                     '攻防数据': {
                         '主队场均进球': h2h_result['home_avg'],
                         '客队场均进球': h2h_result['away_avg'],
+                        '主队攻击力': h2h_result.get('home_attack'),
+                        '主队防守力': h2h_result.get('home_defense'),
+                        '客队攻击力': h2h_result.get('away_attack'),
+                        '客队防守力': h2h_result.get('away_defense'),
                         '主队主场攻击力': h2h_result.get('home_home_attack'),
                         '主队客场攻击力': h2h_result.get('home_away_attack')
                     },
+                    '状态特征': {
+                        '主队状态系数': round(home_form, 3),
+                        '客队状态系数': round(away_form, 3),
+                        '主队疲劳系数': round(home_fatigue, 3),
+                        '客队疲劳系数': round(away_fatigue, 3)
+                    },
                     '泊松推理': {
                         '主场优势系数': 1.10,
-                        '实力接近度': h2h_result['closeness'],
-                        '平局概率提升': h2h_result['draw_boost'],
-                        '主队预期进球': h2h_result['lambda_home'],
-                        '客队预期进球': h2h_result['lambda_away'],
+                        '实力接近度': round(closeness, 4),
+                        '平局概率提升': round(draw_boost, 4),
+                        'H2H主队预期进球': h2h_result['lambda_home'],
+                        'H2H客队预期进球': h2h_result['lambda_away'],
+                        '调整后主队预期进球': round(lambda_home, 3),
+                        '调整后客队预期进球': round(lambda_away, 3),
                         '最终胜平负概率': {
-                            '胜': h2h_result['胜'],
-                            '平': h2h_result['平'],
-                            '负': h2h_result['负']
+                            '胜': round(home_win, 4),
+                            '平': round(draw, 4),
+                            '负': round(away_win, 4)
                         }
                     }
                 }
