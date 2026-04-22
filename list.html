@@ -20,7 +20,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -107,24 +107,48 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            font-size: 0.9em;
         }
         
         .matches-table th {
             background: rgba(0, 188, 212, 0.3);
-            padding: 15px;
-            text-align: left;
+            padding: 8px 6px;
+            text-align: center;
             font-weight: 600;
             position: sticky;
             top: 0;
+            white-space: nowrap;
         }
         
         .matches-table td {
-            padding: 12px 15px;
+            padding: 6px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            vertical-align: top;
         }
         
         .matches-table tr:hover {
             background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .th-group {
+            background: rgba(0, 188, 212, 0.15);
+            border-bottom: 2px solid rgba(0, 188, 212, 0.3);
+        }
+        
+        .th-group-strength {
+            background: rgba(255, 193, 7, 0.15);
+            border-bottom: 2px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .th-group-h2h {
+            background: rgba(33, 150, 243, 0.15);
+            border-bottom: 2px solid rgba(33, 150, 243, 0.3);
+        }
+        
+        .th-group-advanced {
+            background: rgba(156, 39, 176, 0.15);
+            border-bottom: 2px solid rgba(156, 39, 176, 0.3);
         }
         
         .result-3 {
@@ -144,6 +168,33 @@
         
         .result-pending {
             color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .prob-line {
+            font-size: 0.8em;
+            opacity: 0.85;
+            line-height: 1.4;
+        }
+        
+        .prob-label {
+            font-size: 0.75em;
+            opacity: 0.6;
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .avg-prob {
+            background: rgba(156, 39, 176, 0.15);
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+        
+        .final-result {
+            background: rgba(0, 188, 212, 0.15);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 1.2em;
             font-weight: bold;
         }
         
@@ -238,7 +289,6 @@
             color: #2196f3;
         }
         
-        /* 方法说明区域响应式优化 */
         .method-explanation {
             margin-top: 30px;
             padding: 20px;
@@ -288,196 +338,6 @@
             line-height: 1.5;
         }
         
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 20px;
-                border-radius: 16px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-                margin-bottom: 5px;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            header {
-                margin-bottom: 20px;
-                padding-bottom: 15px;
-            }
-            
-            .info-panel,
-            .results-panel {
-                padding: 15px;
-                border-radius: 12px;
-                margin-bottom: 20px;
-            }
-            
-            .info-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .info-item {
-                padding: 12px;
-            }
-            
-            .info-label {
-                font-size: 0.85em;
-            }
-            
-            .info-value {
-                font-size: 1.1em;
-            }
-            
-            .section-title {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-            }
-            
-            .section-title i {
-                font-size: 1.4rem;
-            }
-            
-            .matches-table {
-                font-size: 0.9em;
-                margin-top: 15px;
-            }
-            
-            .matches-table th {
-                padding: 10px 8px;
-                font-size: 0.9em;
-                white-space: nowrap;
-            }
-            
-            .matches-table td {
-                padding: 8px;
-            }
-            
-            .btn-group {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            button {
-                padding: 10px 16px;
-                font-size: 0.95em;
-            }
-            
-            .progress-bar {
-                margin: 15px 0;
-            }
-            
-            .status {
-                margin-top: 15px;
-                padding: 12px;
-                font-size: 0.9em;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-                border-radius: 12px;
-            }
-            
-            h1 {
-                font-size: 1.6rem;
-            }
-            
-            .info-panel,
-            .results-panel {
-                padding: 12px;
-            }
-            
-            .section-title {
-                font-size: 1.1rem;
-            }
-            
-            .section-title i {
-                font-size: 1.3rem;
-            }
-            
-            .matches-table {
-                font-size: 0.85em;
-            }
-            
-            .matches-table th,
-            .matches-table td {
-                padding: 6px 4px;
-            }
-            
-            button {
-                padding: 8px 12px;
-                font-size: 0.9em;
-            }
-            
-            .info-label {
-                font-size: 0.8em;
-            }
-            
-            .info-value {
-                font-size: 1em;
-            }
-            
-            /* 方法说明区域移动端优化 */
-            .method-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .method-card {
-                padding: 12px;
-            }
-            
-            .method-card h4 {
-                font-size: 1em;
-            }
-            
-            .method-card p {
-                font-size: 0.85em;
-            }
-            
-            /* 表格容器横向滚动 */
-            .results-panel {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .matches-table {
-                min-width: 800px; /* 确保表格有足够宽度 */
-            }
-            
-            /* 表格列优化 */
-            .matches-table th:nth-child(2), /* 联赛列 */
-            .matches-table td:nth-child(2) {
-                min-width: 60px;
-            }
-            
-            .matches-table th:nth-child(3), /* 主队列 */
-            .matches-table td:nth-child(3) {
-                min-width: 80px;
-            }
-            
-            .matches-table th:nth-child(4), /* 客队列 */
-            .matches-table td:nth-child(4) {
-                min-width: 80px;
-            }
-            
-            .matches-table th:nth-child(8), /* 比赛时间列 */
-            .matches-table td:nth-child(8) {
-                min-width: 100px;
-                white-space: nowrap;
-            }
-        }
-        
-        /* 期数选择器样式 */
         .period-selector {
             display: flex;
             align-items: center;
@@ -512,22 +372,36 @@
             border-color: #00bcd4;
             box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.3);
         }
-        
-        /* 移动端适配 */
+
         @media (max-width: 768px) {
-            .btn-group {
-                flex-direction: column;
-                gap: 12px;
-            }
-            
-            .period-selector {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .period-selector select {
-                flex: 1;
-            }
+            body { padding: 10px; }
+            .container { padding: 20px; border-radius: 16px; }
+            h1 { font-size: 1.8rem; margin-bottom: 5px; }
+            .subtitle { font-size: 1rem; }
+            header { margin-bottom: 20px; padding-bottom: 15px; }
+            .info-panel, .results-panel { padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+            .info-grid { grid-template-columns: 1fr; gap: 12px; }
+            .info-item { padding: 12px; }
+            .info-label { font-size: 0.85em; }
+            .info-value { font-size: 1.1em; }
+            .section-title { font-size: 1.2rem; margin-bottom: 15px; }
+            .btn-group { flex-direction: column; gap: 12px; }
+            .period-selector { width: 100%; justify-content: space-between; }
+            .period-selector select { flex: 1; }
+            .results-panel { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .matches-table { min-width: 1200px; font-size: 0.85em; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; border-radius: 12px; }
+            h1 { font-size: 1.6rem; }
+            .info-panel, .results-panel { padding: 12px; }
+            .section-title { font-size: 1.1rem; }
+            .matches-table { min-width: 1100px; font-size: 0.8em; }
+            .method-grid { grid-template-columns: 1fr; gap: 15px; }
+            .method-card { padding: 12px; }
+            .method-card h4 { font-size: 1em; }
+            .method-card p { font-size: 0.85em; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -536,7 +410,7 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-list-alt"></i> 足球预测结果列表</h1>
-            <p class="subtitle">基于实力分和预测概率的综合分析</p>
+            <p class="subtitle">基于共同对手泊松和直接交锋泊松的半场/全场概率分析</p>
         </header>
         
         <div class="info-panel">
@@ -578,32 +452,41 @@
                 </div>
             </div>
             
-            <div class="status" id="statusMessage">
-                <!-- 状态消息将显示在这里 -->
-            </div>
+            <div class="status" id="statusMessage"></div>
         </div>
         
         <div class="results-panel">
             <h2 class="section-title"><i class="fas fa-futbol"></i> 预测结果列表</h2>
             <p style="margin-bottom: 20px; opacity: 0.8;">
-                显示14场比赛的预测结果，基于三种方法：共同对手泊松模型、高级预测概率、近期战绩泊松模型
+                显示14场比赛的半场/全场/平均概率，基于共同对手泊松模型和直接交锋泊松模型
             </p>
             
             <table class="matches-table" id="resultsTable">
                 <thead>
                     <tr>
-                        <th>场次</th>
-                        <th>联赛</th>
-                        <th>主队</th>
-                        <th>客队</th>
-                        <th>共同对手泊松</th>
-                        <th>高级预测</th>
-                        <th>直接交锋泊松</th>
-                        <th>比赛时间</th>
+                        <th rowspan="2">场次</th>
+                        <th rowspan="2">联赛</th>
+                        <th rowspan="2">主队</th>
+                        <th rowspan="2">客队</th>
+                        <th colspan="3" class="th-group-strength">共同对手泊松</th>
+                        <th colspan="3" class="th-group-h2h">直接交锋泊松</th>
+                        <th colspan="3" class="th-group-advanced">高级预测</th>
+                        <th rowspan="2">最终结果</th>
+                        <th rowspan="2">比赛时间</th>
+                    </tr>
+                    <tr>
+                        <th class="th-group-strength">半场</th>
+                        <th class="th-group-strength">全场</th>
+                        <th class="th-group-strength">平均</th>
+                        <th class="th-group-h2h">半场</th>
+                        <th class="th-group-h2h">全场</th>
+                        <th class="th-group-h2h">平均</th>
+                        <th class="th-group-advanced">半场</th>
+                        <th class="th-group-advanced">全场</th>
+                        <th class="th-group-advanced">平均</th>
                     </tr>
                 </thead>
                 <tbody id="resultsBody">
-                    <!-- 结果将动态加载到这里 -->
                 </tbody>
             </table>
             
@@ -613,36 +496,43 @@
                 </h3>
                 <div class="method-grid">
                     <div class="method-card strength">
-                        <h4>实力分分析 <span class="method-badge method-strength">泊松</span></h4>
+                        <h4>共同对手泊松 <span class="method-badge method-strength">泊松</span></h4>
                         <p>
                             基于共同对手数据的泊松模型：<br>
-                            • 时间衰减加权计算攻击力/防守力<br>
-                            • 综合攻防估算预期进球(lambda)<br>
-                            • 泊松分布推导胜平负概率<br>
-                            • 主胜概率最大 → 3<br>
-                            • 平概率最大 → 1<br>
-                            • 客胜概率最大 → 0
-                        </p>
-                    </div>
-                    <div class="method-card advanced">
-                        <h4>高级预测概率 <span class="method-badge method-advanced">高级</span></h4>
-                        <p>
-                            比较主胜、平、客胜概率：<br>
-                            • 主胜概率最大 → 3<br>
-                            • 平概率最大 → 1<br>
-                            • 客胜概率最大 → 0
+                            • 半场：用半场进球数据计算lambda，泊松分布推导概率<br>
+                            • 全场：用全场进球数据计算lambda，泊松分布推导概率<br>
+                            • 平均：半场和全场概率取平均值<br>
+                            • 主胜概率最大 → 3，平概率最大 → 1，客胜概率最大 → 0
                         </p>
                     </div>
                     <div class="method-card basic">
                         <h4>直接交锋泊松 <span class="method-badge method-basic">泊松</span></h4>
                         <p>
                             基于两队直接交锋记录的泊松模型：<br>
-                            • 时间衰减加权计算主客场攻击力<br>
-                            • 实力接近时平局概率自动提升<br>
-                            • 泊松分布推导胜平负概率<br>
-                            • 主胜概率最大 → 3<br>
-                            • 平概率最大 → 1<br>
-                            • 客胜概率最大 → 0
+                            • 半场：用半场进球数据计算lambda，泊松分布推导概率<br>
+                            • 全场：用全场进球数据计算lambda，泊松分布推导概率<br>
+                            • 平均：半场和全场概率取平均值<br>
+                            • 主胜概率最大 → 3，平概率最大 → 1，客胜概率最大 → 0
+                        </p>
+                    </div>
+                    <div class="method-card advanced">
+                        <h4>高级预测 <span class="method-badge method-advanced">泊松+状态矩阵</span></h4>
+                        <p>
+                            基于攻防效率+泊松分布+半全场状态矩阵的融合模型：<br>
+                            • 半场：用半场攻防效率计算lambda，泊松分布+Wilson修正融合<br>
+                            • 全场：用全场攻防效率计算lambda，泊松70%+状态矩阵30%<br>
+                            • 平均：半场和全场概率取平均值<br>
+                            • 含平局提升、共同对手调整、预期进球约束
+                        </p>
+                    </div>
+                    <div class="method-card" style="background: rgba(0, 188, 212, 0.1);">
+                        <h4>最终结果 <span class="method-badge" style="background: rgba(0, 188, 212, 0.2); color: #00bcd4;">投票</span></h4>
+                        <p>
+                            综合三种模型的投票结果：<br>
+                            • 收集9个预测结果（3模型 × 3时段）<br>
+                            • 统计3/1/0各出现次数<br>
+                            • 出现最多的数字作为最终结果<br>
+                            • 3=主胜, 1=平, 0=客胜
                         </p>
                     </div>
                 </div>
@@ -651,11 +541,9 @@
     </div>
 
     <script>
-        // 全局变量
         let currentPeriod = '';
-        let allPeriods = [];  // 存储所有期数列表
+        let allPeriods = [];
         
-        // DOM元素
         const currentPeriodEl = document.getElementById('currentPeriod');
         const totalMatchesEl = document.getElementById('totalMatches');
         const generateTimeEl = document.getElementById('generateTime');
@@ -666,7 +554,6 @@
         const refreshBtn = document.getElementById('refreshBtn');
         const periodSelect = document.getElementById('periodSelect');
         
-        // 显示状态消息
         function showStatus(message, type = 'info') {
             statusMessage.textContent = message;
             statusMessage.className = `status ${type}`;
@@ -675,71 +562,17 @@
             }, type === 'error' ? 5000 : 3000);
         }
         
-        // 更新进度条
         function updateProgress(percent) {
             progressFill.style.width = `${percent}%`;
         }
         
-        // 计算实力分分析结果
-        function calculateStrengthResult(strengthData) {
-            if (!strengthData) return '待定';
-            
-            const homeWinProb = strengthData.胜概率 || 0;
-            const drawProb = strengthData.平概率 || 0;
-            const awayWinProb = strengthData.负概率 || 0;
-            
-            if (homeWinProb === 0 && drawProb === 0 && awayWinProb === 0) {
-                return '待定';
-            }
-            
-            if (homeWinProb > drawProb && homeWinProb > awayWinProb) {
-                return '3';
-            }
-            if (awayWinProb > homeWinProb && awayWinProb > drawProb) {
-                return '0';
-            }
-            if (drawProb > homeWinProb && drawProb > awayWinProb) {
-                return '1';
-            }
-            
-            const maxProb = Math.max(homeWinProb, drawProb, awayWinProb);
-            if (maxProb === homeWinProb) return '3';
-            if (maxProb === awayWinProb) return '0';
+        function getResultFromProbs(win, draw, lose) {
+            if (win === 0 && draw === 0 && lose === 0) return '待定';
+            if (win >= draw && win >= lose) return '3';
+            if (lose >= win && lose >= draw) return '0';
             return '1';
         }
         
-        // 计算预测概率结果
-        function calculateProbabilityResult(probData) {
-            if (!probData || typeof probData.胜 === 'undefined' || 
-                typeof probData.平 === 'undefined' || typeof probData.负 === 'undefined') {
-                return '待定';
-            }
-            
-            const winProb = probData.胜 || 0;
-            const drawProb = probData.平 || 0;
-            const loseProb = probData.负 || 0;
-            
-            if (winProb === 0 && drawProb === 0 && loseProb === 0) {
-                return '待定';
-            }
-            
-            if (winProb > drawProb && winProb > loseProb) {
-                return '3';
-            }
-            if (loseProb > winProb && loseProb > drawProb) {
-                return '0';
-            }
-            if (drawProb > winProb && drawProb > loseProb) {
-                return '1';
-            }
-            
-            const maxProb = Math.max(winProb, drawProb, loseProb);
-            if (maxProb === winProb) return '3';
-            if (maxProb === loseProb) return '0';
-            return '1';
-        }
-        
-        // 获取CSS类名用于样式
         function getResultClass(result) {
             if (result === '3') return 'result-3';
             if (result === '1') return 'result-1';
@@ -748,42 +581,47 @@
             return '';
         }
         
-        // 从present.json获取所有期数并填充选择器
+        function formatProbCell(win, draw, lose) {
+            const result = getResultFromProbs(win, draw, lose);
+            const cls = getResultClass(result);
+            if (result === '待定') return `<span class="${cls}">待定</span>`;
+            return `<span class="${cls}">${result}</span><br><span class="prob-line">胜${(win*100).toFixed(0)}% 平${(draw*100).toFixed(0)}% 负${(lose*100).toFixed(0)}%</span>`;
+        }
+        
+        function getFinalResult(results) {
+            let count = {'3': 0, '1': 0, '0': 0};
+            results.forEach(r => {
+                if (r === '3' || r === '1' || r === '0') count[r]++;
+            });
+            if (count['3'] + count['1'] + count['0'] === 0) return '待定';
+            const maxCount = Math.max(count['3'], count['1'], count['0']);
+            if (count['3'] === maxCount) return '3';
+            if (count['0'] === maxCount) return '0';
+            return '1';
+        }
+        
         async function fetchLatestPeriod() {
             try {
                 showStatus('正在获取期数列表...', 'info');
                 updateProgress(20);
                 
                 const response = await fetch('./present.json');
-                if (!response.ok) {
-                    throw new Error(`无法读取present.json文件: HTTP ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`无法读取present.json文件: HTTP ${response.status}`);
                 
                 const data = await response.json();
+                if (!Array.isArray(data) || data.length === 0) throw new Error('present.json格式不正确或为空数组');
                 
-                if (!Array.isArray(data) || data.length === 0) {
-                    throw new Error('present.json格式不正确或为空数组');
-                }
-                
-                // 提取所有期数并排序（最新的在前）
                 allPeriods = data.map(entry => ({
                     period: entry.period || entry.period_number?.toString() || '',
                     date: entry.date || entry.生成时间 || ''
-                })).filter(item => item.period);  // 过滤掉空期数
+                })).filter(item => item.period);
                 
-                if (allPeriods.length === 0) {
-                    throw new Error('未找到有效的期数数据');
-                }
+                if (allPeriods.length === 0) throw new Error('未找到有效的期数数据');
                 
-                // 按期数排序（假设期数越大越新）
                 allPeriods.sort((a, b) => parseInt(b.period) - parseInt(a.period));
-                
-                // 填充期数选择器
                 populatePeriodSelector(allPeriods);
                 
-                // 获取最新期数（排序后的第一个）
                 const latestPeriod = allPeriods[0].period;
-                
                 updateProgress(40);
                 return latestPeriod;
             } catch (error) {
@@ -793,108 +631,82 @@
             }
         }
         
-        // 填充期数选择器
         function populatePeriodSelector(periods) {
             if (!periodSelect) return;
-            
-            // 清空现有选项
             periodSelect.innerHTML = '';
-            
-            // 添加选项
             periods.forEach(item => {
                 const option = document.createElement('option');
                 option.value = item.period;
                 option.textContent = `${item.period}期`;
-                // 如果有日期信息，添加为提示
-                if (item.date) {
-                    option.title = item.date;
-                }
+                if (item.date) option.title = item.date;
                 periodSelect.appendChild(option);
             });
-            
-            // 默认选择第一个（最新期数）
-            if (periods.length > 0) {
-                periodSelect.value = periods[0].period;
-            }
+            if (periods.length > 0) periodSelect.value = periods[0].period;
         }
         
-        // 加载web.json数据
         async function loadWebData(period) {
             try {
-                showStatus(`正在加载 ${period}期_web.json 数据...`, 'info');
+                showStatus(`正在加载 ${period}期 数据...`, 'info');
                 updateProgress(60);
                 
                 const webFileUrl = `./result/${period}期_web.json`;
                 const strengthFileUrl = `./result/${period}期_共同对手实力分.json`;
                 
-                // 并行加载两个文件
                 const [webResponse, strengthResponse] = await Promise.all([
                     fetch(webFileUrl),
                     fetch(strengthFileUrl)
                 ]);
                 
-                if (!webResponse.ok) {
-                    throw new Error(`文件不存在或无法读取: ${webFileUrl}`);
-                }
+                if (!webResponse.ok) throw new Error(`文件不存在或无法读取: ${webFileUrl}`);
                 
                 const data = await webResponse.json();
-                
-                // 验证数据格式
-                if (!data.期数 || !data.计算结果 || !Array.isArray(data.计算结果)) {
-                    throw new Error('web.json文件格式不正确');
-                }
+                if (!data.期数 || !data.计算结果 || !Array.isArray(data.计算结果)) throw new Error('web.json文件格式不正确');
                 
                 updateProgress(70);
                 
-                // 加载共同对手实力分数据
                 if (strengthResponse.ok) {
                     const strengthData = await strengthResponse.json();
-                    
-                    // 验证实力分数据格式
                     if (strengthData.期数 && strengthData['14场比赛结果'] && Array.isArray(strengthData['14场比赛结果'])) {
-                        // 创建场次到实力分数据的映射
                         const strengthMap = {};
-                        strengthData['14场比赛结果'].forEach(strengthMatch => {
-                            const matchNum = String(strengthMatch.场次); // 确保转换为字符串
+                        strengthData['14场比赛结果'].forEach(sm => {
+                            const matchNum = String(sm.场次);
                             strengthMap[matchNum] = {
-                                主队预期进球: strengthMatch.主队预期进球 || 0,
-                                客队预期进球: strengthMatch.客队预期进球 || 0,
-                                胜概率: strengthMatch.胜概率 || 0,
-                                平概率: strengthMatch.平概率 || 0,
-                                负概率: strengthMatch.负概率 || 0,
-                                预测结果: strengthMatch.预测结果,
-                                共同对手数: strengthMatch.共同对手数 || 0,
-                                主队攻击力: strengthMatch.主队攻击力 || 0,
-                                主队防守力: strengthMatch.主队防守力 || 0,
-                                客队攻击力: strengthMatch.客队攻击力 || 0,
-                                客队防守力: strengthMatch.客队防守力 || 0,
-                                详细计算数据: strengthMatch.详细计算数据 || {}
+                                主队预期进球: sm.主队预期进球 || 0,
+                                客队预期进球: sm.客队预期进球 || 0,
+                                胜概率: sm.胜概率 || 0,
+                                平概率: sm.平概率 || 0,
+                                负概率: sm.负概率 || 0,
+                                半场主队预期进球: sm.半场主队预期进球 || 0,
+                                半场客队预期进球: sm.半场客队预期进球 || 0,
+                                半场胜概率: sm.半场胜概率 || 0,
+                                半场平概率: sm.半场平概率 || 0,
+                                半场负概率: sm.半场负概率 || 0,
+                                平均胜概率: sm.平均胜概率 || 0,
+                                平均平概率: sm.平均平概率 || 0,
+                                平均负概率: sm.平均负概率 || 0,
+                                预测结果: sm.预测结果,
+                                共同对手数: sm.共同对手数 || 0,
+                                主队攻击力: sm.主队攻击力 || 0,
+                                主队防守力: sm.主队防守力 || 0,
+                                客队攻击力: sm.客队攻击力 || 0,
+                                客队防守力: sm.客队防守力 || 0,
+                                详细计算数据: sm.详细计算数据 || {}
                             };
                         });
                         
-                        // 将实力分数据合并到web数据中
                         data.计算结果.forEach(webMatch => {
                             const matchNum = String(webMatch.场次);
-                            if (strengthMap[matchNum]) {
-                                webMatch.共同对手实力分 = strengthMap[matchNum];
-                            } else {
-                                // 如果没有找到对应的实力分数据，设置为null
-                                webMatch.共同对手实力分 = null;
-                            }
+                            webMatch.共同对手实力分 = strengthMap[matchNum] || null;
                         });
                         
                         console.log(`成功合并 ${Object.keys(strengthMap).length} 场比赛的实力分数据`);
                     } else {
                         console.warn('共同对手实力分文件格式不正确，跳过数据合并');
-                        data.计算结果.forEach(match => {
-                            match.共同对手实力分 = null;
-                        });
+                        data.计算结果.forEach(match => { match.共同对手实力分 = null; });
                     }
                 } else {
                     console.warn(`共同对手实力分文件不存在或无法读取: ${strengthFileUrl}`);
-                    data.计算结果.forEach(match => {
-                        match.共同对手实力分 = null;
-                    });
+                    data.计算结果.forEach(match => { match.共同对手实力分 = null; });
                 }
                 
                 updateProgress(80);
@@ -906,111 +718,121 @@
             }
         }
         
-        // 渲染结果列表
         function renderResults(data) {
             if (!data || !data.计算结果 || !Array.isArray(data.计算结果)) {
-                resultsBody.innerHTML = `
-                    <tr>
-                        <td colspan="8" style="text-align: center; padding: 40px; opacity: 0.7;">
-                            暂无数据或数据格式不正确
-                        </td>
-                    </tr>
-                `;
+                resultsBody.innerHTML = `<tr><td colspan="15" style="text-align: center; padding: 40px; opacity: 0.7;">暂无数据或数据格式不正确</td></tr>`;
                 return;
             }
             
             let html = '';
-            const matches = data.计算结果;
+            const matches = data.计算结果.slice(0, 14);
             
-            // 只显示前14场比赛（如果有更多的话）
-            const displayMatches = matches.slice(0, 14);
-            
-            displayMatches.forEach(match => {
-                const strengthResult = calculateStrengthResult(match.共同对手实力分);
-                const advancedResult = calculateProbabilityResult(match.高级预测概率);
-                const basicResult = calculateProbabilityResult(match.基础预测概率);
+            matches.forEach(match => {
+                const sd = match.共同对手实力分;
+                const bp = match.基础预测概率;
+                const bhp = match.基础半场预测概率;
+                const bap = match.基础平均预测概率;
+                const ap = match.高级预测概率;
+                const ahp = match.高级半场预测概率;
+                const aap = match.高级平均预测概率;
                 
-                const strengthClass = getResultClass(strengthResult);
-                const advancedClass = getResultClass(advancedResult);
-                const basicClass = getResultClass(basicResult);
+                const sHalfWin = sd ? sd.半场胜概率 : 0;
+                const sHalfDraw = sd ? sd.半场平概率 : 0;
+                const sHalfLose = sd ? sd.半场负概率 : 0;
+                const sFullWin = sd ? sd.胜概率 : 0;
+                const sFullDraw = sd ? sd.平概率 : 0;
+                const sFullLose = sd ? sd.负概率 : 0;
+                const sAvgWin = sd ? sd.平均胜概率 : 0;
+                const sAvgDraw = sd ? sd.平均平概率 : 0;
+                const sAvgLose = sd ? sd.平均负概率 : 0;
                 
-                // 获取实力分数据
-                const homeWinProb = (match.共同对手实力分 && match.共同对手实力分.胜概率) || 0;
-                const drawProb = (match.共同对手实力分 && match.共同对手实力分.平概率) || 0;
-                const awayWinProb = (match.共同对手实力分 && match.共同对手实力分.负概率) || 0;
-                const lambdaHome = (match.共同对手实力分 && match.共同对手实力分.主队预期进球) || 0;
-                const lambdaAway = (match.共同对手实力分 && match.共同对手实力分.客队预期进球) || 0;
-                const hasStrengthData = match.共同对手实力分 !== null && match.共同对手实力分 !== undefined;
+                const hHalfWin = bhp ? bhp.胜 : 0;
+                const hHalfDraw = bhp ? bhp.平 : 0;
+                const hHalfLose = bhp ? bhp.负 : 0;
+                const hFullWin = bp ? bp.胜 : 0;
+                const hFullDraw = bp ? bp.平 : 0;
+                const hFullLose = bp ? bp.负 : 0;
+                const hAvgWin = bap ? bap.胜 : 0;
+                const hAvgDraw = bap ? bap.平 : 0;
+                const hAvgLose = bap ? bap.负 : 0;
                 
-                const basicWinProb = (match.基础预测概率 && match.基础预测概率.胜) || 0;
-                const basicDrawProb = (match.基础预测概率 && match.基础预测概率.平) || 0;
-                const basicLoseProb = (match.基础预测概率 && match.基础预测概率.负) || 0;
-                const hasBasicData = match.基础预测概率 !== null && match.基础预测概率 !== undefined;
+                const aHalfWin = ahp ? ahp.胜 : 0;
+                const aHalfDraw = ahp ? ahp.平 : 0;
+                const aHalfLose = ahp ? ahp.负 : 0;
+                const aFullWin = ap ? ap.胜 : 0;
+                const aFullDraw = ap ? ap.平 : 0;
+                const aFullLose = ap ? ap.负 : 0;
+                const aAvgWin = aap ? aap.胜 : 0;
+                const aAvgDraw = aap ? aap.平 : 0;
+                const aAvgLose = aap ? aap.负 : 0;
+                
+                const allResults = [
+                    getResultFromProbs(sHalfWin, sHalfDraw, sHalfLose),
+                    getResultFromProbs(sFullWin, sFullDraw, sFullLose),
+                    getResultFromProbs(sAvgWin, sAvgDraw, sAvgLose),
+                    getResultFromProbs(hHalfWin, hHalfDraw, hHalfLose),
+                    getResultFromProbs(hFullWin, hFullDraw, hFullLose),
+                    getResultFromProbs(hAvgWin, hAvgDraw, hAvgLose),
+                    getResultFromProbs(aHalfWin, aHalfDraw, aHalfLose),
+                    getResultFromProbs(aFullWin, aFullDraw, aFullLose),
+                    getResultFromProbs(aAvgWin, aAvgDraw, aAvgLose)
+                ];
+                const finalResult = getFinalResult(allResults);
+                const finalCls = getResultClass(finalResult);
                 
                 html += `
                     <tr id="match-${match.场次}">
                         <td><a href="./index.html#match-${match.场次}" style="color: inherit; text-decoration: none;">${match.场次 || ''}</a></td>
                         <td>${match.联赛 || ''}</td>
-                        <td>${match.主队 || ''}</td>
-                        <td>${match.客队 || ''}</td>
-                        <td class="${strengthClass}">
-                            ${strengthResult}
-                            ${hasStrengthData && homeWinProb > 0 ? `<br><small style="opacity: 0.8; font-size: 0.85em;">胜${(homeWinProb*100).toFixed(0)}% 平${(drawProb*100).toFixed(0)}% 负${(awayWinProb*100).toFixed(0)}%</small>` : ''}
-                        </td>
-                        <td class="${advancedClass}">${advancedResult}</td>
-                        <td class="${basicClass}">
-                            ${basicResult}
-                            ${hasBasicData && basicWinProb > 0 ? `<br><small style="opacity: 0.8; font-size: 0.85em;">胜${(basicWinProb*100).toFixed(0)}% 平${(basicDrawProb*100).toFixed(0)}% 负${(basicLoseProb*100).toFixed(0)}%</small>` : ''}
-                        </td>
-                        <td>${match.比赛时间 || ''}</td>
+                        <td style="text-align: left;">${match.主队 || ''}</td>
+                        <td style="text-align: left;">${match.客队 || ''}</td>
+                        <td>${formatProbCell(sHalfWin, sHalfDraw, sHalfLose)}</td>
+                        <td>${formatProbCell(sFullWin, sFullDraw, sFullLose)}</td>
+                        <td class="avg-prob">${formatProbCell(sAvgWin, sAvgDraw, sAvgLose)}</td>
+                        <td>${formatProbCell(hHalfWin, hHalfDraw, hHalfLose)}</td>
+                        <td>${formatProbCell(hFullWin, hFullDraw, hFullLose)}</td>
+                        <td class="avg-prob">${formatProbCell(hAvgWin, hAvgDraw, hAvgLose)}</td>
+                        <td>${formatProbCell(aHalfWin, aHalfDraw, aHalfLose)}</td>
+                        <td>${formatProbCell(aFullWin, aFullDraw, aFullLose)}</td>
+                        <td class="avg-prob">${formatProbCell(aAvgWin, aAvgDraw, aAvgLose)}</td>
+                        <td class="final-result"><span class="${finalCls}">${finalResult}</span></td>
+                        <td style="white-space: nowrap;">${match.比赛时间 || ''}</td>
                     </tr>
                 `;
             });
             
             resultsBody.innerHTML = html;
-            totalMatchesEl.textContent = displayMatches.length;
+            totalMatchesEl.textContent = matches.length;
             
-            // 检查URL中的锚点并滚动到相应比赛
             if (window.location.hash) {
-                const matchId = window.location.hash.substring(1); // 去掉#号
+                const matchId = window.location.hash.substring(1);
                 const targetElement = document.getElementById(matchId);
                 if (targetElement) {
-                    setTimeout(() => {
-                        targetElement.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
+                    setTimeout(() => { targetElement.scrollIntoView({ behavior: 'smooth' }); }, 100);
                 }
             }
         }
         
-        // 更新信息面板
         function updateInfoPanel(data) {
             if (!data) return;
-            
             currentPeriodEl.textContent = data.期数 || currentPeriod;
-            generateTimeEl.textContent = data.生成时间 ? 
-                new Date(data.生成时间).toLocaleString() : '未知';
-            
+            generateTimeEl.textContent = data.生成时间 ? new Date(data.生成时间).toLocaleString() : '未知';
             if (data.数据来源) {
                 const source = data.数据来源;
                 dataSourceEl.textContent = `${source.基础预测文件 || ''}, ${source.高级预测文件 || ''}`;
             }
         }
         
-        // 主加载函数（支持可选期数参数）
         async function loadData(selectedPeriod = null) {
             try {
                 showStatus('正在加载数据...', 'info');
                 updateProgress(10);
                 
                 let period = selectedPeriod;
-                
-                // 1. 确定要加载的期数
                 if (!period) {
-                    // 如果没有提供期数，使用选择器的值
                     if (periodSelect && periodSelect.value) {
                         period = periodSelect.value;
                     } else {
-                        // 如果选择器还没有值，获取最新期数
                         period = await fetchLatestPeriod();
                         if (!period) {
                             showStatus('无法获取期数，请检查present.json文件', 'error');
@@ -1019,25 +841,17 @@
                     }
                 }
                 
-                // 确保选择器选中当前期数
-                if (periodSelect && period) {
-                    periodSelect.value = period;
-                }
-                
+                if (periodSelect && period) periodSelect.value = period;
                 currentPeriod = period;
                 currentPeriodEl.textContent = `${period}期`;
                 
-                // 2. 加载web.json数据
                 const data = await loadWebData(period);
                 if (!data) {
-                    showStatus(`无法加载 ${period}期 的web.json数据`, 'error');
+                    showStatus(`无法加载 ${period}期 的数据`, 'error');
                     return;
                 }
                 
-                // 3. 更新信息面板
                 updateInfoPanel(data);
-                
-                // 4. 渲染结果列表
                 renderResults(data);
                 
                 updateProgress(100);
@@ -1049,22 +863,15 @@
             }
         }
         
-        // 事件监听器
         refreshBtn.addEventListener('click', loadData);
         
-        // 期数选择器变化时加载对应期数数据
         if (periodSelect) {
             periodSelect.addEventListener('change', function() {
-                if (this.value) {
-                    loadData(this.value);
-                }
+                if (this.value) loadData(this.value);
             });
         }
         
-        // 页面加载完成后自动加载数据
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-        });
+        document.addEventListener('DOMContentLoaded', () => { loadData(); });
     </script>
 </body>
 </html>
