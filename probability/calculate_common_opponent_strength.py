@@ -96,11 +96,13 @@ def extract_team_match_stats(match, team_name):
     away_team = match.get('awaysxname', '')
     home_score = match.get('homescore', 0)
     away_score = match.get('awayscore', 0)
+    home_half_score = match.get('homehalfscore') or 0
+    away_half_score = match.get('awayhalfscore') or 0
     if home_team == team_name:
-        return home_score, away_score, True
+        return home_score, away_score, True, home_half_score, away_half_score
     elif away_team == team_name:
-        return away_score, home_score, False
-    return None, None, None
+        return away_score, home_score, False, away_half_score, home_half_score
+    return None, None, None, None, None
 
 def calculate_poisson_from_common_opponents(common_data, home_team, away_team, current_date):
     HOME_ADVANTAGE = 1.10
@@ -115,6 +117,11 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
     away_conceded_w = 0.0
     away_weight_total = 0.0
     away_match_count = 0
+
+    home_half_scored_w = 0.0
+    home_half_conceded_w = 0.0
+    away_half_scored_w = 0.0
+    away_half_conceded_w = 0.0
 
     direct_match_count = 0
     opponent_details = []
@@ -132,7 +139,7 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
         opp_a_weight = 0.0
 
         for match in home_vs_opp:
-            scored, conceded, is_home = extract_team_match_stats(match, home_team)
+            scored, conceded, is_home, half_scored, half_conceded = extract_team_match_stats(match, home_team)
             if scored is None:
                 continue
             match_date = match.get('matchdate', '')
@@ -144,9 +151,12 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
             opp_h_conceded += conceded * w
             opp_h_weight += w
             home_match_count += 1
+            if half_scored is not None:
+                home_half_scored_w += half_scored * w
+                home_half_conceded_w += half_conceded * w
 
         for match in away_vs_opp:
-            scored, conceded, is_home = extract_team_match_stats(match, away_team)
+            scored, conceded, is_home, half_scored, half_conceded = extract_team_match_stats(match, away_team)
             if scored is None:
                 continue
             match_date = match.get('matchdate', '')
@@ -157,6 +167,9 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
             opp_a_conceded += conceded * w
             opp_a_weight += w
             away_match_count += 1
+            if half_scored is not None:
+                away_half_scored_w += half_scored * w
+                away_half_conceded_w += half_conceded * w
 
         home_scored_w += opp_h_scored
         home_conceded_w += opp_h_conceded
@@ -198,7 +211,32 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
         home_win_prob -= home_transfer
         away_win_prob -= away_transfer
 
-    probs = {'胜': home_win_prob, '平': draw_prob, '负': away_win_prob}
+    home_half_attack = home_half_scored_w / home_weight_total if home_weight_total > 0 else home_attack * 0.45
+    home_half_defense = home_half_conceded_w / home_weight_total if home_weight_total > 0 else home_defense * 0.45
+    away_half_attack = away_half_scored_w / away_weight_total if away_weight_total > 0 else away_attack * 0.45
+    away_half_defense = away_half_conceded_w / away_weight_total if away_weight_total > 0 else away_defense * 0.45
+
+    lambda_home_half = (home_half_attack + away_half_defense) / 2.0 * HOME_ADVANTAGE
+    lambda_away_half = (away_half_attack + home_half_defense) / 2.0
+
+    half_home_win, half_draw, half_away_win = calculate_win_draw_lose(lambda_home_half, lambda_away_half)
+
+    half_max_lambda = max(lambda_home_half, lambda_away_half, 0.01)
+    half_closeness = 1 - abs(lambda_home_half - lambda_away_half) / half_max_lambda
+    half_draw_boost = half_closeness * DRAW_BOOST_MAX
+
+    if half_home_win + half_away_win > 0:
+        half_home_transfer = half_home_win * half_draw_boost
+        half_away_transfer = half_away_win * half_draw_boost
+        half_draw += half_home_transfer + half_away_transfer
+        half_home_win -= half_home_transfer
+        half_away_win -= half_away_transfer
+
+    avg_home_win = (home_win_prob + half_home_win) / 2.0
+    avg_draw = (draw_prob + half_draw) / 2.0
+    avg_away_win = (away_win_prob + half_away_win) / 2.0
+
+    probs = {'胜': avg_home_win, '平': avg_draw, '负': avg_away_win}
     max_result = max(probs, key=probs.get)
     result_map = {'胜': 3, '平': 1, '负': 0}
 
@@ -217,6 +255,14 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
         '主队比赛样本数': home_match_count,
         '客队比赛样本数': away_match_count,
         '直接对战样本数': direct_match_count,
+        '半场主队攻击力': round(home_half_attack, 3),
+        '半场主队防守力': round(home_half_defense, 3),
+        '半场客队攻击力': round(away_half_attack, 3),
+        '半场客队防守力': round(away_half_defense, 3),
+        '半场主队预期进球(lambda_home_half)': round(lambda_home_half, 3),
+        '半场客队预期进球(lambda_away_half)': round(lambda_away_half, 3),
+        '半场实力接近度': round(half_closeness, 4),
+        '半场平局概率提升': round(half_draw_boost, 4),
         '对手详情': opponent_details
     }
 
@@ -226,6 +272,14 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
         '胜概率': round(home_win_prob, 4),
         '平概率': round(draw_prob, 4),
         '负概率': round(away_win_prob, 4),
+        '半场主队预期进球': round(lambda_home_half, 3),
+        '半场客队预期进球': round(lambda_away_half, 3),
+        '半场胜概率': round(half_home_win, 4),
+        '半场平概率': round(half_draw, 4),
+        '半场负概率': round(half_away_win, 4),
+        '平均胜概率': round(avg_home_win, 4),
+        '平均平概率': round(avg_draw, 4),
+        '平均负概率': round(avg_away_win, 4),
         '预测结果': result_map[max_result],
         '主队攻击力': round(home_attack, 3),
         '主队防守力': round(home_defense, 3),
@@ -280,6 +334,14 @@ def process_extracted_data(data, current_date):
                 '胜概率': 0,
                 '平概率': 0,
                 '负概率': 0,
+                '半场主队预期进球': 0,
+                '半场客队预期进球': 0,
+                '半场胜概率': 0,
+                '半场平概率': 0,
+                '半场负概率': 0,
+                '平均胜概率': 0,
+                '平均平概率': 0,
+                '平均负概率': 0,
                 '预测结果': None,
                 '主队攻击力': 0,
                 '主队防守力': 0,
@@ -301,6 +363,12 @@ def process_extracted_data(data, current_date):
         print(f"  胜概率: {poisson_result['胜概率']:.1%}")
         print(f"  平概率: {poisson_result['平概率']:.1%}")
         print(f"  负概率: {poisson_result['负概率']:.1%}")
+        print(f"  半场胜概率: {poisson_result['半场胜概率']:.1%}")
+        print(f"  半场平概率: {poisson_result['半场平概率']:.1%}")
+        print(f"  半场负概率: {poisson_result['半场负概率']:.1%}")
+        print(f"  平均胜概率: {poisson_result['平均胜概率']:.1%}")
+        print(f"  平均平概率: {poisson_result['平均平概率']:.1%}")
+        print(f"  平均负概率: {poisson_result['平均负概率']:.1%}")
         print(f"  预测结果: {poisson_result['预测结果']}")
 
         result = {
@@ -318,6 +386,14 @@ def process_extracted_data(data, current_date):
             '胜概率': poisson_result['胜概率'],
             '平概率': poisson_result['平概率'],
             '负概率': poisson_result['负概率'],
+            '半场主队预期进球': poisson_result['半场主队预期进球'],
+            '半场客队预期进球': poisson_result['半场客队预期进球'],
+            '半场胜概率': poisson_result['半场胜概率'],
+            '半场平概率': poisson_result['半场平概率'],
+            '半场负概率': poisson_result['半场负概率'],
+            '平均胜概率': poisson_result['平均胜概率'],
+            '平均平概率': poisson_result['平均平概率'],
+            '平均负概率': poisson_result['平均负概率'],
             '预测结果': poisson_result['预测结果'],
             '主队攻击力': poisson_result['主队攻击力'],
             '主队防守力': poisson_result['主队防守力'],

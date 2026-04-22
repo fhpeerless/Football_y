@@ -198,21 +198,39 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
     home_when_away_conceded_w = 0.0
     home_when_away_weight = 0.0
 
+    home_half_scored_w = 0.0
+    home_half_conceded_w = 0.0
+    away_half_scored_w = 0.0
+    away_half_conceded_w = 0.0
+
+    home_when_home_half_scored_w = 0.0
+    home_when_home_half_conceded_w = 0.0
+    home_when_home_half_weight = 0.0
+    home_when_away_half_scored_w = 0.0
+    home_when_away_half_conceded_w = 0.0
+    home_when_away_half_weight = 0.0
+
     for match in h2h_matches:
         match_home = match.get('homesxname', '')
         match_away = match.get('awaysxname', '')
         home_score = match.get('homescore', 0)
         away_score = match.get('awayscore', 0)
+        home_half_score = match.get('homehalfscore') or 0
+        away_half_score = match.get('awayhalfscore') or 0
         match_date = match.get('matchdate', '')
 
         if match_home == home_team and match_away == away_team:
             our_home_scored = home_score
             our_home_conceded = away_score
             our_home_is_home = True
+            our_home_half_scored = home_half_score
+            our_home_half_conceded = away_half_score
         elif match_home == away_team and match_away == home_team:
             our_home_scored = away_score
             our_home_conceded = home_score
             our_home_is_home = False
+            our_home_half_scored = away_half_score
+            our_home_half_conceded = home_half_score
         else:
             continue
 
@@ -226,14 +244,25 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
         weight_total += w
         match_count += 1
 
+        home_half_scored_w += our_home_half_scored * w
+        home_half_conceded_w += our_home_half_conceded * w
+        away_half_scored_w += our_home_half_conceded * w
+        away_half_conceded_w += our_home_half_scored * w
+
         if our_home_is_home:
             home_when_home_scored_w += our_home_scored * w
             home_when_home_conceded_w += our_home_conceded * w
             home_when_home_weight += w
+            home_when_home_half_scored_w += our_home_half_scored * w
+            home_when_home_half_conceded_w += our_home_half_conceded * w
+            home_when_home_half_weight += w
         else:
             home_when_away_scored_w += our_home_scored * w
             home_when_away_conceded_w += our_home_conceded * w
             home_when_away_weight += w
+            home_when_away_half_scored_w += our_home_half_scored * w
+            home_when_away_half_conceded_w += our_home_half_conceded * w
+            home_when_away_half_weight += w
 
     if match_count == 0 or weight_total == 0:
         return {
@@ -246,7 +275,15 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
             '胜': 0,
             '平': 0,
             '负': 0,
-            'draw_boost': 0
+            'draw_boost': 0,
+            '半场lambda_home': 0,
+            '半场lambda_away': 0,
+            '半场胜': 0,
+            '半场平': 0,
+            '半场负': 0,
+            '平均胜': 0,
+            '平均平': 0,
+            '平均负': 0
         }
 
     home_avg = home_scored_w / weight_total
@@ -296,6 +333,57 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
         home_win -= home_transfer
         away_win -= away_transfer
 
+    home_half_avg = home_half_scored_w / weight_total
+    away_half_avg = away_half_scored_w / weight_total
+
+    home_home_half_attack = home_when_home_half_scored_w / home_when_home_half_weight if home_when_home_half_weight > 0 else home_half_avg
+    home_home_half_defense = home_when_home_half_conceded_w / home_when_home_half_weight if home_when_home_half_weight > 0 else away_half_avg
+    home_away_half_attack = home_when_away_half_scored_w / home_when_away_half_weight if home_when_away_half_weight > 0 else home_half_avg
+    home_away_half_defense = home_when_away_half_conceded_w / home_when_away_half_weight if home_when_away_half_weight > 0 else away_half_avg
+
+    if home_when_home_half_weight > 0 and home_when_away_half_weight > 0:
+        home_half_attack = home_home_half_attack * 0.7 + home_away_half_attack * 0.3
+        home_half_defense = home_home_half_defense * 0.7 + home_away_half_defense * 0.3
+        away_half_attack = home_home_half_defense * 0.7 + home_away_half_defense * 0.3
+        away_half_defense = home_home_half_attack * 0.7 + home_away_half_attack * 0.3
+    else:
+        home_half_attack = home_half_avg
+        home_half_defense = away_half_avg
+        away_half_attack = away_half_avg
+        away_half_defense = home_half_avg
+
+    lambda_home_half = (home_half_attack + away_half_defense) / 2.0 * HOME_ADVANTAGE
+    lambda_away_half = (away_half_attack + home_half_defense) / 2.0
+
+    if match_count < MIN_SAMPLE:
+        lambda_home_half = bayesian_blend(
+            lambda_home_half,
+            DEFAULT_LAMBDA * 0.45 * HOME_ADVANTAGE,
+            match_count
+        )
+        lambda_away_half = bayesian_blend(
+            lambda_away_half,
+            DEFAULT_LAMBDA * 0.45,
+            match_count
+        )
+
+    half_home_win, half_draw, half_away_win = calculate_win_draw_lose(lambda_home_half, lambda_away_half)
+
+    half_max_lambda = max(lambda_home_half, lambda_away_half, 0.01)
+    half_closeness = 1 - abs(lambda_home_half - lambda_away_half) / half_max_lambda
+    half_draw_boost = half_closeness * DRAW_BOOST_MAX
+
+    if half_home_win + half_away_win > 0:
+        half_home_transfer = half_home_win * half_draw_boost
+        half_away_transfer = half_away_win * half_draw_boost
+        half_draw += half_home_transfer + half_away_transfer
+        half_home_win -= half_home_transfer
+        half_away_win -= half_away_transfer
+
+    avg_home_win = (home_win + half_home_win) / 2.0
+    avg_draw = (draw + half_draw) / 2.0
+    avg_away_win = (away_win + half_away_win) / 2.0
+
     return {
         'has_data': True,
         'match_count': match_count,
@@ -313,7 +401,15 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
         '平': round(draw, 4),
         '负': round(away_win, 4),
         'draw_boost': round(draw_boost, 4),
-        'closeness': round(closeness, 4)
+        'closeness': round(closeness, 4),
+        '半场lambda_home': round(lambda_home_half, 3),
+        '半场lambda_away': round(lambda_away_half, 3),
+        '半场胜': round(half_home_win, 4),
+        '半场平': round(half_draw, 4),
+        '半场负': round(half_away_win, 4),
+        '平均胜': round(avg_home_win, 4),
+        '平均平': round(avg_draw, 4),
+        '平均负': round(avg_away_win, 4)
     }
 
 def process_history_data(input_file_path, output_file_path):
@@ -381,6 +477,16 @@ def process_history_data(input_file_path, output_file_path):
                         '平': 0,
                         '负': 0
                     },
+                    '半场预测概率': {
+                        '胜': 0,
+                        '平': 0,
+                        '负': 0
+                    },
+                    '平均预测概率': {
+                        '胜': 0,
+                        '平': 0,
+                        '负': 0
+                    },
                     '预测详细数据': {
                         '基础数据': {
                             '主队名称': home_team,
@@ -421,6 +527,26 @@ def process_history_data(input_file_path, output_file_path):
                 home_win -= home_transfer
                 away_win -= away_transfer
 
+            lambda_home_half = h2h_result['半场lambda_home'] * home_form * home_fatigue
+            lambda_away_half = h2h_result['半场lambda_away'] * away_form * away_fatigue
+
+            half_home_win, half_draw, half_away_win = calculate_win_draw_lose(lambda_home_half, lambda_away_half)
+
+            half_max_lambda = max(lambda_home_half, lambda_away_half, 0.01)
+            half_closeness = 1 - abs(lambda_home_half - lambda_away_half) / half_max_lambda
+            half_draw_boost = half_closeness * DRAW_BOOST_MAX
+
+            if half_home_win + half_away_win > 0:
+                half_home_transfer = half_home_win * half_draw_boost
+                half_away_transfer = half_away_win * half_draw_boost
+                half_draw += half_home_transfer + half_away_transfer
+                half_home_win -= half_home_transfer
+                half_away_win -= half_away_transfer
+
+            avg_home_win = (home_win + half_home_win) / 2.0
+            avg_draw = (draw + half_draw) / 2.0
+            avg_away_win = (away_win + half_away_win) / 2.0
+
             print(f"  主队场均进球: {h2h_result['home_avg']}")
             print(f"  客队场均进球: {h2h_result['away_avg']}")
             print(f"  H2H主队预期进球: {h2h_result['lambda_home']}")
@@ -433,6 +559,14 @@ def process_history_data(input_file_path, output_file_path):
             print(f"    {home_team}胜: {home_win:.2%}")
             print(f"    平: {draw:.2%}")
             print(f"    {away_team}胜: {away_win:.2%}")
+            print(f"  半场预测概率:")
+            print(f"    {home_team}胜: {half_home_win:.2%}")
+            print(f"    平: {half_draw:.2%}")
+            print(f"    {away_team}胜: {half_away_win:.2%}")
+            print(f"  平均预测概率:")
+            print(f"    {home_team}胜: {avg_home_win:.2%}")
+            print(f"    平: {avg_draw:.2%}")
+            print(f"    {away_team}胜: {avg_away_win:.2%}")
 
             match_result = {
                 '场次': match.get('场次'),
@@ -447,6 +581,16 @@ def process_history_data(input_file_path, output_file_path):
                     '胜': round(home_win, 4),
                     '平': round(draw, 4),
                     '负': round(away_win, 4)
+                },
+                '半场预测概率': {
+                    '胜': round(half_home_win, 4),
+                    '平': round(half_draw, 4),
+                    '负': round(half_away_win, 4)
+                },
+                '平均预测概率': {
+                    '胜': round(avg_home_win, 4),
+                    '平': round(avg_draw, 4),
+                    '负': round(avg_away_win, 4)
                 },
                 '预测详细数据': {
                     '基础数据': {

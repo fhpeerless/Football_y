@@ -191,10 +191,30 @@ function calculateCombinedProbabilities(basicData, advancedData, strengthData) {
                 平: basicDrawProb,
                 负: basicLoseProb
             },
+            基础半场预测概率: {
+                胜: parseProbability(basicMatch.半场预测概率?.胜 || 0),
+                平: parseProbability(basicMatch.半场预测概率?.平 || 0),
+                负: parseProbability(basicMatch.半场预测概率?.负 || 0)
+            },
+            基础平均预测概率: {
+                胜: parseProbability(basicMatch.平均预测概率?.胜 || 0),
+                平: parseProbability(basicMatch.平均预测概率?.平 || 0),
+                负: parseProbability(basicMatch.平均预测概率?.负 || 0)
+            },
             高级预测概率: {
                 胜: advancedWinProb,
                 平: advancedDrawProb,
                 负: advancedLoseProb
+            },
+            高级半场预测概率: {
+                胜: parseProbability(advancedMatch.半场预测概率?.胜 || 0),
+                平: parseProbability(advancedMatch.半场预测概率?.平 || 0),
+                负: parseProbability(advancedMatch.半场预测概率?.负 || 0)
+            },
+            高级平均预测概率: {
+                胜: parseProbability(advancedMatch.平均预测概率?.胜 || 0),
+                平: parseProbability(advancedMatch.平均预测概率?.平 || 0),
+                负: parseProbability(advancedMatch.平均预测概率?.负 || 0)
             },
             合并概率: {
                 胜: normalizedWinProb,
@@ -208,6 +228,14 @@ function calculateCombinedProbabilities(basicData, advancedData, strengthData) {
                 胜概率: strengthMatch.胜概率 || 0,
                 平概率: strengthMatch.平概率 || 0,
                 负概率: strengthMatch.负概率 || 0,
+                半场主队预期进球: strengthMatch.半场主队预期进球 || 0,
+                半场客队预期进球: strengthMatch.半场客队预期进球 || 0,
+                半场胜概率: strengthMatch.半场胜概率 || 0,
+                半场平概率: strengthMatch.半场平概率 || 0,
+                半场负概率: strengthMatch.半场负概率 || 0,
+                平均胜概率: strengthMatch.平均胜概率 || 0,
+                平均平概率: strengthMatch.平均平概率 || 0,
+                平均负概率: strengthMatch.平均负概率 || 0,
                 预测结果: strengthMatch.预测结果,
                 共同对手数: strengthMatch.共同对手数 || 0,
                 主队攻击力: strengthMatch.主队攻击力 || 0,

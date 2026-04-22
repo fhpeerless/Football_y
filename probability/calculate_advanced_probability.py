@@ -753,122 +753,161 @@ def create_half_full_state_matrix(home_performance, away_performance, home_match
     return state_matrix
 
 def calculate_final_probabilities(home_team, away_team, home_matches, away_matches, common_data):
-    """
-    计算最终胜平负概率
-    :param home_team: 主队名称
-    :param away_team: 客队名称
-    :param home_matches: 主队比赛记录
-    :param away_matches: 客队比赛记录
-    :param common_data: 共同对手数据
-    :return: 最终预测结果
-    """
-    # 1. 计算两队表现数据
+    HOME_ADVANTAGE = 1.15
+    POISSON_WEIGHT = 0.7
+    STATE_WEIGHT = 0.3
+    HALF_EFFICIENCY_ADJUST = 0.05
+    DRAW_BOOST_MAX = 0.15
+
     home_performance = calculate_team_performance(home_matches, home_team)
     away_performance = calculate_team_performance(away_matches, away_team)
-    
+
     if not home_performance or not away_performance:
         return {
-            'home_win': 0.3333,
-            'draw': 0.3333,
-            'away_win': 0.3333,
-            'method': 'default'
+            'has_data': False,
+            '全场预测概率': {'胜': 0.3333, '平': 0.3333, '负': 0.3333},
+            '半场预测概率': {'胜': 0.3333, '平': 0.3333, '负': 0.3333},
+            '平均预测概率': {'胜': 0.3333, '平': 0.3333, '负': 0.3333}
         }
-    
-    # 2. 共同对手实力分析
+
     common_strength_ratio = analyze_common_opponents_strength(common_data, home_team, away_team)
     num_common_opponents = len(common_data)
-    
-    # 3. 计算预期进球数（考虑统计化约束）
-    # 基础预期进球 = 攻击效率 × 对手防守效率
-    home_advantage_factor = calculate_home_advantage_factor(home_performance, away_performance)
-    home_expected_goals = home_performance['home_attack'] * away_performance['away_defense'] * home_advantage_factor
-    away_expected_goals = away_performance['away_attack'] * home_performance['home_defense']
-    
-    # 根据共同对手分析调整（基于统计化约束）
     common_opponent_adjustment = calculate_common_opponent_adjustment(num_common_opponents, common_strength_ratio)
-    home_expected_goals *= (1.0 + common_opponent_adjustment)
-    away_expected_goals *= (1.0 - common_opponent_adjustment)
-    
-    # 应用合理约束（修复预期进球数的合理约束）
-    home_expected_goals, away_expected_goals = constrain_expected_goals(
-        home_expected_goals, 
-        away_expected_goals,
+
+    # ========== 全场概率计算 ==========
+    # 步骤1: 计算全场预期进球
+    home_expected = home_performance['home_attack'] * away_performance['away_defense'] * HOME_ADVANTAGE
+    away_expected = away_performance['away_attack'] * home_performance['home_defense']
+    home_expected *= (1.0 + common_opponent_adjustment)
+    away_expected *= (1.0 - common_opponent_adjustment)
+    home_expected, away_expected = constrain_expected_goals(
+        home_expected, away_expected,
         home_attack_efficiency=home_performance['attack_efficiency'],
         away_attack_efficiency=away_performance['attack_efficiency']
     )
-    
-    # 4. 泊松分布计算基础概率
-    poisson_result = calculate_poisson_probability(home_expected_goals, away_expected_goals)
-    
-    # 5. 半全场状态矩阵调整（使用统计化约束）
-    state_matrix = create_half_full_state_matrix(home_performance, away_performance, home_matches, away_matches, home_team, away_team)
-    
-    # 6. 使用状态矩阵计算基于半场表现的预期全场概率
-    # 获取主队半场结果概率
+
+    # 步骤2: 全场泊松概率
+    full_poisson = calculate_poisson_probability(home_expected, away_expected)
+
+    # 步骤3: 全场状态矩阵概率
+    state_matrix = create_half_full_state_matrix(
+        home_performance, away_performance, home_matches, away_matches, home_team, away_team
+    )
     home_half_probs = np.array([
         home_performance['first_half_results']['win'],
         home_performance['first_half_results']['draw'],
         home_performance['first_half_results']['loss']
     ])
-    
-    # 获取客队半场结果概率
     away_half_probs = np.array([
         away_performance['first_half_results']['win'],
         away_performance['first_half_results']['draw'],
         away_performance['first_half_results']['loss']
     ])
-    
-    # 计算基于状态矩阵的预期全场概率（从各自球队视角）
-    home_full_from_state = home_half_probs @ state_matrix  # 主队视角：胜、平、负
-    away_full_from_state = away_half_probs @ state_matrix  # 客队视角：胜、平、负
-    
-    # 转换客队视角为主队视角：客队胜 = 主队负，客队平 = 平，客队负 = 主队胜
-    away_full_from_home_perspective = np.array([
-        away_full_from_state[2],  # 客队负 = 主队胜
-        away_full_from_state[1],  # 客队平 = 平
-        away_full_from_state[0]   # 客队胜 = 主队负
+    home_full_from_state = home_half_probs @ state_matrix
+    away_full_from_state = away_half_probs @ state_matrix
+    away_full_from_home = np.array([
+        away_full_from_state[2],
+        away_full_from_state[1],
+        away_full_from_state[0]
     ])
-    
-    # 结合两队的状态矩阵概率（简单平均）
-    state_based_probs = (home_full_from_state + away_full_from_home_perspective) / 2
-    
-    # 7. 结合泊松分布和状态矩阵概率（加权融合 + 归一化）
-    # 权重分配基于方法可靠性：泊松分布基于预期进球模型（更稳定），状态矩阵基于历史转移（样本可能较小）
-    poisson_weight = 0.7  # 泊松分布权重
-    state_weight = 0.3    # 状态矩阵权重
-    
-    # 加权融合
-    combined_home_win = poisson_result['win_probability'] * poisson_weight + state_based_probs[0] * state_weight
-    combined_draw = poisson_result['draw_probability'] * poisson_weight + state_based_probs[1] * state_weight
-    combined_away_win = poisson_result['loss_probability'] * poisson_weight + state_based_probs[2] * state_weight
-    
-    # 归一化确保概率和为1
-    combined_total = combined_home_win + combined_draw + combined_away_win
-    if combined_total > 0:
-        combined_home_win /= combined_total
-        combined_draw /= combined_total
-        combined_away_win /= combined_total
-    
-    # 8. 考虑半场进攻效率对全场结果的影响（微调）
-    home_second_half_factor = home_performance['second_half_attack'] / (home_performance['first_half_attack'] + 0.001)
-    away_second_half_factor = away_performance['second_half_attack'] / (away_performance['first_half_attack'] + 0.001)
-    
-    # 调整因子（幅度较小）
-    home_adjustment = 1.0 + (home_second_half_factor - 1.0) * 0.05
-    away_adjustment = 1.0 + (away_second_half_factor - 1.0) * 0.05
-    
-    final_home_win = combined_home_win * home_adjustment
-    final_draw = combined_draw  # 平局不调整
-    final_away_win = combined_away_win * away_adjustment
-    
-    # 归一化
-    total = final_home_win + final_draw + final_away_win
+    state_based_probs = (home_full_from_state + away_full_from_home) / 2
+
+    # 步骤4: 全场加权融合 (泊松70% + 状态矩阵30%)
+    full_home_win = full_poisson['win_probability'] * POISSON_WEIGHT + state_based_probs[0] * STATE_WEIGHT
+    full_draw = full_poisson['draw_probability'] * POISSON_WEIGHT + state_based_probs[1] * STATE_WEIGHT
+    full_away_win = full_poisson['loss_probability'] * POISSON_WEIGHT + state_based_probs[2] * STATE_WEIGHT
+    total = full_home_win + full_draw + full_away_win
     if total > 0:
-        final_home_win /= total
-        final_draw /= total
-        final_away_win /= total
-    
-    # 构建详细结果
+        full_home_win /= total
+        full_draw /= total
+        full_away_win /= total
+
+    # 步骤5: 全场平局提升
+    max_lambda = max(home_expected, away_expected, 0.01)
+    full_closeness = 1 - abs(home_expected - away_expected) / max_lambda
+    full_draw_boost = full_closeness * DRAW_BOOST_MAX
+    if full_home_win + full_away_win > 0:
+        full_home_win -= full_home_win * full_draw_boost
+        full_away_win -= full_away_win * full_draw_boost
+        full_draw += (full_home_win * full_draw_boost / (full_home_win + full_away_win + 0.001) + full_away_win * full_draw_boost / (full_home_win + full_away_win + 0.001))
+        total = full_home_win + full_draw + full_away_win
+        if total > 0:
+            full_home_win /= total
+            full_draw /= total
+            full_away_win /= total
+
+    # 步骤6: 半场进攻效率微调
+    home_second_factor = home_performance['second_half_attack'] / (home_performance['first_half_attack'] + 0.001)
+    away_second_factor = away_performance['second_half_attack'] / (away_performance['first_half_attack'] + 0.001)
+    home_adj = 1.0 + (home_second_factor - 1.0) * HALF_EFFICIENCY_ADJUST
+    away_adj = 1.0 + (away_second_factor - 1.0) * HALF_EFFICIENCY_ADJUST
+    full_home_win *= home_adj
+    full_away_win *= away_adj
+    total = full_home_win + full_draw + full_away_win
+    if total > 0:
+        full_home_win /= total
+        full_draw /= total
+        full_away_win /= total
+
+    # ========== 半场概率计算 ==========
+    # 步骤1: 计算半场预期进球
+    home_half_expected = home_performance['first_half_attack'] * away_performance['first_half_defense'] * HOME_ADVANTAGE
+    away_half_expected = away_performance['first_half_attack'] * home_performance['first_half_defense']
+    home_half_expected *= (1.0 + common_opponent_adjustment)
+    away_half_expected *= (1.0 - common_opponent_adjustment)
+    home_half_expected, away_half_expected = constrain_expected_goals(
+        home_half_expected, away_half_expected,
+        home_attack_efficiency=home_performance['first_half_attack'],
+        away_attack_efficiency=away_performance['first_half_attack']
+    )
+
+    # 步骤2: 半场泊松概率
+    half_poisson = calculate_poisson_probability(home_half_expected, away_half_expected)
+
+    # 步骤3: 半场状态矩阵概率 (直接用半场结果概率)
+    half_state_home = home_performance['first_half_results']['win'] * POISSON_WEIGHT + home_half_probs[0] * STATE_WEIGHT
+    half_state_draw = home_performance['first_half_results']['draw'] * POISSON_WEIGHT + home_half_probs[1] * STATE_WEIGHT
+    half_state_away_home = home_performance['first_half_results']['loss'] * POISSON_WEIGHT + home_half_probs[2] * STATE_WEIGHT
+
+    away_half_state_home = away_performance['first_half_results']['loss'] * POISSON_WEIGHT + away_half_probs[2] * STATE_WEIGHT
+    away_half_state_draw = away_performance['first_half_results']['draw'] * POISSON_WEIGHT + away_half_probs[1] * STATE_WEIGHT
+    away_half_state_away = away_performance['first_half_results']['win'] * POISSON_WEIGHT + away_half_probs[0] * STATE_WEIGHT
+
+    # 步骤4: 半场加权融合 (泊松70% + Wilson修正的半场结果30%)
+    half_home_win = half_poisson['win_probability'] * POISSON_WEIGHT + (half_state_home + away_half_state_home) / 2 * STATE_WEIGHT
+    half_draw = half_poisson['draw_probability'] * POISSON_WEIGHT + (half_state_draw + away_half_state_draw) / 2 * STATE_WEIGHT
+    half_away_win = half_poisson['loss_probability'] * POISSON_WEIGHT + (half_state_away_home + away_half_state_away) / 2 * STATE_WEIGHT
+    total = half_home_win + half_draw + half_away_win
+    if total > 0:
+        half_home_win /= total
+        half_draw /= total
+        half_away_win /= total
+
+    # 步骤5: 半场平局提升
+    half_max_lambda = max(home_half_expected, away_half_expected, 0.01)
+    half_closeness = 1 - abs(home_half_expected - away_half_expected) / half_max_lambda
+    half_draw_boost = half_closeness * DRAW_BOOST_MAX
+    if half_home_win + half_away_win > 0:
+        h_transfer = half_home_win * half_draw_boost
+        a_transfer = half_away_win * half_draw_boost
+        half_draw += h_transfer + a_transfer
+        half_home_win -= h_transfer
+        half_away_win -= a_transfer
+        total = half_home_win + half_draw + half_away_win
+        if total > 0:
+            half_home_win /= total
+            half_draw /= total
+            half_away_win /= total
+
+    # ========== 平均概率 ==========
+    avg_home_win = (full_home_win + half_home_win) / 2.0
+    avg_draw = (full_draw + half_draw) / 2.0
+    avg_away_win = (full_away_win + half_away_win) / 2.0
+
+    print(f"  全场预测: 胜{full_home_win:.1%} 平{full_draw:.1%} 负{full_away_win:.1%}")
+    print(f"  半场预测: 胜{half_home_win:.1%} 平{half_draw:.1%} 负{half_away_win:.1%}")
+    print(f"  平均预测: 胜{avg_home_win:.1%} 平{avg_draw:.1%} 负{avg_away_win:.1%}")
+
     detailed_result = {
         '基础数据': {
             '主队': home_team,
@@ -897,36 +936,69 @@ def calculate_final_probabilities(home_team, away_team, home_matches, away_match
             '实力对比分数': round(common_strength_ratio, 3),
             '主队相对优势': f"{round((common_strength_ratio - 0.5) * 100, 1)}%"
         },
-        '预期进球': {
-            '主队预期进球': round(home_expected_goals, 3),
-            '客队预期进球': round(away_expected_goals, 3)
+        '全场预期进球': {
+            '主队预期进球': round(home_expected, 3),
+            '客队预期进球': round(away_expected, 3)
         },
-        '计算过程': {
-            '泊松分布胜率': round(poisson_result['win_probability'], 4),
-            '泊松分布平率': round(poisson_result['draw_probability'], 4),
-            '泊松分布负率': round(poisson_result['loss_probability'], 4),
+        '半场预期进球': {
+            '主队预期进球': round(home_half_expected, 3),
+            '客队预期进球': round(away_half_expected, 3)
+        },
+        '全场计算过程': {
+            '泊松分布胜率': round(full_poisson['win_probability'], 4),
+            '泊松分布平率': round(full_poisson['draw_probability'], 4),
+            '泊松分布负率': round(full_poisson['loss_probability'], 4),
             '状态矩阵概率': {
                 '主队胜': round(state_based_probs[0], 4),
                 '平': round(state_based_probs[1], 4),
                 '客队胜': round(state_based_probs[2], 4)
             },
-            '权重分配': {
-                '泊松分布权重': poisson_weight,
-                '状态矩阵权重': state_weight
-            },
-            '半场效率调整因子': {
-                '主队': round(home_adjustment, 3),
-                '客队': round(away_adjustment, 3)
-            }
+            '权重分配': {'泊松分布权重': POISSON_WEIGHT, '状态矩阵权重': STATE_WEIGHT},
+            '平局提升': round(full_draw_boost, 4),
+            '半场效率调整因子': {'主队': round(home_adj, 3), '客队': round(away_adj, 3)}
         },
-        '最终预测概率': {
-            f'{home_team}胜': round(final_home_win, 4),
-            '平': round(final_draw, 4),
-            f'{away_team}胜': round(final_away_win, 4)
+        '半场计算过程': {
+            '泊松分布胜率': round(half_poisson['win_probability'], 4),
+            '泊松分布平率': round(half_poisson['draw_probability'], 4),
+            '泊松分布负率': round(half_poisson['loss_probability'], 4),
+            '平局提升': round(half_draw_boost, 4)
+        },
+        '全场预测概率': {
+            f'{home_team}胜': round(full_home_win, 4),
+            '平': round(full_draw, 4),
+            f'{away_team}胜': round(full_away_win, 4)
+        },
+        '半场预测概率': {
+            f'{home_team}胜': round(half_home_win, 4),
+            '平': round(half_draw, 4),
+            f'{away_team}胜': round(half_away_win, 4)
+        },
+        '平均预测概率': {
+            f'{home_team}胜': round(avg_home_win, 4),
+            '平': round(avg_draw, 4),
+            f'{away_team}胜': round(avg_away_win, 4)
         }
     }
-    
-    return detailed_result
+
+    return {
+        'has_data': True,
+        '全场预测概率': {
+            '胜': round(full_home_win, 4),
+            '平': round(full_draw, 4),
+            '负': round(full_away_win, 4)
+        },
+        '半场预测概率': {
+            '胜': round(half_home_win, 4),
+            '平': round(half_draw, 4),
+            '负': round(half_away_win, 4)
+        },
+        '平均预测概率': {
+            '胜': round(avg_home_win, 4),
+            '平': round(avg_draw, 4),
+            '负': round(avg_away_win, 4)
+        },
+        '预测详细数据': detailed_result
+    }
 
 def process_all_matches(data):
     """
@@ -994,34 +1066,49 @@ def process_all_matches(data):
         print(f"  找到 {len(common_data)} 个共同对手")
         
         # 计算最终概率
-        detailed_result = calculate_final_probabilities(
+        result = calculate_final_probabilities(
             home_team, away_team, home_matches, away_matches, common_data
         )
-        
-        # 格式化输出
-        final_probs = detailed_result['最终预测概率']
-        print(f"  预测概率:")
-        print(f"    {home_team}胜: {final_probs[f'{home_team}胜']:.2%}")
-        print(f"    平: {final_probs['平']:.2%}")
-        print(f"    {away_team}胜: {final_probs[f'{away_team}胜']:.2%}")
-        
-        match_result = {
-            '场次': match_info.get('场次'),
-            '联赛': match_info.get('联赛'),
-            '主队': home_team,
-            '主队排名': match_info.get('主队排名'),
-            '客队': away_team,
-            '客队排名': match_info.get('客队排名'),
-            '比赛时间': match_info.get('比赛时间'),
-            '历史交锋记录数': len(home_matches) + len(away_matches),
-            '共同对手数': len(common_data),
-            '预测概率': {
-                f'{home_team}胜': f"{final_probs[f'{home_team}胜']:.2%}",
-                '平': f"{final_probs['平']:.2%}",
-                f'{away_team}胜': f"{final_probs[f'{away_team}胜']:.2%}"
-            },
-            '预测详细数据': detailed_result
-        }
+
+        if not result.get('has_data', False):
+            match_result = {
+                '场次': match_info.get('场次'),
+                '联赛': match_info.get('联赛'),
+                '主队': home_team,
+                '主队排名': match_info.get('主队排名'),
+                '客队': away_team,
+                '客队排名': match_info.get('客队排名'),
+                '比赛时间': match_info.get('比赛时间'),
+                '预测概率': {'胜': 0.3333, '平': 0.3333, '负': 0.3333},
+                '半场预测概率': {'胜': 0.3333, '平': 0.3333, '负': 0.3333},
+                '平均预测概率': {'胜': 0.3333, '平': 0.3333, '负': 0.3333},
+                '预测方法': '默认平均分布'
+            }
+        else:
+            fp = result['全场预测概率']
+            hp = result['半场预测概率']
+            ap = result['平均预测概率']
+            match_result = {
+                '场次': match_info.get('场次'),
+                '联赛': match_info.get('联赛'),
+                '主队': home_team,
+                '主队排名': match_info.get('主队排名'),
+                '客队': away_team,
+                '客队排名': match_info.get('客队排名'),
+                '比赛时间': match_info.get('比赛时间'),
+                '历史交锋记录数': len(home_matches) + len(away_matches),
+                '共同对手数': len(common_data),
+                '预测概率': {
+                    f'{home_team}胜': f"{fp['胜']:.2%}",
+                    '平': f"{fp['平']:.2%}",
+                    f'{away_team}胜': f"{fp['负']:.2%}"
+                },
+                '全场预测概率': fp,
+                '半场预测概率': hp,
+                '平均预测概率': ap,
+                '预测方法': '数据驱动+泊松分布+状态矩阵+半场泊松',
+                '预测详细数据': result.get('预测详细数据', {})
+            }
         
         results.append(match_result)
     
