@@ -55,6 +55,36 @@ def calculate_win_draw_lose(lambda_home, lambda_away, max_goals=7):
                 away_win += p
     return home_win, draw, away_win
 
+def calculate_win_draw_lose_dc(lambda_home, lambda_away, rho=-0.10, max_goals=7):
+    home_win = 0.0
+    draw = 0.0
+    away_win = 0.0
+    for i in range(max_goals + 1):
+        p_home = poisson_prob(lambda_home, i)
+        for j in range(max_goals + 1):
+            p = p_home * poisson_prob(lambda_away, j)
+            if i == 0 and j == 0:
+                p *= (1 - rho * lambda_home * lambda_away)
+            elif i == 1 and j == 0:
+                p *= (1 + rho * lambda_away)
+            elif i == 0 and j == 1:
+                p *= (1 + rho * lambda_home)
+            elif i == 1 and j == 1:
+                p *= (1 - rho)
+            p = max(0, p)
+            if i > j:
+                home_win += p
+            elif i == j:
+                draw += p
+            else:
+                away_win += p
+    total = home_win + draw + away_win
+    if total > 0:
+        home_win /= total
+        draw /= total
+        away_win /= total
+    return home_win, draw, away_win
+
 def parse_date(date_str):
     if not date_str:
         return None
@@ -67,7 +97,7 @@ def parse_date(date_str):
 def time_decay_weight(match_date_str, current_date, half_life_days=180):
     match_date = parse_date(match_date_str)
     if match_date is None:
-        return 0.1
+        return 0.3
     if isinstance(current_date, str):
         current_dt = parse_date(current_date)
         if current_dt is None:
@@ -78,8 +108,7 @@ def time_decay_weight(match_date_str, current_date, half_life_days=180):
     if days_diff < 0:
         days_diff = 0
     
-    tier = days_diff // 75
-    weight = 1.0 - tier * 0.1
+    weight = math.exp(-days_diff * math.log(2) / half_life_days)
     return max(weight, 0.1)
 
 def bayesian_blend(estimate, prior, sample_count, confidence=0.95):
@@ -181,10 +210,11 @@ def backtest_predictions(historical_results, predictions):
     }
 
 def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
-    HOME_ADVANTAGE = 1.10
-    DEFAULT_LAMBDA = 1.3
+    HOME_ADVANTAGE = 1.15
+    DEFAULT_LAMBDA = 1.35
     MIN_SAMPLE = 3
-    DRAW_BOOST_MAX = 0.15
+    DRAW_BOOST_MAX = 0.21
+    LEAGUE_AVG_GOALS = 1.35
 
     home_scored_w = 0.0
     away_scored_w = 0.0
@@ -209,6 +239,9 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
     home_when_away_half_scored_w = 0.0
     home_when_away_half_conceded_w = 0.0
     home_when_away_half_weight = 0.0
+
+    home_goals_list = []
+    away_goals_list = []
 
     for match in h2h_matches:
         match_home = match.get('homesxname', '')
@@ -237,12 +270,15 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
         w = time_decay_weight(match_date, current_date)
         is_cup = match.get('iscup', 0)
         if is_cup == 1:
-            w *= 0.8
+            w *= 0.85
 
         home_scored_w += our_home_scored * w
         away_scored_w += our_home_conceded * w
         weight_total += w
         match_count += 1
+
+        home_goals_list.append(our_home_scored)
+        away_goals_list.append(our_home_conceded)
 
         home_half_scored_w += our_home_half_scored * w
         home_half_conceded_w += our_home_half_conceded * w
@@ -295,30 +331,32 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
     home_away_defense = home_when_away_conceded_w / home_when_away_weight if home_when_away_weight > 0 else away_avg
 
     if home_when_home_weight > 0 and home_when_away_weight > 0:
-        home_attack = home_home_attack * 0.7 + home_away_attack * 0.3
-        home_defense = home_home_defense * 0.7 + home_away_defense * 0.3
-        away_attack = home_home_defense * 0.7 + home_away_defense * 0.3
-        away_defense = home_home_attack * 0.7 + home_away_attack * 0.3
+        home_weight_ratio = home_when_home_weight / (home_when_home_weight + home_when_away_weight)
+        home_attack = home_home_attack * home_weight_ratio + home_away_attack * (1 - home_weight_ratio)
+        home_defense = home_home_defense * home_weight_ratio + home_away_defense * (1 - home_weight_ratio)
+        away_attack = home_home_defense * home_weight_ratio + home_away_defense * (1 - home_weight_ratio)
+        away_defense = home_home_attack * home_weight_ratio + home_away_attack * (1 - home_weight_ratio)
     else:
         home_attack = home_avg
         home_defense = away_avg
         away_attack = away_avg
         away_defense = home_avg
 
-    lambda_home = (home_attack + away_defense) / 2.0 * HOME_ADVANTAGE
-    lambda_away = (away_attack + home_defense) / 2.0
+    home_attack_rel = home_attack / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    home_defense_rel = home_defense / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    away_attack_rel = away_attack / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    away_defense_rel = away_defense / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+
+    lambda_home = home_attack_rel * away_defense_rel * LEAGUE_AVG_GOALS * HOME_ADVANTAGE
+    lambda_away = away_attack_rel * home_defense_rel * LEAGUE_AVG_GOALS
 
     if match_count < MIN_SAMPLE:
-        lambda_home = bayesian_blend(
-            lambda_home,
-            DEFAULT_LAMBDA * HOME_ADVANTAGE,
-            match_count
-        )
-        lambda_away = bayesian_blend(
-            lambda_away,
-            DEFAULT_LAMBDA,
-            match_count
-        )
+        shrinkage = match_count / (match_count + 5)
+        lambda_home = lambda_home * shrinkage + DEFAULT_LAMBDA * HOME_ADVANTAGE * (1 - shrinkage)
+        lambda_away = lambda_away * shrinkage + DEFAULT_LAMBDA * (1 - shrinkage)
+
+    lambda_home = max(0.3, min(lambda_home, 3.5))
+    lambda_away = max(0.3, min(lambda_away, 3.5))
 
     home_win, draw, away_win = calculate_win_draw_lose(lambda_home, lambda_away)
 
@@ -342,30 +380,33 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
     home_away_half_defense = home_when_away_half_conceded_w / home_when_away_half_weight if home_when_away_half_weight > 0 else away_half_avg
 
     if home_when_home_half_weight > 0 and home_when_away_half_weight > 0:
-        home_half_attack = home_home_half_attack * 0.7 + home_away_half_attack * 0.3
-        home_half_defense = home_home_half_defense * 0.7 + home_away_half_defense * 0.3
-        away_half_attack = home_home_half_defense * 0.7 + home_away_half_defense * 0.3
-        away_half_defense = home_home_half_attack * 0.7 + home_away_half_attack * 0.3
+        half_weight_ratio = home_when_home_half_weight / (home_when_home_half_weight + home_when_away_half_weight)
+        home_half_attack = home_home_half_attack * half_weight_ratio + home_away_half_attack * (1 - half_weight_ratio)
+        home_half_defense = home_home_half_defense * half_weight_ratio + home_away_half_defense * (1 - half_weight_ratio)
+        away_half_attack = home_home_half_defense * half_weight_ratio + home_away_half_defense * (1 - half_weight_ratio)
+        away_half_defense = home_home_half_attack * half_weight_ratio + home_away_half_attack * (1 - half_weight_ratio)
     else:
         home_half_attack = home_half_avg
         home_half_defense = away_half_avg
         away_half_attack = away_half_avg
         away_half_defense = home_half_avg
 
-    lambda_home_half = (home_half_attack + away_half_defense) / 2.0 * HOME_ADVANTAGE
-    lambda_away_half = (away_half_attack + home_half_defense) / 2.0
+    LEAGUE_AVG_HALF = LEAGUE_AVG_GOALS * 0.45
+    home_half_attack_rel = home_half_attack / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    home_half_defense_rel = home_half_defense / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    away_half_attack_rel = away_half_attack / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    away_half_defense_rel = away_half_defense / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+
+    lambda_home_half = home_half_attack_rel * away_half_defense_rel * LEAGUE_AVG_HALF * HOME_ADVANTAGE
+    lambda_away_half = away_half_attack_rel * home_half_defense_rel * LEAGUE_AVG_HALF
 
     if match_count < MIN_SAMPLE:
-        lambda_home_half = bayesian_blend(
-            lambda_home_half,
-            DEFAULT_LAMBDA * 0.45 * HOME_ADVANTAGE,
-            match_count
-        )
-        lambda_away_half = bayesian_blend(
-            lambda_away_half,
-            DEFAULT_LAMBDA * 0.45,
-            match_count
-        )
+        half_shrinkage = match_count / (match_count + 5)
+        lambda_home_half = lambda_home_half * half_shrinkage + DEFAULT_LAMBDA * 0.45 * HOME_ADVANTAGE * (1 - half_shrinkage)
+        lambda_away_half = lambda_away_half * half_shrinkage + DEFAULT_LAMBDA * 0.45 * (1 - half_shrinkage)
+
+    lambda_home_half = max(0.1, min(lambda_home_half, 2.0))
+    lambda_away_half = max(0.1, min(lambda_away_half, 2.0))
 
     half_home_win, half_draw, half_away_win = calculate_win_draw_lose(lambda_home_half, lambda_away_half)
 
@@ -510,12 +551,14 @@ def process_history_data(input_file_path, output_file_path):
                 results.append(match_result)
                 continue
 
-            lambda_home = h2h_result['lambda_home'] * home_form * home_fatigue
-            lambda_away = h2h_result['lambda_away'] * away_form * away_fatigue
+            form_fatigue_home = 1.0 + (home_form - 1.0) * 0.3 + (home_fatigue - 1.0) * 0.2
+            form_fatigue_away = 1.0 + (away_form - 1.0) * 0.3 + (away_fatigue - 1.0) * 0.2
+            lambda_home = h2h_result['lambda_home'] * form_fatigue_home
+            lambda_away = h2h_result['lambda_away'] * form_fatigue_away
 
             home_win, draw, away_win = calculate_win_draw_lose(lambda_home, lambda_away)
 
-            DRAW_BOOST_MAX = 0.15
+            DRAW_BOOST_MAX = 0.21
             max_lambda = max(lambda_home, lambda_away, 0.01)
             closeness = 1 - abs(lambda_home - lambda_away) / max_lambda
             draw_boost = closeness * DRAW_BOOST_MAX
@@ -527,8 +570,8 @@ def process_history_data(input_file_path, output_file_path):
                 home_win -= home_transfer
                 away_win -= away_transfer
 
-            lambda_home_half = h2h_result['半场lambda_home'] * home_form * home_fatigue
-            lambda_away_half = h2h_result['半场lambda_away'] * away_form * away_fatigue
+            lambda_home_half = h2h_result['半场lambda_home'] * form_fatigue_home
+            lambda_away_half = h2h_result['半场lambda_away'] * form_fatigue_away
 
             half_home_win, half_draw, half_away_win = calculate_win_draw_lose(lambda_home_half, lambda_away_half)
 
@@ -616,7 +659,7 @@ def process_history_data(input_file_path, output_file_path):
                         '客队疲劳系数': round(away_fatigue, 3)
                     },
                     '泊松推理': {
-                        '主场优势系数': 1.10,
+                        '主场优势系数': 1.15,
                         '实力接近度': round(closeness, 4),
                         '平局概率提升': round(draw_boost, 4),
                         'H2H主队预期进球': h2h_result['lambda_home'],

@@ -64,6 +64,36 @@ def calculate_win_draw_lose(lambda_home, lambda_away, max_goals=7):
                 away_win += p
     return home_win, draw, away_win
 
+def calculate_win_draw_lose_dc(lambda_home, lambda_away, rho=-0.10, max_goals=7):
+    home_win = 0.0
+    draw = 0.0
+    away_win = 0.0
+    for i in range(max_goals + 1):
+        p_home = poisson_prob(lambda_home, i)
+        for j in range(max_goals + 1):
+            p = p_home * poisson_prob(lambda_away, j)
+            if i == 0 and j == 0:
+                p *= (1 - rho * lambda_home * lambda_away)
+            elif i == 1 and j == 0:
+                p *= (1 + rho * lambda_away)
+            elif i == 0 and j == 1:
+                p *= (1 + rho * lambda_home)
+            elif i == 1 and j == 1:
+                p *= (1 - rho)
+            p = max(0, p)
+            if i > j:
+                home_win += p
+            elif i == j:
+                draw += p
+            else:
+                away_win += p
+    total = home_win + draw + away_win
+    if total > 0:
+        home_win /= total
+        draw /= total
+        away_win /= total
+    return home_win, draw, away_win
+
 def parse_date(date_str):
     if not date_str:
         return None
@@ -76,7 +106,7 @@ def parse_date(date_str):
 def time_decay_weight(match_date_str, current_date, half_life_days=180):
     match_date = parse_date(match_date_str)
     if match_date is None:
-        return 0.1
+        return 0.3
     if isinstance(current_date, str):
         current_dt = parse_date(current_date)
         if current_dt is None:
@@ -87,8 +117,7 @@ def time_decay_weight(match_date_str, current_date, half_life_days=180):
     if days_diff < 0:
         days_diff = 0
     
-    tier = days_diff // 75
-    weight = 1.0 - tier * 0.1
+    weight = math.exp(-days_diff * math.log(2) / half_life_days)
     return max(weight, 0.1)
 
 def extract_team_match_stats(match, team_name):
@@ -106,7 +135,11 @@ def extract_team_match_stats(match, team_name):
 
 def calculate_poisson_from_common_opponents(common_data, home_team, away_team, current_date):
     HOME_ADVANTAGE = 1.10
-    DIRECT_MATCH_WEIGHT_MULT = 2.0
+    DIRECT_MATCH_WEIGHT_MULT = 1.8
+    DRAW_BOOST_MAX = 0.21
+    LEAGUE_AVG_GOALS = 1.35
+    DEFAULT_LAMBDA = 1.35
+    MULTIPLICATIVE_POWER = 0.5
 
     home_scored_w = 0.0
     home_conceded_w = 0.0
@@ -122,6 +155,20 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
     home_half_conceded_w = 0.0
     away_half_scored_w = 0.0
     away_half_conceded_w = 0.0
+
+    home_home_scored_w = 0.0
+    home_home_conceded_w = 0.0
+    home_home_weight = 0.0
+    home_away_scored_w = 0.0
+    home_away_conceded_w = 0.0
+    home_away_weight = 0.0
+
+    away_home_scored_w = 0.0
+    away_home_conceded_w = 0.0
+    away_home_weight = 0.0
+    away_away_scored_w = 0.0
+    away_away_conceded_w = 0.0
+    away_away_weight = 0.0
 
     direct_match_count = 0
     opponent_details = []
@@ -144,6 +191,9 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
                 continue
             match_date = match.get('matchdate', '')
             w = time_decay_weight(match_date, current_date)
+            is_cup = match.get('iscup', 0)
+            if is_cup == 1:
+                w *= 0.85
             if is_direct:
                 w *= DIRECT_MATCH_WEIGHT_MULT
                 direct_match_count += 1
@@ -154,6 +204,14 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
             if half_scored is not None:
                 home_half_scored_w += half_scored * w
                 home_half_conceded_w += half_conceded * w
+            if is_home:
+                home_home_scored_w += scored * w
+                home_home_conceded_w += conceded * w
+                home_home_weight += w
+            else:
+                home_away_scored_w += scored * w
+                home_away_conceded_w += conceded * w
+                home_away_weight += w
 
         for match in away_vs_opp:
             scored, conceded, is_home, half_scored, half_conceded = extract_team_match_stats(match, away_team)
@@ -161,6 +219,9 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
                 continue
             match_date = match.get('matchdate', '')
             w = time_decay_weight(match_date, current_date)
+            is_cup = match.get('iscup', 0)
+            if is_cup == 1:
+                w *= 0.85
             if is_direct:
                 w *= DIRECT_MATCH_WEIGHT_MULT
             opp_a_scored += scored * w
@@ -170,6 +231,14 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
             if half_scored is not None:
                 away_half_scored_w += half_scored * w
                 away_half_conceded_w += half_conceded * w
+            if is_home:
+                away_home_scored_w += scored * w
+                away_home_conceded_w += conceded * w
+                away_home_weight += w
+            else:
+                away_away_scored_w += scored * w
+                away_away_conceded_w += conceded * w
+                away_away_weight += w
 
         home_scored_w += opp_h_scored
         home_conceded_w += opp_h_conceded
@@ -194,12 +263,44 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
     away_attack = away_scored_w / away_weight_total if away_weight_total > 0 else 1.0
     away_defense = away_conceded_w / away_weight_total if away_weight_total > 0 else 1.0
 
-    lambda_home = (home_attack + away_defense) / 2.0 * HOME_ADVANTAGE
-    lambda_away = (away_attack + home_defense) / 2.0
+    home_home_attack = home_home_scored_w / home_home_weight if home_home_weight > 0 else home_attack
+    home_home_defense = home_home_conceded_w / home_home_weight if home_home_weight > 0 else home_defense
+    home_away_attack = home_away_scored_w / home_away_weight if home_away_weight > 0 else home_attack
+    home_away_defense = home_away_conceded_w / home_away_weight if home_away_weight > 0 else home_defense
+
+    away_home_attack = away_home_scored_w / away_home_weight if away_home_weight > 0 else away_attack
+    away_home_defense = away_home_conceded_w / away_home_weight if away_home_weight > 0 else away_defense
+    away_away_attack = away_away_scored_w / away_away_weight if away_away_weight > 0 else away_attack
+    away_away_defense = away_away_conceded_w / away_away_weight if away_away_weight > 0 else away_defense
+
+    home_attack_for_lambda = home_home_attack * 0.6 + home_away_attack * 0.4
+    home_defense_for_lambda = home_home_defense * 0.6 + home_away_defense * 0.4
+    away_attack_for_lambda = away_away_attack * 0.6 + away_home_attack * 0.4
+    away_defense_for_lambda = away_away_defense * 0.6 + away_home_defense * 0.4
+
+    home_attack_rel = home_attack_for_lambda / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    home_defense_rel = home_defense_for_lambda / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    away_attack_rel = away_attack_for_lambda / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    away_defense_rel = away_defense_for_lambda / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+
+    home_factor = (home_attack_rel * away_defense_rel) ** MULTIPLICATIVE_POWER
+    away_factor = (away_attack_rel * home_defense_rel) ** MULTIPLICATIVE_POWER
+
+    lambda_home = home_factor * LEAGUE_AVG_GOALS * HOME_ADVANTAGE
+    lambda_away = away_factor * LEAGUE_AVG_GOALS
+
+    MIN_SAMPLE = 5
+    if home_match_count < MIN_SAMPLE or away_match_count < MIN_SAMPLE:
+        total_matches = home_match_count + away_match_count
+        shrinkage = total_matches / (total_matches + 8)
+        lambda_home = lambda_home * shrinkage + DEFAULT_LAMBDA * HOME_ADVANTAGE * (1 - shrinkage)
+        lambda_away = lambda_away * shrinkage + DEFAULT_LAMBDA * (1 - shrinkage)
+
+    lambda_home = max(0.3, min(lambda_home, 3.5))
+    lambda_away = max(0.3, min(lambda_away, 3.5))
 
     home_win_prob, draw_prob, away_win_prob = calculate_win_draw_lose(lambda_home, lambda_away)
 
-    DRAW_BOOST_MAX = 0.15
     max_lambda = max(lambda_home, lambda_away, 0.01)
     closeness = 1 - abs(lambda_home - lambda_away) / max_lambda
     draw_boost = closeness * DRAW_BOOST_MAX
@@ -211,13 +312,31 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
         home_win_prob -= home_transfer
         away_win_prob -= away_transfer
 
+    LEAGUE_AVG_HALF = LEAGUE_AVG_GOALS * 0.45
     home_half_attack = home_half_scored_w / home_weight_total if home_weight_total > 0 else home_attack * 0.45
     home_half_defense = home_half_conceded_w / home_weight_total if home_weight_total > 0 else home_defense * 0.45
     away_half_attack = away_half_scored_w / away_weight_total if away_weight_total > 0 else away_attack * 0.45
     away_half_defense = away_half_conceded_w / away_weight_total if away_weight_total > 0 else away_defense * 0.45
 
-    lambda_home_half = (home_half_attack + away_half_defense) / 2.0 * HOME_ADVANTAGE
-    lambda_away_half = (away_half_attack + home_half_defense) / 2.0
+    home_half_attack_rel = home_half_attack / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    home_half_defense_rel = home_half_defense / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    away_half_attack_rel = away_half_attack / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    away_half_defense_rel = away_half_defense / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+
+    home_half_factor = (home_half_attack_rel * away_half_defense_rel) ** MULTIPLICATIVE_POWER
+    away_half_factor = (away_half_attack_rel * home_half_defense_rel) ** MULTIPLICATIVE_POWER
+
+    lambda_home_half = home_half_factor * LEAGUE_AVG_HALF * HOME_ADVANTAGE
+    lambda_away_half = away_half_factor * LEAGUE_AVG_HALF
+
+    if home_match_count < MIN_SAMPLE or away_match_count < MIN_SAMPLE:
+        total_matches = home_match_count + away_match_count
+        half_shrinkage = total_matches / (total_matches + 8)
+        lambda_home_half = lambda_home_half * half_shrinkage + DEFAULT_LAMBDA * 0.45 * HOME_ADVANTAGE * (1 - half_shrinkage)
+        lambda_away_half = lambda_away_half * half_shrinkage + DEFAULT_LAMBDA * 0.45 * (1 - half_shrinkage)
+
+    lambda_home_half = max(0.1, min(lambda_home_half, 2.0))
+    lambda_away_half = max(0.1, min(lambda_away_half, 2.0))
 
     half_home_win, half_draw, half_away_win = calculate_win_draw_lose(lambda_home_half, lambda_away_half)
 
@@ -241,7 +360,7 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
     result_map = {'胜': 3, '平': 1, '负': 0}
 
     calculation_details = {
-        '计算方法': '共同对手泊松模型（分段加权+平局提升）',
+        '计算方法': '共同对手泊松模型（乘法模型+主场优势+平局提升）',
         '主队攻击力(场均进球)': round(home_attack, 3),
         '主队防守力(场均失球)': round(home_defense, 3),
         '客队攻击力(场均进球)': round(away_attack, 3),
@@ -445,8 +564,8 @@ def main():
     output_data = {
         '期数': data.get('期数', ''),
         '计算基准日期': current_date,
-        '计算方法': '共同对手泊松模型（时间衰减加权，主场优势修正）',
-        '计算公式': 'lambda_home = (主队攻击力 + 客队防守力) / 2 × 主场优势系数; lambda_away = (客队攻击力 + 主队防守力) / 2; P(胜/平/负) = Σ Poisson(lambda_home,i) × Poisson(lambda_away,j)',
+        '计算方法': '共同对手泊松模型（时间衰减加权，乘法模型，主场优势修正）',
+        '计算公式': 'lambda_home = 主队攻击力相对值 × 客队防守力相对值 × 联赛均值 × 主场优势; lambda_away = 客队攻击力相对值 × 主队防守力相对值 × 联赛均值; P(胜/平/负) = Σ Poisson(lambda_home,i) × Poisson(lambda_away,j)',
         '计算规则': '基于共同对手比赛数据，时间衰减加权计算攻击力和防守力，泊松分布推导胜平负概率',
         '14场比赛结果': results
     }
