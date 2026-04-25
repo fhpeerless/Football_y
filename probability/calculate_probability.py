@@ -453,6 +453,52 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
         '平均负': round(avg_away_win, 4)
     }
 
+def load_odds_for_period(period_str):
+    project_root = get_project_root()
+    bonus_file = os.path.join(project_root, '123', 'bonus_info.json')
+    if not os.path.exists(bonus_file):
+        return {}
+    try:
+        with open(bonus_file, 'r', encoding='utf-8') as f:
+            bonus_data = json.load(f)
+    except:
+        return {}
+    period_clean = period_str.replace('期', '')
+    odds_map = {}
+    for issue_data in bonus_data:
+        if issue_data.get('issue', '') == period_clean:
+            for idx, match in enumerate(issue_data.get('matches', [])):
+                europe_sp = match.get('europeSp', '')
+                parts = europe_sp.strip().split()
+                if len(parts) == 3:
+                    try:
+                        wo, do, lo = float(parts[0]), float(parts[1]), float(parts[2])
+                        rw, rd, ra = 1/wo, 1/do, 1/lo
+                        tt = rw + rd + ra
+                        odds_map[idx] = (rw/tt, rd/tt, ra/tt)
+                    except:
+                        pass
+            break
+    return odds_map
+
+def blend_poisson_with_odds(hw, dr, aw, odds_w, odds_d, odds_a, h2h_match_count, alpha=0.66):
+    if h2h_match_count >= 8:
+        poisson_weight = alpha
+    elif h2h_match_count >= 4:
+        poisson_weight = alpha * 0.8
+    else:
+        poisson_weight = alpha * 0.5
+
+    blended_w = poisson_weight * hw + (1 - poisson_weight) * odds_w
+    blended_d = poisson_weight * dr + (1 - poisson_weight) * odds_d
+    blended_a = poisson_weight * aw + (1 - poisson_weight) * odds_a
+    total = blended_w + blended_d + blended_a
+    if total > 0:
+        blended_w /= total
+        blended_d /= total
+        blended_a /= total
+    return blended_w, blended_d, blended_a
+
 def process_history_data(input_file_path, output_file_path):
     try:
         with open(input_file_path, 'r', encoding='utf-8') as f:
@@ -460,6 +506,8 @@ def process_history_data(input_file_path, output_file_path):
 
         period = data.get('期数', '')
         matches = data.get('14场对战信息', [])
+
+        odds_map = load_odds_for_period(period)
 
         print(f"开始处理 {period} 的 {len(matches)} 场比赛...")
         print("=" * 80)
@@ -570,6 +618,14 @@ def process_history_data(input_file_path, output_file_path):
                 home_win -= home_transfer
                 away_win -= away_transfer
 
+            match_idx = i - 1
+            if match_idx in odds_map:
+                odds_w, odds_d, odds_a = odds_map[match_idx]
+                home_win, draw, away_win = blend_poisson_with_odds(
+                    home_win, draw, away_win, odds_w, odds_d, odds_a,
+                    h2h_result['match_count']
+                )
+
             lambda_home_half = h2h_result['半场lambda_home'] * form_fatigue_home
             lambda_away_half = h2h_result['半场lambda_away'] * form_fatigue_away
 
@@ -585,6 +641,13 @@ def process_history_data(input_file_path, output_file_path):
                 half_draw += half_home_transfer + half_away_transfer
                 half_home_win -= half_home_transfer
                 half_away_win -= half_away_transfer
+
+            if match_idx in odds_map:
+                odds_w, odds_d, odds_a = odds_map[match_idx]
+                half_home_win, half_draw, half_away_win = blend_poisson_with_odds(
+                    half_home_win, half_draw, half_away_win, odds_w, odds_d, odds_a,
+                    h2h_result['match_count'], alpha=0.45
+                )
 
             avg_home_win = (home_win + half_home_win) / 2.0
             avg_draw = (draw + half_draw) / 2.0

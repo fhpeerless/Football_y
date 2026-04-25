@@ -407,12 +407,61 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
         '详细计算数据': calculation_details
     }
 
+def load_odds_for_period(period_str):
+    project_root = get_project_root()
+    bonus_file = os.path.join(project_root, '123', 'bonus_info.json')
+    if not os.path.exists(bonus_file):
+        return {}
+    try:
+        with open(bonus_file, 'r', encoding='utf-8') as f:
+            bonus_data = json.load(f)
+    except:
+        return {}
+    period_clean = period_str.replace('期', '')
+    odds_map = {}
+    for issue_data in bonus_data:
+        if issue_data.get('issue', '') == period_clean:
+            for idx, match in enumerate(issue_data.get('matches', [])):
+                europe_sp = match.get('europeSp', '')
+                parts = europe_sp.strip().split()
+                if len(parts) == 3:
+                    try:
+                        wo, do, lo = float(parts[0]), float(parts[1]), float(parts[2])
+                        rw, rd, ra = 1/wo, 1/do, 1/lo
+                        tt = rw + rd + ra
+                        odds_map[idx] = (rw/tt, rd/tt, ra/tt)
+                    except:
+                        pass
+            break
+    return odds_map
+
+def blend_poisson_with_odds(hw, dr, aw, odds_w, odds_d, odds_a, match_count, alpha=0.45):
+    if match_count >= 10:
+        poisson_weight = alpha
+    elif match_count >= 5:
+        poisson_weight = alpha * 0.7
+    else:
+        poisson_weight = alpha * 0.4
+
+    blended_w = poisson_weight * hw + (1 - poisson_weight) * odds_w
+    blended_d = poisson_weight * dr + (1 - poisson_weight) * odds_d
+    blended_a = poisson_weight * aw + (1 - poisson_weight) * odds_a
+    total = blended_w + blended_d + blended_a
+    if total > 0:
+        blended_w /= total
+        blended_d /= total
+        blended_a /= total
+    return blended_w, blended_d, blended_a
+
 def process_extracted_data(data, current_date):
     results = []
     matches_data = data.get('14场比赛共同对手比赛数据', {})
     if not matches_data:
         print("错误: 未找到比赛数据")
         return results
+
+    period_str = data.get('期数', '')
+    odds_map = load_odds_for_period(period_str)
 
     print(f"开始处理 {len(matches_data)} 场比赛...")
 
@@ -476,6 +525,36 @@ def process_extracted_data(data, current_date):
         poisson_result = calculate_poisson_from_common_opponents(
             common_data, home_team, away_team, current_date
         )
+
+        match_idx = int(match_num) - 1 if isinstance(match_num, (int, str)) and str(match_num).isdigit() else -1
+        if match_idx in odds_map and poisson_result.get('胜概率', 0) > 0:
+            odds_w, odds_d, odds_a = odds_map[match_idx]
+            detail = poisson_result.get('详细计算数据', {})
+            hc = detail.get('主队比赛样本数', 0)
+            ac = detail.get('客队比赛样本数', 0)
+            total_matches = hc + ac
+            blended_w, blended_d, blended_a = blend_poisson_with_odds(
+                poisson_result['胜概率'], poisson_result['平概率'], poisson_result['负概率'],
+                odds_w, odds_d, odds_a, total_matches
+            )
+            poisson_result['胜概率'] = blended_w
+            poisson_result['平概率'] = blended_d
+            poisson_result['负概率'] = blended_a
+            result_map = {'胜': 3, '平': 1, '负': 0}
+            max_result = max(['胜', '平', '负'], key=lambda x: poisson_result[f'{x}概率'])
+            poisson_result['预测结果'] = result_map[max_result]
+
+            half_blended_w, half_blended_d, half_blended_a = blend_poisson_with_odds(
+                poisson_result['半场胜概率'], poisson_result['半场平概率'], poisson_result['半场负概率'],
+                odds_w, odds_d, odds_a, total_matches, alpha=0.35
+            )
+            poisson_result['半场胜概率'] = half_blended_w
+            poisson_result['半场平概率'] = half_blended_d
+            poisson_result['半场负概率'] = half_blended_a
+
+            poisson_result['平均胜概率'] = (blended_w + half_blended_w) / 2
+            poisson_result['平均平概率'] = (blended_d + half_blended_d) / 2
+            poisson_result['平均负概率'] = (blended_a + half_blended_a) / 2
 
         print(f"  主队预期进球: {poisson_result['主队预期进球']:.3f}")
         print(f"  客队预期进球: {poisson_result['客队预期进球']:.3f}")
