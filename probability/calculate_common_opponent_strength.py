@@ -136,7 +136,8 @@ def extract_team_match_stats(match, team_name):
 def calculate_poisson_from_common_opponents(common_data, home_team, away_team, current_date):
     HOME_ADVANTAGE = 1.10
     DIRECT_MATCH_WEIGHT_MULT = 1.8
-    DRAW_BOOST_MAX = 0.21
+    DRAW_BOOST_MAX = 0.29
+    HALF_DRAW_BOOST_MAX = 0.20
     LEAGUE_AVG_GOALS = 1.35
     DEFAULT_LAMBDA = 1.35
     MULTIPLICATIVE_POWER = 0.5
@@ -342,7 +343,7 @@ def calculate_poisson_from_common_opponents(common_data, home_team, away_team, c
 
     half_max_lambda = max(lambda_home_half, lambda_away_half, 0.01)
     half_closeness = 1 - abs(lambda_home_half - lambda_away_half) / half_max_lambda
-    half_draw_boost = half_closeness * DRAW_BOOST_MAX
+    half_draw_boost = half_closeness * HALF_DRAW_BOOST_MAX
 
     if half_home_win + half_away_win > 0:
         half_home_transfer = half_home_win * half_draw_boost

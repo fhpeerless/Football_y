@@ -213,7 +213,8 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
     HOME_ADVANTAGE = 1.15
     DEFAULT_LAMBDA = 1.35
     MIN_SAMPLE = 3
-    DRAW_BOOST_MAX = 0.21
+    DRAW_BOOST_MAX = 0.29
+    HALF_DRAW_BOOST_MAX = 0.20
     LEAGUE_AVG_GOALS = 1.35
 
     home_scored_w = 0.0
@@ -412,7 +413,7 @@ def calculate_h2h_poisson(h2h_matches, home_team, away_team, current_date):
 
     half_max_lambda = max(lambda_home_half, lambda_away_half, 0.01)
     half_closeness = 1 - abs(lambda_home_half - lambda_away_half) / half_max_lambda
-    half_draw_boost = half_closeness * DRAW_BOOST_MAX
+    half_draw_boost = half_closeness * HALF_DRAW_BOOST_MAX
 
     if half_home_win + half_away_win > 0:
         half_home_transfer = half_home_win * half_draw_boost
@@ -481,7 +482,7 @@ def load_odds_for_period(period_str):
             break
     return odds_map
 
-def blend_poisson_with_odds(hw, dr, aw, odds_w, odds_d, odds_a, h2h_match_count, alpha=0.66):
+def blend_poisson_with_odds(hw, dr, aw, odds_w, odds_d, odds_a, h2h_match_count, alpha=0.45):
     if h2h_match_count >= 8:
         poisson_weight = alpha
     elif h2h_match_count >= 4:
@@ -606,7 +607,8 @@ def process_history_data(input_file_path, output_file_path):
 
             home_win, draw, away_win = calculate_win_draw_lose(lambda_home, lambda_away)
 
-            DRAW_BOOST_MAX = 0.21
+            DRAW_BOOST_MAX = 0.29
+            HALF_DRAW_BOOST_MAX = 0.20
             max_lambda = max(lambda_home, lambda_away, 0.01)
             closeness = 1 - abs(lambda_home - lambda_away) / max_lambda
             draw_boost = closeness * DRAW_BOOST_MAX
@@ -633,7 +635,7 @@ def process_history_data(input_file_path, output_file_path):
 
             half_max_lambda = max(lambda_home_half, lambda_away_half, 0.01)
             half_closeness = 1 - abs(lambda_home_half - lambda_away_half) / half_max_lambda
-            half_draw_boost = half_closeness * DRAW_BOOST_MAX
+            half_draw_boost = half_closeness * HALF_DRAW_BOOST_MAX
 
             if half_home_win + half_away_win > 0:
                 half_home_transfer = half_home_win * half_draw_boost
@@ -646,7 +648,7 @@ def process_history_data(input_file_path, output_file_path):
                 odds_w, odds_d, odds_a = odds_map[match_idx]
                 half_home_win, half_draw, half_away_win = blend_poisson_with_odds(
                     half_home_win, half_draw, half_away_win, odds_w, odds_d, odds_a,
-                    h2h_result['match_count'], alpha=0.45
+                    h2h_result['match_count'], alpha=0.35
                 )
 
             avg_home_win = (home_win + half_home_win) / 2.0
