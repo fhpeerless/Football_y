@@ -37,41 +37,6 @@
             font-size: 28px;
         }
 
-        .hint-box {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
-        .hint-label {
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .hint-letters {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .letter {
-            background: linear-gradient(145deg, #e94560, #ff6b6b);
-            color: #fff;
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 32px;
-            font-weight: bold;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
-        }
-
         .input-group {
             margin-bottom: 25px;
         }
@@ -109,7 +74,6 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 10px;
         }
 
         .btn-submit {
@@ -120,15 +84,6 @@
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(233, 69, 96, 0.5);
-        }
-
-        .btn-refresh {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-        }
-
-        .btn-refresh:hover {
-            background: rgba(255, 255, 255, 0.3);
         }
 
         .error-msg {
@@ -159,20 +114,13 @@
 <body>
     <div class="container">
         <h1>密码验证</h1>
-        
-        <div class="hint-box">
-            <div class="hint-label">请根据以下字母输入对应密码</div>
-            <div class="hint-letters" id="hintLetters">
-            </div>
-        </div>
 
         <div class="input-group">
-            <label for="password">输入密码</label>
-            <input type="password" id="password" class="password-input" placeholder="请输入数字密码" autocomplete="off">
+            <label for="password">请输入密码</label>
+            <input type="password" id="password" class="password-input" placeholder="请输入密码" autocomplete="off">
         </div>
 
         <button class="btn btn-submit" onclick="verifyPassword()">验证密码</button>
-        <button class="btn btn-refresh" onclick="refreshHint()">刷新提示</button>
 
         <div class="error-msg" id="errorMsg">密码错误，请重新输入！</div>
         <div class="loading" id="loading">加载中...</div>
@@ -180,7 +128,6 @@
 
     <script>
         let config = null;
-        let currentHintLetters = [];
 
         async function loadConfig() {
             try {
@@ -188,7 +135,6 @@
                 const response = await fetch('password_config.json');
                 config = await response.json();
                 document.getElementById('loading').style.display = 'none';
-                generateHint();
             } catch (error) {
                 console.error('加载配置文件失败:', error);
                 document.getElementById('errorMsg').textContent = '加载配置文件失败';
@@ -197,39 +143,17 @@
             }
         }
 
-        function generateHint() {
-            if (!config) return;
-
-            const letters = Object.keys(config.passwordMapping);
-            const passwordLength = config.passwordLength || 4;
-            
-            currentHintLetters = [];
-            for (let i = 0; i < passwordLength; i++) {
-                const randomIndex = Math.floor(Math.random() * letters.length);
-                currentHintLetters.push(letters[randomIndex]);
-            }
-
-            const hintContainer = document.getElementById('hintLetters');
-            hintContainer.innerHTML = '';
-            
-            currentHintLetters.forEach(letter => {
-                const letterDiv = document.createElement('div');
-                letterDiv.className = 'letter';
-                letterDiv.textContent = letter;
-                hintContainer.appendChild(letterDiv);
-            });
-        }
-
-        function getCorrectPassword() {
-            return currentHintLetters.map(letter => config.passwordMapping[letter]).join('');
-        }
-
         function verifyPassword() {
             const inputPassword = document.getElementById('password').value.trim();
-            const correctPassword = getCorrectPassword();
             const errorMsg = document.getElementById('errorMsg');
 
-            if (inputPassword === correctPassword) {
+            if (!config || !config.passwords) {
+                errorMsg.textContent = '配置加载失败';
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            if (config.passwords.includes(inputPassword)) {
                 errorMsg.classList.remove('show');
                 window.location.href = config.redirectUrl || 'fenxi.html';
             } else {
@@ -239,12 +163,6 @@
                     errorMsg.classList.remove('show');
                 }, 2000);
             }
-        }
-
-        function refreshHint() {
-            generateHint();
-            document.getElementById('password').value = '';
-            document.getElementById('errorMsg').classList.remove('show');
         }
 
         document.getElementById('password').addEventListener('keypress', function(e) {
