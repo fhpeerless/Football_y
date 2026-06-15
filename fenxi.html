@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>足球预测概率查看器（Web JSON数据1）</title>
+    <title>瓒崇悆棰勬祴姒傜巼鏌ョ湅鍣紙Web JSON鏁版嵁1锛?/title>
     <style>
         * {
             box-sizing: border-box;
@@ -270,62 +270,59 @@
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-futbol"></i> 足球预测概率合并工具</h1>
-            <p class="subtitle">查看已生成的预测概率合并结果（web.json数据）</p>
+            <h1><i class="fas fa-futbol"></i> 瓒崇悆棰勬祴姒傜巼鍚堝苟宸ュ叿</h1>
+            <p class="subtitle">鏌ョ湅宸茬敓鎴愮殑棰勬祴姒傜巼鍚堝苟缁撴灉锛坵eb.json鏁版嵁锛?/p>
         </header>
         
         <div class="main-content">
             <div class="control-panel">
-                <h2 class="section-title"><i class="fas fa-sliders-h"></i> 控制面板</h2>
+                <h2 class="section-title"><i class="fas fa-sliders-h"></i> 鎺у埗闈㈡澘</h2>
                 
                 <div class="form-group">
-                    <label><i class="fas fa-list-ol"></i> 快速跳转</label>
+                    <label><i class="fas fa-list-ol"></i> 蹇€熻烦杞?/label>
                     <div class="match-buttons">
-                        <button class="match-btn" data-match="1">第1场</button>
-                        <button class="match-btn" data-match="2">第2场</button>
-                        <button class="match-btn" data-match="3">第3场</button>
-                        <button class="match-btn" data-match="4">第4场</button>
-                        <button class="match-btn" data-match="5">第5场</button>
-                        <button class="match-btn" data-match="6">第6场</button>
-                        <button class="match-btn" data-match="7">第7场</button>
-                        <button class="match-btn" data-match="8">第8场</button>
-                        <button class="match-btn" data-match="9">第9场</button>
-                        <button class="match-btn" data-match="10">第10场</button>
-                        <button class="match-btn" data-match="11">第11场</button>
-                        <button class="match-btn" data-match="12">第12场</button>
-                        <button class="match-btn" data-match="13">第13场</button>
-                        <button class="match-btn" data-match="14">第14场</button>
+                        <button class="match-btn" data-match="1">绗?鍦?/button>
+                        <button class="match-btn" data-match="2">绗?鍦?/button>
+                        <button class="match-btn" data-match="3">绗?鍦?/button>
+                        <button class="match-btn" data-match="4">绗?鍦?/button>
+                        <button class="match-btn" data-match="5">绗?鍦?/button>
+                        <button class="match-btn" data-match="6">绗?鍦?/button>
+                        <button class="match-btn" data-match="7">绗?鍦?/button>
+                        <button class="match-btn" data-match="8">绗?鍦?/button>
+                        <button class="match-btn" data-match="9">绗?鍦?/button>
+                        <button class="match-btn" data-match="10">绗?0鍦?/button>
+                        <button class="match-btn" data-match="11">绗?1鍦?/button>
+                        <button class="match-btn" data-match="12">绗?2鍦?/button>
+                        <button class="match-btn" data-match="13">绗?3鍦?/button>
+                        <button class="match-btn" data-match="14">绗?4鍦?/button>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="periodInput"><i class="fas fa-calendar-alt"></i> 当前期数</label>
+                    <label for="periodInput"><i class="fas fa-calendar-alt"></i> 褰撳墠鏈熸暟</label>
                     <div class="file-input-group">
-                        <input type="text" id="periodInput" placeholder="正在获取最新期数..." value="">
+                        <input type="text" id="periodInput" placeholder="姝ｅ湪鑾峰彇鏈€鏂版湡鏁?.." value="">
                         <button id="fetchPeriodBtn" class="secondary">
-                            <i class="fas fa-sync-alt"></i> 获取期数
+                            <i class="fas fa-sync-alt"></i> 鑾峰彇鏈熸暟
                         </button>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label><i class="fas fa-database"></i> 数据文件</label>
+                    <label><i class="fas fa-database"></i> 鏁版嵁鏂囦欢</label>
                     <div class="btn-group" style="margin-top: 10px;">
                         <button id="loadWebDataBtn">
-                            <i class="fas fa-file-import"></i> 加载Web数据
-                        </button>
-                        <button id="loadGlmAnalysisBtn" class="secondary">
-                            <i class="fas fa-brain"></i> 加载GLM分析
+                            <i class="fas fa-file-import"></i> 鍔犺浇Web鏁版嵁
                         </button>
                         <button id="downloadBtn" class="secondary">
-                            <i class="fas fa-download"></i> 号码结果
+                            <i class="fas fa-download"></i> 鍙风爜缁撴灉
                         </button>
                         <button id="commonMatchesBtn" class="secondary">
-                            <i class="fas fa-handshake"></i> 共同对手
+                            <i class="fas fa-handshake"></i> 鍏卞悓瀵规墜
                         </button>
                     </div>
                     <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                        将自动加载 ./result/{期数}期_web.json 文件，或 ./result/{期数}期_glm分析.json 文件
+                        灏嗚嚜鍔ㄥ姞杞?./result/{鏈熸暟}鏈焈web.json 鏂囦欢
                     </p>
                 </div>
                 
@@ -334,55 +331,42 @@
                 </div>
                 
                 <div class="status" id="statusMessage">
-                    <!-- 状态消息将显示在这里 -->
+                    <!-- 鐘舵€佹秷鎭皢鏄剧ず鍦ㄨ繖閲?-->
                 </div>
             </div>
             
             <div class="results-panel">
-                <h2 class="section-title"><i class="fas fa-list-alt"></i> 计算结果</h2>
+                <h2 class="section-title"><i class="fas fa-list-alt"></i> 璁＄畻缁撴灉</h2>
                 
                 <div id="resultsContainer">
                     <p style="text-align: center; opacity: 0.7; padding: 40px;">
-                        请先获取期数，然后点击"加载Web数据"按钮查看预测结果
+                        璇峰厛鑾峰彇鏈熸暟锛岀劧鍚庣偣鍑?鍔犺浇Web鏁版嵁"鎸夐挳鏌ョ湅棰勬祴缁撴灉
                     </p>
                 </div>
                 
-                <div id="glmResultsContainer" style="display: none;">
-                    <h3 class="section-title" style="margin-top: 30px;">
-                        <i class="fas fa-brain"></i> GLM智能分析结果
-                    </h3>
-                    <div id="glmAnalysisContent">
-                        <!-- GLM分析内容将在这里显示 -->
-                    </div>
-                </div>
                 
                 <a href="#" id="downloadLink" class="download-link" style="display: none;">
-                    <i class="fas fa-file-download"></i> 下载合并结果 (JSON)
+                    <i class="fas fa-file-download"></i> 涓嬭浇鍚堝苟缁撴灉 (JSON)
                 </a>
             </div>
         </div>
     </div>
 
     <script>
-        // 全局变量
+        // 鍏ㄥ眬鍙橀噺
         let currentPeriod = '';
         let webData = null;
-        let glmAnalysisData = null;
-        
-        // DOM元素
+        // DOM鍏冪礌
         const periodInput = document.getElementById('periodInput');
         const fetchPeriodBtn = document.getElementById('fetchPeriodBtn');
         const loadWebDataBtn = document.getElementById('loadWebDataBtn');
-        const loadGlmAnalysisBtn = document.getElementById('loadGlmAnalysisBtn');
         const downloadBtn = document.getElementById('downloadBtn');
         const downloadLink = document.getElementById('downloadLink');
         const statusMessage = document.getElementById('statusMessage');
         const progressFill = document.getElementById('progressFill');
         const resultsContainer = document.getElementById('resultsContainer');
-        const glmResultsContainer = document.getElementById('glmResultsContainer');
-        const glmAnalysisContent = document.getElementById('glmAnalysisContent');
         
-        // 显示状态消息
+        // 鏄剧ず鐘舵€佹秷鎭?
         function showStatus(message, type = 'info') {
             statusMessage.textContent = message;
             statusMessage.className = `status ${type}`;
@@ -391,36 +375,36 @@
             }, type === 'error' ? 5000 : 3000);
         }
         
-        // 更新进度条
+        // 鏇存柊杩涘害鏉?
         function updateProgress(percent) {
             progressFill.style.width = `${percent}%`;
         }
         
-        // 获取当前期数
+        // 鑾峰彇褰撳墠鏈熸暟
         async function fetchCurrentPeriod() {
             try {
-                showStatus('正在从present.json获取当前期数...', 'info');
+                showStatus('姝ｅ湪浠巔resent.json鑾峰彇褰撳墠鏈熸暟...', 'info');
                 updateProgress(30);
                 
                 try {
-                    // 添加时间戳防止缓存
+                    // 娣诲姞鏃堕棿鎴抽槻姝㈢紦瀛?
                     const timestamp = Date.now();
                     const url = `./present.json?t=${timestamp}`;
-                    console.log(`正在请求: ${url}`);
+                    console.log(`姝ｅ湪璇锋眰: ${url}`);
                     
                     const response = await fetch(url);
-                    console.log(`响应状态: ${response.status} ${response.statusText}`);
-                    console.log(`响应 URL: ${response.url}`);
+                    console.log(`鍝嶅簲鐘舵€? ${response.status} ${response.statusText}`);
+                    console.log(`鍝嶅簲 URL: ${response.url}`);
                     
                     if (response.ok) {
                         const data = await response.json();
-                        console.log('获取到的数据:', data);
+                        console.log('鑾峰彇鍒扮殑鏁版嵁:', data);
                         
-                        // 验证数据格式
+                        // 楠岃瘉鏁版嵁鏍煎紡
                         if (Array.isArray(data) && data.length > 0) {
-                            // 获取最后一个条目的期数（最新期数）
+                            // 鑾峰彇鏈€鍚庝竴涓潯鐩殑鏈熸暟锛堟渶鏂版湡鏁帮級
                             const lastEntry = data[data.length - 1];
-                            console.log('最后一条记录:', lastEntry);
+                            console.log('鏈€鍚庝竴鏉¤褰?', lastEntry);
                             
                             const period = lastEntry.period || lastEntry.period_number?.toString() || '';
                             
@@ -428,10 +412,10 @@
                                 currentPeriod = period.toString();
                                 periodInput.value = currentPeriod;
                                 updateProgress(100);
-                                showStatus(`成功获取当前期数: ${currentPeriod}期`, 'success');
-                                console.log(`从present.json获取到最新期数: ${period}`);
+                                showStatus(`鎴愬姛鑾峰彇褰撳墠鏈熸暟: ${currentPeriod}鏈焋, 'success');
+                                console.log(`浠巔resent.json鑾峰彇鍒版渶鏂版湡鏁? ${period}`);
                                 
-                                // 获取期数后自动加载web.json数据
+                                // 鑾峰彇鏈熸暟鍚庤嚜鍔ㄥ姞杞絯eb.json鏁版嵁
                                 setTimeout(() => {
                                     loadWebDataBtn.click();
                                 }, 500);
@@ -439,44 +423,44 @@
                                 return currentPeriod;
                             }
                         } else {
-                            console.error('数据格式错误: 不是数组或数组为空');
+                            console.error('鏁版嵁鏍煎紡閿欒: 涓嶆槸鏁扮粍鎴栨暟缁勪负绌?);
                         }
                     } else {
-                        console.error(`HTTP 错误: ${response.status} ${response.statusText}`);
+                        console.error(`HTTP 閿欒: ${response.status} ${response.statusText}`);
                     }
                     
-                    // 获取失败，提示用户手动输入
-                    console.log('无法从present.json获取期数');
-                    periodInput.placeholder = '请手动输入期数';
+                    // 鑾峰彇澶辫触锛屾彁绀虹敤鎴锋墜鍔ㄨ緭鍏?
+                    console.log('鏃犳硶浠巔resent.json鑾峰彇鏈熸暟');
+                    periodInput.placeholder = '璇锋墜鍔ㄨ緭鍏ユ湡鏁?;
                     updateProgress(0);
-                    showStatus('无法获取期数，请手动输入', 'error');
+                    showStatus('鏃犳硶鑾峰彇鏈熸暟锛岃鎵嬪姩杈撳叆', 'error');
                     return null;
                     
                 } catch (fileError) {
-                    console.error('读取present.json文件失败:', fileError);
-                    console.error('错误堆栈:', fileError.stack);
-                    periodInput.placeholder = '请手动输入期数';
+                    console.error('璇诲彇present.json鏂囦欢澶辫触:', fileError);
+                    console.error('閿欒鍫嗘爤:', fileError.stack);
+                    periodInput.placeholder = '璇锋墜鍔ㄨ緭鍏ユ湡鏁?;
                     updateProgress(0);
-                    showStatus(`读取期数文件失败: ${fileError.message}`, 'error');
+                    showStatus(`璇诲彇鏈熸暟鏂囦欢澶辫触: ${fileError.message}`, 'error');
                     return null;
                 }
             } catch (error) {
-                console.error('获取期数错误:', error);
-                periodInput.placeholder = '请手动输入期数';
+                console.error('鑾峰彇鏈熸暟閿欒:', error);
+                periodInput.placeholder = '璇锋墜鍔ㄨ緭鍏ユ湡鏁?;
                 updateProgress(0);
-                showStatus(`获取期数失败: ${error.message}，请手动输入`, 'error');
+                showStatus(`鑾峰彇鏈熸暟澶辫触: ${error.message}锛岃鎵嬪姩杈撳叆`, 'error');
                 return null;
             }
         }
         
 
         
-        // 加载Web JSON数据
+        // 鍔犺浇Web JSON鏁版嵁
         async function loadWebData() {
-            // 从输入框读取当前期数
+            // 浠庤緭鍏ユ璇诲彇褰撳墠鏈熸暟
             const inputPeriod = periodInput.value.trim();
             if (inputPeriod) {
-                // 提取数字部分（例如从"26027期"中提取"26027"）
+                // 鎻愬彇鏁板瓧閮ㄥ垎锛堜緥濡備粠"26027鏈?涓彁鍙?26027"锛?
                 const periodMatch = inputPeriod.match(/\d+/);
                 if (periodMatch) {
                     currentPeriod = periodMatch[0];
@@ -486,55 +470,55 @@
             }
             
             if (!currentPeriod) {
-                showStatus('请先获取或输入期数', 'error');
+                showStatus('璇峰厛鑾峰彇鎴栬緭鍏ユ湡鏁?, 'error');
                 return null;
             }
             
             try {
-                showStatus(`正在加载 ${currentPeriod}期_web.json 文件...`, 'info');
+                showStatus(`姝ｅ湪鍔犺浇 ${currentPeriod}鏈焈web.json 鏂囦欢...`, 'info');
                 updateProgress(40);
                 
                 const timestamp = Date.now();
-                const fileUrl = `./result/${currentPeriod}期_web.json?t=${timestamp}`;
-                console.log(`正在加载: ${fileUrl}`);
+                const fileUrl = `./result/${currentPeriod}鏈焈web.json?t=${timestamp}`;
+                console.log(`姝ｅ湪鍔犺浇: ${fileUrl}`);
                 
                 const response = await fetch(fileUrl);
                 
                 if (!response.ok) {
                     if (response.status === 404) {
-                        throw new Error(`文件不存在: ${fileUrl}，请确保已生成该文件`);
+                        throw new Error(`鏂囦欢涓嶅瓨鍦? ${fileUrl}锛岃纭繚宸茬敓鎴愯鏂囦欢`);
                     } else {
-                        throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                        throw new Error(`HTTP閿欒: ${response.status} ${response.statusText}`);
                     }
                 }
                 
                 const data = await response.json();
                 updateProgress(80);
                 
-                // 验证数据格式
-                if (!data.期数 || !data.计算结果 || !Array.isArray(data.计算结果)) {
-                    throw new Error('web.json文件格式不正确');
+                // 楠岃瘉鏁版嵁鏍煎紡
+                if (!data.鏈熸暟 || !data.璁＄畻缁撴灉 || !Array.isArray(data.璁＄畻缁撴灉)) {
+                    throw new Error('web.json鏂囦欢鏍煎紡涓嶆纭?);
                 }
                 
                 webData = data;
                 updateProgress(100);
-                showStatus(`成功加载 ${data.计算结果.length} 场比赛数据`, 'success');
+                showStatus(`鎴愬姛鍔犺浇 ${data.璁＄畻缁撴灉.length} 鍦烘瘮璧涙暟鎹甡, 'success');
                 
-                // 显示结果
+                // 鏄剧ず缁撴灉
                 displayResults();
                 
-                // 生成下载链接
+                // 鐢熸垚涓嬭浇閾炬帴
                 generateDownloadLink();
                 
                 return webData;
             } catch (error) {
-                console.error('加载Web数据错误:', error);
+                console.error('鍔犺浇Web鏁版嵁閿欒:', error);
                 updateProgress(0);
-                showStatus(`加载失败: ${error.message}`, 'error');
+                showStatus(`鍔犺浇澶辫触: ${error.message}`, 'error');
                 
-                // 如果文件不存在，提示用户
-                if (error.message.includes('文件不存在')) {
-                    showStatus(`请先运行 combine_probability.js 生成 ${currentPeriod}期_web.json 文件`, 'error');
+                // 濡傛灉鏂囦欢涓嶅瓨鍦紝鎻愮ず鐢ㄦ埛
+                if (error.message.includes('鏂囦欢涓嶅瓨鍦?)) {
+                    showStatus(`璇峰厛杩愯 combine_probability.js 鐢熸垚 ${currentPeriod}鏈焈web.json 鏂囦欢`, 'error');
                 }
                 
                 return null;
@@ -545,12 +529,12 @@
         
 
         
-        // 显示计算结果
+        // 鏄剧ず璁＄畻缁撴灉
         function displayResults() {
-            if (!webData || !webData.计算结果 || webData.计算结果.length === 0) {
+            if (!webData || !webData.璁＄畻缁撴灉 || webData.璁＄畻缁撴灉.length === 0) {
                 resultsContainer.innerHTML = `
                     <p style="text-align: center; opacity: 0.7; padding: 40px;">
-                        暂无数据，请先加载Web JSON数据
+                        鏆傛棤鏁版嵁锛岃鍏堝姞杞絎eb JSON鏁版嵁
                     </p>
                 `;
                 return;
@@ -559,65 +543,65 @@
             let html = `
                 <div style="margin-bottom: 30px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #00bcd4;">
                     <h3 style="color: #00bcd4; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-info-circle"></i> 数据信息
+                        <i class="fas fa-info-circle"></i> 鏁版嵁淇℃伅
                     </h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">期数</p>
-                            <p style="font-size: 1.2em; font-weight: 600;">${webData.期数 || '未知'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">鏈熸暟</p>
+                            <p style="font-size: 1.2em; font-weight: 600;">${webData.鏈熸暟 || '鏈煡'}</p>
                         </div>
 
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">生成时间</p>
-                            <p>${webData.生成时间 ? new Date(webData.生成时间).toLocaleString() : '未知'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">鐢熸垚鏃堕棿</p>
+                            <p>${webData.鐢熸垚鏃堕棿 ? new Date(webData.鐢熸垚鏃堕棿).toLocaleString() : '鏈煡'}</p>
                         </div>
 
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">数据来源</p>
-                            <p style="word-break: break-all;">${webData.数据来源 ? `${webData.数据来源.基础预测文件}<br>${webData.数据来源.高级预测文件}` : 'web.json文件'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">鏁版嵁鏉ユ簮</p>
+                            <p style="word-break: break-all;">${webData.鏁版嵁鏉ユ簮 ? `${webData.鏁版嵁鏉ユ簮.鍩虹棰勬祴鏂囦欢}<br>${webData.鏁版嵁鏉ユ簮.楂樼骇棰勬祴鏂囦欢}` : 'web.json鏂囦欢'}</p>
                         </div>
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">加权规则</p>
-                            <p>${webData.加权规则 || '基础预测概率 + 高级预测概率'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">鍔犳潈瑙勫垯</p>
+                            <p>${webData.鍔犳潈瑙勫垯 || '鍩虹棰勬祴姒傜巼 + 楂樼骇棰勬祴姒傜巼'}</p>
                         </div>
                     </div>
                 </div>
                 
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #00bcd4; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-futbol"></i> 比赛预测详情 (${webData.计算结果.length} 场)
+                        <i class="fas fa-futbol"></i> 姣旇禌棰勬祴璇︽儏 (${webData.璁＄畻缁撴灉.length} 鍦?
                     </h3>
             `;
             
-            // 显示每场比赛的详细卡片
-            webData.计算结果.forEach((match, index) => {
-                const winPercent = (match.合并概率.胜 * 100).toFixed(1);
-                const drawPercent = (match.合并概率.平 * 100).toFixed(1);
-                const losePercent = (match.合并概率.负 * 100).toFixed(1);
-                const basicWinPercent = (match.基础预测概率.胜 * 100).toFixed(1);
-                const basicDrawPercent = (match.基础预测概率.平 * 100).toFixed(1);
-                const basicLosePercent = (match.基础预测概率.负 * 100).toFixed(1);
-                const advancedWinPercent = (match.高级预测概率.胜 * 100).toFixed(1);
-                const advancedDrawPercent = (match.高级预测概率.平 * 100).toFixed(1);
-                const advancedLosePercent = (match.高级预测概率.负 * 100).toFixed(1);
+            // 鏄剧ず姣忓満姣旇禌鐨勮缁嗗崱鐗?
+            webData.璁＄畻缁撴灉.forEach((match, index) => {
+                const winPercent = (match.鍚堝苟姒傜巼.鑳?* 100).toFixed(1);
+                const drawPercent = (match.鍚堝苟姒傜巼.骞?* 100).toFixed(1);
+                const losePercent = (match.鍚堝苟姒傜巼.璐?* 100).toFixed(1);
+                const basicWinPercent = (match.鍩虹棰勬祴姒傜巼.鑳?* 100).toFixed(1);
+                const basicDrawPercent = (match.鍩虹棰勬祴姒傜巼.骞?* 100).toFixed(1);
+                const basicLosePercent = (match.鍩虹棰勬祴姒傜巼.璐?* 100).toFixed(1);
+                const advancedWinPercent = (match.楂樼骇棰勬祴姒傜巼.鑳?* 100).toFixed(1);
+                const advancedDrawPercent = (match.楂樼骇棰勬祴姒傜巼.骞?* 100).toFixed(1);
+                const advancedLosePercent = (match.楂樼骇棰勬祴姒傜巼.璐?* 100).toFixed(1);
                 
-                const resultClass = `result-${match.预测结果}`;
-                const resultText = match.预测结果 === 3 ? '主胜(3)' : match.预测结果 === 1 ? '平(1)' : '客胜(0)';
-                const resultColor = match.预测结果 === 3 ? '#4caf50' : match.预测结果 === 1 ? '#ff9800' : '#f44336';
+                const resultClass = `result-${match.棰勬祴缁撴灉}`;
+                const resultText = match.棰勬祴缁撴灉 === 3 ? '涓昏儨(3)' : match.棰勬祴缁撴灉 === 1 ? '骞?1)' : '瀹㈣儨(0)';
+                const resultColor = match.棰勬祴缁撴灉 === 3 ? '#4caf50' : match.棰勬祴缁撴灉 === 1 ? '#ff9800' : '#f44336';
                 
                 html += `
-                    <div style="margin-bottom: 30px; padding: 25px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);" id="match-${match.场次}">
-                        <!-- 比赛基本信息 -->
+                    <div style="margin-bottom: 30px; padding: 25px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);" id="match-${match.鍦烘}">
+                        <!-- 姣旇禌鍩烘湰淇℃伅 -->
                         <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                                 <div>
                                     <h4 style="color: #00bcd4; margin-bottom: 5px;">
-                                        <a href="./list.html#match-${match.场次}" style="color: inherit; text-decoration: none;">
-                                            第 ${match.场次} 场 · ${match.联赛}
+                                        <a href="./list.html#match-${match.鍦烘}" style="color: inherit; text-decoration: none;">
+                                            绗?${match.鍦烘} 鍦?路 ${match.鑱旇禌}
                                         </a>
                                     </h4>
                                     <p style="opacity: 0.8; font-size: 0.9em;">
-                                        <i class="far fa-clock"></i> ${match.比赛时间}
+                                        <i class="far fa-clock"></i> ${match.姣旇禌鏃堕棿}
                                     </p>
                                 </div>
                                 <div style="background: ${resultColor}20; padding: 8px 16px; border-radius: 20px; border: 1px solid ${resultColor}40;">
@@ -627,190 +611,190 @@
                             
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
                                 <div style="text-align: center; flex: 1;">
-                                    <p style="font-size: 1.5em; font-weight: 600; color: #00bcd4;">${match.主队}</p>
-                                    <p style="opacity: 0.8; font-size: 0.9em;">主队</p>
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #00bcd4;">${match.涓婚槦}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">涓婚槦</p>
                                 </div>
                                 <div style="text-align: center; margin: 0 20px;">
                                     <p style="font-size: 1.2em; opacity: 0.7;">VS</p>
                                 </div>
                                 <div style="text-align: center; flex: 1;">
-                                    <p style="font-size: 1.5em; font-weight: 600; color: #ff9800;">${match.客队}</p>
-                                    <p style="opacity: 0.8; font-size: 0.9em;">客队</p>
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #ff9800;">${match.瀹㈤槦}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">瀹㈤槦</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- 共同对手泊松模型部分 -->
-                        ${match.共同对手实力分 ? `
+                        <!-- 鍏卞悓瀵规墜娉婃澗妯″瀷閮ㄥ垎 -->
+                        ${match.鍏卞悓瀵规墜瀹炲姏鍒?? `
                         <div style="margin-top: 30px; padding-top: 25px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
                             <h5 style="color: #bbdefb; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                                <i class="fas fa-handshake"></i> 共同对手泊松模型
+                                <i class="fas fa-handshake"></i> 鍏卞悓瀵规墜娉婃澗妯″瀷
                             </h5>
                             
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-                                <!-- 预期进球 -->
+                                <!-- 棰勬湡杩涚悆 -->
                                 <div style="padding: 15px; background: rgba(255, 193, 7, 0.05); border-radius: 8px; border-left: 3px solid #ffc107;">
                                     <h6 style="color: #ffc107; margin-bottom: 10px; font-size: 0.95em;">
-                                        <i class="fas fa-star"></i> 预期进球 (Lambda)
+                                        <i class="fas fa-star"></i> 棰勬湡杩涚悆 (Lambda)
                                     </h6>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>主队预期进球:</span>
-                                        <span style="font-weight: 600;">${match.共同对手实力分.主队预期进球.toFixed(3)}</span>
+                                        <span>涓婚槦棰勬湡杩涚悆:</span>
+                                        <span style="font-weight: 600;">${match.鍏卞悓瀵规墜瀹炲姏鍒?涓婚槦棰勬湡杩涚悆.toFixed(3)}</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>客队预期进球:</span>
-                                        <span style="font-weight: 600;">${match.共同对手实力分.客队预期进球.toFixed(3)}</span>
+                                        <span>瀹㈤槦棰勬湡杩涚悆:</span>
+                                        <span style="font-weight: 600;">${match.鍏卞悓瀵规墜瀹炲姏鍒?瀹㈤槦棰勬湡杩涚悆.toFixed(3)}</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
-                                        <span>共同对手数:</span>
-                                        <span style="font-weight: 600;">${match.共同对手实力分.共同对手数}</span>
+                                        <span>鍏卞悓瀵规墜鏁?</span>
+                                        <span style="font-weight: 600;">${match.鍏卞悓瀵规墜瀹炲姏鍒?鍏卞悓瀵规墜鏁皚</span>
                                     </div>
                                 </div>
                                 
-                                <!-- 胜平负概率 -->
+                                <!-- 鑳滃钩璐熸鐜?-->
                                 <div style="padding: 15px; background: rgba(156, 39, 176, 0.05); border-radius: 8px; border-left: 3px solid #9c27b0;">
                                     <h6 style="color: #9c27b0; margin-bottom: 10px; font-size: 0.95em;">
-                                        <i class="fas fa-balance-scale-left"></i> 胜平负概率
+                                        <i class="fas fa-balance-scale-left"></i> 鑳滃钩璐熸鐜?
                                     </h6>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>主胜概率:</span>
-                                        <span style="font-weight: 600; color: #4caf50;">${(match.共同对手实力分.胜概率 * 100).toFixed(1)}%</span>
+                                        <span>涓昏儨姒傜巼:</span>
+                                        <span style="font-weight: 600; color: #4caf50;">${(match.鍏卞悓瀵规墜瀹炲姏鍒?鑳滄鐜?* 100).toFixed(1)}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>平局概率:</span>
-                                        <span style="font-weight: 600; color: #ff9800;">${(match.共同对手实力分.平概率 * 100).toFixed(1)}%</span>
+                                        <span>骞冲眬姒傜巼:</span>
+                                        <span style="font-weight: 600; color: #ff9800;">${(match.鍏卞悓瀵规墜瀹炲姏鍒?骞虫鐜?* 100).toFixed(1)}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>客胜概率:</span>
-                                        <span style="font-weight: 600; color: #f44336;">${(match.共同对手实力分.负概率 * 100).toFixed(1)}%</span>
+                                        <span>瀹㈣儨姒傜巼:</span>
+                                        <span style="font-weight: 600; color: #f44336;">${(match.鍏卞悓瀵规墜瀹炲姏鍒?璐熸鐜?* 100).toFixed(1)}%</span>
                                     </div>
                                     <div style="margin-top: 15px;">
                                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                            <span style="font-size: 0.9em; opacity: 0.8;">胜平负概率分布:</span>
+                                            <span style="font-size: 0.9em; opacity: 0.8;">鑳滃钩璐熸鐜囧垎甯?</span>
                                         </div>
                                         <div style="height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden; display: flex;">
-                                            <div style="height: 100%; width: ${match.共同对手实力分.胜概率 * 100}%; background: #4caf50;"></div>
-                                            <div style="height: 100%; width: ${match.共同对手实力分.平概率 * 100}%; background: #ff9800;"></div>
-                                            <div style="height: 100%; width: ${match.共同对手实力分.负概率 * 100}%; background: #f44336;"></div>
+                                            <div style="height: 100%; width: ${match.鍏卞悓瀵规墜瀹炲姏鍒?鑳滄鐜?* 100}%; background: #4caf50;"></div>
+                                            <div style="height: 100%; width: ${match.鍏卞悓瀵规墜瀹炲姏鍒?骞虫鐜?* 100}%; background: #ff9800;"></div>
+                                            <div style="height: 100%; width: ${match.鍏卞悓瀵规墜瀹炲姏鍒?璐熸鐜?* 100}%; background: #f44336;"></div>
                                         </div>
                                         <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                                            <span style="font-size: 0.85em; opacity: 0.8;">主胜</span>
-                                            <span style="font-size: 0.85em; opacity: 0.8;">客胜</span>
+                                            <span style="font-size: 0.85em; opacity: 0.8;">涓昏儨</span>
+                                            <span style="font-size: 0.85em; opacity: 0.8;">瀹㈣儨</span>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- 攻防数据 -->
+                                <!-- 鏀婚槻鏁版嵁 -->
                                 <div style="padding: 15px; background: rgba(33, 150, 243, 0.05); border-radius: 8px; border-left: 3px solid #2196f3;">
                                     <h6 style="color: #2196f3; margin-bottom: 10px; font-size: 0.95em;">
-                                        <i class="fas fa-shield-alt"></i> 攻防数据
+                                        <i class="fas fa-shield-alt"></i> 鏀婚槻鏁版嵁
                                     </h6>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>主队攻击力:</span>
-                                        <span style="font-weight: 600;">${match.共同对手实力分.主队攻击力.toFixed(3)}</span>
+                                        <span>涓婚槦鏀诲嚮鍔?</span>
+                                        <span style="font-weight: 600;">${match.鍏卞悓瀵规墜瀹炲姏鍒?涓婚槦鏀诲嚮鍔?toFixed(3)}</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>主队防守力:</span>
-                                        <span style="font-weight: 600;">${match.共同对手实力分.主队防守力.toFixed(3)}</span>
+                                        <span>涓婚槦闃插畧鍔?</span>
+                                        <span style="font-weight: 600;">${match.鍏卞悓瀵规墜瀹炲姏鍒?涓婚槦闃插畧鍔?toFixed(3)}</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>客队攻击力:</span>
-                                        <span style="font-weight: 600;">${match.共同对手实力分.客队攻击力.toFixed(3)}</span>
+                                        <span>瀹㈤槦鏀诲嚮鍔?</span>
+                                        <span style="font-weight: 600;">${match.鍏卞悓瀵规墜瀹炲姏鍒?瀹㈤槦鏀诲嚮鍔?toFixed(3)}</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
-                                        <span>客队防守力:</span>
-                                        <span style="font-weight: 600;">${match.共同对手实力分.客队防守力.toFixed(3)}</span>
+                                        <span>瀹㈤槦闃插畧鍔?</span>
+                                        <span style="font-weight: 600;">${match.鍏卞悓瀵规墜瀹炲姏鍒?瀹㈤槦闃插畧鍔?toFixed(3)}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         ` : ''}
                         
-                        <!-- 概率数据部分 -->
+                        <!-- 姒傜巼鏁版嵁閮ㄥ垎 -->
                         <div style="margin-bottom: 25px;">
                             <h5 style="color: #bbdefb; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                                <i class="fas fa-chart-pie"></i> 概率分析
+                                <i class="fas fa-chart-pie"></i> 姒傜巼鍒嗘瀽
                             </h5>
                             
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-                                <!-- 基础预测概率 -->
+                                <!-- 鍩虹棰勬祴姒傜巼 -->
                                 <div style="padding: 15px; background: rgba(0, 188, 212, 0.05); border-radius: 8px; border-left: 3px solid #00bcd4;">
                                     <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.95em;">
-                                        <i class="fas fa-calculator"></i> 基础预测概率（Elo+泊松）
+                                        <i class="fas fa-calculator"></i> 鍩虹棰勬祴姒傜巼锛圗lo+娉婃澗锛?
                                     </h6>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>主胜:</span>
+                                        <span>涓昏儨:</span>
                                         <span style="font-weight: 600;">${basicWinPercent}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>平:</span>
+                                        <span>骞?</span>
                                         <span style="font-weight: 600;">${basicDrawPercent}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
-                                        <span>客胜:</span>
+                                        <span>瀹㈣儨:</span>
                                         <span style="font-weight: 600;">${basicLosePercent}%</span>
                                     </div>
                                 </div>
                                 
-                                <!-- 高级预测概率 -->
+                                <!-- 楂樼骇棰勬祴姒傜巼 -->
                                 <div style="padding: 15px; background: rgba(142, 36, 170, 0.05); border-radius: 8px; border-left: 3px solid #8e24aa;">
                                     <h6 style="color: #8e24aa; margin-bottom: 10px; font-size: 0.95em;">
-                                        <i class="fas fa-chart-line"></i> 高级预测概率
+                                        <i class="fas fa-chart-line"></i> 楂樼骇棰勬祴姒傜巼
                                     </h6>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>主胜:</span>
+                                        <span>涓昏儨:</span>
                                         <span style="font-weight: 600;">${advancedWinPercent}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>平:</span>
+                                        <span>骞?</span>
                                         <span style="font-weight: 600;">${advancedDrawPercent}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
-                                        <span>客胜:</span>
+                                        <span>瀹㈣儨:</span>
                                         <span style="font-weight: 600;">${advancedLosePercent}%</span>
                                     </div>
                                 </div>
                                 
-                                <!-- 合并概率 -->
+                                <!-- 鍚堝苟姒傜巼 -->
                                 <div style="padding: 15px; background: rgba(76, 175, 80, 0.05); border-radius: 8px; border-left: 3px solid #4caf50;">
                                     <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.95em;">
-                                        <i class="fas fa-balance-scale"></i> 合并概率
+                                        <i class="fas fa-balance-scale"></i> 鍚堝苟姒傜巼
                                     </h6>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>主胜:</span>
+                                        <span>涓昏儨:</span>
                                         <span style="font-weight: 600; font-size: 1.1em;">${winPercent}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                        <span>平:</span>
+                                        <span>骞?</span>
                                         <span style="font-weight: 600; font-size: 1.1em;">${drawPercent}%</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between;">
-                                        <span>客胜:</span>
+                                        <span>瀹㈣儨:</span>
                                         <span style="font-weight: 600; font-size: 1.1em;">${losePercent}%</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- 详细数据部分 - 有间隔 -->
+                        <!-- 璇︾粏鏁版嵁閮ㄥ垎 - 鏈夐棿闅?-->
                         <div style="margin-top: 30px; padding-top: 25px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
                             <h5 style="color: #bbdefb; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                                <i class="fas fa-chart-bar"></i> 详细数据
+                                <i class="fas fa-chart-bar"></i> 璇︾粏鏁版嵁
                             </h5>
                 `;
                 
-                // 显示详细数据
-                if (match.预测详细数据 && Object.keys(match.预测详细数据).length > 0) {
+                // 鏄剧ず璇︾粏鏁版嵁
+                if (match.棰勬祴璇︾粏鏁版嵁 && Object.keys(match.棰勬祴璇︾粏鏁版嵁).length > 0) {
                     html += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">`;
                     
-                    // 基础数据
-                    if (match.预测详细数据.基础数据) {
+                    // 鍩虹鏁版嵁
+                    if (match.棰勬祴璇︾粏鏁版嵁.鍩虹鏁版嵁) {
                         html += `
                             <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">基础数据</h6>
+                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">鍩虹鏁版嵁</h6>
                                 <div style="font-size: 0.9em;">
                         `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.基础数据)) {
+                        for (const [key, value] of Object.entries(match.棰勬祴璇︾粏鏁版嵁.鍩虹鏁版嵁)) {
                             html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                         <span style="opacity: 0.8;">${key}:</span>
                                         <span>${value}</span>
@@ -819,14 +803,14 @@
                         html += `</div></div>`;
                     }
                     
-                    // 埃罗评分
-                    if (match.预测详细数据.埃罗评分) {
+                    // 鍩冪綏璇勫垎
+                    if (match.棰勬祴璇︾粏鏁版嵁.鍩冪綏璇勫垎) {
                         html += `
                             <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">埃罗评分</h6>
+                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">鍩冪綏璇勫垎</h6>
                                 <div style="font-size: 0.9em;">
                         `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.埃罗评分)) {
+                        for (const [key, value] of Object.entries(match.棰勬祴璇︾粏鏁版嵁.鍩冪綏璇勫垎)) {
                             html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                         <span style="opacity: 0.8;">${key}:</span>
                                         <span>${value}</span>
@@ -835,14 +819,14 @@
                         html += `</div></div>`;
                     }
                     
-                    // 权重统计
-                    if (match.预测详细数据.权重统计) {
+                    // 鏉冮噸缁熻
+                    if (match.棰勬祴璇︾粏鏁版嵁.鏉冮噸缁熻) {
                         html += `
                             <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #9c27b0; margin-bottom: 10px; font-size: 0.9em;">权重统计</h6>
+                                <h6 style="color: #9c27b0; margin-bottom: 10px; font-size: 0.9em;">鏉冮噸缁熻</h6>
                                 <div style="font-size: 0.9em;">
                         `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.权重统计)) {
+                        for (const [key, value] of Object.entries(match.棰勬祴璇︾粏鏁版嵁.鏉冮噸缁熻)) {
                             html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                         <span style="opacity: 0.8;">${key}:</span>
                                         <span>${value}</span>
@@ -851,11 +835,11 @@
                         html += `</div></div>`;
                     }
                     
-                    // 泊松推理
-                    if (match.预测详细数据.泊松推理) {
+                    // 娉婃澗鎺ㄧ悊
+                    if (match.棰勬祴璇︾粏鏁版嵁.娉婃澗鎺ㄧ悊) {
                         html += `
                             <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.9em;">泊松推理</h6>
+                                <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.9em;">娉婃澗鎺ㄧ悊</h6>
                                 <div style="font-size: 0.9em;">
                         `;
                         const renderPoissonObject = (obj, indent = 0) => {
@@ -875,18 +859,18 @@
                             }
                             return result;
                         };
-                        html += renderPoissonObject(match.预测详细数据.泊松推理);
+                        html += renderPoissonObject(match.棰勬祴璇︾粏鏁版嵁.娉婃澗鎺ㄧ悊);
                         html += `</div></div>`;
                     }
                     
-                    // 攻防效率
-                    if (match.预测详细数据.攻防效率) {
+                    // 鏀婚槻鏁堢巼
+                    if (match.棰勬祴璇︾粏鏁版嵁.鏀婚槻鏁堢巼) {
                         html += `
                             <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #8e24aa; margin-bottom: 10px; font-size: 0.9em;">攻防效率</h6>
+                                <h6 style="color: #8e24aa; margin-bottom: 10px; font-size: 0.9em;">鏀婚槻鏁堢巼</h6>
                                 <div style="font-size: 0.9em;">
                         `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.攻防效率)) {
+                        for (const [key, value] of Object.entries(match.棰勬祴璇︾粏鏁版嵁.鏀婚槻鏁堢巼)) {
                             html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                         <span style="opacity: 0.8;">${key}:</span>
                                         <span>${value}</span>
@@ -895,14 +879,14 @@
                         html += `</div></div>`;
                     }
                     
-                    // 半全场节奏
-                    if (match.预测详细数据.半全场节奏) {
+                    // 鍗婂叏鍦鸿妭濂?
+                    if (match.棰勬祴璇︾粏鏁版嵁.鍗婂叏鍦鸿妭濂? {
                         html += `
                             <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #ff9800; margin-bottom: 10px; font-size: 0.9em;">半全场节奏</h6>
+                                <h6 style="color: #ff9800; margin-bottom: 10px; font-size: 0.9em;">鍗婂叏鍦鸿妭濂?/h6>
                                 <div style="font-size: 0.9em;">
                         `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.半全场节奏)) {
+                        for (const [key, value] of Object.entries(match.棰勬祴璇︾粏鏁版嵁.鍗婂叏鍦鸿妭濂?) {
                             html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
                                         <span style="opacity: 0.8;">${key}:</span>
                                         <span>${value}</span>
@@ -911,16 +895,16 @@
                         html += `</div></div>`;
                     }
                     
-                    // 其他详细数据
-                    const otherSections = ['共同对手分析', '预期进球', '计算过程', '最终预测概率'];
+                    // 鍏朵粬璇︾粏鏁版嵁
+                    const otherSections = ['鍏卞悓瀵规墜鍒嗘瀽', '棰勬湡杩涚悆', '璁＄畻杩囩▼', '鏈€缁堥娴嬫鐜?];
                     otherSections.forEach(section => {
-                        if (match.预测详细数据[section]) {
+                        if (match.棰勬祴璇︾粏鏁版嵁[section]) {
                             html += `
                                 <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
                                     <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.9em;">${section}</h6>
                                     <div style="font-size: 0.9em;">
                             `;
-                            // 处理嵌套对象
+                            // 澶勭悊宓屽瀵硅薄
                             const renderObject = (obj, indent = 0) => {
                                 let result = '';
                                 for (const [key, value] of Object.entries(obj)) {
@@ -939,14 +923,14 @@
                                 return result;
                             };
                             
-                            html += renderObject(match.预测详细数据[section]);
+                            html += renderObject(match.棰勬祴璇︾粏鏁版嵁[section]);
                             html += `</div></div>`;
                         }
                     });
                     
                     html += `</div>`;
                 } else {
-                    html += `<p style="text-align: center; opacity: 0.7; padding: 20px;">无详细数据</p>`;
+                    html += `<p style="text-align: center; opacity: 0.7; padding: 20px;">鏃犺缁嗘暟鎹?/p>`;
                 }
                 
                 html += `
@@ -955,35 +939,35 @@
                 `;
             });
             
-            // 预测结果汇总
-            const winCount = webData.计算结果.filter(m => m.预测结果 === 3).length;
-            const drawCount = webData.计算结果.filter(m => m.预测结果 === 1).length;
-            const loseCount = webData.计算结果.filter(m => m.预测结果 === 0).length;
+            // 棰勬祴缁撴灉姹囨€?
+            const winCount = webData.璁＄畻缁撴灉.filter(m => m.棰勬祴缁撴灉 === 3).length;
+            const drawCount = webData.璁＄畻缁撴灉.filter(m => m.棰勬祴缁撴灉 === 1).length;
+            const loseCount = webData.璁＄畻缁撴灉.filter(m => m.棰勬祴缁撴灉 === 0).length;
             
             html += `
                 </div>
                 
                 <div style="margin-top: 30px; padding: 25px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #ff9800;">
                     <h3 style="color: #ff9800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-chart-bar"></i> 预测结果汇总
+                        <i class="fas fa-chart-bar"></i> 棰勬祴缁撴灉姹囨€?
                     </h3>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;">
                         <div style="text-align: center; padding: 20px; background: rgba(76, 175, 80, 0.1); border-radius: 8px; border: 1px solid rgba(76, 175, 80, 0.3);">
                             <p style="font-size: 2.5em; font-weight: 600; color: #4caf50;">${winCount}</p>
-                            <p style="opacity: 0.9;">主胜(3)</p>
+                            <p style="opacity: 0.9;">涓昏儨(3)</p>
                         </div>
                         <div style="text-align: center; padding: 20px; background: rgba(255, 152, 0, 0.1); border-radius: 8px; border: 1px solid rgba(255, 152, 0, 0.3);">
                             <p style="font-size: 2.5em; font-weight: 600; color: #ff9800;">${drawCount}</p>
-                            <p style="opacity: 0.9;">平(1)</p>
+                            <p style="opacity: 0.9;">骞?1)</p>
                         </div>
                         <div style="text-align: center; padding: 20px; background: rgba(244, 67, 54, 0.1); border-radius: 8px; border: 1px solid rgba(244, 67, 54, 0.3);">
                             <p style="font-size: 2.5em; font-weight: 600; color: #f44336;">${loseCount}</p>
-                            <p style="opacity: 0.9;">客胜(0)</p>
+                            <p style="opacity: 0.9;">瀹㈣儨(0)</p>
                         </div>
                         <div style="text-align: center; padding: 20px; background: rgba(33, 150, 243, 0.1); border-radius: 8px; border: 1px solid rgba(33, 150, 243, 0.3);">
-                            <p style="font-size: 2.5em; font-weight: 600; color: #2196f3;">${webData.计算结果.length}</p>
-                            <p style="opacity: 0.9;">总场次</p>
+                            <p style="font-size: 2.5em; font-weight: 600; color: #2196f3;">${webData.璁＄畻缁撴灉.length}</p>
+                            <p style="opacity: 0.9;">鎬诲満娆?/p>
                         </div>
                     </div>
                 </div>
@@ -992,9 +976,9 @@
             resultsContainer.innerHTML = html;
             downloadLink.style.display = 'inline-block';
             
-            // 检查URL中的锚点并滚动到相应比赛
+            // 妫€鏌RL涓殑閿氱偣骞舵粴鍔ㄥ埌鐩稿簲姣旇禌
             if (window.location.hash) {
-                const matchId = window.location.hash.substring(1); // 去掉#号
+                const matchId = window.location.hash.substring(1); // 鍘绘帀#鍙?
                 const targetElement = document.getElementById(matchId);
                 if (targetElement) {
                     setTimeout(() => {
@@ -1004,10 +988,10 @@
             }
         }
         
-        // 生成下载链接
+        // 鐢熸垚涓嬭浇閾炬帴
         function generateDownloadLink() {
             if (!webData) {
-                showStatus('没有可下载的数据', 'error');
+                showStatus('娌℃湁鍙笅杞界殑鏁版嵁', 'error');
                 return;
             }
             
@@ -1016,27 +1000,27 @@
                 const blob = new Blob([jsonData], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 
-                const period = webData.期数?.replace('期', '') || currentPeriod || '未知期数';
+                const period = webData.鏈熸暟?.replace('鏈?, '') || currentPeriod || '鏈煡鏈熸暟';
                 downloadLink.href = url;
-                downloadLink.download = `${period}期_web.json`;
-                downloadLink.textContent = `下载Web数据 (${period}期_web.json)`;
+                downloadLink.download = `${period}鏈焈web.json`;
+                downloadLink.textContent = `涓嬭浇Web鏁版嵁 (${period}鏈焈web.json)`;
                 
-                // 清理之前的URL
+                // 娓呯悊涔嬪墠鐨刄RL
                 setTimeout(() => URL.revokeObjectURL(url), 60000);
                 
-                showStatus('下载链接已生成，点击"下载JSON"按钮保存文件', 'success');
+                showStatus('涓嬭浇閾炬帴宸茬敓鎴愶紝鐐瑰嚮"涓嬭浇JSON"鎸夐挳淇濆瓨鏂囦欢', 'success');
             } catch (error) {
-                console.error('生成下载链接错误:', error);
-                showStatus(`生成下载链接失败: ${error.message}`, 'error');
+                console.error('鐢熸垚涓嬭浇閾炬帴閿欒:', error);
+                showStatus(`鐢熸垚涓嬭浇閾炬帴澶辫触: ${error.message}`, 'error');
             }
         }
         
-        // 加载GLM分析数据
+        // 鍔犺浇GLM鍒嗘瀽鏁版嵁
         async function loadGlmAnalysis() {
-            // 从输入框读取当前期数
+            // 浠庤緭鍏ユ璇诲彇褰撳墠鏈熸暟
             const inputPeriod = periodInput.value.trim();
             if (inputPeriod) {
-                // 提取数字部分（例如从"26027期"中提取"26027"）
+                // 鎻愬彇鏁板瓧閮ㄥ垎锛堜緥濡備粠"26027鏈?涓彁鍙?26027"锛?
                 const periodMatch = inputPeriod.match(/\d+/);
                 if (periodMatch) {
                     currentPeriod = periodMatch[0];
@@ -1046,64 +1030,64 @@
             }
             
             if (!currentPeriod) {
-                showStatus('请先获取或输入期数', 'error');
+                showStatus('璇峰厛鑾峰彇鎴栬緭鍏ユ湡鏁?, 'error');
                 return null;
             }
             
             try {
-                showStatus(`正在加载 ${currentPeriod}期_glm分析.json 文件...`, 'info');
+                showStatus(`姝ｅ湪鍔犺浇 ${currentPeriod}鏈焈glm鍒嗘瀽.json 鏂囦欢...`, 'info');
                 updateProgress(40);
                 
                 const timestamp = Date.now();
-                const fileUrl = `./result/${currentPeriod}期_glm分析.json?t=${timestamp}`;
-                console.log(`正在加载: ${fileUrl}`);
+                const fileUrl = `./result/${currentPeriod}鏈焈glm鍒嗘瀽.json?t=${timestamp}`;
+                console.log(`姝ｅ湪鍔犺浇: ${fileUrl}`);
                 
                 const response = await fetch(fileUrl);
                 
                 if (!response.ok) {
                     if (response.status === 404) {
-                        throw new Error(`文件不存在: ${fileUrl}，请确保已运行GLM分析脚本`);
+                        throw new Error(`鏂囦欢涓嶅瓨鍦? ${fileUrl}锛岃纭繚宸茶繍琛孏LM鍒嗘瀽鑴氭湰`);
                     } else {
-                        throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                        throw new Error(`HTTP閿欒: ${response.status} ${response.statusText}`);
                     }
                 }
                 
                 const data = await response.json();
                 updateProgress(80);
                 
-                // 验证数据格式
-                if (!data.期数 || !data.分析结果 || !Array.isArray(data.分析结果)) {
-                    throw new Error('glm分析文件格式不正确');
+                // 楠岃瘉鏁版嵁鏍煎紡
+                if (!data.鏈熸暟 || !data.鍒嗘瀽缁撴灉 || !Array.isArray(data.鍒嗘瀽缁撴灉)) {
+                    throw new Error('glm鍒嗘瀽鏂囦欢鏍煎紡涓嶆纭?);
                 }
                 
                 glmAnalysisData = data;
                 updateProgress(100);
-                showStatus(`成功加载 ${data.分析结果.length} 场比赛的GLM分析结果`, 'success');
+                showStatus(`鎴愬姛鍔犺浇 ${data.鍒嗘瀽缁撴灉.length} 鍦烘瘮璧涚殑GLM鍒嗘瀽缁撴灉`, 'success');
                 
-                // 显示结果
+                // 鏄剧ず缁撴灉
                 displayGlmAnalysis();
                 
                 return glmAnalysisData;
             } catch (error) {
-                console.error('加载GLM分析数据错误:', error);
+                console.error('鍔犺浇GLM鍒嗘瀽鏁版嵁閿欒:', error);
                 updateProgress(0);
-                showStatus(`加载失败: ${error.message}`, 'error');
+                showStatus(`鍔犺浇澶辫触: ${error.message}`, 'error');
                 
-                // 如果文件不存在，提示用户
-                if (error.message.includes('文件不存在')) {
-                    showStatus(`请先运行 glm_analysis.py 生成 ${currentPeriod}期_glm分析.json 文件`, 'error');
+                // 濡傛灉鏂囦欢涓嶅瓨鍦紝鎻愮ず鐢ㄦ埛
+                if (error.message.includes('鏂囦欢涓嶅瓨鍦?)) {
+                    showStatus(`璇峰厛杩愯 glm_analysis.py 鐢熸垚 ${currentPeriod}鏈焈glm鍒嗘瀽.json 鏂囦欢`, 'error');
                 }
                 
                 return null;
             }
         }
         
-        // 显示GLM分析结果
+        // 鏄剧ずGLM鍒嗘瀽缁撴灉
         function displayGlmAnalysis() {
-            if (!glmAnalysisData || !glmAnalysisData.分析结果 || glmAnalysisData.分析结果.length === 0) {
+            if (!glmAnalysisData || !glmAnalysisData.鍒嗘瀽缁撴灉 || glmAnalysisData.鍒嗘瀽缁撴灉.length === 0) {
                 glmAnalysisContent.innerHTML = `
                     <p style="text-align: center; opacity: 0.7; padding: 40px;">
-                        暂无GLM分析数据，请先加载GLM分析文件
+                        鏆傛棤GLM鍒嗘瀽鏁版嵁锛岃鍏堝姞杞紾LM鍒嗘瀽鏂囦欢
                     </p>
                 `;
                 return;
@@ -1112,126 +1096,126 @@
             let html = `
                 <div style="margin-bottom: 30px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #8e24aa;">
                     <h3 style="color: #8e24aa; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-info-circle"></i> GLM分析信息
+                        <i class="fas fa-info-circle"></i> GLM鍒嗘瀽淇℃伅
                     </h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">期数</p>
-                            <p style="font-size: 1.2em; font-weight: 600;">${glmAnalysisData.期数 || '未知'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">鏈熸暟</p>
+                            <p style="font-size: 1.2em; font-weight: 600;">${glmAnalysisData.鏈熸暟 || '鏈煡'}</p>
                         </div>
 
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">生成时间</p>
-                            <p>${glmAnalysisData.生成时间 || '未知'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">鐢熸垚鏃堕棿</p>
+                            <p>${glmAnalysisData.鐢熸垚鏃堕棿 || '鏈煡'}</p>
                         </div>
 
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">GLM模型</p>
-                            <p>${glmAnalysisData.GLM配置?.模型 || '未知'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">GLM妯″瀷</p>
+                            <p>${glmAnalysisData.GLM閰嶇疆?.妯″瀷 || '鏈煡'}</p>
                         </div>
                         <div>
-                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">API端点</p>
-                            <p style="word-break: break-all;">${glmAnalysisData.GLM配置?.API端点 || '未知'}</p>
+                            <p style="margin-bottom: 5px; opacity: 0.8; font-size: 0.9em;">API绔偣</p>
+                            <p style="word-break: break-all;">${glmAnalysisData.GLM閰嶇疆?.API绔偣 || '鏈煡'}</p>
                         </div>
                     </div>
                 </div>
                 
                 <div style="margin-bottom: 30px;">
                     <h3 style="color: #8e24aa; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-brain"></i> GLM智能分析详情 (${glmAnalysisData.分析结果.length} 场)
+                        <i class="fas fa-brain"></i> GLM鏅鸿兘鍒嗘瀽璇︽儏 (${glmAnalysisData.鍒嗘瀽缁撴灉.length} 鍦?
                     </h3>
             `;
             
-            // 显示每场比赛的GLM分析
-            glmAnalysisData.分析结果.forEach((match, index) => {
-                const prediction = match.GLM分析?.预测结果 || '未知';
-                const analysis = match.GLM分析?.分析过程 || '无分析过程';
+            // 鏄剧ず姣忓満姣旇禌鐨凣LM鍒嗘瀽
+            glmAnalysisData.鍒嗘瀽缁撴灉.forEach((match, index) => {
+                const prediction = match.GLM鍒嗘瀽?.棰勬祴缁撴灉 || '鏈煡';
+                const analysis = match.GLM鍒嗘瀽?.鍒嗘瀽杩囩▼ || '鏃犲垎鏋愯繃绋?;
                 const predictionColor = prediction === '3' ? '#4caf50' : 
                                       prediction === '1' ? '#ff9800' : 
                                       prediction === '0' ? '#f44336' :
                                       prediction === '3,1' ? '#9c27b0' :
                                       prediction === '0,1' ? '#2196f3' : '#757575';
                 
-                // 预测结果解读
+                // 棰勬祴缁撴灉瑙ｈ
                 let predictionText = '';
                 switch(prediction) {
-                    case '3': predictionText = '主胜(3)'; break;
-                    case '1': predictionText = '平(1)'; break;
-                    case '0': predictionText = '客胜(0)'; break;
-                    case '3,1': predictionText = '主队不败(3或1)'; break;
-                    case '0,1': predictionText = '客队不败(0或1)'; break;
-                    default: predictionText = `未知(${prediction})`;
+                    case '3': predictionText = '涓昏儨(3)'; break;
+                    case '1': predictionText = '骞?1)'; break;
+                    case '0': predictionText = '瀹㈣儨(0)'; break;
+                    case '3,1': predictionText = '涓婚槦涓嶈触(3鎴?)'; break;
+                    case '0,1': predictionText = '瀹㈤槦涓嶈触(0鎴?)'; break;
+                    default: predictionText = `鏈煡(${prediction})`;
                 }
                 
                 html += `
-                    <div style="margin-bottom: 30px; padding: 25px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);" id="glm-match-${match.场次}">
-                        <!-- 比赛基本信息 -->
+                    <div style="margin-bottom: 30px; padding: 25px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);" id="glm-match-${match.鍦烘}">
+                        <!-- 姣旇禌鍩烘湰淇℃伅 -->
                         <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                                 <div>
                                     <h4 style="color: #00bcd4; margin-bottom: 5px;">
-                                        第 ${match.场次} 场 · ${match.联赛}
+                                        绗?${match.鍦烘} 鍦?路 ${match.鑱旇禌}
                                     </h4>
                                     <p style="opacity: 0.8; font-size: 0.9em;">
-                                        <i class="far fa-clock"></i> ${match.比赛时间}
+                                        <i class="far fa-clock"></i> ${match.姣旇禌鏃堕棿}
                                     </p>
                                 </div>
                                 <div style="background: ${predictionColor}20; padding: 8px 16px; border-radius: 20px; border: 1px solid ${predictionColor}40;">
                                     <span style="font-weight: 600; font-size: 1.1em; color: ${predictionColor};">${predictionText}</span>
                                     <br>
-                                    <span style="font-size: 0.9em; opacity: 0.8;">代码: ${prediction}</span>
+                                    <span style="font-size: 0.9em; opacity: 0.8;">浠ｇ爜: ${prediction}</span>
                                 </div>
                             </div>
                             
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
                                 <div style="text-align: center; flex: 1;">
-                                    <p style="font-size: 1.5em; font-weight: 600; color: #00bcd4;">${match.主队}</p>
-                                    <p style="opacity: 0.8; font-size: 0.9em;">主队</p>
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #00bcd4;">${match.涓婚槦}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">涓婚槦</p>
                                 </div>
                                 <div style="text-align: center; margin: 0 20px;">
                                     <p style="font-size: 1.2em; opacity: 0.7;">VS</p>
                                 </div>
                                 <div style="text-align: center; flex: 1;">
-                                    <p style="font-size: 1.5em; font-weight: 600; color: #ff9800;">${match.客队}</p>
-                                    <p style="opacity: 0.8; font-size: 0.9em;">客队</p>
+                                    <p style="font-size: 1.5em; font-weight: 600; color: #ff9800;">${match.瀹㈤槦}</p>
+                                    <p style="opacity: 0.8; font-size: 0.9em;">瀹㈤槦</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- 历史交锋数据摘要 -->
-                        ${match.历史交锋 && match.历史交锋.length > 0 ? `
+                        <!-- 鍘嗗彶浜ら攱鏁版嵁鎽樿 -->
+                        ${match.鍘嗗彶浜ら攱 && match.鍘嗗彶浜ら攱.length > 0 ? `
                         <div style="margin-bottom: 25px;">
                             <h5 style="color: #bbdefb; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                                <i class="fas fa-history"></i> 历史交锋摘要 (最近${Math.min(match.历史交锋.length, 3)}场)
+                                <i class="fas fa-history"></i> 鍘嗗彶浜ら攱鎽樿 (鏈€杩?{Math.min(match.鍘嗗彶浜ら攱.length, 3)}鍦?
                             </h5>
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
                         ` : ''}
                         
-                        ${match.历史交锋 ? match.历史交锋.slice(0, 3).map(history => `
+                        ${match.鍘嗗彶浜ら攱 ? match.鍘嗗彶浜ら攱.slice(0, 3).map(history => `
                                 <div style="padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-left: 3px solid #ffc107;">
                                     <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                        <span style="font-weight: 600;">${history.比赛日期}</span>
-                                        <span style="color: ${history.结果 === '胜' ? '#4caf50' : history.结果 === '平' ? '#ff9800' : '#f44336'}">${history.结果}</span>
+                                        <span style="font-weight: 600;">${history.姣旇禌鏃ユ湡}</span>
+                                        <span style="color: ${history.缁撴灉 === '鑳? ? '#4caf50' : history.缁撴灉 === '骞? ? '#ff9800' : '#f44336'}">${history.缁撴灉}</span>
                                     </div>
                                     <div style="margin-bottom: 5px;">
-                                        <span>${history.主队} ${history.比分} ${history.客队}</span>
+                                        <span>${history.涓婚槦} ${history.姣斿垎} ${history.瀹㈤槦}</span>
                                     </div>
                                     <div style="display: flex; justify-content: space-between; font-size: 0.9em; opacity: 0.8;">
-                                        <span>亚盘: ${history.亚盘结果}</span>
-                                        <span>大小球: ${history.大小球结果}</span>
+                                        <span>浜氱洏: ${history.浜氱洏缁撴灉}</span>
+                                        <span>澶у皬鐞? ${history.澶у皬鐞冪粨鏋渳</span>
                                     </div>
                                 </div>
                         `).join('') : ''}
                         
-                        ${match.历史交锋 && match.历史交锋.length > 0 ? `
+                        ${match.鍘嗗彶浜ら攱 && match.鍘嗗彶浜ら攱.length > 0 ? `
                             </div>
                         </div>
                         ` : ''}
                         
-                        <!-- GLM分析过程 -->
+                        <!-- GLM鍒嗘瀽杩囩▼ -->
                         <div style="margin-top: 25px;">
                             <h5 style="color: #bbdefb; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                                <i class="fas fa-chart-line"></i> GLM分析过程
+                                <i class="fas fa-chart-line"></i> GLM鍒嗘瀽杩囩▼
                             </h5>
                             <div style="padding: 20px; background: rgba(142, 36, 170, 0.05); border-radius: 8px; border: 1px solid rgba(142, 36, 170, 0.2);">
                                 <div style="white-space: pre-wrap; font-family: 'Courier New', monospace; line-height: 1.6;">
@@ -1243,14 +1227,14 @@
                 `;
             });
             
-            // 预测结果汇总
-            const predictionCounts = {"3": 0, "1": 0, "0": 0, "3,1": 0, "0,1": 0, "其他": 0};
-            glmAnalysisData.分析结果.forEach(match => {
-                const prediction = match.GLM分析?.预测结果 || '';
+            // 棰勬祴缁撴灉姹囨€?
+            const predictionCounts = {"3": 0, "1": 0, "0": 0, "3,1": 0, "0,1": 0, "鍏朵粬": 0};
+            glmAnalysisData.鍒嗘瀽缁撴灉.forEach(match => {
+                const prediction = match.GLM鍒嗘瀽?.棰勬祴缁撴灉 || '';
                 if (prediction in predictionCounts) {
                     predictionCounts[prediction] += 1;
                 } else {
-                    predictionCounts["其他"] += 1;
+                    predictionCounts["鍏朵粬"] += 1;
                 }
             });
             
@@ -1259,20 +1243,20 @@
                 
                 <div style="margin-top: 30px; padding: 25px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border-left: 4px solid #8e24aa;">
                     <h3 style="color: #8e24aa; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-chart-bar"></i> GLM预测结果汇总
+                        <i class="fas fa-chart-bar"></i> GLM棰勬祴缁撴灉姹囨€?
                     </h3>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px;">
             `;
             
-            // 添加每个预测结果的统计卡片
+            // 娣诲姞姣忎釜棰勬祴缁撴灉鐨勭粺璁″崱鐗?
             const predictionCards = [
-                {code: "3", name: "主胜(3)", color: "#4caf50"},
-                {code: "1", name: "平(1)", color: "#ff9800"},
-                {code: "0", name: "客胜(0)", color: "#f44336"},
-                {code: "3,1", name: "主队不败", color: "#9c27b0"},
-                {code: "0,1", name: "客队不败", color: "#2196f3"},
-                {code: "其他", name: "其他", color: "#757575"}
+                {code: "3", name: "涓昏儨(3)", color: "#4caf50"},
+                {code: "1", name: "骞?1)", color: "#ff9800"},
+                {code: "0", name: "瀹㈣儨(0)", color: "#f44336"},
+                {code: "3,1", name: "涓婚槦涓嶈触", color: "#9c27b0"},
+                {code: "0,1", name: "瀹㈤槦涓嶈触", color: "#2196f3"},
+                {code: "鍏朵粬", name: "鍏朵粬", color: "#757575"}
             ];
             
             predictionCards.forEach(card => {
@@ -1295,7 +1279,7 @@
             glmAnalysisContent.innerHTML = html;
             glmResultsContainer.style.display = 'block';
             
-            // 检查URL中的锚点并滚动到相应比赛
+            // 妫€鏌RL涓殑閿氱偣骞舵粴鍔ㄥ埌鐩稿簲姣旇禌
             if (window.location.hash && window.location.hash.startsWith('#glm-match-')) {
                 const targetElement = document.getElementById(window.location.hash.substring(1));
                 if (targetElement) {
@@ -1306,22 +1290,22 @@
             }
         }
         
-        // 事件监听器
+        // 浜嬩欢鐩戝惉鍣?
         fetchPeriodBtn.addEventListener('click', fetchCurrentPeriod);
         
         loadWebDataBtn.addEventListener('click', async () => {
             const data = await loadWebData();
             if (data) {
-                console.log('Web数据加载成功:', data);
+                console.log('Web鏁版嵁鍔犺浇鎴愬姛:', data);
             }
         });
         
         loadGlmAnalysisBtn.addEventListener('click', () => {
-            // 获取当前期数
+            // 鑾峰彇褰撳墠鏈熸暟
             const inputPeriod = periodInput.value.trim();
             let currentPeriodForGlm = '';
             if (inputPeriod) {
-                // 提取数字部分（例如从"26027期"中提取"26027"）
+                // 鎻愬彇鏁板瓧閮ㄥ垎锛堜緥濡備粠"26027鏈?涓彁鍙?26027"锛?
                 const periodMatch = inputPeriod.match(/\d+/);
                 if (periodMatch) {
                     currentPeriodForGlm = periodMatch[0];
@@ -1333,11 +1317,11 @@
             }
             
             if (!currentPeriodForGlm) {
-                showStatus('请先获取或输入期数', 'error');
+                showStatus('璇峰厛鑾峰彇鎴栬緭鍏ユ湡鏁?, 'error');
                 return;
             }
             
-            // 跳转到GLM分析页面，传递期数参数
+            // 璺宠浆鍒癎LM鍒嗘瀽椤甸潰锛屼紶閫掓湡鏁板弬鏁?
             window.location.href = `./glm_analysis.html?period=${currentPeriodForGlm}`;
         });
         
@@ -1366,37 +1350,37 @@
             }
         });
         
-        // 比赛按钮跳转
+        // 姣旇禌鎸夐挳璺宠浆
         document.querySelectorAll('.match-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const matchNumber = btn.getAttribute('data-match');
                 const targetId = `match-${matchNumber}`;
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
-                    // 更新URL锚点
+                    // 鏇存柊URL閿氱偣
                     window.location.hash = targetId;
-                    // 滚动到目标元素
+                    // 婊氬姩鍒扮洰鏍囧厓绱?
                     targetElement.scrollIntoView({ behavior: 'smooth' });
                 } else {
-                    showStatus(`第${matchNumber}场比赛尚未加载或不存在`, 'error');
+                    showStatus(`绗?{matchNumber}鍦烘瘮璧涘皻鏈姞杞芥垨涓嶅瓨鍦╜, 'error');
                 }
             });
         });
         
-        // 期数输入框支持回车键
+        // 鏈熸暟杈撳叆妗嗘敮鎸佸洖杞﹂敭
         periodInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const inputValue = periodInput.value.trim();
                 if (inputValue) {
-                    // 提取数字部分（例如从"26027期"中提取"26027"）
+                    // 鎻愬彇鏁板瓧閮ㄥ垎锛堜緥濡備粠"26027鏈?涓彁鍙?26027"锛?
                     const periodMatch = inputValue.match(/\d+/);
                     if (periodMatch) {
                         currentPeriod = periodMatch[0];
                     } else {
                         currentPeriod = inputValue;
                     }
-                    showStatus(`已手动设置期数为: ${currentPeriod}期`, 'info');
-                    // 自动加载数据
+                    showStatus(`宸叉墜鍔ㄨ缃湡鏁颁负: ${currentPeriod}鏈焋, 'info');
+                    // 鑷姩鍔犺浇鏁版嵁
                     setTimeout(() => {
                         loadWebDataBtn.click();
                     }, 300);
@@ -1404,27 +1388,27 @@
             }
         });
         
-        // 期数输入框失去焦点时更新期数（不自动加载）
+        // 鏈熸暟杈撳叆妗嗗け鍘荤劍鐐规椂鏇存柊鏈熸暟锛堜笉鑷姩鍔犺浇锛?
         periodInput.addEventListener('blur', () => {
             const inputValue = periodInput.value.trim();
             if (inputValue) {
-                // 提取数字部分（例如从"26027期"中提取"26027"）
+                // 鎻愬彇鏁板瓧閮ㄥ垎锛堜緥濡備粠"26027鏈?涓彁鍙?26027"锛?
                 const periodMatch = inputValue.match(/\d+/);
                 if (periodMatch) {
                     currentPeriod = periodMatch[0];
                 } else {
                     currentPeriod = inputValue;
                 }
-                showStatus(`已更新期数为: ${currentPeriod}期`, 'info');
+                showStatus(`宸叉洿鏂版湡鏁颁负: ${currentPeriod}鏈焋, 'info');
             }
         });
         
-        // 初始化
+        // 鍒濆鍖?
         document.addEventListener('DOMContentLoaded', () => {
-            showStatus('Web数据查看器已加载完成，正在自动获取期数...', 'info');
+            showStatus('Web鏁版嵁鏌ョ湅鍣ㄥ凡鍔犺浇瀹屾垚锛屾鍦ㄨ嚜鍔ㄨ幏鍙栨湡鏁?..', 'info');
             updateProgress(0);
             
-            // 尝试自动获取期数（获取后会自动加载web.json数据）
+            // 灏濊瘯鑷姩鑾峰彇鏈熸暟锛堣幏鍙栧悗浼氳嚜鍔ㄥ姞杞絯eb.json鏁版嵁锛?
             fetchCurrentPeriod();
         });
         
@@ -1432,4 +1416,5 @@
     </script>
 </body>
 </html>
+
 
