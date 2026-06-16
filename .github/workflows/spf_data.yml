@@ -1,0 +1,62 @@
+name: SPF Data Collection
+
+on:
+  schedule:
+    # 北京时间 9:00, 15:00, 21:00 执行 (UTC = BJT-8)
+    - cron: '0 1,7,13 * * *'
+  workflow_dispatch:
+
+jobs:
+  collect-spf-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+        fetch-depth: 0
+
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 安装依赖
+      run: |
+        pip install requests
+
+    - name: 运行 SPF 数据爬虫
+      working-directory: ./spf
+      run: |
+        echo "=== 获取胜平负赔率数据 ==="
+        python mobile_spf_fetcher.py
+        echo "=== SPF 数据爬虫执行完成 ==="
+
+    - name: 运行历史交锋数据爬虫
+      working-directory: ./spf
+      run: |
+        echo "=== 获取共同对手历史数据 ==="
+        python spf_fetch_history.py
+        echo "=== 历史数据爬虫执行完成 ==="
+
+    - name: 提交 SPF 数据到仓库
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add spf/data/
+
+        git commit -m "更新SPF赔率数据/共同对手数据" || {
+          echo "没有更改可提交，跳过push步骤"
+          exit 0
+        }
+
+        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}" || {
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        }
