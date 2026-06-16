@@ -222,27 +222,38 @@ function calculateCombinedProbabilities(basicData, advancedData, strengthData) {
                 负: normalizedLoseProb
             },
             预测结果: result,
-            共同对手实力分: strengthMatch ? {
-                主队预期进球: strengthMatch.主队预期进球 || 0,
-                客队预期进球: strengthMatch.客队预期进球 || 0,
-                胜概率: strengthMatch.胜概率 || 0,
-                平概率: strengthMatch.平概率 || 0,
-                负概率: strengthMatch.负概率 || 0,
-                半场主队预期进球: strengthMatch.半场主队预期进球 || 0,
-                半场客队预期进球: strengthMatch.半场客队预期进球 || 0,
-                半场胜概率: strengthMatch.半场胜概率 || 0,
-                半场平概率: strengthMatch.半场平概率 || 0,
-                半场负概率: strengthMatch.半场负概率 || 0,
-                平均胜概率: strengthMatch.平均胜概率 || 0,
-                平均平概率: strengthMatch.平均平概率 || 0,
-                平均负概率: strengthMatch.平均负概率 || 0,
-                预测结果: strengthMatch.预测结果,
-                共同对手数: strengthMatch.共同对手数 || 0,
-                主队攻击力: strengthMatch.主队攻击力 || 0,
-                主队防守力: strengthMatch.主队防守力 || 0,
-                客队攻击力: strengthMatch.客队攻击力 || 0,
-                客队防守力: strengthMatch.客队防守力 || 0
-            } : null,
+            共同对手实力分: strengthMatch ? (() => {
+                const homeExp = strengthMatch.主队预期进球 || 0;
+                const awayExp = strengthMatch.客队预期进球 || 0;
+                const totalExp = homeExp + awayExp;
+                const homeRatio = totalExp > 0 ? homeExp / totalExp : 0.5;
+                return {
+                    主队预期进球: homeExp,
+                    客队预期进球: awayExp,
+                    胜概率: strengthMatch.胜概率 || 0,
+                    平概率: strengthMatch.平概率 || 0,
+                    负概率: strengthMatch.负概率 || 0,
+                    半场主队预期进球: strengthMatch.半场主队预期进球 || 0,
+                    半场客队预期进球: strengthMatch.半场客队预期进球 || 0,
+                    半场胜概率: strengthMatch.半场胜概率 || 0,
+                    半场平概率: strengthMatch.半场平概率 || 0,
+                    半场负概率: strengthMatch.半场负概率 || 0,
+                    平均胜概率: strengthMatch.平均胜概率 || 0,
+                    平均平概率: strengthMatch.平均平概率 || 0,
+                    平均负概率: strengthMatch.平均负概率 || 0,
+                    预测结果: strengthMatch.预测结果,
+                    共同对手数: strengthMatch.共同对手数 || 0,
+                    主队攻击力: strengthMatch.主队攻击力 || 0,
+                    主队防守力: strengthMatch.主队防守力 || 0,
+                    客队攻击力: strengthMatch.客队攻击力 || 0,
+                    客队防守力: strengthMatch.客队防守力 || 0,
+                    // 以下字段供前端 fenxi.html 显示使用
+                    主队总实力分: homeExp,
+                    客队总实力分: awayExp,
+                    主队相对实力比: homeRatio,
+                    客队相对实力比: 1 - homeRatio
+                };
+            })() : null,
             预测详细数据: advancedMatch.预测详细数据 || basicMatch.预测详细数据 || {}
         });
     }
