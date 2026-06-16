@@ -1,6 +1,6 @@
 {
   "date_tag": "6_18",
-  "generate_time": "2026-06-16 18:08:55",
+  "generate_time": "2026-06-17 02:06:24",
   "total_matches": 4,
   "matches": [
     {
@@ -124,6 +124,74 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
+        "委内瑞拉": {
+          "home_vs_opponent": [
+            {
+              "result1": "平",
+              "result2": "输",
+              "result3": "小",
+              "homeid": 91,
+              "awayid": 88,
+              "homescore": 0,
+              "awayscore": 0,
+              "league_id": 2811,
+              "win": 2.23,
+              "draw": 3.19,
+              "lost": 3.11,
+              "iscup": 1,
+              "homestanding": 2,
+              "awaystanding": 1,
+              "status": 5,
+              "matchdate": "2026-03-30",
+              "fid": 1401055,
+              "homesxname": "乌兹别克斯坦",
+              "awaysxname": "委内瑞拉",
+              "simplegbname": "世界杯预赛",
+              "seasonid": 19741,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "handicapball": 2.25,
+              "handicapline": "-0.25",
+              "handicaplinename": "平手/半球",
+              "cornernum": 0,
+              "hcornernum": 0,
+              "acornernum": 0
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "result1": "胜",
+              "result2": "赢",
+              "result3": "大",
+              "homeid": 88,
+              "awayid": 6,
+              "homescore": 3,
+              "awayscore": 6,
+              "league_id": 29,
+              "win": 2.75,
+              "draw": 3.03,
+              "lost": 2.73,
+              "iscup": 1,
+              "homestanding": 7,
+              "awaystanding": 5,
+              "status": 5,
+              "matchdate": "2025-09-10",
+              "fid": 1119221,
+              "homesxname": "委内瑞拉",
+              "awaysxname": "哥伦比亚",
+              "simplegbname": "世外南美",
+              "seasonid": 7014,
+              "homehalfscore": 2,
+              "awayhalfscore": 2,
+              "handicapball": 2.25,
+              "handicapline": "0",
+              "handicaplinename": "平手",
+              "cornernum": 5,
+              "hcornernum": 3,
+              "acornernum": 2
+            }
+          ]
+        },
         "加拿大": {
           "home_vs_opponent": [
             {
@@ -257,74 +325,6 @@
               "cornernum": 7,
               "hcornernum": 6,
               "acornernum": 1
-            }
-          ]
-        },
-        "委内瑞拉": {
-          "home_vs_opponent": [
-            {
-              "result1": "平",
-              "result2": "输",
-              "result3": "小",
-              "homeid": 91,
-              "awayid": 88,
-              "homescore": 0,
-              "awayscore": 0,
-              "league_id": 2811,
-              "win": 2.23,
-              "draw": 3.19,
-              "lost": 3.11,
-              "iscup": 1,
-              "homestanding": 2,
-              "awaystanding": 1,
-              "status": 5,
-              "matchdate": "2026-03-30",
-              "fid": 1401055,
-              "homesxname": "乌兹别克斯坦",
-              "awaysxname": "委内瑞拉",
-              "simplegbname": "世界杯预赛",
-              "seasonid": 19741,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "handicapball": 2.25,
-              "handicapline": "-0.25",
-              "handicaplinename": "平手/半球",
-              "cornernum": 0,
-              "hcornernum": 0,
-              "acornernum": 0
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 88,
-              "awayid": 6,
-              "homescore": 3,
-              "awayscore": 6,
-              "league_id": 29,
-              "win": 2.75,
-              "draw": 3.03,
-              "lost": 2.73,
-              "iscup": 1,
-              "homestanding": 7,
-              "awaystanding": 5,
-              "status": 5,
-              "matchdate": "2025-09-10",
-              "fid": 1119221,
-              "homesxname": "委内瑞拉",
-              "awaysxname": "哥伦比亚",
-              "simplegbname": "世外南美",
-              "seasonid": 7014,
-              "homehalfscore": 2,
-              "awayhalfscore": 2,
-              "handicapball": 2.25,
-              "handicapline": "0",
-              "handicaplinename": "平手",
-              "cornernum": 5,
-              "hcornernum": 3,
-              "acornernum": 2
             }
           ]
         },
