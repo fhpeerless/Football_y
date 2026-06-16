@@ -14,6 +14,7 @@ import json
 import os
 import sys
 import time
+import argparse
 import requests
 import warnings
 from datetime import datetime, timezone, timedelta
@@ -62,17 +63,36 @@ def get_date_tag():
 # ============================================================
 
 def load_spf_matches(date_tag: str) -> list[dict]:
-    """读取 data/{date_tag}_shengpingfu.json，返回比赛列表"""
+    """读取 SPF 比赛数据，返回比赛列表
+
+    按以下顺序尝试文件:
+      1. data/{date_tag}_spf.json          (新格式, 例如 6_16_spf.json)
+      2. data/{date_tag}_shengpingfu.json  (旧格式, 例如 6.16_shengpingfu.json)
+    """
     data_dir = os.path.join(get_project_root(), "data")
-    filepath = os.path.join(data_dir, f"{date_tag}_shengpingfu.json")
-    if not os.path.exists(filepath):
-        print(f"错误: SPF数据文件不存在: {filepath}")
-        print("请先运行 mobile_spf_fetcher.py 获取SPF数据")
-        exit(1)
-    with open(filepath, "r", encoding="utf-8") as f:
-        matches = json.load(f)
-    print(f"已加载 {len(matches)} 场比赛的SPF数据: {filepath}")
-    return matches
+
+    # 尝试新格式: {date_tag}_spf.json
+    filepath = os.path.join(data_dir, f"{date_tag}_spf.json")
+    if os.path.exists(filepath):
+        with open(filepath, "r", encoding="utf-8") as f:
+            matches = json.load(f)
+        print(f"已加载 {len(matches)} 场比赛的SPF数据: {filepath}")
+        return matches
+
+    # 尝试旧格式: 将 _ 替换为 . 再试 _shengpingfu.json
+    old_tag = date_tag.replace("_", ".")
+    filepath_old = os.path.join(data_dir, f"{old_tag}_shengpingfu.json")
+    if os.path.exists(filepath_old):
+        with open(filepath_old, "r", encoding="utf-8") as f:
+            matches = json.load(f)
+        print(f"已加载 {len(matches)} 场比赛的SPF数据: {filepath_old}")
+        return matches
+
+    print(f"错误: SPF数据文件不存在")
+    print(f"  尝试过: {filepath}")
+    print(f"  尝试过: {filepath_old}")
+    print("请先运行 mobile_spf_fetcher.py 获取SPF数据")
+    exit(1)
 
 
 # ============================================================
@@ -414,7 +434,18 @@ def process_spf_match(match_info: dict, history_data: dict):
 # ============================================================
 
 def main():
-    date_tag = get_date_tag()
+    parser = argparse.ArgumentParser(description="提取共同对手比赛数据")
+    parser.add_argument(
+        "date_tag", nargs="?", default=None,
+        help="日期标记，如 6_16（不传则使用当天日期）"
+    )
+    args = parser.parse_args()
+
+    if args.date_tag:
+        date_tag = args.date_tag
+    else:
+        date_tag = get_date_tag().replace(".", "_")
+
     print(f"日期标记: {date_tag}")
     print("=" * 70)
 
@@ -458,17 +489,12 @@ def main():
         home_id, away_id = team_ids
         print(f"  [成功] 球队ID: homeid={home_id}, awayid={away_id}")
 
-        # 3b. 获取历史交锋记录
-        print(f"  获取历史交锋记录...")
+        # 3b. 获取近期战绩（recent_record API）
+        print(f"  获取近期战绩...")
         history = get_recent_record(home_id, away_id, match_date)
         time.sleep(REQUEST_INTERVAL)
 
-        # 3c. 获取交战数据
-        print(f"  获取交战数据...")
-        jz = get_jz_data(home_id, away_id, match_date)
-        time.sleep(REQUEST_INTERVAL)
-
-        # 3d. 提取共同对手
+        # 3c. 提取共同对手
         result = process_spf_match(match, history)
         result["home_id"] = home_id
         result["away_id"] = away_id
@@ -477,7 +503,7 @@ def main():
 
         print(f"  共同对手数: {result.get('common_opponent_count', 0)}")
 
-    # 4. 保存结果
+    # 4. 保存结果（格式: {date_tag}_common.json）
     output = {
         "date_tag": date_tag,
         "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
@@ -487,7 +513,7 @@ def main():
 
     data_dir = os.path.join(get_project_root(), "data")
     os.makedirs(data_dir, exist_ok=True)
-    outpath = os.path.join(data_dir, f"{date_tag}_spfgtong.json")
+    outpath = os.path.join(data_dir, f"{date_tag}_common.json")
     with open(outpath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
@@ -495,8 +521,8 @@ def main():
     with_common = sum(1 for r in results if r.get("common_opponent_count", 0) > 0)
     print(f"\n{'=' * 70}")
     print(f"共同对手比赛提取完成！")
+    print(f"  日期标记: {date_tag}")
     print(f"  总比赛数: {len(results)}")
-    print(f"  匹配到球队ID: {sum(1 for r in results if 'error' not in r or not r['error'] or '球队ID' not in r['error'])}")
     print(f"  有共同对手: {with_common}")
     print(f"  无共同对手: {len(results) - with_common}")
     print(f"  输出文件: {outpath}")

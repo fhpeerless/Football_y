@@ -1337,6 +1337,11 @@
             spfDateInput.value = `${month}.${day}`;
         }
         
+        // 将用户输入的 月.日 格式转为 月_日 格式（用于文件名）
+        function spfDateTagToFileTag(dateTag) {
+            return dateTag.replace('.', '_');
+        }
+        
         // 加载 SPF 数据
         async function loadSpfData() {
             const dateTag = spfDateInput.value.trim();
@@ -1348,12 +1353,14 @@
             // 获取今天的日期，用于默认日期
             const today = new Date();
             const defaultDate = `${today.getMonth()+1}.${today.getDate()}`;
+            // 转为文件路径格式（点变下划线）
+            const fileTag = spfDateTagToFileTag(dateTag);
             
             showSpfStatus(`正在加载 SPF 数据 (${dateTag})...`, 'info');
             updateSpfProgress(20);
             
-            // 1. 加载 shengpingfu 数据
-            const spfUrl = `./spf/data/${dateTag}_shengpingfu.json?t=${Date.now()}`;
+            // 1. 加载 SPF 赔率数据（新格式: {M}_{D}_spf.json）
+            const spfUrl = `./spf/data/${fileTag}_spf.json?t=${Date.now()}`;
             let spfData = null;
             try {
                 const resp = await fetch(spfUrl);
@@ -1363,7 +1370,7 @@
                         spfDateInput.value = defaultDate;
                         return await loadSpfData();
                     }
-                    throw new Error(`文件不存在: spf/data/${dateTag}_shengpingfu.json`);
+                    throw new Error(`文件不存在: spf/data/${fileTag}_spf.json`);
                 }
                 spfData = await resp.json();
                 updateSpfProgress(50);
@@ -1378,8 +1385,8 @@
             spfOddsSection.style.display = 'block';
             updateSpfProgress(70);
             
-            // 3. 加载共同对手数据
-            const gtUrl = `./spf/data/${dateTag}_spfgtong.json?t=${Date.now()}`;
+            // 3. 加载共同对手数据（新格式: {M}_{D}_common.json）
+            const gtUrl = `./spf/data/${fileTag}_common.json?t=${Date.now()}`;
             try {
                 const gtResp = await fetch(gtUrl);
                 if (gtResp.ok) {

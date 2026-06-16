@@ -236,12 +236,31 @@ def main():
     else:
         print("获取让球胜平负数据失败")
 
-    # 合并保存
+    # 合并保存（全部数据）
     merged = list(all_matches.values())
     merged.sort(key=lambda x: x["match_num"])
     saved_path = save_to_data_file(merged, f"{date_tag}_shengpingfu")
     print(f"\n合并后的SPF+NSPF数据已保存到: {saved_path}")
     print(f"共 {len(merged)} 场比赛")
+
+    # =======================================================
+    # 按日期分组保存（供工作流按日处理）
+    # 格式: data/{M}_{D}_spf.json  (例如 6_16_spf.json)
+    # =======================================================
+    by_date = {}
+    for m in merged:
+        d = m.get("date", "")
+        if d:
+            by_date.setdefault(d, []).append(m)
+
+    print(f"\n按日期分组保存（共 {len(by_date)} 个比赛日）:")
+    for date_str, matches in sorted(by_date.items()):
+        parts = date_str.split("-")  # "2026-06-16" → ["2026", "06", "16"]
+        month = int(parts[1])
+        day = int(parts[2])
+        day_tag = f"{month}_{day}_spf"
+        save_to_data_file(matches, day_tag)
+        print(f"  {date_str} → {day_tag}.json  ({len(matches)} 场)")
 
 
 if __name__ == "__main__":

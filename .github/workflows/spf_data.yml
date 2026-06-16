@@ -29,19 +29,33 @@ jobs:
       run: |
         pip install requests
 
-    - name: 运行 SPF 数据爬虫
+    - name: 获取所有比赛赔率数据并分组保存
       working-directory: ./spf
       run: |
-        echo "=== 获取胜平负赔率数据 ==="
+        echo "=== 获取所有比赛赔率数据 ==="
         python mobile_spf_fetcher.py
-        echo "=== SPF 数据爬虫执行完成 ==="
+        echo "=== SPF 数据获取完成 ==="
+        echo "生成的文件:"
+        ls -la data/*_spf.json 2>/dev/null || echo "  (无 *_spf.json 文件)"
 
-    - name: 运行历史交锋数据爬虫
+    - name: 逐日获取近期战绩并提取共同对手
       working-directory: ./spf
       run: |
-        echo "=== 获取共同对手历史数据 ==="
-        python spf_fetch_history.py
-        echo "=== 历史数据爬虫执行完成 ==="
+        echo "=== 逐日处理共同对手数据 ==="
+        for f in data/*_spf.json; do
+          if [ ! -f "$f" ]; then
+            echo "未找到 *_spf.json 文件，跳过"
+            continue
+          fi
+          basename=$(basename "$f" .json)
+          date_tag="${basename%_spf}"
+          echo "========================================"
+          echo "处理日期: $date_tag"
+          echo "========================================"
+          python spf_fetch_history.py "$date_tag"
+          echo "--- $date_tag 处理完成 ---"
+        done
+        echo "=== 所有日期处理完成 ==="
 
     - name: 提交 SPF 数据到仓库
       run: |
