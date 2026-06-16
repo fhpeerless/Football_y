@@ -269,6 +269,28 @@ async function checkNewPeriod() {
         console.log(`脚本目录: ${SCRIPT_DIR}`);
         console.log(`present.json路径: ${PRESENT_JSON_PATH}`);
         
+        // 0. 检查是否通过环境变量手动指定了期数（workflow_dispatch）
+        const manualPeriod = process.env.INPUT_PERIOD || '';
+        if (manualPeriod) {
+            console.log(`检测到手动指定期数: ${manualPeriod}`);
+            const manualPeriodNum = extractPeriodNumber(manualPeriod);
+            if (manualPeriodNum > 0) {
+                // 手动指定期数时，直接使用指定期数
+                const currentTimestamp = new Date().toISOString();
+                const appendSuccess = appendToPresentJson(manualPeriodNum.toString(), currentTimestamp);
+                if (appendSuccess) {
+                    console.log(`已将手动指定期数 ${manualPeriodNum} 写入present.json`);
+                }
+                console.log('='.repeat(60));
+                console.log('返回结果: 2 (手动指定期数)');
+                setOutput('has_new_period', 'true');
+                setOutput('exit_code', '2');
+                return true;
+            } else {
+                console.warn(`手动指定期数格式无效: ${manualPeriod}，回退到API获取`);
+            }
+        }
+        
         // 1. 获取当前期数
         let currentPeriod = null;
         const maxRetries = 3;
@@ -322,13 +344,15 @@ async function checkNewPeriod() {
         // 2. 从present.json读取最后保存的期数（在追加新记录之前）
         const lastRecord = getLastPeriodFromPresentJson();
         
-        // 3. 比较期数
+        // 3. 比较期数，决定是否需要处理
         let hasNewPeriod = false;
+        let shouldAppend = false;  // 是否追加到present.json
         
         if (!lastRecord) {
             // 如果present.json不存在或为空，视为有新期数
             console.log('present.json不存在或为空，视为有新期数');
             hasNewPeriod = true;
+            shouldAppend = true;
         } else {
             const lastPeriodNum = lastRecord.period_number || extractPeriodNumber(lastRecord.period);
             console.log(`最后保存的期数: ${lastPeriodNum}期`);
@@ -336,14 +360,26 @@ async function checkNewPeriod() {
             if (lastPeriodNum < currentPeriodNum) {
                 console.log(`最后保存期数(${lastPeriodNum}) < 当前期数(${currentPeriodNum})`);
                 hasNewPeriod = true;
+                shouldAppend = true;
             } else {
                 console.log(`最后保存期数(${lastPeriodNum}) >= 当前期数(${currentPeriodNum})`);
-                hasNewPeriod = false;
+                // 期数相同，检查结果文件是否已存在（防止上次工作流失败未生成结果）
+                const resultFile = path.join(RESULT_DIR_PATH, `${currentPeriodNum}期_web.json`);
+                const resultExists = fs.existsSync(resultFile);
+                if (!resultExists) {
+                    console.log(`结果文件 ${currentPeriodNum}期_web.json 不存在，需要重新处理`);
+                    hasNewPeriod = true;   // 需要重新处理
+                    shouldAppend = false;  // 但present.json已有该期数，不重复追加
+                } else {
+                    console.log(`结果文件 ${currentPeriodNum}期_web.json 已存在，无需处理`);
+                    hasNewPeriod = false;
+                    shouldAppend = false;
+                }
             }
         }
         
-        // 4. 只有当前期数大于最后保存期数时，才将期数和时间戳追加到present.json
-        if (hasNewPeriod) {
+        // 4. 需要追加时，将期数和时间戳追加到present.json
+        if (shouldAppend) {
             const currentTimestamp = new Date().toISOString();
             console.log(`当前时间戳: ${currentTimestamp}`);
             
@@ -352,7 +388,7 @@ async function checkNewPeriod() {
                 console.warn('警告: 无法将数据追加到present.json');
             }
         } else {
-            console.log('当前期数不大于最后保存期数，不追加到present.json');
+            console.log('不追加到present.json');
         }
         
         // 5. 设置输出结果
