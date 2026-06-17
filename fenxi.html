@@ -424,18 +424,16 @@
         <!-- SPF 数据页面 -->
         <div id="tab-spf" class="tab-content">
             <div class="spf-panel">
-                <h2 class="section-title"><i class="fas fa-sliders-h"></i> 胜平负数据面板</h2>
+                <h2 class="section-title"><i class="fas fa-handshake"></i> 共同对手分析</h2>
                 
                 <div class="form-group">
-                    <label><i class="fas fa-calendar-alt"></i> 日期标记</label>
-                    <div class="file-input-group">
-                        <input type="text" id="spfDateInput" placeholder="例: 6.16" value="">
-                        <button id="loadSpfDataBtn" class="secondary">
-                            <i class="fas fa-search"></i> 加载SPF数据
+                    <div class="btn-group" style="margin-top: 0;">
+                        <button id="loadCommonMatchBtn">
+                            <i class="fas fa-sync-alt"></i> 加载共同对手数据
                         </button>
                     </div>
                     <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                        自动加载 spf/data/{日期}_shengpingfu.json 和 {日期}_spfgtong.json
+                        加载 spf/data/common_match.json 中的共同对手分析数据
                     </p>
                 </div>
                 
@@ -447,37 +445,10 @@
                 </div>
             </div>
             
-            <!-- SPF 赔率表格 -->
-            <div id="spfOddsSection" style="display: none;">
-                <div class="spf-panel">
-                    <h2 class="section-title"><i class="fas fa-list-alt"></i> 胜平负/让球胜平负赔率</h2>
-                    <div style="overflow-x: auto;">
-                        <table class="spf-table" id="spfOddsTable">
-                            <thead>
-                                <tr>
-                                    <th>场次</th>
-                                    <th>联赛</th>
-                                    <th>主队</th>
-                                    <th>客队</th>
-                                    <th>比赛时间</th>
-                                    <th>SPF主胜</th>
-                                    <th>SPF平</th>
-                                    <th>SPF客胜</th>
-                                    <th>NSPF主胜</th>
-                                    <th>NSPF平</th>
-                                    <th>NSPF客胜</th>
-                                </tr>
-                            </thead>
-                            <tbody id="spfOddsBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- SPF 共同对手分析 -->
+            <!-- 共同对手分析结果 -->
             <div id="spfCommonSection" style="display: none;">
                 <div class="spf-panel">
-                    <h2 class="section-title"><i class="fas fa-handshake"></i> 共同对手分析</h2>
+                    <h2 class="section-title"><i class="fas fa-list-alt"></i> 共同对手分析结果</h2>
                     <div id="spfCommonBody"></div>
                 </div>
             </div>
@@ -1307,14 +1278,11 @@
             });
         });
         
-        // ========== SPF 数据逻辑 ==========
-        const loadSpfDataBtn = document.getElementById('loadSpfDataBtn');
-        const spfDateInput = document.getElementById('spfDateInput');
+        // ========== SPF 共同对手数据逻辑 ==========
+        const loadCommonMatchBtn = document.getElementById('loadCommonMatchBtn');
         const spfStatusMessage = document.getElementById('spfStatusMessage');
         const spfProgressFill = document.getElementById('spfProgressFill');
-        const spfOddsSection = document.getElementById('spfOddsSection');
         const spfCommonSection = document.getElementById('spfCommonSection');
-        const spfOddsBody = document.getElementById('spfOddsBody');
         const spfCommonBody = document.getElementById('spfCommonBody');
         
         function showSpfStatus(message, type = 'info') {
@@ -1329,120 +1297,39 @@
             spfProgressFill.style.width = `${percent}%`;
         }
         
-        // 自动设置日期（当天日期 月.日 格式）
-        function setDefaultSpfDate() {
-            const now = new Date();
-            const month = now.getMonth() + 1;
-            const day = now.getDate();
-            spfDateInput.value = `${month}.${day}`;
-        }
-        
-        // 将用户输入的 月.日 格式转为 月_日 格式（用于文件名）
-        function spfDateTagToFileTag(dateTag) {
-            return dateTag.replace('.', '_');
-        }
-        
-        // 加载 SPF 数据
-        async function loadSpfData() {
-            const dateTag = spfDateInput.value.trim();
-            if (!dateTag) {
-                showSpfStatus('请输入日期标记（例如 6.16）', 'error');
-                return;
-            }
-            
-            // 获取今天的日期，用于默认日期
-            const today = new Date();
-            const defaultDate = `${today.getMonth()+1}.${today.getDate()}`;
-            // 转为文件路径格式（点变下划线）
-            const fileTag = spfDateTagToFileTag(dateTag);
-            
-            showSpfStatus(`正在加载 SPF 数据 (${dateTag})...`, 'info');
+        // 加载共同对手数据
+        async function loadCommonMatchData() {
+            showSpfStatus('正在加载共同对手数据...', 'info');
             updateSpfProgress(20);
             
-            // 1. 加载 SPF 赔率数据（新格式: {M}_{D}_spf.json）
-            const spfUrl = `./spf/data/${fileTag}_spf.json?t=${Date.now()}`;
-            let spfData = null;
+            const url = `./spf/data/common_match.json?t=${Date.now()}`;
             try {
-                const resp = await fetch(spfUrl);
+                const resp = await fetch(url);
                 if (!resp.ok) {
-                    // 尝试默认日期
-                    if (dateTag !== defaultDate) {
-                        spfDateInput.value = defaultDate;
-                        return await loadSpfData();
-                    }
-                    throw new Error(`文件不存在: spf/data/${fileTag}_spf.json`);
+                    throw new Error('common_match.json 不存在，请先运行 spf_fetch_history.py 生成数据');
                 }
-                spfData = await resp.json();
-                updateSpfProgress(50);
+                const data = await resp.json();
+                updateSpfProgress(70);
+                
+                renderCommonMatchData(data);
+                spfCommonSection.style.display = 'block';
+                updateSpfProgress(100);
+                showSpfStatus(`成功加载 ${data.total_matches || 0} 场比赛的共同对手数据`, 'success');
             } catch (e) {
                 updateSpfProgress(0);
                 showSpfStatus(`加载失败: ${e.message}`, 'error');
-                return;
             }
-            
-            // 2. 渲染赔率表格
-            renderSpfOddsTable(spfData);
-            spfOddsSection.style.display = 'block';
-            updateSpfProgress(70);
-            
-            // 3. 加载共同对手数据（新格式: {M}_{D}_common.json）
-            const gtUrl = `./spf/data/${fileTag}_common.json?t=${Date.now()}`;
-            try {
-                const gtResp = await fetch(gtUrl);
-                if (gtResp.ok) {
-                    const gtData = await gtResp.json();
-                    renderCommonOpponents(gtData, spfData);
-                    spfCommonSection.style.display = 'block';
-                } else {
-                    spfCommonSection.style.display = 'none';
-                }
-            } catch (e) {
-                spfCommonSection.style.display = 'none';
-            }
-            
-            updateSpfProgress(100);
-            showSpfStatus(`成功加载 ${spfData.length} 场比赛的SPF赔率数据`, 'success');
         }
         
-        // 渲染 SPF 赔率表格
-        function renderSpfOddsTable(spfData) {
-            if (!Array.isArray(spfData) || spfData.length === 0) {
-                spfOddsBody.innerHTML = '<tr><td colspan="11" style="padding: 20px; opacity: 0.7;">暂无数据</td></tr>';
-                return;
-            }
-            
-            let html = '';
-            spfData.forEach((match, index) => {
-                const spf = match.spf_odds || {};
-                const nspf = match.nspf_odds || {};
-                html += `
-                    <tr>
-                        <td><strong>${match.match_num || index + 1}</strong></td>
-                        <td>${match.league || '-'}</td>
-                        <td class="team-cell" style="color: #00bcd4;">${match.home_team || '-'}</td>
-                        <td class="team-cell" style="color: #ff9800;">${match.away_team || '-'}</td>
-                        <td>${match.date || ''}<br><small style="opacity:0.6;">${match.dayofweek || ''}</small></td>
-                        <td>${spf.主胜 !== undefined ? spf.主胜.toFixed(2) : '-'}</td>
-                        <td>${spf.平 !== undefined ? spf.平.toFixed(2) : '-'}</td>
-                        <td>${spf.客胜 !== undefined ? spf.客胜.toFixed(2) : '-'}</td>
-                        <td>${nspf.主胜 !== undefined ? nspf.主胜.toFixed(2) : '-'}</td>
-                        <td>${nspf.平 !== undefined ? nspf.平.toFixed(2) : '-'}</td>
-                        <td>${nspf.客胜 !== undefined ? nspf.客胜.toFixed(2) : '-'}</td>
-                    </tr>
-                `;
-            });
-            spfOddsBody.innerHTML = html;
-        }
-        
-        // 渲染共同对手分析
-        function renderCommonOpponents(gtData, spfData) {
-            const matches = gtData.matches || [];
+        // 渲染共同对手数据
+        function renderCommonMatchData(data) {
+            const matches = data.matches || [];
             if (!matches || matches.length === 0) {
                 spfCommonBody.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">暂无共同对手数据</p>';
                 return;
             }
             
-            let html = `<p style="margin-bottom: 20px; opacity: 0.8;">生成时间: ${gtData.generate_time || '未知'} | 总比赛数: ${gtData.total_matches || matches.length}</p>`;
+            let html = `<p style="margin-bottom: 20px; opacity: 0.8;">生成时间: ${data.generate_time || '未知'} | 总比赛数: ${data.total_matches || matches.length}</p>`;
             
             matches.forEach((match, idx) => {
                 const count = match.common_opponent_count || 0;
@@ -1480,8 +1367,80 @@
                     const opponents = match.common_opponent_data;
                     const opponentNames = Object.keys(opponents);
                     if (opponentNames.length > 0) {
-                        html += `<div style="font-size: 0.9em;"><strong>共同对手:</strong> `;
+                        html += `<div style="font-size: 0.9em; margin-bottom: 12px;"><strong>共同对手:</strong> `;
                         html += opponentNames.map(name => `<span style="display: inline-block; padding: 2px 10px; margin: 2px 4px; background: rgba(0,188,212,0.1); border-radius: 10px;">${name}</span>`).join('');
+                        html += `</div>`;
+                        
+                        // 显示每场共同对手的详细比赛记录
+                        html += `<div style="margin-top: 10px;">`;
+                        opponentNames.forEach(name => {
+                            const opp = opponents[name];
+                            if (opp._is_direct_match) {
+                                html += `<details style="margin-bottom: 8px;">
+                                    <summary style="cursor: pointer; color: #ff9800; font-weight: 600; font-size: 0.9em;">${name}</summary>`;
+                            } else {
+                                html += `<details style="margin-bottom: 8px;">
+                                    <summary style="cursor: pointer; color: #4caf50; font-weight: 600; font-size: 0.9em;">${name}</summary>`;
+                            }
+                            
+                            // 主队 vs 共同对手
+                            if (opp.home_vs_opponent && opp.home_vs_opponent.length > 0) {
+                                html += `<div style="margin: 8px 0 4px 16px; font-size: 0.85em;">
+                                    <span style="color: #00bcd4;">${match.home_team} vs ${name}:</span>
+                                    <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.9em;">
+                                        <tr style="background: rgba(0,188,212,0.08);">
+                                            <th style="padding: 4px 6px; text-align: left;">日期</th>
+                                            <th style="padding: 4px 6px; text-align: center;">主队</th>
+                                            <th style="padding: 4px 6px; text-align: center;">比分</th>
+                                            <th style="padding: 4px 6px; text-align: center;">客队</th>
+                                            <th style="padding: 4px 6px; text-align: center;">结果</th>
+                                        </tr>`;
+                                opp.home_vs_opponent.forEach(m => {
+                                    const isHome = m.homesxname === match.home_team;
+                                    const score = `${m.homescore}-${m.awayscore}`;
+                                    const result = isHome ? m.result1 : m.result2;
+                                    const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
+                                    html += `<tr>
+                                        <td style="padding: 4px 6px;">${m.matchdate || ''}</td>
+                                        <td style="padding: 4px 6px; text-align: center; ${m.homesxname === match.home_team ? 'color:#00bcd4;font-weight:600' : ''}">${m.homesxname}</td>
+                                        <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
+                                        <td style="padding: 4px 6px; text-align: center; ${m.awaysxname === match.home_team ? 'color:#00bcd4;font-weight:600' : ''}">${m.awaysxname}</td>
+                                        <td style="padding: 4px 6px; text-align: center; color:${resultColor}; font-weight:600;">${result}</td>
+                                    </tr>`;
+                                });
+                                html += `</table></div>`;
+                            }
+                            
+                            // 客队 vs 共同对手
+                            if (opp.away_vs_opponent && opp.away_vs_opponent.length > 0) {
+                                html += `<div style="margin: 8px 0 4px 16px; font-size: 0.85em;">
+                                    <span style="color: #ff9800;">${match.away_team} vs ${name}:</span>
+                                    <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.9em;">
+                                        <tr style="background: rgba(255,152,0,0.08);">
+                                            <th style="padding: 4px 6px; text-align: left;">日期</th>
+                                            <th style="padding: 4px 6px; text-align: center;">主队</th>
+                                            <th style="padding: 4px 6px; text-align: center;">比分</th>
+                                            <th style="padding: 4px 6px; text-align: center;">客队</th>
+                                            <th style="padding: 4px 6px; text-align: center;">结果</th>
+                                        </tr>`;
+                                opp.away_vs_opponent.forEach(m => {
+                                    const isAway = m.awaysxname === match.away_team;
+                                    const score = `${m.homescore}-${m.awayscore}`;
+                                    const result = isAway ? m.result2 : m.result1;
+                                    const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
+                                    html += `<tr>
+                                        <td style="padding: 4px 6px;">${m.matchdate || ''}</td>
+                                        <td style="padding: 4px 6px; text-align: center; ${m.homesxname === match.away_team ? 'color:#ff9800;font-weight:600' : ''}">${m.homesxname}</td>
+                                        <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
+                                        <td style="padding: 4px 6px; text-align: center; ${m.awaysxname === match.away_team ? 'color:#ff9800;font-weight:600' : ''}">${m.awaysxname}</td>
+                                        <td style="padding: 4px 6px; text-align: center; color:${resultColor}; font-weight:600;">${result}</td>
+                                    </tr>`;
+                                });
+                                html += `</table></div>`;
+                            }
+                            
+                            html += `</details>`;
+                        });
                         html += `</div>`;
                     }
                     
@@ -1496,26 +1455,8 @@
             spfCommonBody.innerHTML = html;
         }
         
-        // SPF 加载按钮事件
-        loadSpfDataBtn.addEventListener('click', loadSpfData);
-        
-        // SPF 日期输入框回车键
-        spfDateInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                loadSpfData();
-            }
-        });
-        
-        // 初始化 - 设置默认日期
-        document.addEventListener('DOMContentLoaded', () => {
-            setDefaultSpfDate();
-            
-            showStatus('Web数据查看器已加载完成，正在自动获取期数...', 'info');
-            updateProgress(0);
-            
-            // 尝试自动获取期数（获取后会自动加载web.json数据）
-            fetchCurrentPeriod();
-        });
+        // 加载按钮事件
+        loadCommonMatchBtn.addEventListener('click', loadCommonMatchData);
         
 
     </script>
