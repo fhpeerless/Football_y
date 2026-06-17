@@ -36,26 +36,12 @@ jobs:
         python mobile_spf_fetcher.py
         echo "=== 数据获取完成 ==="
 
-    - name: 逐日获取近期战绩并提取共同对手
+    - name: 爬取历史数据并提取共同对手
       working-directory: ./spf
       run: |
-        echo "=== 逐日处理共同对手数据 ==="
-        python -c "
-import json
-with open('data/onsale_spf.json', encoding='utf-8') as f:
-    data = json.load(f)
-dates = sorted(set(m['date'] for m in data if m.get('date')))
-for d in dates:
-    p = d.split('-')
-    print(f'{int(p[1])}_{int(p[2])}')
-" | while read date_tag; do
-          echo "========================================"
-          echo "处理日期: $date_tag"
-          echo "========================================"
-          python spf_fetch_history.py "$date_tag"
-          echo "--- $date_tag 处理完成 ---"
-        done
-        echo "=== 所有日期处理完成 ==="
+        echo "=== 爬取历史数据 & 分析共同对手 ==="
+        python spf_fetch_history.py
+        echo "=== 处理完成 ==="
 
     - name: 提交 SPF 数据到仓库
       run: |
