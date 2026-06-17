@@ -422,7 +422,7 @@
         </div>
         
         <!-- SPF 数据页面 -->
-        <div id="tab-spf" class="tab-content">
+        <div id="tab-spf" class="tab-content active">
             <div class="spf-panel">
                 <h2 class="section-title"><i class="fas fa-handshake"></i> 共同对手分析</h2>
                 
@@ -455,7 +455,7 @@
         </div>
         
         <!-- 14场分析页面（原内容） -->
-        <div id="tab-f14" class="tab-content active">
+        <div id="tab-f14" class="tab-content">
         <div class="main-content">
             <div class="control-panel">
                 <h2 class="section-title"><i class="fas fa-sliders-h"></i> 控制面板</h2>
@@ -1458,6 +1458,8 @@
         // 加载按钮事件
         loadCommonMatchBtn.addEventListener('click', loadCommonMatchData);
         
+        // 页面加载后自动加载共同对手数据
+        loadCommonMatchData();
 
     </script>
 </body>
