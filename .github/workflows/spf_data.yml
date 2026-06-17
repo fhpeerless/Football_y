@@ -36,12 +36,19 @@ jobs:
         python mobile_spf_fetcher.py
         echo "=== 数据获取完成 ==="
 
-    - name: 爬取历史数据并提取共同对手
+    - name: 爬取历史数据
       working-directory: ./spf
       run: |
-        echo "=== 爬取历史数据 & 分析共同对手 ==="
+        echo "=== 爬取历史数据 ==="
         python spf_fetch_history.py
-        echo "=== 处理完成 ==="
+        echo "=== 爬取完成 ==="
+
+    - name: 分析共同对手
+      working-directory: ./spf
+      run: |
+        echo "=== 分析共同对手 ==="
+        python spf_common_opponents.py
+        echo "=== 分析完成 ==="
 
     - name: 提交 SPF 数据到仓库
       run: |
