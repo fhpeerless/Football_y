@@ -236,31 +236,12 @@ def main():
     else:
         print("获取让球胜平负数据失败")
 
-    # 合并保存（全部数据）
+    # 合并保存为单个文件（onsale_spf.json），包含所有日期的比赛
     merged = list(all_matches.values())
     merged.sort(key=lambda x: x["match_num"])
-    saved_path = save_to_data_file(merged, f"{date_tag}_shengpingfu")
-    print(f"\n合并后的SPF+NSPF数据已保存到: {saved_path}")
-    print(f"共 {len(merged)} 场比赛")
-
-    # =======================================================
-    # 按日期分组保存（供工作流按日处理）
-    # 格式: data/{M}_{D}_spf.json  (例如 6_16_spf.json)
-    # =======================================================
-    by_date = {}
-    for m in merged:
-        d = m.get("date", "")
-        if d:
-            by_date.setdefault(d, []).append(m)
-
-    print(f"\n按日期分组保存（共 {len(by_date)} 个比赛日）:")
-    for date_str, matches in sorted(by_date.items()):
-        parts = date_str.split("-")  # "2026-06-16" → ["2026", "06", "16"]
-        month = int(parts[1])
-        day = int(parts[2])
-        day_tag = f"{month}_{day}_spf"
-        save_to_data_file(matches, day_tag)
-        print(f"  {date_str} → {day_tag}.json  ({len(matches)} 场)")
+    saved_path = save_to_data_file(merged, "onsale_spf")
+    print(f"\n所有比赛数据已保存到: {saved_path}")
+    print(f"共 {len(merged)} 场比赛 (含多个比赛日)")
 
 
 if __name__ == "__main__":

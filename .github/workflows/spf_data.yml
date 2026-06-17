@@ -29,26 +29,26 @@ jobs:
       run: |
         pip install requests
 
-    - name: 获取所有比赛赔率数据并分组保存
+    - name: 获取所有比赛赔率数据
       working-directory: ./spf
       run: |
         echo "=== 获取所有比赛赔率数据 ==="
         python mobile_spf_fetcher.py
-        echo "=== SPF 数据获取完成 ==="
-        echo "生成的文件:"
-        ls -la data/*_spf.json 2>/dev/null || echo "  (无 *_spf.json 文件)"
+        echo "=== 数据获取完成 ==="
 
     - name: 逐日获取近期战绩并提取共同对手
       working-directory: ./spf
       run: |
         echo "=== 逐日处理共同对手数据 ==="
-        for f in data/*_spf.json; do
-          if [ ! -f "$f" ]; then
-            echo "未找到 *_spf.json 文件，跳过"
-            continue
-          fi
-          basename=$(basename "$f" .json)
-          date_tag="${basename%_spf}"
+        python -c "
+import json
+with open('data/onsale_spf.json', encoding='utf-8') as f:
+    data = json.load(f)
+dates = sorted(set(m['date'] for m in data if m.get('date')))
+for d in dates:
+    p = d.split('-')
+    print(f'{int(p[1])}_{int(p[2])}')
+" | while read date_tag; do
           echo "========================================"
           echo "处理日期: $date_tag"
           echo "========================================"

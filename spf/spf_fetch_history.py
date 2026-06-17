@@ -2,12 +2,12 @@
 基于SPF胜平负数据的共同对手比赛提取脚本
 
 核心思路:
-  1. 读取 data/{今日日期}_shengpingfu.json 中的比赛列表（含队名、日期）
-  2. 调用 score/zq/info API 获取多期数据，建立 日期+队名 → 球队ID 映射
+  1. 读取 data/onsale_spf.json 中的比赛列表（含队名、日期），按日期过滤
+  2. 调用 score/zq/info API 获取球队数据，建立 日期+队名 → 球队ID 映射
   3. 对每场SPF比赛，按日期+队名匹配获取homeid/awayid
   4. 用球队ID调用 recent_record API 获取历史交锋数据
   5. 从历史交锋数据中提取共同对手比赛信息
-  6. 保存到 data/{今日日期}_spfgtong.json
+  6. 保存到 data/{日期标记}_common.json
 """
 
 import json
@@ -63,73 +63,54 @@ def get_date_tag():
 # ============================================================
 
 def load_spf_matches(date_tag: str) -> list[dict]:
-    """读取 SPF 比赛数据，返回比赛列表
+    """从 onsale_spf.json 读取 SPF 比赛数据，按日期过滤
 
-    按以下顺序尝试文件:
-      1. data/{date_tag}_spf.json          (新格式, 例如 6_16_spf.json)
-      2. data/{date_tag}_shengpingfu.json  (旧格式, 例如 6.16_shengpingfu.json)
+    读取包含所有日期的 onsale_spf.json，
+    根据 date_tag（例如 6_17）过滤出对应日期的比赛
     """
     data_dir = os.path.join(get_project_root(), "data")
+    filepath = os.path.join(data_dir, "onsale_spf.json")
 
-    # 尝试新格式: {date_tag}_spf.json
-    filepath = os.path.join(data_dir, f"{date_tag}_spf.json")
-    if os.path.exists(filepath):
-        with open(filepath, "r", encoding="utf-8") as f:
-            matches = json.load(f)
-        print(f"已加载 {len(matches)} 场比赛的SPF数据: {filepath}")
-        return matches
+    if not os.path.exists(filepath):
+        print(f"错误: {filepath} 不存在")
+        print("请先运行 mobile_spf_fetcher.py 获取SPF数据")
+        exit(1)
 
-    # 尝试旧格式: 将 _ 替换为 . 再试 _shengpingfu.json
-    old_tag = date_tag.replace("_", ".")
-    filepath_old = os.path.join(data_dir, f"{old_tag}_shengpingfu.json")
-    if os.path.exists(filepath_old):
-        with open(filepath_old, "r", encoding="utf-8") as f:
-            matches = json.load(f)
-        print(f"已加载 {len(matches)} 场比赛的SPF数据: {filepath_old}")
-        return matches
+    with open(filepath, "r", encoding="utf-8") as f:
+        all_matches = json.load(f)
 
-    print(f"错误: SPF数据文件不存在")
-    print(f"  尝试过: {filepath}")
-    print(f"  尝试过: {filepath_old}")
-    print("请先运行 mobile_spf_fetcher.py 获取SPF数据")
-    exit(1)
+    # 从 date_tag (如 6_17) 解析月、日
+    parts = date_tag.split("_")
+    target_month = int(parts[0])
+    target_day = int(parts[1])
+
+    # 过滤出该日期的比赛
+    filtered = []
+    for m in all_matches:
+        d = m.get("date", "")
+        if d:
+            d_parts = d.split("-")
+            if int(d_parts[1]) == target_month and int(d_parts[2]) == target_day:
+                filtered.append(m)
+
+    if not filtered:
+        print(f"警告: {filepath} 中无 {date_tag} 的比赛数据")
+        print(f"  (onsale_spf.json 共 {len(all_matches)} 场比赛)")
+    else:
+        print(f"已加载 {len(filtered)} 场比赛的SPF数据 (日期: {date_tag}, 来源: {filepath})")
+
+    return filtered
 
 
 # ============================================================
 # 从 score/zq/info API 获取球队ID映射
 # ============================================================
 
-def fetch_score_info(period: str) -> list[dict]:
-    """
-    获取指定期数的score数据
-    返回比赛列表，每场包含: fid, homeid, awayid, homesxname, awaysxname, matchdate
-    """
-    url = f"https://ews.500.com/score/zq/info?vtype=sfc&expect={period}&_t={int(time.time() * 1000)}"
-    try:
-        resp = requests.get(url, headers=API_HEADERS, timeout=20, verify=False)
-        if resp.status_code == 200:
-            data = resp.json()
-            matches = data.get("data", {}).get("matches", [])
-            result = []
-            for m in matches:
-                result.append({
-                    "fid": m.get("fid", ""),
-                    "homeid": str(m.get("homeid", "")),
-                    "awayid": str(m.get("awayid", "")),
-                    "home": m.get("homesxname", ""),
-                    "away": m.get("awaysxname", ""),
-                    "date": m.get("matchdate", ""),
-                })
-            return result
-        return []
-    except Exception as e:
-        print(f"  获取期数 {period} 数据异常: {e}")
-        return []
-
-
 def get_team_id_mapping() -> dict:
     """
-    从 score/zq/info API 获取多期数据，建立队名→球队ID映射
+    从 score/zq/info API 获取球队ID映射
+
+    只获取最近一期数据，建立 日期+队名 → 球队ID 映射
 
     返回: {
         "日期||主队||客队": {"homeid": "10", "awayid": "32", "fid": "1359212"},
@@ -138,59 +119,59 @@ def get_team_id_mapping() -> dict:
     """
     print("\n正在从 score/zq/info API 获取球队数据...")
 
-    # 先获取当前期数和可用期数列表
-    now = time.time()
-    url = f"https://ews.500.com/score/zq/info?vtype=sfc&_t={int(now * 1000)}"
+    # 一次性获取最近一期的比赛数据（不指定 expect）
+    url = f"https://ews.500.com/score/zq/info?vtype=sfc&_t={int(time.time() * 1000)}"
     resp = requests.get(url, headers=API_HEADERS, timeout=20, verify=False)
-    available_periods = []
-    if resp.status_code == 200:
-        d = resp.json().get("data", {})
-        available_periods = d.get("expect_list", [])
-        print(f"可用期数: {available_periods}")
-
-    if not available_periods:
-        print("错误: 无法获取可用期数列表")
+    if resp.status_code != 200:
+        print("错误: API 请求失败")
         return {}
 
-    # 获取所有期数的数据
+    data = resp.json().get("data", {})
+    matches = data.get("matches", [])
+
+    if not matches:
+        # 如果首期没有比赛数据，尝试从 expect_list 取最近一期
+        expect_list = data.get("expect_list", [])
+        if expect_list:
+            period = expect_list[0]
+            url = f"https://ews.500.com/score/zq/info?vtype=sfc&expect={period}&_t={int(time.time() * 1000)}"
+            resp2 = requests.get(url, headers=API_HEADERS, timeout=20, verify=False)
+            if resp2.status_code == 200:
+                data = resp2.json().get("data", {})
+                matches = data.get("matches", [])
+
+    print(f"获取到 {len(matches)} 场比赛的球队数据")
+
     all_matches = {}  # key="日期||主队||客队" → {homeid, awayid}
-    team_name_map = {}  # 队名标准化映射
 
-    for period in available_periods:
-        print(f"  获取期数 {period} 的数据...")
-        matches = fetch_score_info(period)
-        print(f"    获取到 {len(matches)} 场比赛")
-        for m in matches:
-            if not m["homeid"] or not m["awayid"]:
-                continue
-            # 精确匹配key
-            key = f"{m['date']}||{m['home']}||{m['away']}"
-            if key not in all_matches:
-                all_matches[key] = {
-                    "homeid": m["homeid"],
-                    "awayid": m["awayid"],
-                    "fid": m["fid"],
-                    "home": m["home"],
-                    "away": m["away"],
-                    "date": m["date"],
-                }
-            # 也存一份反转（主客队互换）的版本，备用
-            rev_key = f"{m['date']}||{m['away']}||{m['home']}"
-            if rev_key not in all_matches:
-                all_matches[rev_key] = {
-                    "homeid": m["awayid"],
-                    "awayid": m["homeid"],
-                    "fid": m["fid"],
-                    "home": m["away"],
-                    "away": m["home"],
-                    "date": m["date"],
-                }
+    for m in matches:
+        homeid = str(m.get("homeid", ""))
+        awayid = str(m.get("awayid", ""))
+        if not homeid or not awayid:
+            continue
 
-        # 按队名建立映射（不依赖日期），用于跨日期查找
-        team_name_map[m["home"]] = m["homeid"]
-        team_name_map[m["away"]] = m["awayid"]
-
-        time.sleep(0.2)
+        # 精确匹配key
+        key = f"{m.get('matchdate', '')}||{m.get('homesxname', '')}||{m.get('awaysxname', '')}"
+        if key not in all_matches:
+            all_matches[key] = {
+                "homeid": homeid,
+                "awayid": awayid,
+                "fid": str(m.get("fid", "")),
+                "home": m.get("homesxname", ""),
+                "away": m.get("awaysxname", ""),
+                "date": m.get("matchdate", ""),
+            }
+        # 也存一份反转（主客队互换）的版本，备用
+        rev_key = f"{m.get('matchdate', '')}||{m.get('awaysxname', '')}||{m.get('homesxname', '')}"
+        if rev_key not in all_matches:
+            all_matches[rev_key] = {
+                "homeid": awayid,
+                "awayid": homeid,
+                "fid": str(m.get("fid", "")),
+                "home": m.get("awaysxname", ""),
+                "away": m.get("homesxname", ""),
+                "date": m.get("matchdate", ""),
+            }
 
     print(f"共获取 {len(all_matches)} 个比赛映射")
     return all_matches
