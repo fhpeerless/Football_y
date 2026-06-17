@@ -1,0 +1,16 @@
+# 密码/配置
+password_config.json
+present.json
+
+# Python缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 备份
+backup/
+
+# 环境
+.env
+venv/
+.venv/
