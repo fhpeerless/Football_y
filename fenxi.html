@@ -1391,19 +1391,22 @@
                                         <tr style="background: rgba(0,188,212,0.08);">
                                             <th style="padding: 4px 6px; text-align: left;">日期</th>
                                             <th style="padding: 4px 6px; text-align: center;">主队</th>
-                                            <th style="padding: 4px 6px; text-align: center;">比分</th>
+                                            <th style="padding: 4px 6px; text-align: center;">全场</th>
+                                            <th style="padding: 4px 6px; text-align: center;">半场</th>
                                             <th style="padding: 4px 6px; text-align: center;">客队</th>
                                             <th style="padding: 4px 6px; text-align: center;">结果</th>
                                         </tr>`;
                                 opp.home_vs_opponent.forEach(m => {
                                     const isHome = m.homesxname === match.home_team;
                                     const score = `${m.homescore}-${m.awayscore}`;
+                                    const halfScore = (m.homehalfscore !== undefined && m.awayhalfscore !== undefined) ? `${m.homehalfscore}-${m.awayhalfscore}` : '-';
                                     const result = isHome ? m.result1 : m.result2;
                                     const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
                                     html += `<tr>
                                         <td style="padding: 4px 6px;">${m.matchdate || ''}</td>
                                         <td style="padding: 4px 6px; text-align: center; ${m.homesxname === match.home_team ? 'color:#00bcd4;font-weight:600' : ''}">${m.homesxname}</td>
                                         <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
+                                        <td style="padding: 4px 6px; text-align: center; color:#888; font-size:0.9em;">(${halfScore})</td>
                                         <td style="padding: 4px 6px; text-align: center; ${m.awaysxname === match.home_team ? 'color:#00bcd4;font-weight:600' : ''}">${m.awaysxname}</td>
                                         <td style="padding: 4px 6px; text-align: center; color:${resultColor}; font-weight:600;">${result}</td>
                                     </tr>`;
@@ -1419,19 +1422,22 @@
                                         <tr style="background: rgba(255,152,0,0.08);">
                                             <th style="padding: 4px 6px; text-align: left;">日期</th>
                                             <th style="padding: 4px 6px; text-align: center;">主队</th>
-                                            <th style="padding: 4px 6px; text-align: center;">比分</th>
+                                            <th style="padding: 4px 6px; text-align: center;">全场</th>
+                                            <th style="padding: 4px 6px; text-align: center;">半场</th>
                                             <th style="padding: 4px 6px; text-align: center;">客队</th>
                                             <th style="padding: 4px 6px; text-align: center;">结果</th>
                                         </tr>`;
                                 opp.away_vs_opponent.forEach(m => {
                                     const isAway = m.awaysxname === match.away_team;
                                     const score = `${m.homescore}-${m.awayscore}`;
+                                    const halfScore = (m.homehalfscore !== undefined && m.awayhalfscore !== undefined) ? `${m.homehalfscore}-${m.awayhalfscore}` : '-';
                                     const result = isAway ? m.result2 : m.result1;
                                     const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
                                     html += `<tr>
                                         <td style="padding: 4px 6px;">${m.matchdate || ''}</td>
                                         <td style="padding: 4px 6px; text-align: center; ${m.homesxname === match.away_team ? 'color:#ff9800;font-weight:600' : ''}">${m.homesxname}</td>
                                         <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
+                                        <td style="padding: 4px 6px; text-align: center; color:#888; font-size:0.9em;">(${halfScore})</td>
                                         <td style="padding: 4px 6px; text-align: center; ${m.awaysxname === match.away_team ? 'color:#ff9800;font-weight:600' : ''}">${m.awaysxname}</td>
                                         <td style="padding: 4px 6px; text-align: center; color:${resultColor}; font-weight:600;">${result}</td>
                                     </tr>`;
