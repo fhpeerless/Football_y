@@ -390,6 +390,67 @@
             border: 1px solid rgba(244, 67, 54, 0.3);
         }
 
+        /* SPF 预测按钮 - 点击选中效果 */
+        .spf-predict-section {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding: 8px 0;
+        }
+        .spf-predict-btn {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+            user-select: none;
+            border: 2px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            text-align: center;
+            min-width: 52px;
+        }
+        .spf-predict-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+        .spf-predict-btn.selected-win {
+            background: rgba(76, 175, 80, 0.35);
+            border-color: #4caf50;
+            color: #4caf50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+        .spf-predict-btn.selected-draw {
+            background: rgba(255, 193, 7, 0.35);
+            border-color: #ffc107;
+            color: #ffc107;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+        }
+        .spf-predict-btn.selected-lose {
+            background: rgba(244, 67, 54, 0.35);
+            border-color: #f44336;
+            color: #f44336;
+            box-shadow: 0 0 10px rgba(244, 67, 54, 0.3);
+        }
+
+        /* 半全场赔率单元格 - 点击选中效果 */
+        .bqc-odds-cell {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .bqc-odds-cell:hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+        .bqc-odds-cell.selected {
+            background: rgba(76, 175, 80, 0.3) !important;
+            border: 2px solid #4caf50 !important;
+            transform: scale(1.02);
+            box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2rem;
@@ -1384,6 +1445,11 @@
                                 <span class="opponent-tag ${tagClass}">${tagText}</span>
                             </div>
                         </div>
+                        <div class="spf-predict-section">
+                            <span class="spf-predict-btn" onclick="selectPredict(this, 'win')">胜</span>
+                            <span class="spf-predict-btn" onclick="selectPredict(this, 'draw')">平</span>
+                            <span class="spf-predict-btn" onclick="selectPredict(this, 'lose')">负</span>
+                        </div>
                 `;
                 
                 if (count > 0 && match.common_opponent_data) {
@@ -1493,6 +1559,11 @@
             });
             
             spfCommonBody.innerHTML = html;
+        }
+        
+        // SPF 预测按钮点击切换函数 - 每个按钮独立切换，互不影响
+        function selectPredict(btn, outcome) {
+            btn.classList.toggle('selected-' + outcome);
         }
         
         // 加载按钮事件
@@ -1618,7 +1689,7 @@
                         }
                         if (i % 3 === 0) html += '</tr><tr>';
                         html += `
-                            <td style="padding: 8px 6px; text-align: center; border: 1px solid rgba(255,255,255,0.08);">
+                            <td class="bqc-odds-cell" data-key="${key}" style="padding: 8px 6px; text-align: center; border: 1px solid rgba(255,255,255,0.08);" onclick="this.classList.toggle('selected')">
                                 <div style="font-weight: 600; color: ${color}; font-size: 1.1em;">${oddsVal}</div>
                                 <div style="font-size: 0.8em; opacity: 0.7;">${info.label}</div>
                                 <div style="font-size: 0.7em; opacity: 0.5;">${info.desc}</div>
