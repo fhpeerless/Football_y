@@ -451,19 +451,199 @@
             box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
         }
 
+        /* ========== 移动端独立样式 ========== */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            /* 整体缩小 */
+            body {
+                padding: 8px;
+            }
+            .container {
+                padding: 12px;
+                border-radius: 12px;
+            }
+            header {
+                margin-bottom: 12px;
+                padding-bottom: 10px;
+            }
+            header h1 {
+                font-size: 1.3rem;
+            }
+            header .subtitle {
+                font-size: 0.75rem;
+            }
+
+            /* Tab 导航固定到底部 */
+            .tab-nav {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                margin-bottom: 0;
+                border-radius: 0;
+                border: none;
+                border-top: 1px solid rgba(255,255,255,0.15);
+                background: rgba(26, 35, 78, 0.98);
+                backdrop-filter: blur(10px);
+                padding: 4px 6px;
             }
             .tab-btn {
-                font-size: 0.85rem;
-                padding: 10px 12px;
+                font-size: 0.75rem;
+                padding: 8px 6px;
+                border-radius: 6px;
+                gap: 4px;
             }
+            .tab-btn i {
+                font-size: 0.85rem;
+            }
+            /* 内容区域底部留白，避免被固定tab遮挡 */
+            .tab-content {
+                padding-bottom: 56px;
+            }
+
+            /* 通用缩放 */
+            .section-title {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+            .section-title i {
+                font-size: 1.1rem;
+            }
+            .spf-panel {
+                padding: 12px;
+                border-radius: 10px;
+            }
+            .control-panel,
+            .results-panel {
+                padding: 12px;
+                border-radius: 10px;
+            }
+            .results-panel {
+                max-height: none;
+            }
+            .btn-group {
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-top: 10px;
+            }
+            .btn-group button {
+                flex: 1 1 auto;
+                min-width: 0;
+                font-size: 0.78rem;
+                padding: 8px 10px;
+            }
+            input, select, button {
+                font-size: 0.85rem;
+                padding: 8px 10px;
+            }
+            .form-group {
+                margin-bottom: 10px;
+            }
+            label {
+                font-size: 0.85rem;
+                margin-bottom: 4px;
+            }
+
+            /* 14场 - 快速跳转按钮 */
+            .match-buttons {
+                gap: 4px;
+            }
+            .match-btn {
+                font-size: 0.75rem;
+                padding: 6px 8px;
+                min-width: 0;
+            }
+
+            /* SPF 比赛卡片 */
+            .spf-match-card {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            .spf-match-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+                margin-bottom: 8px;
+                padding-bottom: 8px;
+            }
+            .spf-match-header h4 {
+                font-size: 0.85rem !important;
+            }
+            .spf-match-header > div:last-child {
+                flex-wrap: wrap;
+                gap: 6px;
+                width: 100%;
+            }
+            .spf-match-header > div:last-child > span:first-child {
+                font-size: 0.8rem !important;
+            }
+            .opponent-tag {
+                font-size: 0.75rem;
+                padding: 2px 8px;
+            }
+
+            /* SPF 预测按钮 */
+            .spf-predict-section {
+                gap: 4px;
+                padding: 4px 0;
+                margin-bottom: 6px;
+            }
+            .spf-predict-btn {
+                font-size: 0.78rem;
+                padding: 4px 12px;
+                min-width: 40px;
+            }
+
+            /* SPF 表格 (共同对手详情) */
             .spf-table {
-                font-size: 0.75em;
+                font-size: 0.65em;
             }
             .spf-table th, .spf-table td {
-                padding: 6px 4px;
+                padding: 3px 3px;
+            }
+            details {
+                font-size: 0.8rem;
+            }
+            details summary {
+                font-size: 0.82rem;
+            }
+            details table {
+                font-size: 0.7rem;
+            }
+            details table th,
+            details table td {
+                padding: 2px 3px !important;
+            }
+
+            /* 半全场赔率表 */
+            .bqc-odds-cell {
+                font-size: 0.85em;
+            }
+            .bqc-odds-cell td {
+                padding: 4px 3px !important;
+            }
+
+            /* 进度条 */
+            .progress-bar {
+                height: 6px;
+                margin: 8px 0;
+            }
+
+            /* 状态消息 */
+            .status {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            /* 通用文本 */
+            p {
+                font-size: 0.82rem !important;
+            }
+
+            /* 下载链接 */
+            .download-link {
+                font-size: 0.85rem;
+                padding: 8px 12px;
             }
         }
     </style>
