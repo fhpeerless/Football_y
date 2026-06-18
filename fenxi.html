@@ -1614,6 +1614,14 @@
                 const tagClass = count > 0 ? 'has-data' : 'no-data';
                 const tagText = count > 0 ? `共同对手: ${count} 队` : '无共同对手';
                 
+                // 相邻比赛之间的彩色分割线
+                if (idx > 0) {
+                    const hue = (idx * 47) % 360;
+                    html += `
+                        <div style="height: 2px; margin: 16px 0; border-radius: 2px; background: linear-gradient(90deg, transparent, hsl(${hue}, 80%, 60%), transparent);"></div>
+                    `;
+                }
+                
                 html += `
                     <div class="spf-match-card">
                         <div class="spf-match-header">
