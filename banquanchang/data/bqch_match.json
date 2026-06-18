@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
   "generate_time": "2026-06-18 23:45:51",
   "period": "26119",
   "total_matches": 3,
@@ -64,4 +65,221 @@
       }
     }
   ]
+=======
+  "generate_time": "2026-06-19 07:37:59",
+  "data_source": "webapi.sporttery.cn",
+  "total_periods": 2,
+  "total_matches": 12,
+  "periods": [
+    "26119",
+    "26120"
+  ],
+  "data": {
+    "26119": [
+      {
+        "match_id": "2040243",
+        "match_num": 1,
+        "date": "2026-06-21",
+        "league": "世界杯",
+        "home_team": "荷  兰",
+        "away_team": "瑞  典",
+        "odds_spf": {
+          "h": "1.59",
+          "d": "3.58",
+          "a": "4.52"
+        },
+        "bqc_odds": {
+          "aa": "2.45",
+          "ac": "15.00",
+          "ab": "30.00",
+          "ca": "4.30",
+          "cc": "5.80",
+          "cb": "10.00",
+          "ba": "19.00",
+          "bc": "15.00",
+          "bb": "8.25",
+          "updatetime": "2026-06-18 09:22:38"
+        }
+      },
+      {
+        "match_id": "2040244",
+        "match_num": 2,
+        "date": "2026-06-21",
+        "league": "世界杯",
+        "home_team": "德  国",
+        "away_team": "科特迪",
+        "odds_spf": {
+          "h": "1.40",
+          "d": "4.15",
+          "a": "5.75"
+        },
+        "bqc_odds": {
+          "aa": "2.00",
+          "ac": "17.00",
+          "ab": "42.00",
+          "ca": "4.30",
+          "cc": "6.50",
+          "cb": "13.00",
+          "ba": "20.00",
+          "bc": "17.00",
+          "bb": "10.00",
+          "updatetime": "2026-06-18 09:22:38"
+        }
+      },
+      {
+        "match_id": "2040246",
+        "match_num": 3,
+        "date": "2026-06-21",
+        "league": "世界杯",
+        "home_team": "突尼斯",
+        "away_team": "日  本",
+        "odds_spf": {
+          "h": "5.75",
+          "d": "3.70",
+          "a": "1.46"
+        },
+        "bqc_odds": {
+          "aa": "10.50",
+          "ac": "17.00",
+          "ab": "24.00",
+          "ca": "12.00",
+          "cc": "6.00",
+          "cb": "4.00",
+          "ba": "40.00",
+          "bc": "17.00",
+          "bb": "2.11",
+          "updatetime": "2026-06-18 09:22:38"
+        }
+      },
+      {
+        "match_id": "2040247",
+        "match_num": 4,
+        "date": "2026-06-22",
+        "league": "世界杯",
+        "home_team": "西班牙",
+        "away_team": "沙  特",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      },
+      {
+        "match_id": "2040249",
+        "match_num": 5,
+        "date": "2026-06-22",
+        "league": "世界杯",
+        "home_team": "乌拉圭",
+        "away_team": "佛得角",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      },
+      {
+        "match_id": "2040250",
+        "match_num": 6,
+        "date": "2026-06-22",
+        "league": "世界杯",
+        "home_team": "新西兰",
+        "away_team": "埃  及",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      }
+    ],
+    "26120": [
+      {
+        "match_id": "2040251",
+        "match_num": 1,
+        "date": "2026-06-23",
+        "league": "世界杯",
+        "home_team": "阿根廷",
+        "away_team": "奥地利",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      },
+      {
+        "match_id": "2040252",
+        "match_num": 2,
+        "date": "2026-06-23",
+        "league": "世界杯",
+        "home_team": "法  国",
+        "away_team": "伊拉克",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      },
+      {
+        "match_id": "2040253",
+        "match_num": 3,
+        "date": "2026-06-23",
+        "league": "世界杯",
+        "home_team": "挪  威",
+        "away_team": "塞内加",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      },
+      {
+        "match_id": "2040255",
+        "match_num": 4,
+        "date": "2026-06-24",
+        "league": "世界杯",
+        "home_team": "葡萄牙",
+        "away_team": "乌兹别",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      },
+      {
+        "match_id": "2040256",
+        "match_num": 5,
+        "date": "2026-06-24",
+        "league": "世界杯",
+        "home_team": "英格兰",
+        "away_team": "加  纳",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      },
+      {
+        "match_id": "2040257",
+        "match_num": 6,
+        "date": "2026-06-24",
+        "league": "世界杯",
+        "home_team": "巴拿马",
+        "away_team": "克罗地",
+        "odds_spf": {
+          "h": "",
+          "d": "",
+          "a": ""
+        },
+        "bqc_odds": null
+      }
+    ]
+  }
+>>>>>>> Stashed changes
 }
