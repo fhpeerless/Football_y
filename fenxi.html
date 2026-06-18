@@ -263,7 +263,8 @@
         .tab-nav {
             display: flex;
             gap: 0;
-            margin-bottom: 25px;
+            margin: 0 auto 25px;
+            max-width: 1200px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
             padding: 4px;
@@ -472,20 +473,20 @@
                 font-size: 0.75rem;
             }
 
-            /* Tab 导航固定到底部 */
+            /* Tab 导航浮动在视口最下面 */
             .tab-nav {
                 position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                bottom: 12px;
+                left: 10px;
+                right: 10px;
                 z-index: 1000;
                 margin-bottom: 0;
-                border-radius: 0;
-                border: none;
-                border-top: 1px solid rgba(255,255,255,0.15);
-                background: rgba(26, 35, 78, 0.98);
-                backdrop-filter: blur(10px);
-                padding: 4px 6px;
+                border-radius: 14px;
+                border: 1px solid rgba(255,255,255,0.15);
+                background: rgba(26, 35, 78, 0.95);
+                backdrop-filter: blur(12px);
+                padding: 5px 6px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.4);
             }
             .tab-btn {
                 font-size: 0.75rem;
@@ -655,6 +656,7 @@
             <h1><i class="fas fa-futbol"></i> 足球预测概率合并工具</h1>
             <p class="subtitle">查看已生成的预测概率合并结果（web.json数据）</p>
         </header>
+        </div>  <!-- end .container -->
         
         <!-- 顶级分类导航 -->
         <div class="tab-nav">
@@ -663,6 +665,7 @@
             <button class="tab-btn" data-tab="bqc"><i class="fas fa-chart-pie"></i> 半全场数据</button>
         </div>
         
+        <div class="container">
         <!-- SPF 数据页面 -->
         <div id="tab-spf" class="tab-content active">
             <div class="spf-panel">
