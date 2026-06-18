@@ -1,0 +1,69 @@
+name: BQC Data Collection
+
+on:
+  schedule:
+    # 北京时间 8:01, 9:01, 11:01, 12:01, 14:01, 20:01, 22:01 执行 (UTC = BJT-8)
+    - cron: '1 0,1,3,4,6,12,14 * * *'
+  workflow_dispatch:
+
+jobs:
+  collect-bqc-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+        fetch-depth: 0
+
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 安装依赖
+      run: |
+        pip install requests
+
+    - name: 获取半全场所有比赛信息
+      working-directory: ./banquanchang
+      run: |
+        echo "=== 获取半全场比赛信息 ==="
+        python bqchmatch_requst.py
+        echo "=== 获取完成 ==="
+
+    - name: 爬取主客队历史比赛
+      working-directory: ./banquanchang
+      run: |
+        echo "=== 爬取主客队历史比赛 ==="
+        python bqch_home_away_history_request.py
+        echo "=== 爬取完成 ==="
+
+    - name: 分析共同比赛
+      working-directory: ./banquanchang
+      run: |
+        echo "=== 分析共同比赛 ==="
+        python find_bqch_common.py
+        echo "=== 分析完成 ==="
+
+    - name: 提交 BQC 数据到仓库
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add banquanchang/data/
+
+        git commit -m "更新BQC半全场数据/共同对手数据" || {
+          echo "没有更改可提交，跳过push步骤"
+          exit 0
+        }
+
+        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}" || {
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        }
