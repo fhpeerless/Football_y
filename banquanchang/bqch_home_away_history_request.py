@@ -1,15 +1,17 @@
 """
-通过 bqch_match.json 中最小期数的比赛，获取主队和客队的历史比赛
+通过 bqch_match.json 中所有期数的比赛，获取主队和客队的历史比赛
 
 流程:
-  1. 读取 data/bqch_match.json 中最小期数的6场比赛
-  2. 调用 sporttery.cn getMatchResultV1.qry API 获取两队近期比赛
+  1. 读取 data/bqch_match.json 中所有期数的比赛
+  2. 调用 sporttery.cn getMatchResultV1.qry API 获取两队近期比赛(各20场)
   3. 调用 getResultHistoryV1.qry API 获取历史交锋记录
   4. 保存到 data/bqch_homaway_history.json
 
-API来源: 分析 120003.har 中 sporttery.cn 网络请求
-  - getMatchResultV1.qry → 主客队各10场近期比赛
-  - getResultHistoryV1.qry → 历史交锋记录
+API来源: 分析 期数比赛的分析.har 中 sporttery.cn 网络请求
+  - getMatchResultV1.qry → 主客队各20场近期比赛(termLimits=20)
+  - getResultHistoryV1.qry → 历史交锋记录(termLimits=20)
+
+注意: 本脚本自动处理所有期数所有比赛，含重试机制确保数据完整。
 """
 
 import json
@@ -41,7 +43,9 @@ MATCH_RESULT_API = "https://webapi.sporttery.cn/gateway/uniform/football/getMatc
 # getResultHistoryV1.qry - 返回两队历史交锋记录
 MATCH_HISTORY_API = "https://webapi.sporttery.cn/gateway/uniform/football/getResultHistoryV1.qry"
 
-REQUEST_INTERVAL = 0.8
+REQUEST_INTERVAL = 0.8     # 请求间隔(秒)
+MAX_RETRIES = 3            # 最大重试次数
+RETRY_DELAY = 3            # 重试等待基数(秒)
 
 
 def get_project_root():
@@ -53,9 +57,9 @@ def get_project_root():
 # ============================================================
 
 def load_bqc_matches() -> list[dict]:
-    """读取 bqch_match.json 中最小期数的比赛数据
+    """读取 bqch_match.json 中所有期数的比赛数据
 
-    JSON结构: {data: {期号: [6场比赛]}} → 只取最小期数的比赛
+    JSON结构: {data: {期号: [6场比赛]}} → 加载所有期数的比赛
     """
     data_dir = os.path.join(get_project_root(), "data")
     filepath = os.path.join(data_dir, "bqch_match.json")
@@ -73,21 +77,54 @@ def load_bqc_matches() -> list[dict]:
         print("错误: 没有比赛数据")
         exit(1)
 
-    # 取最小期数
-    min_period = min(periods_data.keys())
-    matches = periods_data[min_period]
+    # 加载所有期数的比赛
+    all_matches = []
+    period_keys = sorted(periods_data.keys())
+    for period in period_keys:
+        matches = periods_data[period]
+        # 为每场比赛标注期数
+        for m in matches:
+            m["period"] = period
+        all_matches.extend(matches)
+        print(f"  期数 {period}: {len(matches)} 场比赛")
 
-    # 为每场比赛标注期数
-    for m in matches:
-        m["period"] = min_period
-
-    print(f"已加载 {len(matches)} 场比赛 (来源: {filepath}, 期数: {min_period})")
-    return matches
+    print(f"已加载 {len(all_matches)} 场比赛 (来源: {filepath}, 共 {len(period_keys)} 个期数)")
+    return all_matches
 
 
 # ============================================================
 # sporttery.cn API 调用
 # ============================================================
+
+def api_request_with_retry(url: str, params: dict, max_retries: int = MAX_RETRIES) -> dict:
+    """带重试机制的API请求
+
+    对网络波动和服务临时不可用进行最多 max_retries 次重试
+    """
+    for attempt in range(1, max_retries + 1):
+        try:
+            resp = requests.get(
+                url, params=params,
+                headers=SPORTTERY_HEADERS,
+                timeout=20, verify=False,
+            )
+            if resp.status_code == 200:
+                return resp.json()
+            print(f"    HTTP {resp.status_code}", end="")
+            if attempt < max_retries:
+                print(f" 等待{RETRY_DELAY * attempt}秒后重试({attempt}/{max_retries})...")
+                time.sleep(RETRY_DELAY * attempt)
+            else:
+                print("  放弃")
+        except Exception as e:
+            print(f"    请求异常: {e}", end="")
+            if attempt < max_retries:
+                print(f" 等待{RETRY_DELAY * attempt}秒后重试({attempt}/{max_retries})...")
+                time.sleep(RETRY_DELAY * attempt)
+            else:
+                print("  放弃")
+    return {}
+
 
 def fetch_history_for_match(sporttery_match_id: str) -> dict:
     """调用 getMatchResultV1.qry 获取两队近期比赛
@@ -103,21 +140,7 @@ def fetch_history_for_match(sporttery_match_id: str) -> dict:
         "tournamentFlag": "0",
         "homeAwayFlag": "0",
     }
-    try:
-        resp = requests.get(
-            MATCH_RESULT_API,
-            params=params,
-            headers=SPORTTERY_HEADERS,
-            timeout=20,
-            verify=False,
-        )
-        if resp.status_code == 200:
-            return resp.json()
-        print(f"    HTTP {resp.status_code}")
-        return {}
-    except Exception as e:
-        print(f"    请求异常: {e}")
-        return {}
+    return api_request_with_retry(MATCH_RESULT_API, params)
 
 
 def fetch_h2h_for_match(sporttery_match_id: str) -> list:
@@ -134,22 +157,10 @@ def fetch_h2h_for_match(sporttery_match_id: str) -> list:
         "tournamentFlag": "0",
         "homeAwayFlag": "0",
     }
-    try:
-        resp = requests.get(
-            MATCH_HISTORY_API,
-            params=params,
-            headers=SPORTTERY_HEADERS,
-            timeout=20,
-            verify=False,
-        )
-        if resp.status_code == 200:
-            data = resp.json()
-            return data.get("value", {}).get("matchList", [])
-        print(f"    HTTP {resp.status_code}")
-        return []
-    except Exception as e:
-        print(f"    请求异常: {e}")
-        return []
+    data = api_request_with_retry(MATCH_HISTORY_API, params)
+    if data and data.get("success"):
+        return data.get("value", {}).get("matchList", [])
+    return []
 
 
 # ============================================================
@@ -160,6 +171,7 @@ def fetch_all_history(bqc_matches: list[dict]) -> list[dict]:
     """爬取每场BQC比赛的历史数据（使用sporttery.cn API）"""
     results = []
     total = len(bqc_matches)
+    failures = []  # 记录失败的比赛
 
     for idx, match in enumerate(bqc_matches, 1):
         match_id = match.get("match_id", "")
@@ -176,6 +188,7 @@ def fetch_all_history(bqc_matches: list[dict]) -> list[dict]:
 
         home_record = {"team": home_team, "matches": [], "statistics": {}}
         away_record = {"team": away_team, "matches": [], "statistics": {}}
+        match_ok = False
 
         if history_json and history_json.get("success"):
             value = history_json.get("value", {})
@@ -185,7 +198,10 @@ def fetch_all_history(bqc_matches: list[dict]) -> list[dict]:
             home_record["statistics"] = home_data.get("statistics", {})
             away_record["matches"] = away_data.get("matchList", [])
             away_record["statistics"] = away_data.get("statistics", {})
-            print(f"  [成功] 主队 {len(home_record['matches'])} 场, 客队 {len(away_record['matches'])} 场")
+            h_cnt = len(home_record["matches"])
+            a_cnt = len(away_record["matches"])
+            print(f"  [成功] 主队 {h_cnt} 场, 客队 {a_cnt} 场")
+            match_ok = (h_cnt > 0 and a_cnt > 0)
         else:
             print(f"  [警告] getMatchResultV1.qry 请求失败或返回异常")
 
@@ -210,15 +226,34 @@ def fetch_all_history(bqc_matches: list[dict]) -> list[dict]:
             },
         }
         results.append(match_record)
+
+        if not match_ok:
+            failures.append({
+                "match_id": match_id,
+                "match_num": match_num,
+                "period": match.get("period", ""),
+                "home_team": home_team,
+                "away_team": away_team,
+            })
+
         time.sleep(REQUEST_INTERVAL)
+
+    # 报告失败情况
+    if failures:
+        print(f"\n  ⚠ 以下 {len(failures)} 场比赛历史数据获取不完整:")
+        for f in failures:
+            print(f"    期{f['period']} 场次{f['match_num']}: {f['home_team']} vs {f['away_team']} (id={f['match_id']})")
+    else:
+        print(f"\n  ✅ 全部 {total} 场比赛历史数据获取成功")
 
     return results
 
 
-def save_history(history_records: list[dict]):
-    """保存历史数据到 bqch_homaway_history.json"""
+def save_history(history_records: list[dict], periods: list = None):
+    """保存历史数据到 bqch_homaway_history.json（含期数信息）"""
     output = {
         "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
+        "periods": periods or [],
         "total_matches": len(history_records),
         "matches": history_records,
     }
@@ -241,16 +276,52 @@ def main():
     print("  BQC 半全场历史数据爬取 (sporttery.cn API)")
     print("=" * 70)
 
-    # 1. 读取BQC比赛
-    bqc_matches = load_bqc_matches()
+    # 1. 读取 bqch_match.json，获取所有期数数据
+    data_dir = os.path.join(get_project_root(), "data")
+    filepath = os.path.join(data_dir, "bqch_match.json")
 
-    # 2. 爬取每场比赛的历史数据
-    history_records = fetch_all_history(bqc_matches)
+    if not os.path.exists(filepath):
+        print(f"错误: {filepath} 不存在")
+        print("请先运行 bqchmatch_requst.py 获取BQC数据")
+        exit(1)
 
-    # 3. 保存历史数据
-    save_history(history_records)
+    with open(filepath, "r", encoding="utf-8") as f:
+        bqch_match_data = json.load(f)
 
-    print(f"\n全部完成！")
+    periods_data = bqch_match_data.get("data", {})
+    if not periods_data:
+        print("错误: 没有比赛数据")
+        exit(1)
+
+    period_keys = sorted(periods_data.keys())
+    print(f"共 {len(period_keys)} 个期数: {', '.join(period_keys)}")
+    print(f"{'=' * 70}")
+
+    all_history_records = []
+
+    # 2. 逐个期数处理
+    for period_idx, period in enumerate(period_keys, 1):
+        matches = periods_data[period]
+        # 为每场比赛标注期数
+        for m in matches:
+            m["period"] = period
+
+        print(f"\n{'─' * 70}")
+        print(f"[{period_idx}/{len(period_keys)}] 期数 {period}: {len(matches)} 场比赛")
+        print(f"{'─' * 70}")
+
+        # 获取该期数的所有比赛历史数据
+        period_records = fetch_all_history(matches)
+        all_history_records.extend(period_records)
+
+        print(f"\n  ✅ 期数 {period} 完成，已获取 {len(period_records)} 场比赛历史数据")
+
+    # 3. 保存所有历史数据（带期数信息）
+    print(f"\n{'=' * 70}")
+    all_periods = bqch_match_data.get("periods", period_keys)
+    save_history(all_history_records, periods=all_periods)
+    print(f"共处理 {len(period_keys)} 个期数，{len(all_history_records)} 场比赛")
+    print(f"全部完成！")
 
 
 if __name__ == "__main__":

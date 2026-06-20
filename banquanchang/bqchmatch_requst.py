@@ -129,9 +129,11 @@ def fetch_matches_for_period(period: str) -> list:
 
     API返回matchList，每场比赛字段:
       - matchNum:       场次序号(1-6)
-      - masterTeamName: 主队名
-      - guestTeamName:  客队名
-      - matchName:      赛事名称(如"世界杯")
+      - masterTeamName:     主队名(含空格截断,如"荷  兰")
+    - masterTeamAllName:  完整主队名(如"荷兰")
+    - guestTeamName:      客队名(含空格截断,如"瑞  典")
+    - guestTeamAllName:   完整客队名(如"瑞典")
+    - matchName:          赛事名称(如"世界杯")
       - startTime:      开赛日期
       - h/d/a:          胜/平/负赔率
       - infohubMatchId: 比赛ID
@@ -156,7 +158,9 @@ def fetch_matches_for_period(period: str) -> list:
         match_list = data["value"]["bqcMatch"].get("matchList", [])
         print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
         for m in match_list:
-            print(f"    #{m['matchNum']} {m['masterTeamName'].strip()} vs {m['guestTeamName'].strip()} ({m['matchName']})")
+            home = m.get("masterTeamAllName", "").strip() or m["masterTeamName"].strip()
+            away = m.get("guestTeamAllName", "").strip() or m["guestTeamName"].strip()
+            print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
         return match_list
     except Exception as e:
         print(f"  [错误] 获取期数{period}比赛数据异常: {e}")
@@ -225,13 +229,17 @@ def match_bqc_odds(api_matches: list, bqc_odds_map: dict) -> list:
     匹配策略: 通过 infohubMatchId 直接与XML的matchid匹配
     (BQC XML中无队伍名，只能按match_id匹配)
 
+    注意: 使用 masterTeamAllName/guestTeamAllName 获取完整球队名，
+          避免 masterTeamName/guestTeamName 的截断问题。
+
     返回: 匹配后的比赛记录列表
     """
     results = []
     for m in api_matches:
         match_id = str(m.get("infohubMatchId", ""))
-        home = m["masterTeamName"].strip()
-        away = m["guestTeamName"].strip()
+        # 优先使用完整球队名(masterTeamAllName)，避免截断问题(如"科特迪瓦"被截断为"科特迪")
+        home = (m.get("masterTeamAllName", "") or m["masterTeamName"]).strip()
+        away = (m.get("guestTeamAllName", "") or m["guestTeamName"]).strip()
 
         # 通过match_id匹配BQC赔率
         bqc_odds = bqc_odds_map.get(match_id, None)

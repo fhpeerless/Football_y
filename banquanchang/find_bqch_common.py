@@ -156,6 +156,7 @@ def process_single_match(match_record: dict) -> dict:
     result = {
         "match_id": match_record.get("match_id", ""),
         "matchnum": match_num,
+        "period": match_record.get("period", ""),
         "league": match_record.get("league", ""),
         "home_team": home_team,
         "away_team": away_team,

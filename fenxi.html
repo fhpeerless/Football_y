@@ -452,6 +452,28 @@
             box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
         }
 
+        /* 期数切换按钮 */
+        .period-btn {
+            padding: 6px 14px;
+            border: 1px solid rgba(0, 188, 212, 0.3);
+            background: transparent;
+            color: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        .period-btn:hover {
+            border-color: #00bcd4;
+            color: #00bcd4;
+        }
+        .period-btn.active {
+            background: rgba(0, 188, 212, 0.2);
+            color: #00bcd4;
+            border-color: #00bcd4;
+            box-shadow: 0 0 8px rgba(0, 188, 212, 0.3);
+        }
+
         /* ========== 移动端独立样式 ========== */
         @media (max-width: 768px) {
             /* 整体缩小 */
@@ -806,6 +828,7 @@
         <div id="bqcCommonSection" style="display: none;">
             <div class="spf-panel">
                 <h2 class="section-title"><i class="fas fa-list-alt"></i> 半全场分析结果</h2>
+                <div id="bqcPeriodNav" class="period-nav" style="margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;"></div>
                 <div id="bqcCommonBody"></div>
             </div>
         </div>
@@ -816,6 +839,8 @@
         // 全局变量
         let currentPeriod = '';
         let webData = null;
+        let bqcAllData = null;
+        let bqcCurrentPeriod = '';
         
         // DOM元素
         const periodInput = document.getElementById('periodInput');
@@ -1809,8 +1834,14 @@
                 const data = await resp.json();
                 updateBqcProgress(60);
                 
-                renderBqcCommonData(data);
+                // 存储数据并构建期数导航
+                bqcAllData = data;
                 bqcCommonSection.style.display = 'block';
+                const periods = data.periods || [];
+                bqcCurrentPeriod = periods.length > 0 ? periods[0] : '';
+                renderBqcPeriodNav();
+                renderBqcCommonData();
+                
                 updateBqcProgress(100);
                 showBqcStatus(`成功加载 ${data.total_matches || 0} 场比赛的半全场数据`, 'success');
             } catch (e) {
@@ -1820,19 +1851,27 @@
         }
         
         // 渲染半全场数据
-        function renderBqcCommonData(data) {
-            const matches = data.matches || [];
+        function renderBqcCommonData() {
+            if (!bqcAllData) return;
+            const allMatches = bqcAllData.matches || [];
+            let matches = allMatches;
+            if (bqcCurrentPeriod) {
+                matches = allMatches.filter(m => String(m.period) === String(bqcCurrentPeriod));
+            }
             if (!matches || matches.length === 0) {
-                bqcCommonBody.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">暂无半全场数据</p>';
+                const label = bqcCurrentPeriod ? `期数 ${bqcCurrentPeriod}` : '';
+                bqcCommonBody.innerHTML = `<p style="text-align: center; opacity: 0.7; padding: 20px;">${label ? label + '：' : ''}暂无半全场数据</p>`;
                 return;
             }
             
             let periodDisplay = '';
-            if (data.periods && data.periods.length > 0) {
-                periodDisplay = ` | 期数: ${data.periods.join(', ')}`;
+            if (bqcCurrentPeriod) {
+                periodDisplay = ` | 当前期数: ${bqcCurrentPeriod}期`;
+            } else if (bqcAllData.periods && bqcAllData.periods.length > 0) {
+                periodDisplay = ` | 总期数: ${bqcAllData.periods.join(', ')}`;
             }
             let html = `<p style="margin-bottom: 20px; opacity: 0.8;">
-                生成时间: ${data.generate_time || '未知'} | 总比赛数: ${data.total_matches || matches.length}${periodDisplay}
+                生成时间: ${bqcAllData.generate_time || '未知'} | 总比赛数: ${allMatches.length} | 当前显示: ${matches.length} 场${periodDisplay}
             </p>`;
             
             matches.forEach((match, idx) => {
@@ -1911,18 +1950,17 @@
                     `;
                 }
                 
+                // 主客队各自比赛记录数（始终显示）
+                html += `<div style="padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px;">`;
+                html += `
+                    <div style="display: flex; gap: 20px; margin-bottom: 15px; font-size: 0.9em;">
+                        <span>🏠 ${match.home_team} 记录: <strong>${match.home_matches_count || 0}</strong> 场</span>
+                        <span>✈️ ${match.away_team} 记录: <strong>${match.away_matches_count || 0}</strong> 场</span>
+                    </div>
+                `;
+                
                 // 共同对手数据
                 if (count > 0 && match.common_opponent_data) {
-                    html += `<div style="padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px;">`;
-                    
-                    // 主客队各自比赛记录数
-                    html += `
-                        <div style="display: flex; gap: 20px; margin-bottom: 15px; font-size: 0.9em;">
-                            <span>🏠 ${match.home_team} 记录: <strong>${match.home_matches_count || 0}</strong> 场</span>
-                            <span>✈️ ${match.away_team} 记录: <strong>${match.away_matches_count || 0}</strong> 场</span>
-                        </div>
-                    `;
-                    
                     const opponents = match.common_opponent_data;
                     const opponentNames = Object.keys(opponents);
                     if (opponentNames.length > 0) {
@@ -1995,16 +2033,39 @@
                         });
                         html += `</div>`;
                     }
-                    
-                    html += `</div>`;
                 } else if (!hasError) {
-                    html += `<p style="font-size: 0.9em; opacity: 0.6; padding: 10px 0;">该场比赛未能匹配到共同对手数据</p>`;
+                    html += `<p style="font-size: 0.9em; opacity: 0.6; padding: 0px 0 10px 0;">该场比赛未能匹配到共同对手数据</p>`;
                 }
+                html += `</div>`;
                 
                 html += `</div>`;
             });
             
             bqcCommonBody.innerHTML = html;
+        }
+        
+        // 渲染期数导航按钮
+        function renderBqcPeriodNav() {
+            const container = document.getElementById('bqcPeriodNav');
+            if (!bqcAllData) return;
+            const periods = bqcAllData.periods || [];
+            if (periods.length <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            let html = '<span style="opacity:0.7; margin-right:6px;">📅 期数:</span>';
+            periods.forEach(p => {
+                const active = p === bqcCurrentPeriod ? ' active' : '';
+                html += `<button class="period-btn${active}" onclick="switchBqcPeriod('${p}')">${p}期</button>`;
+            });
+            container.innerHTML = html;
+        }
+        
+        // 切换期数
+        function switchBqcPeriod(period) {
+            bqcCurrentPeriod = period;
+            renderBqcPeriodNav();
+            renderBqcCommonData();
         }
         
         // 加载按钮事件
