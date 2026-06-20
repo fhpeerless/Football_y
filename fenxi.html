@@ -1827,8 +1827,12 @@
                 return;
             }
             
+            let periodDisplay = '';
+            if (data.periods && data.periods.length > 0) {
+                periodDisplay = ` | 期数: ${data.periods.join(', ')}`;
+            }
             let html = `<p style="margin-bottom: 20px; opacity: 0.8;">
-                生成时间: ${data.generate_time || '未知'} | 总比赛数: ${data.total_matches || matches.length}
+                生成时间: ${data.generate_time || '未知'} | 总比赛数: ${data.total_matches || matches.length}${periodDisplay}
             </p>`;
             
             matches.forEach((match, idx) => {

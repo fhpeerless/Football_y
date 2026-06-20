@@ -30,6 +30,7 @@ jobs:
         pip install requests
 
     - name: 获取半全场所有比赛信息
+      id: fetch_matches
       working-directory: ./banquanchang
       run: |
         echo "=== 获取半全场比赛信息 ==="
@@ -37,6 +38,7 @@ jobs:
         echo "=== 获取完成 ==="
 
     - name: 爬取主客队历史比赛
+      if: steps.fetch_matches.outputs.bqch_status == 'continue'
       working-directory: ./banquanchang
       run: |
         echo "=== 爬取主客队历史比赛 ==="
@@ -44,6 +46,7 @@ jobs:
         echo "=== 爬取完成 ==="
 
     - name: 分析共同比赛
+      if: steps.fetch_matches.outputs.bqch_status == 'continue'
       working-directory: ./banquanchang
       run: |
         echo "=== 分析共同比赛 ==="
@@ -51,6 +54,7 @@ jobs:
         echo "=== 分析完成 ==="
 
     - name: 提交 BQC 数据到仓库
+      if: steps.fetch_matches.outputs.bqch_status == 'continue'
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"

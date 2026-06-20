@@ -39,6 +39,21 @@ warnings.filterwarnings("ignore")
 # 强制UTF-8输出
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
+
+# ============================================================
+# 通用辅助函数
+# ============================================================
+
+def set_github_action_output(key: str, value: str):
+    """在 GitHub Actions 环境中设置输出变量"""
+    github_output = os.environ.get('GITHUB_OUTPUT')
+    if github_output:
+        try:
+            with open(github_output, 'a', encoding='utf-8') as f:
+                f.write(f"{key}={value}\n")
+        except Exception:
+            pass
+
 # ============================================================
 # 配置
 # ============================================================
@@ -243,6 +258,30 @@ def match_bqc_odds(api_matches: list, bqc_odds_map: dict) -> list:
 
 
 # ============================================================
+# 本地期数检查
+# ============================================================
+
+def get_local_max_period(data_dir: str) -> int:
+    """读取本地 bqch_match.json 中最大期数，不存在或异常返回 -1"""
+    local_file = os.path.join(data_dir, "bqch_match.json")
+    if not os.path.exists(local_file):
+        print("  本地无历史数据，首次运行")
+        return -1
+    try:
+        with open(local_file, "r", encoding="utf-8") as f:
+            local_data = json.load(f)
+        local_periods = local_data.get("periods", [])
+        if not local_periods:
+            return -1
+        max_local = max(int(p) for p in local_periods)
+        print(f"  本地最大期数: {max_local}")
+        return max_local
+    except Exception as e:
+        print(f"  读取本地期数异常: {e}")
+        return -1
+
+
+# ============================================================
 # 主逻辑
 # ============================================================
 
@@ -260,6 +299,20 @@ def main():
         print("错误: 无法获取在售期数")
         exit(1)
     print(f"  ✓ 共 {len(periods)} 个在售期数: {periods}")
+
+    # 1b. 检查本地期数，判断是否有新期数
+    print("\n[检查] 对比本地期数...")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(script_dir, "data")
+    max_local = get_local_max_period(data_dir)
+    max_api = max(int(p) for p in periods)
+    print(f"  API最大期数: {max_api}")
+    if max_api <= max_local:
+        print("  无新期数，跳过本次执行")
+        set_github_action_output("bqch_status", "skip")
+        exit(0)
+    else:
+        print("  检测到新期数，继续获取数据...")
 
     # 2. 遍历每个期数获取比赛数据
     print("\n[步骤2] 获取各期比赛数据...")
@@ -323,6 +376,9 @@ def main():
     outpath = os.path.join(data_dir, "bqch_match.json")
     with open(outpath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
+
+    # 通知 GitHub Actions 有新数据，继续执行下游脚本
+    set_github_action_output("bqch_status", "continue")
 
     print(f"\n{'=' * 60}")
     print(f"  数据已保存到: {outpath}")

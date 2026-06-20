@@ -236,13 +236,25 @@ def analyze_common_opponents() -> list[dict]:
 
 def save_common_match(results: list[dict]):
     """保存共同对手数据到 bqch_common.json"""
+    # 从 bqch_match.json 读取期数信息
+    data_dir = os.path.join(get_project_root(), "data")
+    match_path = os.path.join(data_dir, "bqch_match.json")
+    periods = []
+    if os.path.exists(match_path):
+        try:
+            with open(match_path, "r", encoding="utf-8") as f:
+                match_data = json.load(f)
+            periods = match_data.get("periods", [])
+        except Exception as e:
+            print(f"  读取 bqch_match.json 期数失败: {e}")
+
     output = {
         "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
+        "periods": periods,
         "total_matches": len(results),
         "matches": results,
     }
 
-    data_dir = os.path.join(get_project_root(), "data")
     outpath = os.path.join(data_dir, "bqch_common.json")
     with open(outpath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)

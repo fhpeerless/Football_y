@@ -1,5 +1,9 @@
 {
-  "generate_time": "2026-06-20 10:58:05",
+  "generate_time": "2026-06-20 11:43:43",
+  "periods": [
+    "26119",
+    "26120"
+  ],
   "total_matches": 6,
   "matches": [
     {
@@ -80,34 +84,6 @@
             }
           ]
         },
-        "阿尔及利": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "荷兰",
-              "awaysxname": "阿尔及利",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-06-04",
-              "result1": "平",
-              "result2": "平"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "瑞典",
-              "awaysxname": "阿尔及利",
-              "homescore": 4,
-              "awayscore": 3,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2025-06-11",
-              "result1": "胜",
-              "result2": "负"
-            }
-          ]
-        },
         "匈牙利": {
           "home_vs_opponent": [
             {
@@ -144,6 +120,34 @@
               "matchdate": "2025-06-07",
               "result1": "平",
               "result2": "平"
+            }
+          ]
+        },
+        "阿尔及利": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "荷兰",
+              "awaysxname": "阿尔及利",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-04",
+              "result1": "平",
+              "result2": "平"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "瑞典",
+              "awaysxname": "阿尔及利",
+              "homescore": 4,
+              "awayscore": 3,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2025-06-11",
+              "result1": "胜",
+              "result2": "负"
             }
           ]
         }
@@ -249,45 +253,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
-        "塞尔维亚": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "西班牙",
-              "awaysxname": "塞尔维亚",
-              "homescore": 3,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-03-28",
-              "result1": "胜",
-              "result2": "负"
-            },
-            {
-              "homesxname": "西班牙",
-              "awaysxname": "塞尔维亚",
-              "homescore": 3,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2024-10-16",
-              "result1": "胜",
-              "result2": "负"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "塞尔维亚",
-              "awaysxname": "沙特",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-04-01",
-              "result1": "胜",
-              "result2": "负"
-            }
-          ]
-        },
         "埃及": {
           "home_vs_opponent": [
             {
@@ -341,6 +306,45 @@
               "matchdate": "2025-10-15",
               "result1": "平",
               "result2": "平"
+            }
+          ]
+        },
+        "塞尔维亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "西班牙",
+              "awaysxname": "塞尔维亚",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-28",
+              "result1": "胜",
+              "result2": "负"
+            },
+            {
+              "homesxname": "西班牙",
+              "awaysxname": "塞尔维亚",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2024-10-16",
+              "result1": "胜",
+              "result2": "负"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "塞尔维亚",
+              "awaysxname": "沙特",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-01",
+              "result1": "胜",
+              "result2": "负"
             }
           ]
         }
