@@ -1,468 +1,5 @@
 {
-<<<<<<< Updated upstream
-  "generate_time": "2026-06-18 23:46:16",
-  "total_matches": 3,
-  "matches": [
-    {
-      "match_id": "2040243",
-      "matchnum": "6033",
-      "league": "世界杯",
-      "home_team": "荷兰",
-      "away_team": "瑞典",
-      "date": "2026-06-21",
-      "home_matches_count": 20,
-      "away_matches_count": 20,
-      "common_opponent_count": 4,
-      "common_opponent_data": {
-        "波兰": {
-          "home_vs_opponent": [
-            {
-              "result1": "平",
-              "result2": "输",
-              "result3": "小",
-              "homeid": 37,
-              "awayid": 18,
-              "homescore": 1,
-              "awayscore": 1,
-              "league_id": 118,
-              "win": 4.51,
-              "draw": 3.66,
-              "lost": 1.78,
-              "iscup": 1,
-              "homestanding": 2,
-              "awaystanding": 1,
-              "status": 5,
-              "matchdate": "2025-11-15",
-              "fid": 1198518,
-              "homesxname": "波兰",
-              "awaysxname": "荷兰",
-              "simplegbname": "世外欧洲",
-              "seasonid": 7386,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "handicapball": 2.75,
-              "handicapline": "+0.75",
-              "handicaplinename": "受半球/一球",
-              "cornernum": 5,
-              "hcornernum": 2,
-              "acornernum": 3
-            },
-            {
-              "result1": "平",
-              "result2": "输",
-              "result3": "小",
-              "homeid": 18,
-              "awayid": 37,
-              "homescore": 1,
-              "awayscore": 1,
-              "league_id": 118,
-              "win": 1.25,
-              "draw": 5.85,
-              "lost": 10.81,
-              "iscup": 1,
-              "homestanding": 2,
-              "awaystanding": 3,
-              "status": 5,
-              "matchdate": "2025-09-05",
-              "fid": 1198514,
-              "homesxname": "荷兰",
-              "awaysxname": "波兰",
-              "simplegbname": "世外欧洲",
-              "seasonid": 7386,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "handicapball": 3.0,
-              "handicapline": "-1.75",
-              "handicaplinename": "球半/两球",
-              "cornernum": 11,
-              "hcornernum": 7,
-              "acornernum": 4
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 27,
-              "awayid": 37,
-              "homescore": 3,
-              "awayscore": 2,
-              "league_id": 118,
-              "win": 2.1,
-              "draw": 3.34,
-              "lost": 3.55,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2026-04-01",
-              "fid": 1402470,
-              "homesxname": "瑞典",
-              "awaysxname": "波兰",
-              "simplegbname": "世外欧洲",
-              "seasonid": 7386,
-              "homehalfscore": 2,
-              "awayhalfscore": 1,
-              "handicapball": 2.5,
-              "handicapline": "-0.5",
-              "handicaplinename": "半球",
-              "cornernum": 11,
-              "hcornernum": 2,
-              "acornernum": 9
-            }
-          ]
-        },
-        "匈牙利": {
-          "home_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 18,
-              "awayid": 55,
-              "homescore": 4,
-              "awayscore": 0,
-              "league_id": 676,
-              "win": 1.35,
-              "draw": 5.04,
-              "lost": 8.29,
-              "iscup": 1,
-              "homestanding": 2,
-              "awaystanding": 3,
-              "status": 5,
-              "matchdate": "2024-11-17",
-              "fid": 1171087,
-              "homesxname": "荷兰",
-              "awaysxname": "匈牙利",
-              "simplegbname": "欧国联",
-              "seasonid": 7304,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "handicapball": 3.0,
-              "handicapline": "-1.5",
-              "handicaplinename": "球半",
-              "cornernum": 9,
-              "hcornernum": 5,
-              "acornernum": 4
-            },
-            {
-              "result1": "平",
-              "result2": "输",
-              "result3": "小",
-              "homeid": 55,
-              "awayid": 18,
-              "homescore": 1,
-              "awayscore": 1,
-              "league_id": 676,
-              "win": 5.02,
-              "draw": 4.0,
-              "lost": 1.64,
-              "iscup": 1,
-              "homestanding": 4,
-              "awaystanding": 2,
-              "status": 5,
-              "matchdate": "2024-10-12",
-              "fid": 1171083,
-              "homesxname": "匈牙利",
-              "awaysxname": "荷兰",
-              "simplegbname": "欧国联",
-              "seasonid": 7304,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "handicapball": 2.75,
-              "handicapline": "+0.75",
-              "handicaplinename": "受半球/一球",
-              "cornernum": 7,
-              "hcornernum": 2,
-              "acornernum": 5
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "小",
-              "homeid": 55,
-              "awayid": 27,
-              "homescore": 0,
-              "awayscore": 2,
-              "league_id": 65,
-              "win": 2.54,
-              "draw": 3.34,
-              "lost": 2.58,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-06-07",
-              "fid": 1198551,
-              "homesxname": "匈牙利",
-              "awaysxname": "瑞典",
-              "simplegbname": "友谊赛",
-              "seasonid": 7388,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "handicapball": 2.5,
-              "handicapline": "0",
-              "handicaplinename": "平手",
-              "cornernum": 13,
-              "hcornernum": 5,
-              "acornernum": 8
-            }
-          ]
-        },
-        "挪威": {
-          "home_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 18,
-              "awayid": 31,
-              "homescore": 2,
-              "awayscore": 1,
-              "league_id": 65,
-              "win": 1.7,
-              "draw": 3.91,
-              "lost": 4.27,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2026-03-28",
-              "fid": 1393595,
-              "homesxname": "荷兰",
-              "awaysxname": "挪威",
-              "simplegbname": "友谊赛",
-              "seasonid": 19472,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "handicapball": 2.75,
-              "handicapline": "-0.75",
-              "handicaplinename": "半球/一球",
-              "cornernum": 0,
-              "hcornernum": 0,
-              "acornernum": 0
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "负",
-              "result2": "输",
-              "result3": "大",
-              "homeid": 31,
-              "awayid": 27,
-              "homescore": 3,
-              "awayscore": 1,
-              "league_id": 65,
-              "win": 1.68,
-              "draw": 3.91,
-              "lost": 4.45,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2026-06-02",
-              "fid": 1406335,
-              "homesxname": "挪威",
-              "awaysxname": "瑞典",
-              "simplegbname": "友谊赛",
-              "seasonid": 19472,
-              "homehalfscore": 3,
-              "awayhalfscore": 0,
-              "handicapball": 2.75,
-              "handicapline": "-0.75",
-              "handicaplinename": "半球/一球",
-              "cornernum": 0,
-              "hcornernum": 0,
-              "acornernum": 0
-            }
-          ]
-        },
-        "阿尔及利亚": {
-          "home_vs_opponent": [
-            {
-              "result1": "负",
-              "result2": "输",
-              "result3": "小",
-              "homeid": 18,
-              "awayid": 69,
-              "homescore": 0,
-              "awayscore": 1,
-              "league_id": 65,
-              "win": 1.3,
-              "draw": 5.2,
-              "lost": 8.66,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2026-06-04",
-              "fid": 1393310,
-              "homesxname": "荷兰",
-              "awaysxname": "阿尔及利亚",
-              "simplegbname": "友谊赛",
-              "seasonid": 19472,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "handicapball": 3.0,
-              "handicapline": "-1.5",
-              "handicaplinename": "球半",
-              "cornernum": 0,
-              "hcornernum": 0,
-              "acornernum": 0
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 27,
-              "awayid": 69,
-              "homescore": 4,
-              "awayscore": 3,
-              "league_id": 65,
-              "win": 2.0,
-              "draw": 3.48,
-              "lost": 3.38,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-06-11",
-              "fid": 1199097,
-              "homesxname": "瑞典",
-              "awaysxname": "阿尔及利亚",
-              "simplegbname": "友谊赛",
-              "seasonid": 7388,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "handicapball": 2.5,
-              "handicapline": "-0.5",
-              "handicaplinename": "半球",
-              "cornernum": 11,
-              "hcornernum": 5,
-              "acornernum": 6
-            }
-          ]
-        }
-      },
-      "bqc_odds": {
-        "aa": "2.45",
-        "ac": "15.00",
-        "ab": "30.00",
-        "ca": "4.30",
-        "cc": "5.80",
-        "cb": "10.00",
-        "ba": "19.00",
-        "bc": "15.00",
-        "bb": "8.25",
-        "updatetime": "2026-06-18 09:22:38"
-      }
-    },
-    {
-      "match_id": "2040244",
-      "matchnum": "6034",
-      "league": "世界杯",
-      "home_team": "德国",
-      "away_team": "科特迪瓦",
-      "date": "2026-06-21",
-      "home_matches_count": 20,
-      "away_matches_count": 20,
-      "common_opponent_count": 1,
-      "common_opponent_data": {
-        "法国": {
-          "home_vs_opponent": [
-            {
-              "result1": "负",
-              "result2": "输",
-              "result3": "小",
-              "homeid": 13,
-              "awayid": 10,
-              "homescore": 0,
-              "awayscore": 2,
-              "league_id": 676,
-              "win": 2.45,
-              "draw": 3.74,
-              "lost": 2.62,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-06-08",
-              "fid": 1198979,
-              "homesxname": "德国",
-              "awaysxname": "法国",
-              "simplegbname": "欧国联",
-              "seasonid": 7304,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "handicapball": 3.25,
-              "handicapline": "0",
-              "handicaplinename": "平手",
-              "cornernum": 15,
-              "hcornernum": 9,
-              "acornernum": 6
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "走",
-              "homeid": 10,
-              "awayid": 59,
-              "homescore": 1,
-              "awayscore": 2,
-              "league_id": 65,
-              "win": 1.21,
-              "draw": 6.22,
-              "lost": 11.07,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2026-06-05",
-              "fid": 1397147,
-              "homesxname": "法国",
-              "awaysxname": "科特迪瓦",
-              "simplegbname": "友谊赛",
-              "seasonid": 19472,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "handicapball": 3.0,
-              "handicapline": "-2",
-              "handicaplinename": "两球",
-              "cornernum": 10,
-              "hcornernum": 8,
-              "acornernum": 2
-            }
-          ]
-        }
-      },
-      "bqc_odds": {
-        "aa": "2.00",
-        "ac": "17.00",
-        "ab": "42.00",
-        "ca": "4.30",
-        "cc": "6.50",
-        "cb": "13.00",
-        "ba": "20.00",
-        "bc": "17.00",
-        "bb": "10.00",
-        "updatetime": "2026-06-18 09:22:38"
-      }
-    },
-    {
-      "match_id": "2040246",
-      "matchnum": "6036",
-      "league": "世界杯",
-      "home_team": "突尼斯",
-      "away_team": "日本",
-=======
-  "generate_time": "2026-06-19 07:38:23",
+  "generate_time": "2026-06-20 10:58:05",
   "total_matches": 6,
   "matches": [
     {
@@ -471,117 +8,11 @@
       "league": "世界杯",
       "home_team": "荷  兰",
       "away_team": "瑞  典",
->>>>>>> Stashed changes
       "date": "2026-06-21",
       "home_matches_count": 20,
       "away_matches_count": 20,
-      "common_opponent_count": 1,
+      "common_opponent_count": 4,
       "common_opponent_data": {
-<<<<<<< Updated upstream
-        "巴西": {
-          "home_vs_opponent": [
-            {
-              "result1": "平",
-              "result2": "赢",
-              "result3": "小",
-              "homeid": 11,
-              "awayid": 40,
-              "homescore": 1,
-              "awayscore": 1,
-              "league_id": 65,
-              "win": 1.14,
-              "draw": 7.61,
-              "lost": 15.86,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-11-19",
-              "fid": 1351861,
-              "homesxname": "巴西",
-              "awaysxname": "突尼斯",
-              "simplegbname": "友谊赛",
-              "seasonid": 7388,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "handicapball": 3.25,
-              "handicapline": "-2.25",
-              "handicaplinename": "两球/两球半",
-              "cornernum": 0,
-              "hcornernum": 0,
-              "acornernum": 0
-=======
-        "匈牙利": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "荷兰",
-              "awaysxname": "匈牙利",
-              "homescore": 4,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2024-11-17",
-              "result1": "胜",
-              "result2": "负"
-            },
-            {
-              "homesxname": "匈牙利",
-              "awaysxname": "荷兰",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2024-10-12",
-              "result1": "平",
-              "result2": "平"
->>>>>>> Stashed changes
-            }
-          ],
-          "away_vs_opponent": [
-            {
-<<<<<<< Updated upstream
-              "result1": "胜",
-              "result2": "赢",
-              "result3": "大",
-              "homeid": 29,
-              "awayid": 11,
-              "homescore": 3,
-              "awayscore": 2,
-              "league_id": 2194,
-              "win": 4.98,
-              "draw": 4.52,
-              "lost": 1.54,
-              "iscup": 1,
-              "homestanding": 0,
-              "awaystanding": 0,
-              "status": 5,
-              "matchdate": "2025-10-14",
-              "fid": 1237494,
-              "homesxname": "日本",
-              "awaysxname": "巴西",
-              "simplegbname": "麒麟挑战杯",
-              "seasonid": 19385,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "handicapball": 3.25,
-              "handicapline": "+1",
-              "handicaplinename": "受一球",
-              "cornernum": 0,
-              "hcornernum": 0,
-              "acornernum": 0
-=======
-              "homesxname": "匈牙利",
-              "awaysxname": "瑞典",
-              "homescore": 0,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2025-06-07",
-              "result1": "平",
-              "result2": "平"
-            }
-          ]
-        },
         "波兰": {
           "home_vs_opponent": [
             {
@@ -616,6 +47,34 @@
               "homehalfscore": 2,
               "awayhalfscore": 1,
               "matchdate": "2026-04-01",
+              "result1": "胜",
+              "result2": "负"
+            }
+          ]
+        },
+        "挪威": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "荷兰",
+              "awaysxname": "挪威",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-28",
+              "result1": "胜",
+              "result2": "负"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "挪威",
+              "awaysxname": "瑞典",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-02",
               "result1": "胜",
               "result2": "负"
             }
@@ -649,31 +108,42 @@
             }
           ]
         },
-        "挪威": {
+        "匈牙利": {
           "home_vs_opponent": [
             {
               "homesxname": "荷兰",
-              "awaysxname": "挪威",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-03-28",
+              "awaysxname": "匈牙利",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2024-11-17",
               "result1": "胜",
               "result2": "负"
+            },
+            {
+              "homesxname": "匈牙利",
+              "awaysxname": "荷兰",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2024-10-12",
+              "result1": "平",
+              "result2": "平"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "挪威",
+              "homesxname": "匈牙利",
               "awaysxname": "瑞典",
-              "homescore": 3,
-              "awayscore": 1,
-              "homehalfscore": 3,
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
               "awayhalfscore": 0,
-              "matchdate": "2026-06-02",
-              "result1": "胜",
-              "result2": "负"
+              "matchdate": "2025-06-07",
+              "result1": "平",
+              "result2": "平"
             }
           ]
         }
@@ -756,16 +226,16 @@
         }
       },
       "bqc_odds": {
-        "aa": "10.50",
+        "aa": "13.00",
         "ac": "17.00",
         "ab": "24.00",
-        "ca": "12.00",
-        "cc": "6.00",
-        "cb": "4.00",
-        "ba": "40.00",
+        "ca": "14.00",
+        "cc": "6.05",
+        "cb": "3.85",
+        "ba": "45.00",
         "bc": "17.00",
-        "bb": "2.11",
-        "updatetime": "2026-06-18 09:22:38"
+        "bb": "2.00",
+        "updatetime": "2026-06-19 14:22:32"
       }
     },
     {
@@ -779,34 +249,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
-        "伊拉克": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "西班牙",
-              "awaysxname": "伊拉克",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-06-05",
-              "result1": "平",
-              "result2": "平"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "沙特",
-              "awaysxname": "伊拉克",
-              "homescore": 0,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2025-10-15",
-              "result1": "平",
-              "result2": "平"
-            }
-          ]
-        },
         "塞尔维亚": {
           "home_vs_opponent": [
             {
@@ -871,26 +313,50 @@
               "matchdate": "2026-03-28",
               "result1": "平",
               "result2": "平"
->>>>>>> Stashed changes
+            }
+          ]
+        },
+        "伊拉克": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "西班牙",
+              "awaysxname": "伊拉克",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-06-05",
+              "result1": "平",
+              "result2": "平"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "沙特",
+              "awaysxname": "伊拉克",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2025-10-15",
+              "result1": "平",
+              "result2": "平"
             }
           ]
         }
       },
-<<<<<<< Updated upstream
       "bqc_odds": {
-        "aa": "10.50",
-        "ac": "17.00",
-        "ab": "24.00",
-        "ca": "12.00",
-        "cc": "6.00",
-        "cb": "4.00",
-        "ba": "40.00",
-        "bc": "17.00",
-        "bb": "2.11",
-        "updatetime": "2026-06-18 09:22:38"
+        "aa": "1.26",
+        "ac": "35.00",
+        "ab": "120.00",
+        "ca": "4.00",
+        "cc": "14.00",
+        "cb": "50.00",
+        "ba": "30.00",
+        "bc": "35.00",
+        "bb": "50.00",
+        "updatetime": "2026-06-19 09:19:45"
       }
-=======
-      "bqc_odds": null
     },
     {
       "match_id": "2040249",
@@ -932,7 +398,18 @@
           ]
         }
       },
-      "bqc_odds": null
+      "bqc_odds": {
+        "aa": "1.90",
+        "ac": "22.00",
+        "ab": "60.00",
+        "ca": "3.50",
+        "cc": "5.45",
+        "cb": "17.00",
+        "ba": "34.00",
+        "bc": "22.00",
+        "bb": "16.00",
+        "updatetime": "2026-06-19 09:19:45"
+      }
     },
     {
       "match_id": "2040250",
@@ -974,8 +451,18 @@
           ]
         }
       },
-      "bqc_odds": null
->>>>>>> Stashed changes
+      "bqc_odds": {
+        "aa": "10.50",
+        "ac": "19.00",
+        "ab": "27.00",
+        "ca": "12.00",
+        "cc": "5.50",
+        "cb": "4.10",
+        "ba": "50.00",
+        "bc": "19.00",
+        "bb": "2.05",
+        "updatetime": "2026-06-19 09:19:45"
+      }
     }
   ]
 }
