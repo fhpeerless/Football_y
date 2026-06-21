@@ -23,6 +23,20 @@ def get_project_root():
     return os.path.dirname(os.path.abspath(__file__))
 
 
+def get_target_period() -> str:
+    """从 period.json 读取要处理的期数"""
+    period_file = os.path.join(get_project_root(), "period.json")
+    if not os.path.exists(period_file):
+        print(f"错误: {period_file} 不存在，请先运行 bqchmatch_requst.py")
+        exit(1)
+    try:
+        with open(period_file, "r", encoding="utf-8") as f:
+            return str(json.load(f).get("max_period", 0))
+    except Exception as e:
+        print(f"错误: 读取 period.json 失败: {e}")
+        exit(1)
+
+
 def normalize_match_record(match: dict) -> dict:
     """将新API格式(sporttery.cn)的比赛记录转换为旧格式(兼容 fenxi.html)"""
     # 解析全场比分 "2:2" -> (2, 2)
@@ -192,10 +206,10 @@ def process_single_match(match_record: dict) -> dict:
     return result
 
 
-def analyze_common_opponents() -> list[dict]:
-    """从 bqch_homaway_history.json 读取历史数据并分析共同对手"""
+def analyze_common_opponents(period: str) -> list[dict]:
+    """从 {period}_bqch_homaway_history.json 读取历史数据并分析共同对手"""
     data_dir = os.path.join(get_project_root(), "data")
-    history_path = os.path.join(data_dir, "bqch_homaway_history.json")
+    history_path = os.path.join(data_dir, f"{period}_bqch_homaway_history.json")
 
     if not os.path.exists(history_path):
         print(f"错误: {history_path} 不存在，请先执行 bqch_home_away_history_request.py")
@@ -235,28 +249,18 @@ def analyze_common_opponents() -> list[dict]:
     return results
 
 
-def save_common_match(results: list[dict]):
-    """保存共同对手数据到 bqch_common.json"""
-    # 从 bqch_match.json 读取期数信息
+def save_common_match(results: list[dict], period: str):
+    """保存共同对手数据到 {period}_bqch_common.json"""
     data_dir = os.path.join(get_project_root(), "data")
-    match_path = os.path.join(data_dir, "bqch_match.json")
-    periods = []
-    if os.path.exists(match_path):
-        try:
-            with open(match_path, "r", encoding="utf-8") as f:
-                match_data = json.load(f)
-            periods = match_data.get("periods", [])
-        except Exception as e:
-            print(f"  读取 bqch_match.json 期数失败: {e}")
 
     output = {
         "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
-        "periods": periods,
+        "period": period,
         "total_matches": len(results),
         "matches": results,
     }
 
-    outpath = os.path.join(data_dir, "bqch_common.json")
+    outpath = os.path.join(data_dir, f"{period}_bqch_common.json")
     with open(outpath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     print(f"\n共同对手数据已保存到: {outpath}")
@@ -267,8 +271,11 @@ def main():
     print("  BQC 半全场共同对手数据分析")
     print("=" * 70)
 
-    results = analyze_common_opponents()
-    save_common_match(results)
+    target_period = get_target_period()
+    print(f"目标期数: {target_period}")
+
+    results = analyze_common_opponents(target_period)
+    save_common_match(results, period=target_period)
 
     print(f"\n全部完成！")
 

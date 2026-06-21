@@ -266,30 +266,6 @@ def match_bqc_odds(api_matches: list, bqc_odds_map: dict) -> list:
 
 
 # ============================================================
-# 本地期数检查
-# ============================================================
-
-def get_local_max_period(data_dir: str) -> int:
-    """读取本地 bqch_match.json 中最大期数，不存在或异常返回 -1"""
-    local_file = os.path.join(data_dir, "bqch_match.json")
-    if not os.path.exists(local_file):
-        print("  本地无历史数据，首次运行")
-        return -1
-    try:
-        with open(local_file, "r", encoding="utf-8") as f:
-            local_data = json.load(f)
-        local_periods = local_data.get("periods", [])
-        if not local_periods:
-            return -1
-        max_local = max(int(p) for p in local_periods)
-        print(f"  本地最大期数: {max_local}")
-        return max_local
-    except Exception as e:
-        print(f"  读取本地期数异常: {e}")
-        return -1
-
-
-# ============================================================
 # 主逻辑
 # ============================================================
 
@@ -308,33 +284,39 @@ def main():
         exit(1)
     print(f"  ✓ 共 {len(periods)} 个在售期数: {periods}")
 
-    # 1b. 检查本地期数，判断是否有新期数
-    print("\n[检查] 对比本地期数...")
+    # 1b. 检查 period.json，判断是否有新期数
+    print("\n[检查] 对比已处理期数...")
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(script_dir, "data")
-    max_local = get_local_max_period(data_dir)
+    period_file = os.path.join(script_dir, "period.json")
+    prev_max = 0
+    if os.path.exists(period_file):
+        try:
+            with open(period_file, "r", encoding="utf-8") as f:
+                prev_max = json.load(f).get("max_period", 0)
+        except Exception:
+            pass
     max_api = max(int(p) for p in periods)
-    print(f"  API最大期数: {max_api}")
-    if max_api <= max_local:
+    print(f"  已处理最大期数: {prev_max}, API最大期数: {max_api}")
+    if max_api <= prev_max:
         print("  无新期数，跳过本次执行")
         set_github_action_output("bqch_status", "skip")
         exit(0)
     else:
         print("  检测到新期数，继续获取数据...")
 
-    # 2. 遍历每个期数获取比赛数据
-    print("\n[步骤2] 获取各期比赛数据...")
-    all_periods_data = {}
-    for period in periods:
-        print(f"\n  --- 期数 {period} ---")
-        api_matches = fetch_matches_for_period(period)
-        if not api_matches:
-            print(f"  ⚠ 期数{period} 无比赛数据")
-            continue
-        all_periods_data[period] = api_matches
+    # 先更新 period.json，供下游脚本读取
+    with open(period_file, "w", encoding="utf-8") as f:
+        json.dump({"max_period": max_api}, f, ensure_ascii=False, indent=2)
+    print(f"  period.json 已更新: max_period={max_api}")
 
-    if not all_periods_data:
-        print("错误: 未获取到任何比赛数据")
+    # 从 period.json 读取要处理的期数
+    target_period = str(max_api)
+
+    # 2. 获取该期数的比赛数据
+    print(f"\n[步骤2] 获取期数 {target_period} 比赛数据...")
+    api_matches = fetch_matches_for_period(target_period)
+    if not api_matches:
+        print(f"错误: 期数{target_period} 无比赛数据")
         exit(1)
 
     # 3. 获取BQC赔率XML
@@ -349,50 +331,38 @@ def main():
 
     # 4. 匹配数据（按match_id匹配）
     print("\n[步骤4] 匹配比赛数据与BQC赔率（按match_id匹配）...")
-    combined = {}
-    total_with_bqc = 0
-    total_matches = 0
+    matched = match_bqc_odds(api_matches, bqc_odds_map)
+    matched.sort(key=lambda x: int(x.get("match_num", 0)) if str(x.get("match_num", "")).isdigit() else 0)
 
-    for period in sorted(all_periods_data.keys()):
-        api_matches = all_periods_data[period]
-        print(f"\n  --- 期数 {period} ---")
-        matched = match_bqc_odds(api_matches, bqc_odds_map)
-        # 按场次序号排序
-        matched.sort(key=lambda x: int(x.get("match_num", 0)) if str(x.get("match_num", "")).isdigit() else 0)
-        combined[period] = matched
-
-        with_bqc = sum(1 for m in matched if m.get("bqc_odds"))
-        total_with_bqc += with_bqc
-        total_matches += len(matched)
-        print(f"  匹配结果: {len(matched)} 场, 有BQC赔率: {with_bqc} 场")
+    total_matches = len(matched)
+    with_bqc = sum(1 for m in matched if m.get("bqc_odds"))
+    print(f"  匹配结果: {total_matches} 场, 有BQC赔率: {with_bqc} 场")
 
     # 5. 保存数据
     print("\n[步骤5] 保存数据...")
-    script_dir = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(script_dir, "data")
     os.makedirs(data_dir, exist_ok=True)
 
     output = {
         "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
         "data_source": "webapi.sporttery.cn",
-        "total_periods": len(combined),
+        "period": target_period,
         "total_matches": total_matches,
-        "periods": sorted(combined.keys()),
-        "data": combined,
+        "data": matched,
     }
 
-    outpath = os.path.join(data_dir, "bqch_match.json")
+    outpath = os.path.join(data_dir, f"{target_period}_bqch_match.json")
     with open(outpath, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
+    print(f"  数据已保存到: {outpath}")
 
     # 通知 GitHub Actions 有新数据，继续执行下游脚本
     set_github_action_output("bqch_status", "continue")
 
     print(f"\n{'=' * 60}")
-    print(f"  数据已保存到: {outpath}")
-    print(f"  共 {len(combined)} 个期数, {total_matches} 场比赛")
-    print(f"  有BQC赔率: {total_with_bqc} 场")
-    print(f"  无BQC赔率: {total_matches - total_with_bqc} 场")
+    print(f"  期数 {target_period}: 共 {total_matches} 场比赛")
+    print(f"  有BQC赔率: {with_bqc} 场")
+    print(f"  无BQC赔率: {total_matches - with_bqc} 场")
     print(f"{'=' * 60}")
     print("完成!")
 

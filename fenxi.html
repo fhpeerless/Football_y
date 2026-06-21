@@ -806,13 +806,15 @@
             <h2 class="section-title"><i class="fas fa-handshake"></i> 半全场共同对手分析</h2>
             
             <div class="form-group">
-                <div class="btn-group" style="margin-top: 0;">
+                <label for="bqcPeriodInput"><i class="fas fa-calendar-alt"></i> 期数</label>
+                <div class="file-input-group">
+                    <input type="text" id="bqcPeriodInput" placeholder="正在获取最新期数..." value="">
                     <button id="loadBqcCommonBtn">
                         <i class="fas fa-sync-alt"></i> 加载半全场数据
                     </button>
                 </div>
                 <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                    加载 banquanchang/data/bqch_common.json 中的半全场共同对手分析数据
+                    读取 period.json 中的最新期数，加载 banquanchang/data/{期数}_bqch_common.json 数据
                 </p>
             </div>
             
@@ -828,7 +830,6 @@
         <div id="bqcCommonSection" style="display: none;">
             <div class="spf-panel">
                 <h2 class="section-title"><i class="fas fa-list-alt"></i> 半全场分析结果</h2>
-                <div id="bqcPeriodNav" class="period-nav" style="margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;"></div>
                 <div id="bqcCommonBody"></div>
             </div>
         </div>
@@ -1790,6 +1791,7 @@
 
         // ========== BQC 半全场数据逻辑 ==========
         const loadBqcCommonBtn = document.getElementById('loadBqcCommonBtn');
+        const bqcPeriodInput = document.getElementById('bqcPeriodInput');
         const bqcStatusMessage = document.getElementById('bqcStatusMessage');
         const bqcProgressFill = document.getElementById('bqcProgressFill');
         const bqcCommonSection = document.getElementById('bqcCommonSection');
@@ -1820,30 +1822,62 @@
             'bb': { label: '负负', desc: '主队半场负/全场负' }
         };
         
-        // 加载半全场数据
+        // 从 period.json 获取最新期数
+        async function fetchLatestBqcPeriod() {
+            try {
+                const resp = await fetch(`./banquanchang/period.json?t=${Date.now()}`);
+                if (!resp.ok) throw new Error('period.json 不存在');
+                const data = await resp.json();
+                const period = String(data.max_period || '');
+                if (period && period !== '0') {
+                    bqcPeriodInput.value = period;
+                    bqcCurrentPeriod = period;
+                    return period;
+                }
+            } catch (e) {
+                console.warn('读取 period.json 失败:', e.message);
+            }
+            bqcPeriodInput.placeholder = '请输入期数';
+            return null;
+        }
+        
+        // 加载半全场数据（先读 period.json 获取最新期数）
         async function loadBqcCommonData() {
-            showBqcStatus('正在加载半全场数据...', 'info');
-            updateBqcProgress(20);
+            showBqcStatus('正在获取最新期数...', 'info');
+            updateBqcProgress(10);
             
-            const url = `./banquanchang/data/bqch_common.json?t=${Date.now()}`;
+            // 从输入框读取期数
+            let period = bqcPeriodInput.value.trim();
+            if (!period) {
+                // 尝试从 period.json 获取
+                period = await fetchLatestBqcPeriod();
+                if (!period) {
+                    updateBqcProgress(0);
+                    showBqcStatus('无法获取期数，请手动输入', 'error');
+                    return;
+                }
+            }
+            
+            bqcCurrentPeriod = period;
+            showBqcStatus(`正在加载期数 ${period} 的半全场数据...`, 'info');
+            updateBqcProgress(30);
+            
+            const url = `./banquanchang/data/${period}_bqch_common.json?t=${Date.now()}`;
             try {
                 const resp = await fetch(url);
                 if (!resp.ok) {
-                    throw new Error('bqch_common.json 不存在，请先运行 bqch 数据管道生成数据');
+                    throw new Error(`${period}_bqch_common.json 不存在，请先运行 bqch 数据管道生成数据`);
                 }
                 const data = await resp.json();
                 updateBqcProgress(60);
                 
-                // 存储数据并构建期数导航
+                // 存储数据并渲染
                 bqcAllData = data;
                 bqcCommonSection.style.display = 'block';
-                const periods = data.periods || [];
-                bqcCurrentPeriod = periods.length > 0 ? periods[0] : '';
-                renderBqcPeriodNav();
                 renderBqcCommonData();
                 
                 updateBqcProgress(100);
-                showBqcStatus(`成功加载 ${data.total_matches || 0} 场比赛的半全场数据`, 'success');
+                showBqcStatus(`成功加载期数 ${period} 的 ${data.total_matches || 0} 场比赛数据`, 'success');
             } catch (e) {
                 updateBqcProgress(0);
                 showBqcStatus(`加载失败: ${e.message}`, 'error');
@@ -1853,25 +1887,14 @@
         // 渲染半全场数据
         function renderBqcCommonData() {
             if (!bqcAllData) return;
-            const allMatches = bqcAllData.matches || [];
-            let matches = allMatches;
-            if (bqcCurrentPeriod) {
-                matches = allMatches.filter(m => String(m.period) === String(bqcCurrentPeriod));
-            }
+            const matches = bqcAllData.matches || [];
             if (!matches || matches.length === 0) {
-                const label = bqcCurrentPeriod ? `期数 ${bqcCurrentPeriod}` : '';
-                bqcCommonBody.innerHTML = `<p style="text-align: center; opacity: 0.7; padding: 20px;">${label ? label + '：' : ''}暂无半全场数据</p>`;
+                bqcCommonBody.innerHTML = `<p style="text-align: center; opacity: 0.7; padding: 20px;">期数 ${bqcCurrentPeriod}：暂无半全场数据</p>`;
                 return;
             }
             
-            let periodDisplay = '';
-            if (bqcCurrentPeriod) {
-                periodDisplay = ` | 当前期数: ${bqcCurrentPeriod}期`;
-            } else if (bqcAllData.periods && bqcAllData.periods.length > 0) {
-                periodDisplay = ` | 总期数: ${bqcAllData.periods.join(', ')}`;
-            }
             let html = `<p style="margin-bottom: 20px; opacity: 0.8;">
-                生成时间: ${bqcAllData.generate_time || '未知'} | 总比赛数: ${allMatches.length} | 当前显示: ${matches.length} 场${periodDisplay}
+                生成时间: ${bqcAllData.generate_time || '未知'} | 期数: ${bqcCurrentPeriod}期 | 总比赛数: ${matches.length} 场
             </p>`;
             
             matches.forEach((match, idx) => {
@@ -2044,35 +2067,23 @@
             bqcCommonBody.innerHTML = html;
         }
         
-        // 渲染期数导航按钮
-        function renderBqcPeriodNav() {
-            const container = document.getElementById('bqcPeriodNav');
-            if (!bqcAllData) return;
-            const periods = bqcAllData.periods || [];
-            if (periods.length <= 1) {
-                container.innerHTML = '';
-                return;
-            }
-            let html = '<span style="opacity:0.7; margin-right:6px;">📅 期数:</span>';
-            periods.forEach(p => {
-                const active = p === bqcCurrentPeriod ? ' active' : '';
-                html += `<button class="period-btn${active}" onclick="switchBqcPeriod('${p}')">${p}期</button>`;
-            });
-            container.innerHTML = html;
-        }
-        
-        // 切换期数
-        function switchBqcPeriod(period) {
-            bqcCurrentPeriod = period;
-            renderBqcPeriodNav();
-            renderBqcCommonData();
-        }
-        
         // 加载按钮事件
         loadBqcCommonBtn.addEventListener('click', loadBqcCommonData);
         
-        // 页面加载后自动加载半全场数据
-        loadBqcCommonData();
+        // 期数输入框回车键加载
+        bqcPeriodInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                loadBqcCommonData();
+            }
+        });
+        
+        // 页面加载后先获取最新期数，再自动加载半全场数据
+        (async function autoLoadBqcData() {
+            await fetchLatestBqcPeriod();
+            if (bqcCurrentPeriod) {
+                loadBqcCommonData();
+            }
+        })();
 
     </script>
 </body>

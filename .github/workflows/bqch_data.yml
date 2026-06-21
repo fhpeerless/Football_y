@@ -59,7 +59,10 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        git add banquanchang/data/
+        # 删除旧格式的聚合文件（新格式按期数拆分）
+        git rm --ignore-unmatch banquanchang/data/bqch_match.json banquanchang/data/bqch_homaway_history.json banquanchang/data/bqch_common.json
+
+        git add banquanchang/period.json banquanchang/data/*_bqch_*.json
 
         git commit -m "更新BQC半全场数据/共同对手数据" || {
           echo "没有更改可提交，跳过push步骤"
