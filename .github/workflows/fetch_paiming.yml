@@ -1,0 +1,56 @@
+name: Fetch FIFA Rankings
+
+on:
+  schedule:
+    # 每月双数日期 北京时间 8:01 执行 (UTC = BJT-8)
+    # 双数日期: 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30
+    - cron: '1 0 2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 * *'
+  workflow_dispatch:
+
+jobs:
+  fetch-rankings:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+        fetch-depth: 0
+
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 安装依赖
+      run: |
+        pip install requests
+
+    - name: 抓取 FIFA 世界排名
+      working-directory: ./paiming
+      run: |
+        echo "=== 抓取 FIFA 世界排名 ==="
+        python parse_paiming_har.py
+        echo "=== 抓取完成 ==="
+
+    - name: 提交排名数据到仓库
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add paiming/paiming_rankings.json
+
+        git commit -m "更新FIFA世界排名数据" || {
+          echo "排名数据无变化，跳过push步骤"
+          exit 0
+        }
+
+        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}" || {
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        }
