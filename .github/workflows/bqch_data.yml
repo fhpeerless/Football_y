@@ -53,6 +53,14 @@ jobs:
         python find_bqch_common.py
         echo "=== 分析完成 ==="
 
+    - name: 添加 FIFA 排名到共同对手数据
+      if: steps.fetch_matches.outputs.bqch_status == 'continue'
+      working-directory: ./banquanchang
+      run: |
+        echo "=== 添加 FIFA 排名到共同对手数据 ==="
+        python add_ranking_to_common.py
+        echo "=== 添加完成 ==="
+
     - name: 提交 BQC 数据到仓库
       if: steps.fetch_matches.outputs.bqch_status == 'continue'
       run: |

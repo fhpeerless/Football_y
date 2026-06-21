@@ -876,7 +876,7 @@
                 try {
                     // 添加时间戳防止缓存
                     const timestamp = Date.now();
-                    const url = `./present.json?t=${timestamp}`;
+                    const url = `./14chang/present.json?t=${timestamp}`;
                     console.log(`正在请求: ${url}`);
                     
                     const response = await fetch(url);
@@ -1921,7 +1921,13 @@
                                 <p style="opacity: 0.8; font-size: 0.9em;">${match.date || ''}</p>
                             </div>
                             <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                                <span style="font-size: 0.9em; opacity: 0.8;">${match.home_team || ''} vs ${match.away_team || ''}</span>
+                                <span style="font-size: 0.9em;">
+                                    ${match.home_team || ''}
+                                    ${match.home_team_ranking ? `<span style="display:inline-block; margin-left: 4px; padding: 1px 8px; border-radius: 10px; background: rgba(76,175,80,0.15); color: #4caf50; font-weight:600; font-size:0.8em;">#${match.home_team_ranking} <span style="opacity:0.7; font-weight:400;">${match.home_team_fifa_points}分</span></span>` : ''}
+                                    <span style="margin:0 6px; opacity:0.5;">vs</span>
+                                    ${match.away_team || ''}
+                                    ${match.away_team_ranking ? `<span style="display:inline-block; margin-left: 4px; padding: 1px 8px; border-radius: 10px; background: rgba(255,152,0,0.15); color: #ff9800; font-weight:600; font-size:0.8em;">#${match.away_team_ranking} <span style="opacity:0.7; font-weight:400;">${match.away_team_fifa_points}分</span></span>` : ''}
+                                </span>
                                 <span class="opponent-tag ${tagClass}">${tagText}</span>
                             </div>
                         </div>
