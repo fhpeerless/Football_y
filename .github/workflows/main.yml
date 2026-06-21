@@ -68,13 +68,13 @@ jobs:
         echo "脚本目录: $(dirname $(which node))"
         echo "手动输入期数: ${{ inputs.period || '无' }}"
         # 运行脚本，脚本会设置 has_new_period 输出（true/false）
-        node match_data/check_new_period.js
+        node 14chang/match_data/check_new_period.js
         # 调试present.json状态
         echo "=== present.json 状态检查 ==="
-        if [ -f "./present.json" ]; then
+        if [ -f "./14chang/present.json" ]; then
           echo "present.json 存在，内容如下："
-          cat ./present.json
-          echo "文件大小: $(wc -c < ./present.json) 字节"
+          cat ./14chang/present.json
+          echo "文件大小: $(wc -c < ./14chang/present.json) 字节"
         else
           echo "present.json 不存在"
         fi
@@ -90,10 +90,10 @@ jobs:
         
         # 创建result目录并设置权限
         echo "创建result目录..."
-        mkdir -p ./result
-        chmod 755 ./result
+        mkdir -p ./14chang/result
+        chmod 755 ./14chang/result
         echo "result目录状态:"
-        ls -ld ./result
+        ls -ld ./14chang/result
         
         echo "Python版本: $(python --version)"
         echo "Node.js版本: $(node --version)"
@@ -113,16 +113,16 @@ jobs:
         # 尝试最多3次
         for i in {1..3}; do
           echo "第 $i 次尝试..."
-          if python match_data/api_crawler_final.py; then
+          if python 14chang/match_data/api_crawler_final.py; then
             echo "API爬虫执行成功"
             
             # 检查是否生成了文件
             echo "检查生成的文件..."
-            ls -la ./result/ 2>/dev/null || echo "result目录不存在"
+            ls -la ./14chang/result/ 2>/dev/null || echo "result目录不存在"
             
             # 显示生成的文件内容（前100个字符）
-            if [ -d "./result" ]; then
-              for file in ./result/*.json; do
+            if [ -d "./14chang/result" ]; then
+              for file in ./14chang/result/*.json; do
                 if [ -f "$file" ]; then
                   echo "文件: $file"
                   echo "前100字符: $(head -c 100 "$file")"
@@ -152,20 +152,20 @@ jobs:
         
         # 检查必要的输入文件
         echo "检查result目录内容:"
-        ls -la ./result/ 2>/dev/null || echo "result目录不存在"
+        ls -la ./14chang/result/ 2>/dev/null || echo "result目录不存在"
         
         # 运行脚本
-        if python match_data/get_history_data.py; then
+        if python 14chang/match_data/get_history_data.py; then
           echo "历史交锋数据获取成功"
           
           # 验证输出文件
           echo "检查生成的文件..."
-          if [ -d "./result" ]; then
+          if [ -d "./14chang/result" ]; then
             echo "result目录中的文件:"
-            ls -la ./result/
+            ls -la ./14chang/result/
             
             # 检查是否有历史交锋文件
-            history_files=$(find ./result -name "*历史交锋.json" -type f)
+            history_files=$(find ./14chang/result -name "*历史交锋.json" -type f)
             if [ -n "$history_files" ]; then
               echo "找到历史交锋文件:"
               for file in $history_files; do
@@ -189,31 +189,31 @@ jobs:
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算基础预测概率..."
-        python probability/calculate_probability.py
+        python 14chang/probability/calculate_probability.py
         
     - name: 计算高级预测概率
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算高级预测概率..."
-        python probability/calculate_advanced_probability.py
+        python 14chang/probability/calculate_advanced_probability.py
         
     - name: 提取共同对手比赛数据
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在提取共同对手比赛数据..."
-        python probability/extract_common_opponent_matches.py
+        python 14chang/probability/extract_common_opponent_matches.py
         
     - name: 计算共同对手实力分
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在计算共同对手实力分..."
-        python probability/calculate_common_opponent_strength.py
+        python 14chang/probability/calculate_common_opponent_strength.py
         
     - name: 合并预测概率
       if: steps.check-period.outputs.has_new_period == 'true'
       run: |
         echo "正在合并预测概率..."
-        node probability/combine_probability.js
+        node 14chang/probability/combine_probability.js
         
     - name: 验证最终结果
       if: steps.check-period.outputs.has_new_period == 'true'
@@ -221,18 +221,18 @@ jobs:
         echo "=== 验证最终结果开始 ==="
         echo "检查所有生成的文件..."
         
-        if [ -d "./result" ]; then
+        if [ -d "./14chang/result" ]; then
           echo "result目录内容:"
-          ls -la ./result/
+          ls -la ./14chang/result/
           
           echo "文件统计:"
-          echo "总文件数: $(find ./result -type f | wc -l)"
+          echo "总文件数: $(find ./14chang/result -type f | wc -l)"
           
           # 检查关键文件
           key_files=("*_web.json" "*_预测概率.json" "*_高级预测概率.json" "*_共同对手实力分.json" "*_历史交锋.json" "*.json")
           
           for pattern in "${key_files[@]}"; do
-            files=$(find ./result -name "$pattern" -type f)
+            files=$(find ./14chang/result -name "$pattern" -type f)
             if [ -n "$files" ]; then
               echo "找到 $pattern 文件:"
               for file in $files; do
@@ -244,7 +244,7 @@ jobs:
           done
           
           # 检查web.json文件内容
-          web_files=$(find ./result -name "*_web.json" -type f)
+          web_files=$(find ./14chang/result -name "*_web.json" -type f)
           if [ -n "$web_files" ]; then
             echo "web.json文件内容摘要:"
             for file in $web_files; do
@@ -265,8 +265,8 @@ jobs:
       with:
         name: prediction-results
         path: |
-          result/
-          present.json  # ========== 新增：上传present.json ==========
+          14chang/result/
+          14chang/present.json
         retention-days: 7
         
     - name: 提交结果到仓库
@@ -275,7 +275,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         
-        git add result/ present.json
+        git add 14chang/result/ 14chang/present.json
         
         git commit -m "更新预测结果/present.json" || {
           echo "没有更改可提交，跳过push步骤"
@@ -287,4 +287,3 @@ jobs:
           sleep 3
           git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
         }
-

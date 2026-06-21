@@ -771,7 +771,7 @@
                         </button>
                     </div>
                     <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                        将自动加载 ./result/{期数}期_web.json 文件
+                        将自动加载 ./14chang/result/{期数}期_web.json 文件
                     </p>
                 </div>
                 
@@ -966,7 +966,7 @@
                 updateProgress(40);
                 
                 const timestamp = Date.now();
-                const fileUrl = `./result/${currentPeriod}期_web.json?t=${timestamp}`;
+                const fileUrl = `./14chang/result/${currentPeriod}期_web.json?t=${timestamp}`;
                 console.log(`正在加载: ${fileUrl}`);
                 
                 const response = await fetch(fileUrl);
@@ -1090,7 +1090,7 @@
                             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                                 <div>
                                     <h4 style="color: #00bcd4; margin-bottom: 5px;">
-                                        <a href="./list.html#match-${match.场次}" style="color: inherit; text-decoration: none;">
+                                        <a href="./14chang/list.html#match-${match.场次}" style="color: inherit; text-decoration: none;">
                                             第 ${match.场次} 场 · ${match.联赛}
                                         </a>
                                     </h4>
@@ -1491,7 +1491,7 @@
         });
         
         downloadBtn.addEventListener('click', () => {
-            window.location.href = './list.html';
+            window.location.href = './14chang/list.html';
         });
         
         commonMatchesBtn.addEventListener('click', () => {
@@ -1509,9 +1509,9 @@
             }
             
             if (periodForUrl) {
-                window.location.href = `./common_matches.html?period=${periodForUrl}`;
+                window.location.href = `./14chang/common_matches.html?period=${periodForUrl}`;
             } else {
-                window.location.href = './common_matches.html';
+                window.location.href = './14chang/common_matches.html';
             }
         });
         
