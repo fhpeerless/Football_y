@@ -33,8 +33,6 @@ import io
 import warnings
 from datetime import datetime, timezone, timedelta
 from typing import Optional
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 warnings.filterwarnings("ignore")
 
@@ -57,31 +55,28 @@ def set_github_action_output(key: str, value: str):
             pass
 
 
-def create_session(retries: int = 3, backoff: float = 3.0, timeout: int = 60) -> tuple:
-    """
-    创建带重试机制的 requests Session
-
-    参数:
-        retries:  最大重试次数
-        backoff:  退避因子(秒)，重试间隔 = backoff * (2 ** (retry_num - 1))
-        timeout:  总超时时间(秒)
-
-    返回:
-        (session, timeout) 供 requests.get(url, timeout=timeout) 使用
-    """
-    session = requests.Session()
-    retry_strategy = Retry(
-        total=retries,
-        backoff_factor=backoff,
-        status_forcelist=[429, 500, 502, 503, 504],
-        allowed_methods=["GET"],
-    )
-    adapter = HTTPAdapter(max_retries=retry_strategy)
-    session.mount("https://", adapter)
-    session.mount("http://", adapter)
-    # 全局超时由调用方传参控制，不由 session 级设置
-    return session, timeout
-
+def request_with_retry(url, method='GET', max_retries=3, delay=3, **kwargs):
+    """带重试机制的HTTP请求，返回 response 对象或 None"""
+    import time
+    for attempt in range(1, max_retries + 1):
+        try:
+            resp = requests.request(method, url, timeout=20, **kwargs)
+            print(f"  [请求] {url[:60]}... 状态码: {resp.status_code} (尝试 {attempt}/{max_retries})")
+            if resp.status_code == 200:
+                return resp
+            print(f"  [重试 {attempt}/{max_retries}] HTTP {resp.status_code}, {delay}秒后重试...")
+        except requests.exceptions.SSLError as e:
+            print(f"  [SSL错误 {attempt}/{max_retries}] {e}")
+            # SSL错误通常需要 verify=False，记录后仍重试
+        except requests.exceptions.ConnectionError as e:
+            print(f"  [连接错误 {attempt}/{max_retries}] {e}")
+        except requests.exceptions.Timeout as e:
+            print(f"  [超时 {attempt}/{max_retries}] {e}")
+        except Exception as e:
+            print(f"  [请求异常 {attempt}/{max_retries}] {type(e).__name__}: {e}")
+        if attempt < max_retries:
+            time.sleep(delay)
+    return None
 
 # ============================================================
 # 配置
@@ -131,22 +126,21 @@ def fetch_available_periods() -> list:
         "sellStatus": "0",
         "termLimits": "10",
     }
-    session, timeout = create_session(retries=3, backoff=3.0, timeout=60)
-    try:
-        resp = session.get(API_URL, params=params, headers=API_HEADERS, timeout=timeout, verify=False)
-        if resp.status_code != 200:
-            print(f"  [错误] API请求失败, HTTP: {resp.status_code}")
-            return []
-        data = resp.json()
-        if not data.get("success"):
-            print(f"  [错误] API返回失败: {data.get('errorMessage', '未知错误')}")
-            return []
-        bqclist = data["value"].get("bqclist", [])
-        print(f"  在售期数: {bqclist}")
-        return bqclist
-    except Exception as e:
-        print(f"  [错误] 获取在售期数异常: {e}")
+    resp = request_with_retry(API_URL, params=params, headers=API_HEADERS, verify=False)
+    if resp is None:
+        print("  [错误] 所有重试均失败，无法获取在售期数")
         return []
+    try:
+        data = resp.json()
+    except Exception as e:
+        print(f"  [错误] API返回非JSON格式: {e}, 前200字符: {resp.text[:200]}")
+        return []
+    if not data.get("success"):
+        print(f"  [错误] API返回失败: {data.get('errorMessage', '未知错误')}")
+        return []
+    bqclist = data["value"].get("bqclist", [])
+    print(f"  在售期数: {bqclist}")
+    return bqclist
 
 
 # ============================================================
@@ -176,26 +170,25 @@ def fetch_matches_for_period(period: str) -> list:
         "sellStatus": "0",
         "termLimits": "10",
     }
-    session, timeout = create_session(retries=3, backoff=3.0, timeout=60)
-    try:
-        resp = session.get(API_URL, params=params, headers=API_HEADERS, timeout=timeout, verify=False)
-        if resp.status_code != 200:
-            print(f"  [错误] 期数{period} API请求失败, HTTP: {resp.status_code}")
-            return []
-        data = resp.json()
-        if not data.get("success"):
-            print(f"  [错误] 期数{period} API返回失败: {data.get('errorMessage', '未知错误')}")
-            return []
-        match_list = data["value"]["bqcMatch"].get("matchList", [])
-        print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
-        for m in match_list:
-            home = m.get("masterTeamAllName", "").strip() or m["masterTeamName"].strip()
-            away = m.get("guestTeamAllName", "").strip() or m["guestTeamName"].strip()
-            print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
-        return match_list
-    except Exception as e:
-        print(f"  [错误] 获取期数{period}比赛数据异常: {e}")
+    resp = request_with_retry(API_URL, params=params, headers=API_HEADERS, verify=False)
+    if resp is None:
+        print(f"  [错误] 期数{period} 所有重试均失败")
         return []
+    try:
+        data = resp.json()
+    except Exception as e:
+        print(f"  [错误] 期数{period} API返回非JSON格式: {e}, 前200字符: {resp.text[:200]}")
+        return []
+    if not data.get("success"):
+        print(f"  [错误] 期数{period} API返回失败: {data.get('errorMessage', '未知错误')}")
+        return []
+    match_list = data["value"]["bqcMatch"].get("matchList", [])
+    print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
+    for m in match_list:
+        home = m.get("masterTeamAllName", "").strip() or m["masterTeamName"].strip()
+        away = m.get("guestTeamAllName", "").strip() or m["guestTeamName"].strip()
+        print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
+    return match_list
 
 
 # ============================================================
@@ -203,18 +196,13 @@ def fetch_matches_for_period(period: str) -> list:
 # ============================================================
 
 def fetch_xml(url: str) -> Optional[str]:
-    """获取XML数据"""
-    session, timeout = create_session(retries=3, backoff=2.0, timeout=30)
-    try:
-        resp = session.get(url, headers=XML_HEADERS, timeout=timeout)
-        resp.encoding = "utf-8"
-        if resp.status_code == 200:
-            return resp.text
-        print(f"  请求失败, HTTP状态码: {resp.status_code}, URL: {url}")
+    """获取XML数据（带重试和SSL绕过）"""
+    resp = request_with_retry(url, headers=XML_HEADERS, verify=False)
+    if resp is None:
+        print(f"  [错误] XML请求全部重试失败: {url}")
         return None
-    except requests.RequestException as e:
-        print(f"  请求异常: {e}, URL: {url}")
-        return None
+    resp.encoding = "utf-8"
+    return resp.text
 
 
 def parse_bqc_xml(xml_text: str) -> dict:

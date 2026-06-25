@@ -29,6 +29,13 @@ jobs:
       run: |
         pip install requests
 
+    - name: 网络诊断 (排查API连接问题)
+      run: |
+        echo "=== 测试 sporttery.cn API 连通性 ==="
+        curl -s -o /dev/null -w "HTTP状态码: %{http_code}\n" "https://webapi.sporttery.cn/gateway/lottery/getFootBallMatchV1.qry?param=98,0&lotteryDrawNum=&sellStatus=0&termLimits=1" || echo "sporttery.cn 不可达"
+        echo "=== 测试 500.com XML 连通性 ==="
+        curl -s -o /dev/null -w "HTTP状态码: %{http_code}\n" "https://trade.500.com/static/public/jczq/newxml/pl/pl_bqc_2.xml" || echo "500.com 不可达"
+
     - name: 获取半全场所有比赛信息
       id: fetch_matches
       working-directory: ./banquanchang
