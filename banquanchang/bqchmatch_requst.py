@@ -33,6 +33,8 @@ import io
 import warnings
 from datetime import datetime, timezone, timedelta
 from typing import Optional
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 warnings.filterwarnings("ignore")
 
@@ -53,6 +55,33 @@ def set_github_action_output(key: str, value: str):
                 f.write(f"{key}={value}\n")
         except Exception:
             pass
+
+
+def create_session(retries: int = 3, backoff: float = 3.0, timeout: int = 60) -> tuple:
+    """
+    创建带重试机制的 requests Session
+
+    参数:
+        retries:  最大重试次数
+        backoff:  退避因子(秒)，重试间隔 = backoff * (2 ** (retry_num - 1))
+        timeout:  总超时时间(秒)
+
+    返回:
+        (session, timeout) 供 requests.get(url, timeout=timeout) 使用
+    """
+    session = requests.Session()
+    retry_strategy = Retry(
+        total=retries,
+        backoff_factor=backoff,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["GET"],
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    # 全局超时由调用方传参控制，不由 session 级设置
+    return session, timeout
+
 
 # ============================================================
 # 配置
@@ -102,8 +131,9 @@ def fetch_available_periods() -> list:
         "sellStatus": "0",
         "termLimits": "10",
     }
+    session, timeout = create_session(retries=3, backoff=3.0, timeout=60)
     try:
-        resp = requests.get(API_URL, params=params, headers=API_HEADERS, timeout=20, verify=False)
+        resp = session.get(API_URL, params=params, headers=API_HEADERS, timeout=timeout, verify=False)
         if resp.status_code != 200:
             print(f"  [错误] API请求失败, HTTP: {resp.status_code}")
             return []
@@ -146,8 +176,9 @@ def fetch_matches_for_period(period: str) -> list:
         "sellStatus": "0",
         "termLimits": "10",
     }
+    session, timeout = create_session(retries=3, backoff=3.0, timeout=60)
     try:
-        resp = requests.get(API_URL, params=params, headers=API_HEADERS, timeout=20, verify=False)
+        resp = session.get(API_URL, params=params, headers=API_HEADERS, timeout=timeout, verify=False)
         if resp.status_code != 200:
             print(f"  [错误] 期数{period} API请求失败, HTTP: {resp.status_code}")
             return []
@@ -173,8 +204,9 @@ def fetch_matches_for_period(period: str) -> list:
 
 def fetch_xml(url: str) -> Optional[str]:
     """获取XML数据"""
+    session, timeout = create_session(retries=3, backoff=2.0, timeout=30)
     try:
-        resp = requests.get(url, headers=XML_HEADERS, timeout=15)
+        resp = session.get(url, headers=XML_HEADERS, timeout=timeout)
         resp.encoding = "utf-8"
         if resp.status_code == 200:
             return resp.text
