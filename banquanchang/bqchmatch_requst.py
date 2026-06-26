@@ -24,7 +24,6 @@ BQC赔率编码:
   ba=负胜  bc=负平  bb=负负
 """
 
-from curl_cffi import requests
 import xml.etree.ElementTree as ET
 import json
 import os
@@ -38,6 +37,13 @@ warnings.filterwarnings("ignore")
 
 # 强制UTF-8输出
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+# 使用 curl_cffi 模拟 Chrome TLS 指纹，绕过 Tencent EdgeOne WAF 的 JA3 检测
+from curl_cffi import requests as cffi_requests
+
+# 全局 Session，保持连接池和 impersonation 状态
+_cffi_session = cffi_requests.Session()
+_cffi_session.impersonate = "chrome"
 
 
 # ============================================================
@@ -60,17 +66,19 @@ def request_with_retry(url, method='GET', max_retries=3, delay=3, **kwargs):
     import time
     for attempt in range(1, max_retries + 1):
         try:
-            resp = requests.request(method, url, timeout=20, impersonate="chrome", **kwargs)
+            resp = _cffi_session.request(method, url, timeout=20, **kwargs)
             print(f"  [请求] {url[:60]}... 状态码: {resp.status_code} (尝试 {attempt}/{max_retries})")
             if resp.status_code == 200:
                 return resp
-            print(f"  [重试 {attempt}/{max_retries}] HTTP {resp.status_code}, {delay}秒后重试...")
-        except requests.exceptions.SSLError as e:
+            # 非200时打印部分响应体辅助诊断
+            body_preview = resp.text[:200].replace('\n', ' ').replace('\r', '')
+            print(f"  [响应] HTTP {resp.status_code}, 响应预览: {body_preview}")
+            print(f"  [重试 {attempt}/{max_retries}] {delay}秒后重试...")
+        except cffi_requests.exceptions.SSLError as e:
             print(f"  [SSL错误 {attempt}/{max_retries}] {e}")
-            # SSL错误通常需要 verify=False，记录后仍重试
-        except requests.exceptions.ConnectionError as e:
+        except cffi_requests.exceptions.ConnectionError as e:
             print(f"  [连接错误 {attempt}/{max_retries}] {e}")
-        except requests.exceptions.Timeout as e:
+        except cffi_requests.exceptions.Timeout as e:
             print(f"  [超时 {attempt}/{max_retries}] {e}")
         except Exception as e:
             print(f"  [请求异常 {attempt}/{max_retries}] {type(e).__name__}: {e}")

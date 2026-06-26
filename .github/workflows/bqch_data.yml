@@ -32,9 +32,26 @@ jobs:
     - name: 网络诊断 (排查API连接问题)
       run: |
         echo "=== 测试 sporttery.cn API 连通性 ==="
-        curl -s -o /dev/null -w "HTTP状态码: %{http_code}\n" "https://webapi.sporttery.cn/gateway/lottery/getFootBallMatchV1.qry?param=98,0&lotteryDrawNum=&sellStatus=0&termLimits=1" || echo "sporttery.cn 不可达"
+        curl -s --max-time 15 \
+          -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36" \
+          -H "Accept: application/json, text/javascript, */*; q=0.01" \
+          -H "Accept-Language: zh-CN,zh;q=0.9" \
+          -H "Accept-Encoding: gzip, deflate, br, zstd" \
+          -H "Referer: https://www.sporttery.cn/" \
+          -H "Origin: https://www.sporttery.cn" \
+          -H "Sec-CH-UA: \"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\"" \
+          -H "Sec-CH-UA-Mobile: ?0" \
+          -H "Sec-CH-UA-Platform: \"Windows\"" \
+          -H "Sec-Fetch-Dest: empty" \
+          -H "Sec-Fetch-Mode: cors" \
+          -H "Sec-Fetch-Site: same-site" \
+          "https://webapi.sporttery.cn/gateway/lottery/getFootBallMatchV1.qry?param=98,0&lotteryDrawNum=&sellStatus=0&termLimits=1" 2>&1 | head -c 500 || echo "sporttery.cn 不可达"
+        echo ""
         echo "=== 测试 500.com XML 连通性 ==="
-        curl -s -o /dev/null -w "HTTP状态码: %{http_code}\n" "https://trade.500.com/static/public/jczq/newxml/pl/pl_bqc_2.xml" || echo "500.com 不可达"
+        curl -s --max-time 15 \
+          -H "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15" \
+          -H "Referer: https://trade.500.com/jczq/" \
+          "https://trade.500.com/static/public/jczq/newxml/pl/pl_bqc_2.xml" 2>&1 | head -c 300 || echo "500.com 不可达"
 
     - name: 获取半全场所有比赛信息
       id: fetch_matches

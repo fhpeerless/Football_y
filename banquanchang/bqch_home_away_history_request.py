@@ -19,9 +19,14 @@ import os
 import sys
 import io
 import time
-from curl_cffi import requests
 import warnings
 from datetime import datetime, timezone, timedelta
+
+from curl_cffi import requests as cffi_requests
+
+# 全局 Session，模拟 Chrome TLS 指纹绕过 EdgeOne WAF
+_cffi_session = cffi_requests.Session()
+_cffi_session.impersonate = "chrome"
 
 warnings.filterwarnings("ignore")
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -118,11 +123,10 @@ def api_request_with_retry(url: str, params: dict, max_retries: int = MAX_RETRIE
     """
     for attempt in range(1, max_retries + 1):
         try:
-            resp = requests.get(
+            resp = _cffi_session.get(
                 url, params=params,
                 headers=SPORTTERY_HEADERS,
                 timeout=20, verify=False,
-                impersonate="chrome",
             )
             if resp.status_code == 200:
                 return resp.json()
