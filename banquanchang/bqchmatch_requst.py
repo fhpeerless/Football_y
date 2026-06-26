@@ -61,18 +61,85 @@ def set_github_action_output(key: str, value: str):
             pass
 
 
+class _CurlResponse:
+    """模拟 requests.Response 的简单包装，用于 subprocess curl 回退"""
+    def __init__(self, status_code, text):
+        self.status_code = status_code
+        self._text = text
+    def json(self):
+        import json as _json
+        return _json.loads(self._text)
+    @property
+    def text(self):
+        return self._text
+    @property
+    def encoding(self):
+        return 'utf-8'
+    @encoding.setter
+    def encoding(self, val):
+        pass
+
+
+def _curl_subprocess(url, headers, timeout=20):
+    """使用系统 curl 命令发送 HTTP 请求（回退方案，用于 curl_cffi 被 WAF 拦截时）"""
+    import subprocess, tempfile, os
+    # 构建 curl 命令行参数
+    cmd = ["curl", "-s", "-S", "--max-time", str(timeout), "--compressed", "--http2"]
+    # 添加请求头
+    for key, val in headers.items():
+        cmd.extend(["-H", f"{key}: {val}"])
+    # 添加 URL
+    cmd.append(url)
+    # 用临时文件保存响应体和状态码
+    with tempfile.NamedTemporaryFile(mode='w+', suffix='.txt', delete=False) as tmp_body:
+        body_path = tmp_body.name
+    with tempfile.NamedTemporaryFile(mode='w+', suffix='.txt', delete=False) as tmp_code:
+        code_path = tmp_code.name
+    try:
+        cmd_write = cmd + ["-o", body_path, "-w", "%{http_code}"]
+        subprocess.run(cmd_write, capture_output=True, timeout=timeout + 5)
+        with open(code_path, 'r') as f:
+            status_str = f.read().strip()
+        status_code = int(status_str) if status_str else 0
+        with open(body_path, 'r', encoding='utf-8', errors='replace') as f:
+            body_text = f.read()
+        return _CurlResponse(status_code, body_text)
+    except subprocess.TimeoutExpired:
+        print("  [curl回退] 超时")
+        return None
+    except Exception as e:
+        print(f"  [curl回退] 异常: {e}")
+        return None
+    finally:
+        try:
+            os.unlink(body_path)
+            os.unlink(code_path)
+        except Exception:
+            pass
+
+
 def request_with_retry(url, method='GET', max_retries=3, delay=3, **kwargs):
-    """带重试机制的HTTP请求，返回 response 对象或 None"""
+    """带重试机制的HTTP请求，返回 response 对象或 None
+
+    策略:
+      1. 优先使用 curl_cffi (模拟 Chrome TLS 指纹)
+      2. 如果 curl_cffi 返回 567 (WAF拦截)，回退到系统 curl 命令
+    """
     import time
+
+    # ----- 策略1: curl_cffi -----
     for attempt in range(1, max_retries + 1):
         try:
             resp = _cffi_session.request(method, url, timeout=20, **kwargs)
-            print(f"  [请求] {url[:60]}... 状态码: {resp.status_code} (尝试 {attempt}/{max_retries})")
+            print(f"  [请求] {url[:70]}... 状态码: {resp.status_code} (尝试 {attempt}/{max_retries})")
             if resp.status_code == 200:
                 return resp
-            # 非200时打印部分响应体辅助诊断
             body_preview = resp.text[:200].replace('\n', ' ').replace('\r', '')
             print(f"  [响应] HTTP {resp.status_code}, 响应预览: {body_preview}")
+            # 如果被 WAF 拦截，直接跳到回退策略，不再重试 curl_cffi
+            if resp.status_code == 567:
+                print(f"  [WAF拦截] 检测到 567, 切换到系统 curl 回退策略...")
+                break
             print(f"  [重试 {attempt}/{max_retries}] {delay}秒后重试...")
         except cffi_requests.exceptions.SSLError as e:
             print(f"  [SSL错误 {attempt}/{max_retries}] {e}")
@@ -82,6 +149,26 @@ def request_with_retry(url, method='GET', max_retries=3, delay=3, **kwargs):
             print(f"  [超时 {attempt}/{max_retries}] {e}")
         except Exception as e:
             print(f"  [请求异常 {attempt}/{max_retries}] {type(e).__name__}: {e}")
+        if attempt < max_retries:
+            time.sleep(delay)
+    else:
+        # 所有重试用完且不是 567，返回 None
+        return None
+
+    # ----- 策略2: 系统 curl 回退 (应对 WAF 拦截) -----
+    print("  [回退] 使用系统 curl 命令重试...")
+    # 从 kwargs 提取 headers
+    headers = kwargs.get('headers', {})
+    for attempt in range(1, max_retries + 1):
+        print(f"  [curl回退] 请求 (尝试 {attempt}/{max_retries})...")
+        curl_resp = _curl_subprocess(url, headers, timeout=20)
+        if curl_resp is None:
+            print(f"  [curl回退] 请求失败")
+        elif curl_resp.status_code == 200:
+            print(f"  [curl回退] ✓ 状态码: 200")
+            return curl_resp
+        else:
+            print(f"  [curl回退] 状态码: {curl_resp.status_code}, 响应前100: {curl_resp.text[:100]}")
         if attempt < max_retries:
             time.sleep(delay)
     return None

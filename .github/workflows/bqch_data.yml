@@ -27,7 +27,11 @@ jobs:
 
     - name: 安装依赖
       run: |
-        pip install requests curl_cffi
+        python -m pip install --upgrade pip
+        pip install requests
+        pip install --upgrade curl_cffi
+        # 验证 curl_cffi 安装和版本
+        python -c "import curl_cffi; print(f'curl_cffi 版本: {curl_cffi.__version__}')"
 
     - name: 网络诊断 (排查API连接问题)
       run: |

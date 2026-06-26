@@ -116,11 +116,46 @@ def load_bqc_matches(period: str) -> list[dict]:
 # sporttery.cn API 调用
 # ============================================================
 
+def _curl_subprocess(url, headers, timeout=20):
+    """使用系统 curl 命令发送HTTP请求（回退方案）"""
+    import subprocess, tempfile
+    cmd = ["curl", "-s", "-S", "--max-time", str(timeout), "--compressed", "--http2"]
+    for key, val in headers.items():
+        cmd.extend(["-H", f"{key}: {val}"])
+    cmd.append(url)
+    with tempfile.NamedTemporaryFile(mode='w+', suffix='.txt', delete=False) as tmp_body:
+        body_path = tmp_body.name
+    with tempfile.NamedTemporaryFile(mode='w+', suffix='.txt', delete=False) as tmp_code:
+        code_path = tmp_code.name
+    try:
+        subprocess.run(cmd + ["-o", body_path, "-w", "%{http_code}"], capture_output=True, timeout=timeout + 5)
+        with open(code_path, 'r') as f:
+            status_code = int(f.read().strip() or 0)
+        with open(body_path, 'r', encoding='utf-8', errors='replace') as f:
+            body_text = f.read()
+        return status_code, body_text
+    except subprocess.TimeoutExpired:
+        return 0, ""
+    except Exception as e:
+        print(f"    [curl回退异常] {e}")
+        return 0, ""
+    finally:
+        import os
+        for p in [body_path, code_path]:
+            try: os.unlink(p)
+            except Exception: pass
+
+
 def api_request_with_retry(url: str, params: dict, max_retries: int = MAX_RETRIES) -> dict:
     """带重试机制的API请求
 
-    对网络波动和服务临时不可用进行最多 max_retries 次重试
+    策略:
+      1. curl_cffi (模拟 Chrome TLS 指纹)
+      2. 如果 567 WAF拦截，回退到系统 curl
     """
+    import urllib.parse
+
+    # ----- 策略1: curl_cffi -----
     for attempt in range(1, max_retries + 1):
         try:
             resp = _cffi_session.get(
@@ -131,6 +166,9 @@ def api_request_with_retry(url: str, params: dict, max_retries: int = MAX_RETRIE
             if resp.status_code == 200:
                 return resp.json()
             print(f"    HTTP {resp.status_code}", end="")
+            if resp.status_code == 567:
+                print("  [WAF拦截] 切换到系统curl回退...")
+                break
             if attempt < max_retries:
                 print(f" 等待{RETRY_DELAY * attempt}秒后重试({attempt}/{max_retries})...")
                 time.sleep(RETRY_DELAY * attempt)
@@ -143,6 +181,23 @@ def api_request_with_retry(url: str, params: dict, max_retries: int = MAX_RETRIE
                 time.sleep(RETRY_DELAY * attempt)
             else:
                 print("  放弃")
+    else:
+        return {}
+
+    # ----- 策略2: 系统 curl 回退 -----
+    full_url = url + "?" + urllib.parse.urlencode(params) if params else url
+    print(f"    [curl回退] 尝试获取 {url.split('/')[-1][:20]}...")
+    for attempt in range(1, max_retries + 1):
+        sc, text = _curl_subprocess(full_url, SPORTTERY_HEADERS)
+        if sc == 200:
+            try:
+                return json.loads(text)
+            except Exception:
+                print(f"    [curl回退] JSON解析失败")
+        else:
+            print(f"    [curl回退] HTTP {sc} (尝试 {attempt}/{max_retries})")
+        if attempt < max_retries:
+            time.sleep(RETRY_DELAY * attempt)
     return {}
 
 
