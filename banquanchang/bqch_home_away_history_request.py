@@ -19,7 +19,7 @@ import os
 import sys
 import io
 import time
-import requests
+from curl_cffi import requests
 import warnings
 from datetime import datetime, timezone, timedelta
 
@@ -30,12 +30,20 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 # API 配置 (sporttery.cn)
 # ============================================================
 SPORTTERY_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "Accept": "application/json, text/javascript, */*; q=0.01",
-    "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
+    "Accept-Language": "zh-CN,zh;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
     "Referer": "https://www.sporttery.cn/jc/zqdz/index.html",
     "Origin": "https://www.sporttery.cn",
     "X-Requested-With": "XMLHttpRequest",
+    "Priority": "u=1, i",
+    "Sec-CH-UA": '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
+    "Sec-CH-UA-Mobile": "?0",
+    "Sec-CH-UA-Platform": '"Windows"',
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-site",
 }
 
 # getMatchResultV1.qry - 返回主客队各 N 场近期比赛
@@ -114,6 +122,7 @@ def api_request_with_retry(url: str, params: dict, max_retries: int = MAX_RETRIE
                 url, params=params,
                 headers=SPORTTERY_HEADERS,
                 timeout=20, verify=False,
+                impersonate="chrome",
             )
             if resp.status_code == 200:
                 return resp.json()

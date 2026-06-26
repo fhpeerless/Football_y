@@ -24,7 +24,7 @@ BQC赔率编码:
   ba=负胜  bc=负平  bb=负负
 """
 
-import requests
+from curl_cffi import requests
 import xml.etree.ElementTree as ET
 import json
 import os
@@ -60,7 +60,7 @@ def request_with_retry(url, method='GET', max_retries=3, delay=3, **kwargs):
     import time
     for attempt in range(1, max_retries + 1):
         try:
-            resp = requests.request(method, url, timeout=20, **kwargs)
+            resp = requests.request(method, url, timeout=20, impersonate="chrome", **kwargs)
             print(f"  [请求] {url[:60]}... 状态码: {resp.status_code} (尝试 {attempt}/{max_retries})")
             if resp.status_code == 200:
                 return resp
@@ -88,13 +88,21 @@ API_URL = "https://webapi.sporttery.cn/gateway/lottery/getFootBallMatchV1.qry"
 # BQC赔率XML
 BQC_XML_URL = "https://trade.500.com/static/public/jczq/newxml/pl/pl_bqc_2.xml"
 
-# API请求头
+# API请求头 — 模拟 sporttery.cn 页面真实浏览器请求（Tencent EdgeOne WAF 会校验 sec-* 头）
 API_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "Accept": "application/json, text/javascript, */*; q=0.01",
     "Accept-Language": "zh-CN,zh;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
     "Referer": "https://www.sporttery.cn/",
     "Origin": "https://www.sporttery.cn",
+    "Priority": "u=1, i",
+    "Sec-CH-UA": '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
+    "Sec-CH-UA-Mobile": "?0",
+    "Sec-CH-UA-Platform": '"Windows"',
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-site",
 }
 
 # XML请求头
@@ -102,8 +110,16 @@ XML_HEADERS = {
     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1",
     "Accept": "application/xml, text/xml, */*; q=0.01",
     "Accept-Language": "zh-CN,zh;q=0.9",
+    "Accept-Encoding": "gzip, deflate",
     "X-Requested-With": "XMLHttpRequest",
     "Referer": "https://trade.500.com/jczq/",
+    "Priority": "u=1, i",
+    "Sec-CH-UA": '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
+    "Sec-CH-UA-Mobile": "?0",
+    "Sec-CH-UA-Platform": '"iPhone"',
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-site",
 }
 
 

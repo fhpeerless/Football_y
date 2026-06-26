@@ -27,7 +27,7 @@ jobs:
 
     - name: 安装依赖
       run: |
-        pip install requests
+        pip install requests curl_cffi
 
     - name: 网络诊断 (排查API连接问题)
       run: |
