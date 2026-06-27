@@ -105,6 +105,8 @@ def fetch_available_periods() -> list:
     }
     try:
         resp = proxy_get(API_URL, params=params, headers=API_HEADERS, timeout=20, verify=False)
+        print(f"  [调试] 代理返回状态码: {resp.status_code}")
+        print(f"  [调试] 代理返回体(前500字符): {resp.text[:500]}")
         if resp.status_code != 200:
             body_sample = resp.text[:300] if resp.text else "(空)"
             print(f"  [错误] API请求失败, HTTP: {resp.status_code}")
