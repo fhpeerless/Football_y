@@ -106,7 +106,9 @@ def fetch_available_periods() -> list:
     try:
         resp = proxy_get(API_URL, params=params, headers=API_HEADERS, timeout=20, verify=False)
         if resp.status_code != 200:
+            body_sample = resp.text[:300] if resp.text else "(空)"
             print(f"  [错误] API请求失败, HTTP: {resp.status_code}")
+            print(f"  [诊断] 响应内容: {body_sample}")
             return []
         data = resp.json()
         if not data.get("success"):
@@ -150,7 +152,9 @@ def fetch_matches_for_period(period: str) -> list:
     try:
         resp = proxy_get(API_URL, params=params, headers=API_HEADERS, timeout=20, verify=False)
         if resp.status_code != 200:
+            body_sample = resp.text[:300] if resp.text else "(空)"
             print(f"  [错误] 期数{period} API请求失败, HTTP: {resp.status_code}")
+            print(f"  [诊断] 响应内容: {body_sample}")
             return []
         data = resp.json()
         if not data.get("success"):

@@ -118,7 +118,8 @@ def api_request_with_retry(url: str, params: dict, max_retries: int = MAX_RETRIE
             )
             if resp.status_code == 200:
                 return resp.json()
-            print(f"    HTTP {resp.status_code}", end="")
+            body_sample = resp.text[:200] if resp.text else "(空)"
+            print(f"    HTTP {resp.status_code} | body: {body_sample}", end="")
             if attempt < max_retries:
                 print(f" 等待{RETRY_DELAY * attempt}秒后重试({attempt}/{max_retries})...")
                 time.sleep(RETRY_DELAY * attempt)

@@ -30,6 +30,14 @@ SCF_TOKEN = os.environ.get("SCF_TOKEN", "")
 USE_PROXY = bool(SCF_BASE_URL and SCF_TOKEN)
 
 
+def _build_target_url(base_url: str, params: Optional[dict] = None) -> str:
+    """构建目标完整 URL（含查询参数）"""
+    if not params:
+        return base_url
+    query_string = urllib.parse.urlencode(params, doseq=True)
+    return f"{base_url}?{query_string}"
+
+
 def proxy_request(method: str, url: str, **kwargs) -> requests.Response:
     """
     通过 SCF 代理发送 HTTP 请求
@@ -38,34 +46,28 @@ def proxy_request(method: str, url: str, **kwargs) -> requests.Response:
     当 USE_PROXY=True 时自动走 SCF 代理，否则直接请求。
 
     处理逻辑:
-        1. 提取 params 参数，拼接到目标 URL 中
-        2. 将完整目标 URL 作为 url 参数传给 SCF
+        1. 构建目标完整 URL（含查询参数）
+        2. 用 quote() 编码后拼接到 SCF 代理 URL
         3. 清理 Host 请求头（避免冲突）
-        4. 其余参数 (headers, timeout, verify 等) 透传给内层 requests
+        4. 其余参数透传给内层 requests
     """
     if not USE_PROXY:
         return requests.request(method, url, **kwargs)
 
     # 1. 构建目标完整 URL（含查询参数）
     params = kwargs.pop("params", None)
-    target_url = url
-    if params:
-        query_string = urllib.parse.urlencode(params, doseq=True)
-        target_url = f"{url}?{query_string}"
+    target_url = _build_target_url(url, params)
 
     # 2. 清理请求头中可能冲突的字段
     headers = kwargs.pop("headers", {})
     headers.pop("Host", None)
 
-    # 3. 构建 SCF 代理请求参数
-    proxy_params = {
-        "url": target_url,
-        "token": SCF_TOKEN,
-    }
+    # 3. 手动拼接代理 URL（避免 params 方式可能引发的编码问题）
+    encoded_target = urllib.parse.quote(target_url, safe='')
+    proxy_url = f"https://{SCF_BASE_URL}/?url={encoded_target}&token={urllib.parse.quote(SCF_TOKEN, safe='')}"
 
     # 4. 发送到 SCF 代理
-    proxy_url = f"https://{SCF_BASE_URL}/"
-    return requests.request(method, proxy_url, params=proxy_params, headers=headers, **kwargs)
+    return requests.request(method, proxy_url, headers=headers, **kwargs)
 
 
 def proxy_get(url: str, **kwargs) -> requests.Response:
