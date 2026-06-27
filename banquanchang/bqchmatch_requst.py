@@ -24,6 +24,7 @@ BQC赔率编码:
   ba=负胜  bc=负平  bb=负负
 """
 
+import requests
 import xml.etree.ElementTree as ET
 import json
 import os
@@ -32,18 +33,12 @@ import io
 import warnings
 from datetime import datetime, timezone, timedelta
 from typing import Optional
+from scf_proxy_util import proxy_get
 
 warnings.filterwarnings("ignore")
 
 # 强制UTF-8输出
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
-# 使用 curl_cffi 模拟 Chrome TLS 指纹，绕过 Tencent EdgeOne WAF 的 JA3 检测
-from curl_cffi import requests as cffi_requests
-
-# 全局 Session，保持连接池和 impersonation 状态
-_cffi_session = cffi_requests.Session()
-_cffi_session.impersonate = "chrome"
 
 
 # ============================================================
@@ -60,119 +55,6 @@ def set_github_action_output(key: str, value: str):
         except Exception:
             pass
 
-
-class _CurlResponse:
-    """模拟 requests.Response 的简单包装，用于 subprocess curl 回退"""
-    def __init__(self, status_code, text):
-        self.status_code = status_code
-        self._text = text
-    def json(self):
-        import json as _json
-        return _json.loads(self._text)
-    @property
-    def text(self):
-        return self._text
-    @property
-    def encoding(self):
-        return 'utf-8'
-    @encoding.setter
-    def encoding(self, val):
-        pass
-
-
-def _curl_subprocess(url, headers, timeout=20):
-    """使用系统 curl 命令发送 HTTP 请求（回退方案，用于 curl_cffi 被 WAF 拦截时）"""
-    import subprocess, tempfile, os
-    # 构建 curl 命令行参数
-    cmd = ["curl", "-s", "-S", "--max-time", str(timeout), "--compressed", "--http2"]
-    # 添加请求头
-    for key, val in headers.items():
-        cmd.extend(["-H", f"{key}: {val}"])
-    # 添加 URL
-    cmd.append(url)
-    # 用临时文件保存响应体和状态码
-    with tempfile.NamedTemporaryFile(mode='w+', suffix='.txt', delete=False) as tmp_body:
-        body_path = tmp_body.name
-    with tempfile.NamedTemporaryFile(mode='w+', suffix='.txt', delete=False) as tmp_code:
-        code_path = tmp_code.name
-    try:
-        cmd_write = cmd + ["-o", body_path, "-w", "%{http_code}"]
-        subprocess.run(cmd_write, capture_output=True, timeout=timeout + 5)
-        with open(code_path, 'r') as f:
-            status_str = f.read().strip()
-        status_code = int(status_str) if status_str else 0
-        with open(body_path, 'r', encoding='utf-8', errors='replace') as f:
-            body_text = f.read()
-        return _CurlResponse(status_code, body_text)
-    except subprocess.TimeoutExpired:
-        print("  [curl回退] 超时")
-        return None
-    except Exception as e:
-        print(f"  [curl回退] 异常: {e}")
-        return None
-    finally:
-        try:
-            os.unlink(body_path)
-            os.unlink(code_path)
-        except Exception:
-            pass
-
-
-def request_with_retry(url, method='GET', max_retries=3, delay=3, **kwargs):
-    """带重试机制的HTTP请求，返回 response 对象或 None
-
-    策略:
-      1. 优先使用 curl_cffi (模拟 Chrome TLS 指纹)
-      2. 如果 curl_cffi 返回 567 (WAF拦截)，回退到系统 curl 命令
-    """
-    import time
-
-    # ----- 策略1: curl_cffi -----
-    for attempt in range(1, max_retries + 1):
-        try:
-            resp = _cffi_session.request(method, url, timeout=20, **kwargs)
-            print(f"  [请求] {url[:70]}... 状态码: {resp.status_code} (尝试 {attempt}/{max_retries})")
-            if resp.status_code == 200:
-                return resp
-            body_preview = resp.text[:200].replace('\n', ' ').replace('\r', '')
-            print(f"  [响应] HTTP {resp.status_code}, 响应预览: {body_preview}")
-            # 如果被 WAF 拦截，直接跳到回退策略，不再重试 curl_cffi
-            if resp.status_code == 567:
-                print(f"  [WAF拦截] 检测到 567, 切换到系统 curl 回退策略...")
-                break
-            print(f"  [重试 {attempt}/{max_retries}] {delay}秒后重试...")
-        except cffi_requests.exceptions.SSLError as e:
-            print(f"  [SSL错误 {attempt}/{max_retries}] {e}")
-        except cffi_requests.exceptions.ConnectionError as e:
-            print(f"  [连接错误 {attempt}/{max_retries}] {e}")
-        except cffi_requests.exceptions.Timeout as e:
-            print(f"  [超时 {attempt}/{max_retries}] {e}")
-        except Exception as e:
-            print(f"  [请求异常 {attempt}/{max_retries}] {type(e).__name__}: {e}")
-        if attempt < max_retries:
-            time.sleep(delay)
-    else:
-        # 所有重试用完且不是 567，返回 None
-        return None
-
-    # ----- 策略2: 系统 curl 回退 (应对 WAF 拦截) -----
-    print("  [回退] 使用系统 curl 命令重试...")
-    # 从 kwargs 提取 headers
-    headers = kwargs.get('headers', {})
-    for attempt in range(1, max_retries + 1):
-        print(f"  [curl回退] 请求 (尝试 {attempt}/{max_retries})...")
-        curl_resp = _curl_subprocess(url, headers, timeout=20)
-        if curl_resp is None:
-            print(f"  [curl回退] 请求失败")
-        elif curl_resp.status_code == 200:
-            print(f"  [curl回退] ✓ 状态码: 200")
-            return curl_resp
-        else:
-            print(f"  [curl回退] 状态码: {curl_resp.status_code}, 响应前100: {curl_resp.text[:100]}")
-        if attempt < max_retries:
-            time.sleep(delay)
-    return None
-
 # ============================================================
 # 配置
 # ============================================================
@@ -183,21 +65,13 @@ API_URL = "https://webapi.sporttery.cn/gateway/lottery/getFootBallMatchV1.qry"
 # BQC赔率XML
 BQC_XML_URL = "https://trade.500.com/static/public/jczq/newxml/pl/pl_bqc_2.xml"
 
-# API请求头 — 模拟 sporttery.cn 页面真实浏览器请求（Tencent EdgeOne WAF 会校验 sec-* 头）
+# API请求头
 API_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "application/json, text/javascript, */*; q=0.01",
     "Accept-Language": "zh-CN,zh;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br, zstd",
     "Referer": "https://www.sporttery.cn/",
     "Origin": "https://www.sporttery.cn",
-    "Priority": "u=1, i",
-    "Sec-CH-UA": '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
-    "Sec-CH-UA-Mobile": "?0",
-    "Sec-CH-UA-Platform": '"Windows"',
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-site",
 }
 
 # XML请求头
@@ -205,16 +79,8 @@ XML_HEADERS = {
     "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1",
     "Accept": "application/xml, text/xml, */*; q=0.01",
     "Accept-Language": "zh-CN,zh;q=0.9",
-    "Accept-Encoding": "gzip, deflate",
     "X-Requested-With": "XMLHttpRequest",
     "Referer": "https://trade.500.com/jczq/",
-    "Priority": "u=1, i",
-    "Sec-CH-UA": '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
-    "Sec-CH-UA-Mobile": "?0",
-    "Sec-CH-UA-Platform": '"iPhone"',
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-site",
 }
 
 
@@ -237,21 +103,21 @@ def fetch_available_periods() -> list:
         "sellStatus": "0",
         "termLimits": "10",
     }
-    resp = request_with_retry(API_URL, params=params, headers=API_HEADERS, verify=False)
-    if resp is None:
-        print("  [错误] 所有重试均失败，无法获取在售期数")
-        return []
     try:
+        resp = proxy_get(API_URL, params=params, headers=API_HEADERS, timeout=20, verify=False)
+        if resp.status_code != 200:
+            print(f"  [错误] API请求失败, HTTP: {resp.status_code}")
+            return []
         data = resp.json()
+        if not data.get("success"):
+            print(f"  [错误] API返回失败: {data.get('errorMessage', '未知错误')}")
+            return []
+        bqclist = data["value"].get("bqclist", [])
+        print(f"  在售期数: {bqclist}")
+        return bqclist
     except Exception as e:
-        print(f"  [错误] API返回非JSON格式: {e}, 前200字符: {resp.text[:200]}")
+        print(f"  [错误] 获取在售期数异常: {e}")
         return []
-    if not data.get("success"):
-        print(f"  [错误] API返回失败: {data.get('errorMessage', '未知错误')}")
-        return []
-    bqclist = data["value"].get("bqclist", [])
-    print(f"  在售期数: {bqclist}")
-    return bqclist
 
 
 # ============================================================
@@ -281,25 +147,25 @@ def fetch_matches_for_period(period: str) -> list:
         "sellStatus": "0",
         "termLimits": "10",
     }
-    resp = request_with_retry(API_URL, params=params, headers=API_HEADERS, verify=False)
-    if resp is None:
-        print(f"  [错误] 期数{period} 所有重试均失败")
-        return []
     try:
+        resp = proxy_get(API_URL, params=params, headers=API_HEADERS, timeout=20, verify=False)
+        if resp.status_code != 200:
+            print(f"  [错误] 期数{period} API请求失败, HTTP: {resp.status_code}")
+            return []
         data = resp.json()
+        if not data.get("success"):
+            print(f"  [错误] 期数{period} API返回失败: {data.get('errorMessage', '未知错误')}")
+            return []
+        match_list = data["value"]["bqcMatch"].get("matchList", [])
+        print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
+        for m in match_list:
+            home = m.get("masterTeamAllName", "").strip() or m["masterTeamName"].strip()
+            away = m.get("guestTeamAllName", "").strip() or m["guestTeamName"].strip()
+            print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
+        return match_list
     except Exception as e:
-        print(f"  [错误] 期数{period} API返回非JSON格式: {e}, 前200字符: {resp.text[:200]}")
+        print(f"  [错误] 获取期数{period}比赛数据异常: {e}")
         return []
-    if not data.get("success"):
-        print(f"  [错误] 期数{period} API返回失败: {data.get('errorMessage', '未知错误')}")
-        return []
-    match_list = data["value"]["bqcMatch"].get("matchList", [])
-    print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
-    for m in match_list:
-        home = m.get("masterTeamAllName", "").strip() or m["masterTeamName"].strip()
-        away = m.get("guestTeamAllName", "").strip() or m["guestTeamName"].strip()
-        print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
-    return match_list
 
 
 # ============================================================
@@ -307,13 +173,17 @@ def fetch_matches_for_period(period: str) -> list:
 # ============================================================
 
 def fetch_xml(url: str) -> Optional[str]:
-    """获取XML数据（带重试和SSL绕过）"""
-    resp = request_with_retry(url, headers=XML_HEADERS, verify=False)
-    if resp is None:
-        print(f"  [错误] XML请求全部重试失败: {url}")
+    """获取XML数据"""
+    try:
+        resp = proxy_get(url, headers=XML_HEADERS, timeout=15)
+        resp.encoding = "utf-8"
+        if resp.status_code == 200:
+            return resp.text
+        print(f"  请求失败, HTTP状态码: {resp.status_code}, URL: {url}")
         return None
-    resp.encoding = "utf-8"
-    return resp.text
+    except requests.RequestException as e:
+        print(f"  请求异常: {e}, URL: {url}")
+        return None
 
 
 def parse_bqc_xml(xml_text: str) -> dict:
