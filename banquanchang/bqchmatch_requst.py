@@ -336,60 +336,64 @@ def main():
 
     print("  检测到新期数，继续获取数据...")
 
-    # 处理最大期数
-    target_period = str(max(api_periods))
-
-    # 2. 获取该期数的比赛数据
-    print(f"\n[步骤2] 获取期数 {target_period} 比赛数据...")
-    api_matches = fetch_matches_for_period(target_period)
-    if not api_matches:
-        print(f"错误: 期数{target_period} 无比赛数据")
-        exit(1)
-
-    # 3. 获取BQC赔率XML
-    print("\n[步骤3] 获取BQC赔率XML...")
-    bqc_xml = fetch_xml(BQC_XML_URL)
-    if not bqc_xml:
-        print("警告: 获取BQC赔率失败，将不包含半全场赔率数据")
-        bqc_odds_map = {}
-    else:
-        bqc_odds_map = parse_bqc_xml(bqc_xml)
-        print(f"  BQC XML 中共 {len(bqc_odds_map)} 场赔率")
-
-    # 4. 匹配数据（按match_id匹配）
-    print("\n[步骤4] 匹配比赛数据与BQC赔率（按match_id匹配）...")
-    matched = match_bqc_odds(api_matches, bqc_odds_map)
-    matched.sort(key=lambda x: int(x.get("match_num", 0)) if str(x.get("match_num", "")).isdigit() else 0)
-
-    total_matches = len(matched)
-    with_bqc = sum(1 for m in matched if m.get("bqc_odds"))
-    print(f"  匹配结果: {total_matches} 场, 有BQC赔率: {with_bqc} 场")
-
-    # 5. 保存数据
-    print("\n[步骤5] 保存数据...")
+    # 2. 遍历每个在售期数，获取比赛数据+BQC赔率并保存
+    print("\n[步骤2] 遍历在售期数获取比赛数据...")
     data_dir = os.path.join(script_dir, "data")
     os.makedirs(data_dir, exist_ok=True)
 
-    output = {
-        "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
-        "data_source": "webapi.sporttery.cn",
-        "period": target_period,
-        "total_matches": total_matches,
-        "data": matched,
-    }
+    all_periods_list = sorted(api_periods)
+    success_count = 0
+    for period_num in all_periods_list:
+        period_str = str(period_num)
+        print(f"\n  --- 期数 {period_str} ---")
 
-    outpath = os.path.join(data_dir, f"{target_period}_bqch_match.json")
-    with open(outpath, "w", encoding="utf-8") as f:
-        json.dump(output, f, ensure_ascii=False, indent=2)
-    print(f"  数据已保存到: {outpath}")
+        # 2a. 获取该期数的比赛数据
+        api_matches = fetch_matches_for_period(period_str)
+        if not api_matches:
+            print(f"  警告: 期数{period_str} 无比赛数据，跳过")
+            continue
+
+        # 2b. 获取该期数的BQC赔率XML
+        print(f"  获取BQC赔率XML...")
+        bqc_xml = fetch_xml(BQC_XML_URL)
+        if not bqc_xml:
+            print("  警告: 获取BQC赔率失败，将不包含半全场赔率数据")
+            bqc_odds_map = {}
+        else:
+            bqc_odds_map = parse_bqc_xml(bqc_xml)
+            print(f"  BQC XML 中共 {len(bqc_odds_map)} 场赔率")
+
+        # 2c. 匹配BQC赔率
+        matched = match_bqc_odds(api_matches, bqc_odds_map)
+        matched.sort(key=lambda x: int(x.get("match_num", 0)) if str(x.get("match_num", "")).isdigit() else 0)
+
+        total = len(matched)
+        with_bqc = sum(1 for m in matched if m.get("bqc_odds"))
+        print(f"  匹配结果: {total} 场, 有BQC赔率: {with_bqc} 场")
+
+        # 2d. 保存数据
+        output = {
+            "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
+            "data_source": "webapi.sporttery.cn",
+            "period": period_str,
+            "total_matches": total,
+            "data": matched,
+        }
+        outpath = os.path.join(data_dir, f"{period_str}_bqch_match.json")
+        with open(outpath, "w", encoding="utf-8") as f:
+            json.dump(output, f, ensure_ascii=False, indent=2)
+        print(f"  数据已保存到: {outpath}")
+        success_count += 1
+
+    if success_count == 0:
+        print("错误: 所有在售期数均无比赛数据")
+        exit(1)
 
     # 通知 GitHub Actions 有新数据，继续执行下游脚本
     set_github_action_output("bqch_status", "continue")
 
     print(f"\n{'=' * 60}")
-    print(f"  期数 {target_period}: 共 {total_matches} 场比赛")
-    print(f"  有BQC赔率: {with_bqc} 场")
-    print(f"  无BQC赔率: {total_matches - with_bqc} 场")
+    print(f"  共处理 {success_count}/{len(all_periods_list)} 个在售期数")
     print(f"{'=' * 60}")
     print("完成!")
 
