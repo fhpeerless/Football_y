@@ -214,8 +214,8 @@ def analyze_common_opponents(period: str) -> list[dict]:
     history_path = os.path.join(data_dir, f"{period}_bqch_homaway_history.json")
 
     if not os.path.exists(history_path):
-        print(f"错误: {history_path} 不存在，请先执行 bqch_home_away_history_request.py")
-        exit(1)
+        print(f"  跳过: {history_path} 不存在")
+        return []
 
     with open(history_path, "r", encoding="utf-8") as f:
         history_data = json.load(f)
@@ -273,11 +273,38 @@ def main():
     print("  BQC 半全场共同对手数据分析")
     print("=" * 70)
 
-    target_period = get_target_period()
-    print(f"目标期数: {target_period}")
+    # 从 period.json 读取所有在售期数
+    period_file = os.path.join(get_project_root(), "period.json")
+    if not os.path.exists(period_file):
+        print(f"错误: {period_file} 不存在")
+        exit(1)
+    try:
+        with open(period_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            on_sale_periods = data.get("on_sale", [])
+    except Exception as e:
+        print(f"错误: 读取 period.json 失败: {e}")
+        exit(1)
 
-    results = analyze_common_opponents(target_period)
-    save_common_match(results, period=target_period)
+    if not on_sale_periods:
+        print("错误: period.json 中没有在售期数")
+        exit(1)
+
+    print(f"在售期数: {on_sale_periods}")
+
+    # 遍历每个在售期数
+    for period_num in on_sale_periods:
+        period_str = str(period_num)
+        print(f"\n{'=' * 70}")
+        print(f"处理期数: {period_str}")
+        print(f"{'=' * 70}")
+
+        results = analyze_common_opponents(period_str)
+        if not results:
+            print(f"  跳过期数 {period_str}（无历史数据）")
+            continue
+
+        save_common_match(results, period=period_str)
 
     print(f"\n全部完成！")
 

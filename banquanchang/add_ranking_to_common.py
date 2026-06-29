@@ -99,17 +99,24 @@ def main():
     ranking_lookup = load_rankings()
     print(f'      共加载 {len(ranking_lookup)} 支球队排名')
 
-    print('[2/3] 获取当前期数...')
-    period = get_period()
-    print(f'      当前期数: {period}')
+    print('[2/3] 获取所有在售期数...')
+    with open(PERIOD_PATH, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    on_sale_periods = data.get("on_sale", [])
+    if not on_sale_periods:
+        print('      错误: period.json 中没有在售期数')
+        exit(1)
+    print(f'      在售期数: {on_sale_periods}')
 
-    print('[3/3] 处理共同对手数据文件...')
-    ok = process_common_file(period, ranking_lookup)
-
-    if ok:
-        print(f'\n  完成! 排名数据已写入 data/{period}_bqch_common.json')
-    else:
-        print(f'\n  未找到 data/{period}_bqch_common.json，跳过')
+    print('[3/3] 遍历处理各期数共同对手数据...')
+    for period_num in on_sale_periods:
+        period_str = str(period_num)
+        print(f'\n  --- 期数 {period_str} ---')
+        ok = process_common_file(period_str, ranking_lookup)
+        if ok:
+            print(f'  完成! 排名数据已写入 data/{period_str}_bqch_common.json')
+        else:
+            print(f'  跳过: data/{period_str}_bqch_common.json 不存在')
 
 
 if __name__ == '__main__':

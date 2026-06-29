@@ -77,28 +77,28 @@ def load_bqc_matches(period: str) -> list[dict]:
     """读取指定期数的 {period}_bqch_match.json 比赛数据
 
     JSON结构: {period: "26120", data: [6场比赛]}
+    文件不存在或数据为空时返回空列表（由调用方决定是否跳过）
     """
     data_dir = os.path.join(get_project_root(), "data")
     filepath = os.path.join(data_dir, f"{period}_bqch_match.json")
 
     if not os.path.exists(filepath):
-        print(f"错误: {filepath} 不存在")
-        print("请先运行 bqchmatch_requst.py 获取BQC数据")
-        exit(1)
+        print(f"  跳过: {filepath} 不存在")
+        return []
 
     with open(filepath, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     matches = data.get("data", [])
     if not matches:
-        print(f"错误: 期数 {period} 没有比赛数据")
-        exit(1)
+        print(f"  跳过: 期数 {period} 没有比赛数据")
+        return []
 
     # 为每场比赛标注期数
     for m in matches:
         m["period"] = period
 
-    print(f"已加载 {len(matches)} 场比赛 (来源: {filepath})")
+    print(f"  已加载 {len(matches)} 场比赛 (来源: {filepath})")
     return matches
 
 
@@ -287,30 +287,52 @@ def main():
     print("  BQC 半全场历史数据爬取 (sporttery.cn API)")
     print("=" * 70)
 
-    # 1. 从 period.json 读取要处理的期数
-    target_period = get_target_period()
-    print(f"目标期数: {target_period}")
-    print(f"{'=' * 70}")
+    # 1. 从 period.json 读取所有在售期数
+    period_file = os.path.join(get_project_root(), "period.json")
+    if not os.path.exists(period_file):
+        print(f"错误: {period_file} 不存在")
+        exit(1)
+    try:
+        with open(period_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            on_sale_periods = data.get("on_sale", [])
+    except Exception as e:
+        print(f"错误: 读取 period.json 失败: {e}")
+        exit(1)
 
-    # 2. 加载该期数的比赛数据
-    print(f"\n[步骤1] 加载期数 {target_period} 比赛数据...")
-    matches = load_bqc_matches(target_period)
-    print(f"  ✓ 共 {len(matches)} 场比赛")
+    if not on_sale_periods:
+        print("错误: period.json 中没有在售期数")
+        exit(1)
 
-    # 3. 获取该期数所有比赛的历史数据
-    print(f"\n{'─' * 70}")
-    print(f"[步骤2] 期数 {target_period}: {len(matches)} 场比赛")
-    print(f"{'─' * 70}")
+    print(f"在售期数: {on_sale_periods}")
 
-    history_records = fetch_all_history(matches)
+    # 2. 遍历每个在售期数
+    for period_num in on_sale_periods:
+        period_str = str(period_num)
+        print(f"\n{'=' * 70}")
+        print(f"处理期数: {period_str}")
+        print(f"{'=' * 70}")
 
-    print(f"\n  ✅ 期数 {target_period} 完成，已获取 {len(history_records)} 场比赛历史数据")
+        # 加载该期数的比赛数据
+        print(f"\n[步骤1] 加载期数 {period_str} 比赛数据...")
+        matches = load_bqc_matches(period_str)
+        if not matches:
+            print(f"  跳过期数 {period_str}（无比赛数据）")
+            continue
 
-    # 4. 保存历史数据
-    print(f"\n{'=' * 70}")
-    save_history(history_records, period=target_period)
-    print(f"共处理 {len(history_records)} 场比赛")
-    print(f"全部完成！")
+        # 获取该期数所有比赛的历史数据
+        print(f"\n{'─' * 70}")
+        print(f"[步骤2] 期数 {period_str}: {len(matches)} 场比赛")
+        print(f"{'─' * 70}")
+
+        history_records = fetch_all_history(matches)
+        print(f"\n  ✅ 期数 {period_str} 完成，已获取 {len(history_records)} 场比赛历史数据")
+
+        # 保存历史数据
+        print(f"\n{'=' * 70}")
+        save_history(history_records, period=period_str)
+
+    print(f"\n全部完成！")
 
 
 if __name__ == "__main__":
