@@ -436,20 +436,54 @@
             box-shadow: 0 0 10px rgba(244, 67, 54, 0.3);
         }
 
-        /* 半全场赔率单元格 - 点击选中效果 */
+        /* 半全场赔率单元格 - 仅展示，不可点选 */
         .bqc-odds-cell {
+            transition: all 0.2s ease;
+        }
+
+        /* 半全场 3/1/0 选择器按钮 */
+        .bqc-half-predict {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .bqc-half-btn {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 6px;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
             transition: all 0.2s ease;
             user-select: none;
+            border: 2px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+            text-align: center;
+            min-width: 52px;
         }
-        .bqc-odds-cell:hover {
-            background: rgba(255, 255, 255, 0.1) !important;
+        .bqc-half-btn:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
         }
-        .bqc-odds-cell.selected {
-            background: rgba(76, 175, 80, 0.3) !important;
-            border: 2px solid #4caf50 !important;
-            transform: scale(1.02);
-            box-shadow: 0 0 12px rgba(76, 175, 80, 0.4);
+        .bqc-half-btn.selected-win {
+            background: rgba(76, 175, 80, 0.35);
+            border-color: #4caf50;
+            color: #4caf50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+        }
+        .bqc-half-btn.selected-draw {
+            background: rgba(255, 193, 7, 0.35);
+            border-color: #ffc107;
+            color: #ffc107;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+        }
+        .bqc-half-btn.selected-lose {
+            background: rgba(244, 67, 54, 0.35);
+            border-color: #f44336;
+            color: #f44336;
+            box-shadow: 0 0 10px rgba(244, 67, 54, 0.3);
         }
 
         /* 期数切换按钮 */
@@ -1783,6 +1817,13 @@
             btn.classList.toggle('selected-' + outcome);
         }
         
+        // 半全场 3/1/0 选择器 - 独立点选，可同时选中多个
+        function selectHalfResult(btn) {
+            const value = btn.dataset.bqcValue;
+            const cls = value === '3' ? 'selected-win' : value === '1' ? 'selected-draw' : 'selected-lose';
+            btn.classList.toggle(cls);
+        }
+        
         // 加载按钮事件
         loadCommonMatchBtn.addEventListener('click', loadCommonMatchData);
         
@@ -1960,14 +2001,33 @@
                         }
                         if (i % 3 === 0) html += '</tr><tr>';
                         html += `
-                            <td class="bqc-odds-cell" data-key="${key}" style="padding: 8px 6px; text-align: center; border: 1px solid rgba(255,255,255,0.08);" onclick="this.classList.toggle('selected')">
+                            <td class="bqc-odds-cell" data-key="${key}" style="padding: 8px 6px; text-align: center; border: 1px solid rgba(255,255,255,0.08);">
                                 <div style="font-weight: 600; color: ${color}; font-size: 1.1em;">${oddsVal}</div>
                                 <div style="font-size: 0.8em; opacity: 0.7;">${info.label}</div>
                                 <div style="font-size: 0.7em; opacity: 0.5;">${info.desc}</div>
                             </td>
                         `;
                     });
-                    html += `</tr></table></div>`;
+                    html += `</tr></table>`;
+
+                    // 上半场/下半场 3/1/0 选择器
+                    html += `
+                        <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);">
+                            <div class="bqc-half-predict" style="margin-bottom: 8px;">
+                                <span style="font-size: 0.85em; color: #90caf9; font-weight: 600; min-width: 55px;">上半场</span>
+                                <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="3" onclick="selectHalfResult(this)">3</span>
+                                <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="1" onclick="selectHalfResult(this)">1</span>
+                                <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="0" onclick="selectHalfResult(this)">0</span>
+                            </div>
+                            <div class="bqc-half-predict">
+                                <span style="font-size: 0.85em; color: #90caf9; font-weight: 600; min-width: 55px;">下半场</span>
+                                <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="3" onclick="selectHalfResult(this)">3</span>
+                                <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="1" onclick="selectHalfResult(this)">1</span>
+                                <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="0" onclick="selectHalfResult(this)">0</span>
+                            </div>
+                        </div>
+                    `;
+                    html += `</div>`;
                 }
                 
                 // 错误信息
