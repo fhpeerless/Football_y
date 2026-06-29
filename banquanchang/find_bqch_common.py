@@ -64,6 +64,7 @@ def normalize_match_record(match: dict) -> dict:
         "homehalfscore": homehalfscore,
         "awayhalfscore": awayhalfscore,
         "matchdate": match.get("matchDate", ""),
+        "tournamentShortName": match.get("tournamentShortName", ""),
         "result1": {"home": "胜", "draw": "平", "away": "负"}.get(winning_team, "平"),
         "result2": {"home": "负", "draw": "平", "away": "胜"}.get(winning_team, "平"),
     }

@@ -2121,6 +2121,7 @@
                                     <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.9em;">
                                         <tr style="background: ${accentColor}15;">
                                             <th style="padding: 4px 6px; text-align: left;">日期</th>
+                                            <th style="padding: 4px 6px; text-align: center;">赛制</th>
                                             <th style="padding: 4px 6px; text-align: center;">主队</th>
                                             <th style="padding: 4px 6px; text-align: center;">全场</th>
                                             <th style="padding: 4px 6px; text-align: center;">半场</th>
@@ -2138,6 +2139,7 @@
                                     const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
                                     tableHtml += `<tr>
                                         <td style="padding: 4px 6px;">${m.matchdate || ''}</td>
+                                        <td style="padding: 4px 6px; text-align: center; font-size:0.85em; opacity:0.8;">${m.tournamentShortName || '-'}</td>
                                         <td style="padding: 4px 6px; text-align: center; ${m.homesxname === highlightTeam ? `color:${accentColor};font-weight:600` : ''}">${m.homesxname}</td>
                                         <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
                                         <td style="padding: 4px 6px; text-align: center; color:#ff9800; font-weight:500;">(${halfScore})</td>
