@@ -2008,27 +2008,29 @@
                             </td>
                         `;
                     });
-                    html += `</tr></table>`;
-
-                    // 上半场/下半场 3/1/0 选择器
-                    html += `
-                        <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06);">
-                            <div class="bqc-half-predict" style="margin-bottom: 8px;">
-                                <span style="font-size: 0.85em; color: #90caf9; font-weight: 600; min-width: 55px;">上半场</span>
-                                <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="3" onclick="selectHalfResult(this)">3</span>
-                                <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="1" onclick="selectHalfResult(this)">1</span>
-                                <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="0" onclick="selectHalfResult(this)">0</span>
-                            </div>
-                            <div class="bqc-half-predict">
-                                <span style="font-size: 0.85em; color: #90caf9; font-weight: 600; min-width: 55px;">下半场</span>
-                                <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="3" onclick="selectHalfResult(this)">3</span>
-                                <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="1" onclick="selectHalfResult(this)">1</span>
-                                <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="0" onclick="selectHalfResult(this)">0</span>
-                            </div>
-                        </div>
-                    `;
-                    html += `</div>`;
+                    html += `</tr></table></div>`;
                 }
+                
+                // 上半场/下半场 3/1/0 选择器（始终显示）
+                html += `
+                    <div style="margin-bottom: 15px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 8px;">
+                        <div style="font-size: 0.85em; color: #bbdefb; font-weight: 600; margin-bottom: 10px;">
+                            <i class="fas fa-futbol"></i> 半全场选择
+                        </div>
+                        <div class="bqc-half-predict" style="margin-bottom: 8px;">
+                            <span style="font-size: 0.85em; color: #90caf9; font-weight: 600; min-width: 55px;">上半场</span>
+                            <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="3" onclick="selectHalfResult(this)">3</span>
+                            <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="1" onclick="selectHalfResult(this)">1</span>
+                            <span class="bqc-half-btn" data-bqc-group="${idx}-first" data-bqc-value="0" onclick="selectHalfResult(this)">0</span>
+                        </div>
+                        <div class="bqc-half-predict">
+                            <span style="font-size: 0.85em; color: #90caf9; font-weight: 600; min-width: 55px;">下半场</span>
+                            <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="3" onclick="selectHalfResult(this)">3</span>
+                            <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="1" onclick="selectHalfResult(this)">1</span>
+                            <span class="bqc-half-btn" data-bqc-group="${idx}-second" data-bqc-value="0" onclick="selectHalfResult(this)">0</span>
+                        </div>
+                    </div>
+                `;
                 
                 // 错误信息
                 if (hasError) {
