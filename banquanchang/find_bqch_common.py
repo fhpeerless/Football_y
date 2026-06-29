@@ -24,14 +24,16 @@ def get_project_root():
 
 
 def get_target_period() -> str:
-    """从 period.json 读取要处理的期数"""
+    """从 period.json 读取最大在售期数"""
     period_file = os.path.join(get_project_root(), "period.json")
     if not os.path.exists(period_file):
         print(f"错误: {period_file} 不存在，请先运行 bqchmatch_requst.py")
         exit(1)
     try:
         with open(period_file, "r", encoding="utf-8") as f:
-            return str(json.load(f).get("max_period", 0))
+            data = json.load(f)
+            on_sale = data.get("on_sale", [])
+            return str(max(on_sale)) if on_sale else "0"
     except Exception as e:
         print(f"错误: 读取 period.json 失败: {e}")
         exit(1)

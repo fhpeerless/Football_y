@@ -30,10 +30,11 @@ def load_rankings():
 
 
 def get_period():
-    """从 period.json 获取最大期数"""
+    """从 period.json 获取最大在售期数"""
     with open(PERIOD_PATH, 'r', encoding='utf-8') as f:
         data = json.load(f)
-    return str(data['max_period'])
+    on_sale = data.get("on_sale", [])
+    return str(max(on_sale)) if on_sale else "0"
 
 
 def process_common_file(period, ranking_lookup):

@@ -291,33 +291,53 @@ def main():
         exit(1)
     print(f"  ✓ 共 {len(periods)} 个在售期数: {periods}")
 
-    # 1b. 检查 period.json，判断是否有新期数
+    # 1b. 检查 period.json，对比在售期数
     print("\n[检查] 对比已处理期数...")
     script_dir = os.path.dirname(os.path.abspath(__file__))
     period_file = os.path.join(script_dir, "period.json")
-    prev_max = 0
+
+    # 读取已记录的在售/不在售期数
+    recorded_on_sale = set()
+    recorded_off_sale = set()
     if os.path.exists(period_file):
         try:
             with open(period_file, "r", encoding="utf-8") as f:
-                prev_max = json.load(f).get("max_period", 0)
+                data = json.load(f)
+                recorded_on_sale = set(data.get("on_sale", []))
+                recorded_off_sale = set(data.get("off_sale", []))
         except Exception:
             pass
-    max_api = max(int(p) for p in periods)
-    print(f"  已处理最大期数: {prev_max}, API最大期数: {max_api}")
-    if max_api <= prev_max:
-        print("  无新期数，跳过本次执行")
+
+    api_periods = set(int(p) for p in periods)
+    print(f"  已记录在售期数: {sorted(recorded_on_sale)}")
+    print(f"  已记录不在售期数: {sorted(recorded_off_sale)}")
+    print(f"  API在售期数: {sorted(api_periods)}")
+
+    # 比对在售期数，无变化则跳过
+    if api_periods == recorded_on_sale:
+        print("  在售期数无变化，跳过本次执行")
         set_github_action_output("bqch_status", "skip")
         exit(0)
-    else:
-        print("  检测到新期数，继续获取数据...")
 
-    # 先更新 period.json，供下游脚本读取
+    # 有变化：更新 period.json
+    print("  在售期数有变化，更新 period.json...")
+    new_off_sale = sorted(recorded_off_sale | (recorded_on_sale - api_periods))
+    new_on_sale = sorted(api_periods)
+
+    period_data = {
+        "on_sale": new_on_sale,
+        "off_sale": new_off_sale,
+    }
     with open(period_file, "w", encoding="utf-8") as f:
-        json.dump({"max_period": max_api}, f, ensure_ascii=False, indent=2)
-    print(f"  period.json 已更新: max_period={max_api}")
+        json.dump(period_data, f, ensure_ascii=False, indent=2)
+    print(f"  period.json 已更新")
+    print(f"    在售期数: {new_on_sale}")
+    print(f"    不在售期数: {new_off_sale}")
 
-    # 从 period.json 读取要处理的期数
-    target_period = str(max_api)
+    print("  检测到新期数，继续获取数据...")
+
+    # 处理最大期数
+    target_period = str(max(api_periods))
 
     # 2. 获取该期数的比赛数据
     print(f"\n[步骤2] 获取期数 {target_period} 比赛数据...")
