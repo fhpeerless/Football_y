@@ -259,6 +259,38 @@
             padding: 12px 20px;
         }
         
+        /* 期数选择标签 */
+        .bqc-period-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        .bqc-period-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+        }
+        .bqc-period-btn:hover {
+            background: rgba(0, 188, 212, 0.2);
+            border-color: rgba(0, 188, 212, 0.4);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+        .bqc-period-btn.active {
+            background: linear-gradient(135deg, #00bcd4 0%, #00838f 100%);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+        }
+        
         /* ========== Tab 导航样式 ========== */
         .tab-nav {
             display: flex;
@@ -840,16 +872,10 @@
             <h2 class="section-title"><i class="fas fa-handshake"></i> 半全场共同对手分析</h2>
             
             <div class="form-group">
-                <label for="bqcPeriodInput"><i class="fas fa-calendar-alt"></i> 期数</label>
-                <div class="file-input-group">
-                    <input type="text" id="bqcPeriodInput" placeholder="正在获取最新期数..." value="">
-                    <button id="loadBqcCommonBtn">
-                        <i class="fas fa-sync-alt"></i> 加载半全场数据
-                    </button>
+                <label><i class="fas fa-calendar-alt"></i> 选择期数</label>
+                <div class="bqc-period-tabs" id="bqcPeriodTabs">
+                    <div style="opacity: 0.7; padding: 5px 0; font-size: 0.9em;">正在获取期数列表...</div>
                 </div>
-                <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                    读取 period.json 中的最新期数，加载 banquanchang/data/{期数}_bqch_common.json 数据
-                </p>
             </div>
             
             <div class="progress-bar">
@@ -1831,8 +1857,6 @@
         loadCommonMatchData();
 
         // ========== BQC 半全场数据逻辑 ==========
-        const loadBqcCommonBtn = document.getElementById('loadBqcCommonBtn');
-        const bqcPeriodInput = document.getElementById('bqcPeriodInput');
         const bqcStatusMessage = document.getElementById('bqcStatusMessage');
         const bqcProgressFill = document.getElementById('bqcProgressFill');
         const bqcCommonSection = document.getElementById('bqcCommonSection');
@@ -1863,42 +1887,57 @@
             'bb': { label: '负负', desc: '主队半场负/全场负' }
         };
         
-        // 从 period.json 获取最新期数
-        async function fetchLatestBqcPeriod() {
+        // 存储所有在售期数
+        let bqcOnSalePeriods = [];
+        let bqcActivePeriod = '';
+
+        // 从 period.json 获取所有在售期数
+        async function fetchBqcPeriods() {
             try {
                 const resp = await fetch(`./banquanchang/period.json?t=${Date.now()}`);
                 if (!resp.ok) throw new Error('period.json 不存在');
                 const data = await resp.json();
-                const period = String(data.max_period || '');
-                if (period && period !== '0') {
-                    bqcPeriodInput.value = period;
-                    bqcCurrentPeriod = period;
-                    return period;
-                }
+                bqcOnSalePeriods = (data.on_sale || []).map(String).filter(p => p && p !== '0');
+                return bqcOnSalePeriods;
             } catch (e) {
                 console.warn('读取 period.json 失败:', e.message);
+                bqcOnSalePeriods = [];
+                return [];
             }
-            bqcPeriodInput.placeholder = '请输入期数';
-            return null;
+        }
+
+        // 渲染期数标签
+        function renderBqcPeriodTabs() {
+            const container = document.getElementById('bqcPeriodTabs');
+            if (!bqcOnSalePeriods.length) {
+                container.innerHTML = '<div style="opacity:0.7;padding:5px 0;font-size:0.9em;">暂无在售期数</div>';
+                return;
+            }
+            container.innerHTML = bqcOnSalePeriods.map(p =>
+                `<span class="bqc-period-btn ${p === bqcActivePeriod ? 'active' : ''}" data-period="${p}" onclick="switchBqcPeriod('${p}')">第 ${p} 期</span>`
+            ).join('');
+        }
+
+        // 切换期数
+        async function switchBqcPeriod(period) {
+            bqcActivePeriod = period;
+            bqcCurrentPeriod = period;
+            renderBqcPeriodTabs();
+            await loadBqcCommonData(period);
         }
         
-        // 加载半全场数据（先读 period.json 获取最新期数）
-        async function loadBqcCommonData() {
-            showBqcStatus('正在获取最新期数...', 'info');
-            updateBqcProgress(10);
-            
-            // 从输入框读取期数
-            let period = bqcPeriodInput.value.trim();
+        // 加载半全场数据（指定期数）
+        async function loadBqcCommonData(period) {
             if (!period) {
-                // 尝试从 period.json 获取
-                period = await fetchLatestBqcPeriod();
-                if (!period) {
+                if (bqcOnSalePeriods.length > 0) {
+                    period = bqcOnSalePeriods[0];
+                } else {
+                    showBqcStatus('没有在售期数', 'error');
                     updateBqcProgress(0);
-                    showBqcStatus('无法获取期数，请手动输入', 'error');
                     return;
                 }
             }
-            
+
             bqcCurrentPeriod = period;
             showBqcStatus(`正在加载期数 ${period} 的半全场数据...`, 'info');
             updateBqcProgress(30);
@@ -2135,21 +2174,18 @@
             bqcCommonBody.innerHTML = html;
         }
         
-        // 加载按钮事件
-        loadBqcCommonBtn.addEventListener('click', loadBqcCommonData);
-        
-        // 期数输入框回车键加载
-        bqcPeriodInput.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                loadBqcCommonData();
-            }
-        });
-        
-        // 页面加载后先获取最新期数，再自动加载半全场数据
+        // 页面加载后自动获取期数列表，渲染标签，加载第一个期数数据
         (async function autoLoadBqcData() {
-            await fetchLatestBqcPeriod();
-            if (bqcCurrentPeriod) {
-                loadBqcCommonData();
+            await fetchBqcPeriods();
+            renderBqcPeriodTabs();
+            if (bqcOnSalePeriods.length > 0) {
+                const firstPeriod = bqcOnSalePeriods[0];
+                bqcActivePeriod = firstPeriod;
+                bqcCurrentPeriod = firstPeriod;
+                renderBqcPeriodTabs();
+                loadBqcCommonData(firstPeriod);
+            } else {
+                showBqcStatus('无法获取在售期数', 'error');
             }
         })();
 
