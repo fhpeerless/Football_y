@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-06-29 10:39:29",
+  "generate_time": "2026-06-29 10:52:38",
   "period": "26126",
   "total_matches": 6,
   "matches": [
@@ -61,34 +61,6 @@
             }
           ]
         },
-        "美国": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "美国",
-              "awaysxname": "比利时",
-              "homescore": 2,
-              "awayscore": 5,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-03-29",
-              "result1": "平",
-              "result2": "平"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "美国",
-              "awaysxname": "塞内加尔",
-              "homescore": 3,
-              "awayscore": 2,
-              "homehalfscore": 2,
-              "awayhalfscore": 1,
-              "matchdate": "2026-06-01",
-              "result1": "胜",
-              "result2": "负"
-            }
-          ]
-        },
         "法国": {
           "home_vs_opponent": [
             {
@@ -112,6 +84,34 @@
               "homehalfscore": 0,
               "awayhalfscore": 0,
               "matchdate": "2026-06-17",
+              "result1": "胜",
+              "result2": "负"
+            }
+          ]
+        },
+        "美国": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "美国",
+              "awaysxname": "比利时",
+              "homescore": 2,
+              "awayscore": 5,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-29",
+              "result1": "平",
+              "result2": "平"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "美国",
+              "awaysxname": "塞内加尔",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-06-01",
               "result1": "胜",
               "result2": "负"
             }
@@ -205,6 +205,34 @@
       "away_matches_count": 21,
       "common_opponent_count": 4,
       "common_opponent_data": {
+        "波兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "葡萄牙",
+              "awaysxname": "波兰",
+              "homescore": 5,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2024-11-16",
+              "result1": "胜",
+              "result2": "负"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "波兰",
+              "awaysxname": "克罗地亚",
+              "homescore": 3,
+              "awayscore": 3,
+              "homehalfscore": 2,
+              "awayhalfscore": 3,
+              "matchdate": "2024-10-16",
+              "result1": "平",
+              "result2": "平"
+            }
+          ]
+        },
         "哥伦比亚": {
           "home_vs_opponent": [
             {
@@ -258,34 +286,6 @@
               "matchdate": "2024-11-16",
               "result1": "胜",
               "result2": "负"
-            }
-          ]
-        },
-        "波兰": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "葡萄牙",
-              "awaysxname": "波兰",
-              "homescore": 5,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2024-11-16",
-              "result1": "胜",
-              "result2": "负"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "波兰",
-              "awaysxname": "克罗地亚",
-              "homescore": 3,
-              "awayscore": 3,
-              "homehalfscore": 2,
-              "awayhalfscore": 3,
-              "matchdate": "2024-10-16",
-              "result1": "平",
-              "result2": "平"
             }
           ]
         },
@@ -359,31 +359,42 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
-        "安哥拉": {
+        "毛里塔尼": {
           "home_vs_opponent": [
             {
-              "homesxname": "安哥拉",
-              "awaysxname": "阿根廷",
-              "homescore": 0,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2025-11-15",
-              "result1": "平",
-              "result2": "平"
+              "homesxname": "阿根廷",
+              "awaysxname": "毛里塔尼",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-28",
+              "result1": "胜",
+              "result2": "负"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "安哥拉",
+              "homesxname": "毛里塔尼",
               "awaysxname": "佛得角",
               "homescore": 1,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2025-03-26",
-              "result1": "平",
-              "result2": "平"
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2024-11-19",
+              "result1": "胜",
+              "result2": "负"
+            },
+            {
+              "homesxname": "佛得角",
+              "awaysxname": "毛里塔尼",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2024-09-11",
+              "result1": "胜",
+              "result2": "负"
             }
           ]
         },
@@ -443,42 +454,31 @@
             }
           ]
         },
-        "毛里塔尼": {
+        "安哥拉": {
           "home_vs_opponent": [
             {
-              "homesxname": "阿根廷",
-              "awaysxname": "毛里塔尼",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-03-28",
-              "result1": "胜",
-              "result2": "负"
+              "homesxname": "安哥拉",
+              "awaysxname": "阿根廷",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2025-11-15",
+              "result1": "平",
+              "result2": "平"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "毛里塔尼",
+              "homesxname": "安哥拉",
               "awaysxname": "佛得角",
               "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2024-11-19",
-              "result1": "胜",
-              "result2": "负"
-            },
-            {
-              "homesxname": "佛得角",
-              "awaysxname": "毛里塔尼",
-              "homescore": 2,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2024-09-11",
-              "result1": "胜",
-              "result2": "负"
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2025-03-26",
+              "result1": "平",
+              "result2": "平"
             }
           ]
         }
