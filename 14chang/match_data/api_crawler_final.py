@@ -80,20 +80,20 @@ def crawl_football_data_api_final(period=None, max_retries=3):
                 print(f"成功解析JSON数据")
                 print(f"API响应: {json.dumps(data, ensure_ascii=False, indent=2)}")
                 
-                # 提取期数
-                period = None
+                # 提取期数（使用独立变量名，避免覆盖函数参数）
+                api_period = None
                 if 'data' in data:
                     # 尝试从多个字段获取期数
                     data_dict = data.get('data', {})
-                    period = data_dict.get('period', None)
-                    if not period:
-                        period = data_dict.get('curr_expect', None)
-                    if not period:
-                        period = data_dict.get('expect', None)
+                    api_period = data_dict.get('period', None)
+                    if not api_period:
+                        api_period = data_dict.get('curr_expect', None)
+                    if not api_period:
+                        api_period = data_dict.get('expect', None)
                     
-                    if period:
-                        period = f"{period}期"
-                        print(f"期数: {period}")
+                    if api_period:
+                        api_period = f"{api_period}期"
+                        print(f"期数: {api_period}")
                 
                 # 提取比赛信息
                 match_list = []
@@ -150,9 +150,9 @@ def crawl_football_data_api_final(period=None, max_retries=3):
                     if match_info["主队"] and match_info["客队"]:
                         match_list.append(match_info)
                 
-                # 整理结果
+                # 整理结果（优先使用API返回的期数，否则使用传入的期数）
                 result = {
-                    "期数": period,
+                    "期数": api_period if api_period else f"{period}期",
                     "14场对战信息": match_list
                 }
                 return result
