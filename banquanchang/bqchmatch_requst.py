@@ -28,6 +28,7 @@ import requests
 import xml.etree.ElementTree as ET
 import json
 import os
+import re
 import sys
 import io
 import warnings
@@ -54,6 +55,24 @@ def set_github_action_output(key: str, value: str):
                 f.write(f"{key}={value}\n")
         except Exception:
             pass
+
+
+def clean_team_name_cn(name: str) -> str:
+    """清理球队名: 去除常见前缀和内部空格
+
+    API 的 masterTeamAllName 字段可能含前缀（如"IFK哥德堡"、"AIK索尔纳"），
+    需要去除前缀以匹配历史 API 返回的短名。
+    同时去除内部空格（如"法  国"→"法国"）。
+    """
+    if not name:
+        return ""
+    cleaned = name.strip()
+    # 去除常见欧洲俱乐部前缀
+    cleaned = re.sub(r'^(IFK|AIK|FC|BK|IK|SK|FK|US|ACS?|SC|SS)\s*', '', cleaned)
+    # 去除内部空格
+    cleaned = cleaned.replace(' ', '')
+    return cleaned
+
 
 # ============================================================
 # 配置
@@ -165,8 +184,8 @@ def fetch_matches_for_period(period: str) -> list:
         match_list = data["value"]["bqcMatch"].get("matchList", [])
         print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
         for m in match_list:
-            home = m.get("masterTeamName", "").replace(" ", "") or m.get("masterTeamAllName", "").strip()
-            away = m.get("guestTeamName", "").replace(" ", "") or m.get("guestTeamAllName", "").strip()
+            home = clean_team_name_cn(m.get("masterTeamAllName", "")) or m.get("masterTeamName", "").replace(" ", "")
+            away = clean_team_name_cn(m.get("guestTeamAllName", "")) or m.get("guestTeamName", "").replace(" ", "")
             print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
         return match_list
     except Exception as e:
@@ -244,10 +263,10 @@ def match_bqc_odds(api_matches: list, bqc_odds_map: dict) -> list:
     results = []
     for m in api_matches:
         match_id = str(m.get("infohubMatchId", ""))
-        # 优先使用短球队名(masterTeamName)，与页面显示一致（如"哥德堡"而非"IFK哥德堡"）
-        # 注意: masterTeamName 可能有空格填充（如"法  国"），需去除内部空格
-        home = m.get("masterTeamName", "").replace(" ", "") or m.get("masterTeamAllName", "").strip()
-        away = m.get("guestTeamName", "").replace(" ", "") or m.get("guestTeamAllName", "").strip()
+        # 优先使用 masterTeamAllName（完整队伍名）并清除前缀（如"IFK哥德堡"→"哥德堡"）
+        # 回退到 masterTeamName（短名，可能截断如"埃尔夫"→"埃尔夫斯堡"）
+        home = clean_team_name_cn(m.get("masterTeamAllName", "")) or m.get("masterTeamName", "").replace(" ", "")
+        away = clean_team_name_cn(m.get("guestTeamAllName", "")) or m.get("guestTeamName", "").replace(" ", "")
 
         # 通过match_id匹配BQC赔率
         bqc_odds = bqc_odds_map.get(match_id, None)
