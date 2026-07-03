@@ -165,8 +165,8 @@ def fetch_matches_for_period(period: str) -> list:
         match_list = data["value"]["bqcMatch"].get("matchList", [])
         print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
         for m in match_list:
-            home = m.get("masterTeamAllName", "").strip() or m["masterTeamName"].strip()
-            away = m.get("guestTeamAllName", "").strip() or m["guestTeamName"].strip()
+            home = m.get("masterTeamName", "").replace(" ", "") or m.get("masterTeamAllName", "").strip()
+            away = m.get("guestTeamName", "").replace(" ", "") or m.get("guestTeamAllName", "").strip()
             print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
         return match_list
     except Exception as e:
@@ -244,9 +244,10 @@ def match_bqc_odds(api_matches: list, bqc_odds_map: dict) -> list:
     results = []
     for m in api_matches:
         match_id = str(m.get("infohubMatchId", ""))
-        # 优先使用完整球队名(masterTeamAllName)，避免截断问题(如"科特迪瓦"被截断为"科特迪")
-        home = (m.get("masterTeamAllName", "") or m["masterTeamName"]).strip()
-        away = (m.get("guestTeamAllName", "") or m["guestTeamName"]).strip()
+        # 优先使用短球队名(masterTeamName)，与页面显示一致（如"哥德堡"而非"IFK哥德堡"）
+        # 注意: masterTeamName 可能有空格填充（如"法  国"），需去除内部空格
+        home = m.get("masterTeamName", "").replace(" ", "") or m.get("masterTeamAllName", "").strip()
+        away = m.get("guestTeamName", "").replace(" ", "") or m.get("guestTeamAllName", "").strip()
 
         # 通过match_id匹配BQC赔率
         bqc_odds = bqc_odds_map.get(match_id, None)
