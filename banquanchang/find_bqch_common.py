@@ -70,14 +70,28 @@ def normalize_match_record(match: dict) -> dict:
     }
 
 
+def _find_our_team_id(section_matches):
+    """通过统计 uniformTeamId 频率确定本队的数字ID"""
+    counter = defaultdict(int)
+    for m in section_matches:
+        hid = m.get("uniformHomeTeamId")
+        aid = m.get("uniformAwayTeamId")
+        if hid: counter[hid] += 1
+        if aid: counter[aid] += 1
+    if counter:
+        return max(counter, key=counter.get)
+    return None
+
+
 def extract_team_matches(history_data, team_name):
     """从历史数据中提取指定球队的所有比赛
 
-    匹配策略:
-      1. 优先通过 history.home.team / history.away.team 与请求的 team_name 匹配，
-         因为这两个字段来自 bqchmatch_requst.py 保存的队伍名，可以避免
-         API之间队伍名不一致的问题（如赛程API "埃尔夫" vs 历史API "埃夫斯堡"）。
-      2. 如果段落名匹配失败，回退到按 match 记录的 homeTeamShortName/awayTeamShortName 精确匹配。
+    匹配策略（使用原网页 sporttery.cn 的 uniformTeamId 机制）:
+      1. 优先通过 history.home.team / history.away.team 段落名匹配
+      2. 在匹配的段落中，统计 uniformTeamId 出现频率，最高频ID即本队ID
+      3. 用本队ID判断每条记录中本队是主队还是客队，从而确定对手
+      4. 在每条记录中写入 _opponent 字段，供 find_common_opponents 直接使用
+      5. 若段落名匹配失败或 uniformTeamId 不可用，回退到球队名精确匹配
     """
     all_matches = []
     if not history_data:
@@ -88,26 +102,49 @@ def extract_team_matches(history_data, team_name):
     home_section = history_data.get("home", {})
     away_section = history_data.get("away", {})
 
-    # 策略1: 通过段落名匹配（此时 matches 已由 API 按 match_id 正确返回）
-    # 标记 _is_home_side 让 find_common_opponents 无需依赖球队名精确匹配
     home_team_stored = home_section.get("team", "").replace(" ", "")
     away_team_stored = away_section.get("team", "").replace(" ", "")
 
+    # 确定本队所属段落
+    section = None
     if home_team_stored == clean_team_name:
-        for match in home_section.get("matches", []):
+        section = home_section
+    elif away_team_stored == clean_team_name:
+        section = away_section
+
+    if section is not None:
+        section_matches = section.get("matches", [])
+        # 用 uniformTeamId 确定本队ID（原网页机制）
+        our_team_id = _find_our_team_id(section_matches)
+
+        for match in section_matches:
             norm = normalize_match_record(match)
-            norm["_is_home_side"] = True  # 本队是主队 → 对手是客队
+            hn = norm["homesxname"].replace(" ", "")
+            an = norm["awaysxname"].replace(" ", "")
+            hid = match.get("uniformHomeTeamId")
+            aid = match.get("uniformAwayTeamId")
+
+            # 策略1: 用 uniformTeamId 判断本队角色 → 确定对手
+            opponent = None
+            if our_team_id:
+                if hid == our_team_id:
+                    opponent = norm["awaysxname"]
+                elif aid == our_team_id:
+                    opponent = norm["homesxname"]
+
+            # 策略2: 回退到球队名精确匹配
+            if not opponent:
+                if hn == clean_team_name:
+                    opponent = norm["awaysxname"]
+                elif an == clean_team_name:
+                    opponent = norm["homesxname"]
+
+            if opponent:
+                norm["_opponent"] = opponent.replace(" ", "")
             all_matches.append(norm)
         return all_matches
 
-    if away_team_stored == clean_team_name:
-        for match in away_section.get("matches", []):
-            norm = normalize_match_record(match)
-            norm["_is_home_side"] = False  # 本队是客队 → 对手是主队
-            all_matches.append(norm)
-        return all_matches
-
-    # 策略2: 回退到按 match 内队伍名精确匹配
+    # 回退：段落名匹配失败时，按 match 内球队名精确匹配
     for match in home_section.get("matches", []) + away_section.get("matches", []):
         norm = normalize_match_record(match)
         home_team = norm["homesxname"].replace(" ", "")
@@ -118,22 +155,11 @@ def extract_team_matches(history_data, team_name):
     return all_matches
 
 
-def _match_team(hn, an, team_clean, other_clean):
-    """判断比赛记录(hn,an)是否涉及目标球队 team_clean
-
-    处理赛程API与历史API球队名不一致问题（如赛程用"埃尔夫"但历史用"埃夫斯堡"）。
-    当精确匹配失败时，通过另一队名 other_clean 回退判断。
-    """
-    if hn == team_clean or an == team_clean:
-        return True
-    # 回退：如果 hn/an 等于对手队名，说明目标队用了不同名称
-    if hn == other_clean or an == other_clean:
-        return True
-    return False
-
-
 def find_common_opponents(home_matches, away_matches, home_team_name, away_team_name):
-    """找出两队共同的对手（含直接对战）"""
+    """找出两队共同的对手（含直接对战）
+
+    使用 extract_team_matches 预计算的 _opponent 字段，避免依赖球队名精确匹配。
+    """
     # 去除空格统一比较
     home_clean = home_team_name.replace(" ", "")
     away_clean = away_team_name.replace(" ", "")
@@ -141,52 +167,27 @@ def find_common_opponents(home_matches, away_matches, home_team_name, away_team_
     home_opponents = defaultdict(list)
     away_opponents = defaultdict(list)
 
-    for match in home_matches:
+    def _get_opponent(match, self_clean):
+        """从记录中获取对手名，优先 _opponent 字段"""
+        opp = match.get("_opponent")
+        if opp:
+            return opp
+        # 回退到名称匹配
         hn = match.get("homesxname", "").replace(" ", "")
         an = match.get("awaysxname", "").replace(" ", "")
-        # 优先使用 _is_home_side 标记（来自 extract_team_matches 段落匹配）
-        # 可避免赛程API("埃尔夫")与历史API("埃夫斯堡")球队名不一致问题
-        is_home_side = match.get("_is_home_side")
-        if is_home_side is True:
-            opponent = an  # 本队是主队，对手是客队
-        elif is_home_side is False:
-            opponent = hn  # 本队是客队，对手是主队
-        else:
-            # 回退：按球队名精确匹配
-            if hn == home_clean:
-                opponent = an
-            elif an == home_clean:
-                opponent = hn
-            elif hn == away_clean:
-                opponent = an
-            elif an == away_clean:
-                opponent = hn
-            else:
-                continue
+        if hn == self_clean:
+            return an
+        if an == self_clean:
+            return hn
+        return None
+
+    for match in home_matches:
+        opponent = _get_opponent(match, home_clean)
         if opponent and opponent != home_clean and opponent != away_clean:
             home_opponents[opponent].append(match)
 
     for match in away_matches:
-        hn = match.get("homesxname", "").replace(" ", "")
-        an = match.get("awaysxname", "").replace(" ", "")
-        # 优先使用 _is_home_side 标记
-        is_home_side = match.get("_is_home_side")
-        if is_home_side is True:
-            opponent = an  # 本队是主队，对手是客队
-        elif is_home_side is False:
-            opponent = hn  # 本队是客队，对手是主队
-        else:
-            # 回退：按球队名精确匹配
-            if hn == away_clean:
-                opponent = an
-            elif an == away_clean:
-                opponent = hn
-            elif hn == home_clean:
-                opponent = an
-            elif an == home_clean:
-                opponent = hn
-            else:
-                continue
+        opponent = _get_opponent(match, away_clean)
         if opponent and opponent != home_clean and opponent != away_clean:
             away_opponents[opponent].append(match)
 
@@ -201,39 +202,16 @@ def find_common_opponents(home_matches, away_matches, home_team_name, away_team_
             }
 
     # 直接对战
-    # 策略：从各自段落检测直接对战
-    # - home_matches 检查是否涉及 away_team（优先 _is_home_side 标记，回退名称匹配）
-    # - away_matches 同样检测（home侧能检测到直接对战即可，away侧作为补充）
     direct_matches_home = []
     direct_matches_away = []
     for match in home_matches:
-        hn = match.get("homesxname", "").replace(" ", "")
-        an = match.get("awaysxname", "").replace(" ", "")
-        is_home_side = match.get("_is_home_side")
-        if is_home_side is True:
-            if an == away_clean:
-                direct_matches_home.append(match)
-        elif is_home_side is False:
-            if hn == away_clean:
-                direct_matches_home.append(match)
-        else:
-            # 回退名称匹配
-            if hn == away_clean or an == away_clean:
-                direct_matches_home.append(match)
+        opp = _get_opponent(match, home_clean)
+        if opp == away_clean:
+            direct_matches_home.append(match)
     for match in away_matches:
-        hn = match.get("homesxname", "").replace(" ", "")
-        an = match.get("awaysxname", "").replace(" ", "")
-        is_home_side = match.get("_is_home_side")
-        if is_home_side is True:
-            if an == home_clean:
-                direct_matches_away.append(match)
-        elif is_home_side is False:
-            if hn == home_clean:
-                direct_matches_away.append(match)
-        else:
-            # 回退名称匹配（注意历史API可能用"埃夫斯堡"而非"埃尔夫"）
-            if hn == home_clean or an == home_clean:
-                direct_matches_away.append(match)
+        opp = _get_opponent(match, away_clean)
+        if opp == home_clean:
+            direct_matches_away.append(match)
 
     if direct_matches_home or direct_matches_away:
         key = f"直接对战({home_team_name.strip()} vs {away_team_name.strip()})"
