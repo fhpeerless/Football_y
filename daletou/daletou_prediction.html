@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>超级大乐透 — 开奖预测分析</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 20px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 32px 40px; border-radius: 16px; margin-bottom: 24px; }
+  .header h1 { font-size: 24px; font-weight: 700; letter-spacing: 2px; }
+  .header p { margin-top: 8px; font-size: 14px; opacity: .7; }
+
+  /* Prediction Cards */
+  .pred-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .pred-card { background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.06); border-top: 4px solid #e94560; transition: transform .15s; }
+  .pred-card:hover { transform: translateY(-2px); }
+  .pred-card .method-name { font-size: 15px; font-weight: 700; color: #e94560; margin-bottom: 4px; }
+  .pred-card .method-desc { font-size: 12px; color: #888; margin-bottom: 14px; line-height: 1.4; }
+  .pred-card .label { font-size: 12px; color: #999; margin-bottom: 4px; }
+  .pred-card .balls { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .ball-front, .ball-back { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; }
+  .ball-front { background: linear-gradient(135deg, #e94560, #c23152); }
+  .ball-back { background: linear-gradient(135deg, #0f3460, #1a5276); }
+
+  /* Zone Section */
+  .zone-section { background: #fff; border-radius: 14px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+  .zone-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid #f0f2f5; }
+  .zone-title .badge { display: inline-block; font-size: 12px; font-weight: 400; background: #f0f2f5; color: #666; padding: 2px 10px; border-radius: 20px; margin-left: 8px; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f8f9fa; color: #555; font-weight: 600; padding: 10px 8px; text-align: center; border-bottom: 2px solid #e8e8e8; position: sticky; top: 0; white-space: nowrap; }
+  td { padding: 7px 8px; text-align: center; border-bottom: 1px solid #f0f2f5; }
+  tr:hover td { background: #fafbfc; }
+  .num-cell { font-weight: 700; }
+  .overdue-high { color: #e94560; font-weight: 700; }
+  .overdue-mid { color: #e67e22; font-weight: 600; }
+  .overdue-low { color: #27ae60; }
+
+  /* Bar in overdue cell */
+  .bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .bar-bg { flex: 1; height: 6px; background: #eee; border-radius: 3px; overflow: hidden; max-width: 80px; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width .3s; }
+
+  /* Tab switch */
+  .tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .tab-btn { padding: 8px 20px; border: none; background: #e8e8e8; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 500; color: #666; transition: all .15s; }
+  .tab-btn.active { background: #e94560; color: #fff; }
+  .tab-btn:hover:not(.active) { background: #ddd; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .footer { text-align: center; color: #aaa; font-size: 12px; padding: 20px 0; }
+</style>
+</head>
+<body>
+<div class="container" id="app"></div>
+
+<script>
+// ========== 内嵌数据（本地 file:// 打开时兜底使用） ==========
+const EMBEDDED_DATA = {"analysis":{"total_draws":2891,"front_zone":{"1":{"last_pos":2889,"last_gap":1,"avg_gap":6.8,"median_gap":5,"mode_gap":1,"max_gap":35,"min_gap":1,"count":425,"overdue_ratio":0.15},"2":{"last_pos":2871,"last_gap":19,"avg_gap":6.92,"median_gap":5,"mode_gap":1,"max_gap":38,"min_gap":1,"count":415,"overdue_ratio":2.75},"3":{"last_pos":2885,"last_gap":5,"avg_gap":6.8,"median_gap":5,"mode_gap":1,"max_gap":42,"min_gap":1,"count":425,"overdue_ratio":0.74},"4":{"last_pos":2890,"last_gap":0,"avg_gap":7.66,"median_gap":5,"mode_gap":2,"max_gap":50,"min_gap":1,"count":378,"overdue_ratio":0.0},"5":{"last_pos":2888,"last_gap":2,"avg_gap":6.75,"median_gap":5,"mode_gap":1,"max_gap":37,"min_gap":1,"count":425,"overdue_ratio":0.3},"6":{"last_pos":2884,"last_gap":6,"avg_gap":7.1,"median_gap":5,"mode_gap":1,"max_gap":42,"min_gap":1,"count":407,"overdue_ratio":0.85},"7":{"last_pos":2879,"last_gap":11,"avg_gap":6.71,"median_gap":5,"mode_gap":1,"max_gap":32,"min_gap":1,"count":428,"overdue_ratio":1.64},"8":{"last_pos":2861,"last_gap":29,"avg_gap":7.39,"median_gap":5,"mode_gap":2,"max_gap":46,"min_gap":1,"count":387,"overdue_ratio":3.92},"9":{"last_pos":2872,"last_gap":18,"avg_gap":7.34,"median_gap":5,"mode_gap":1,"max_gap":36,"min_gap":1,"count":392,"overdue_ratio":2.45},"10":{"last_pos":2890,"last_gap":0,"avg_gap":7.25,"median_gap":5,"mode_gap":1,"max_gap":45,"min_gap":1,"count":399,"overdue_ratio":0.0},"11":{"last_pos":2885,"last_gap":5,"avg_gap":6.89,"median_gap":5,"mode_gap":1,"max_gap":37,"min_gap":1,"count":419,"overdue_ratio":0.73},"12":{"last_pos":2886,"last_gap":4,"avg_gap":7.41,"median_gap":5,"mode_gap":1,"max_gap":47,"min_gap":1,"count":389,"overdue_ratio":0.54},"13":{"last_pos":2889,"last_gap":1,"avg_gap":7.45,"median_gap":5,"mode_gap":1,"max_gap":50,"min_gap":1,"count":387,"overdue_ratio":0.13},"14":{"last_pos":2871,"last_gap":19,"avg_gap":7.42,"median_gap":5,"mode_gap":1,"max_gap":39,"min_gap":1,"count":387,"overdue_ratio":2.56},"15":{"last_pos":2887,"last_gap":3,"avg_gap":7.72,"median_gap":5,"mode_gap":1,"max_gap":53,"min_gap":1,"count":375,"overdue_ratio":0.39},"16":{"last_pos":2884,"last_gap":6,"avg_gap":8.26,"median_gap":6,"mode_gap":2,"max_gap":69,"min_gap":1,"count":350,"overdue_ratio":0.73},"17":{"last_pos":2881,"last_gap":9,"avg_gap":7.55,"median_gap":5,"mode_gap":1,"max_gap":49,"min_gap":1,"count":382,"overdue_ratio":1.19},"18":{"last_pos":2884,"last_gap":6,"avg_gap":7.33,"median_gap":5,"mode_gap":2,"max_gap":35,"min_gap":1,"count":394,"overdue_ratio":0.82},"19":{"last_pos":2886,"last_gap":4,"avg_gap":6.85,"median_gap":5,"mode_gap":3,"max_gap":50,"min_gap":1,"count":422,"overdue_ratio":0.58},"20":{"last_pos":2880,"last_gap":10,"avg_gap":7.08,"median_gap":5,"mode_gap":1,"max_gap":46,"min_gap":1,"count":407,"overdue_ratio":1.41},"21":{"last_pos":2887,"last_gap":3,"avg_gap":7.38,"median_gap":5,"mode_gap":1,"max_gap":58,"min_gap":1,"count":391,"overdue_ratio":0.41},"22":{"last_pos":2890,"last_gap":0,"avg_gap":6.39,"median_gap":5,"mode_gap":1,"max_gap":32,"min_gap":1,"count":453,"overdue_ratio":0.0},"23":{"last_pos":2890,"last_gap":0,"avg_gap":7.22,"median_gap":5,"mode_gap":1,"max_gap":53,"min_gap":1,"count":401,"overdue_ratio":0.0},"24":{"last_pos":2886,"last_gap":4,"avg_gap":7.91,"median_gap":6,"mode_gap":1,"max_gap":46,"min_gap":1,"count":366,"overdue_ratio":0.51},"25":{"last_pos":2882,"last_gap":8,"avg_gap":7.07,"median_gap":5,"mode_gap":1,"max_gap":38,"min_gap":1,"count":408,"overdue_ratio":1.13},"26":{"last_pos":2889,"last_gap":1,"avg_gap":7.21,"median_gap":5,"mode_gap":2,"max_gap":47,"min_gap":1,"count":401,"overdue_ratio":0.14},"27":{"last_pos":2874,"last_gap":16,"avg_gap":7.19,"median_gap":5,"mode_gap":1,"max_gap":40,"min_gap":1,"count":399,"overdue_ratio":2.23},"28":{"last_pos":2884,"last_gap":6,"avg_gap":7.27,"median_gap":6,"mode_gap":1,"max_gap":39,"min_gap":1,"count":397,"overdue_ratio":0.83},"29":{"last_pos":2889,"last_gap":1,"avg_gap":5.82,"median_gap":4,"mode_gap":1,"max_gap":38,"min_gap":1,"count":497,"overdue_ratio":0.17},"30":{"last_pos":2889,"last_gap":1,"avg_gap":6.23,"median_gap":4,"mode_gap":1,"max_gap":38,"min_gap":1,"count":464,"overdue_ratio":0.16},"31":{"last_pos":2880,"last_gap":10,"avg_gap":6.82,"median_gap":5,"mode_gap":1,"max_gap":44,"min_gap":1,"count":423,"overdue_ratio":1.47},"32":{"last_pos":2888,"last_gap":2,"avg_gap":6.26,"median_gap":4,"mode_gap":1,"max_gap":51,"min_gap":1,"count":462,"overdue_ratio":0.32},"33":{"last_pos":2890,"last_gap":0,"avg_gap":6,"median_gap":4,"mode_gap":2,"max_gap":34,"min_gap":1,"count":481,"overdue_ratio":0.0},"34":{"last_pos":2877,"last_gap":13,"avg_gap":6.52,"median_gap":4,"mode_gap":1,"max_gap":64,"min_gap":1,"count":442,"overdue_ratio":1.99},"35":{"last_pos":2878,"last_gap":12,"avg_gap":6.05,"median_gap":4,"mode_gap":1,"max_gap":44,"min_gap":1,"count":477,"overdue_ratio":1.98}},"back_zone":{"1":{"last_pos":2880,"last_gap":10,"avg_gap":6.27,"median_gap":5,"mode_gap":1,"max_gap":41,"min_gap":1,"count":460,"overdue_ratio":1.59},"2":{"last_pos":2890,"last_gap":0,"avg_gap":5.96,"median_gap":4,"mode_gap":1,"max_gap":36,"min_gap":1,"count":485,"overdue_ratio":0.0},"3":{"last_pos":2888,"last_gap":2,"avg_gap":6.17,"median_gap":5,"mode_gap":1,"max_gap":33,"min_gap":1,"count":468,"overdue_ratio":0.32},"4":{"last_pos":2883,"last_gap":7,"avg_gap":6.21,"median_gap":5,"mode_gap":1,"max_gap":31,"min_gap":1,"count":465,"overdue_ratio":1.13},"5":{"last_pos":2883,"last_gap":7,"avg_gap":5.72,"median_gap":4,"mode_gap":1,"max_gap":28,"min_gap":1,"count":505,"overdue_ratio":1.22},"6":{"last_pos":2885,"last_gap":5,"avg_gap":6.21,"median_gap":4,"mode_gap":1,"max_gap":35,"min_gap":1,"count":465,"overdue_ratio":0.8},"7":{"last_pos":2884,"last_gap":6,"avg_gap":5.62,"median_gap":4,"mode_gap":1,"max_gap":29,"min_gap":1,"count":513,"overdue_ratio":1.07},"8":{"last_pos":2882,"last_gap":8,"avg_gap":6.31,"median_gap":5,"mode_gap":3,"max_gap":33,"min_gap":1,"count":454,"overdue_ratio":1.27},"9":{"last_pos":2889,"last_gap":1,"avg_gap":6.06,"median_gap":4,"mode_gap":1,"max_gap":36,"min_gap":1,"count":477,"overdue_ratio":0.17},"10":{"last_pos":2886,"last_gap":4,"avg_gap":5.57,"median_gap":4,"mode_gap":1,"max_gap":38,"min_gap":1,"count":517,"overdue_ratio":0.72},"11":{"last_pos":2889,"last_gap":1,"avg_gap":6.03,"median_gap":4,"mode_gap":1,"max_gap":42,"min_gap":1,"count":480,"overdue_ratio":0.17},"12":{"last_pos":2890,"last_gap":0,"avg_gap":5.87,"median_gap":4,"mode_gap":1,"max_gap":31,"min_gap":1,"count":493,"overdue_ratio":0.0}},"predictions":[{"name":"逾期比优先法","desc":"选择超过平均间隔最多的号码，兼顾历史出现频率","front_zone":[2,8,9,14,27],"back_zone":[1,8]},{"name":"间隔重复法","desc":"按号码自身最近两次出现的间隔周期推演，到期即可能重复出现","front_zone":[2,8,9,14,20],"back_zone":[4,10]},{"name":"热号优先法","desc":"选择历史出现总次数最多的号码（长期热号）","front_zone":[29,30,32,33,35],"back_zone":[7,10]},{"name":"近期活跃法","desc":"统计最近 50 期内出现最频繁的号码","front_zone":[12,13,21,22,26],"back_zone":[7,8]},{"name":"冷热均衡法","desc":"综合逾期比(40%) + 历史频率(30%) + 近期频率(30%) 加权评分","front_zone":[2,8,9,14,27],"back_zone":[1,8]}]};
+// ============================================================
+
+const COLORS = ['#e94560','#e67e22','#2ecc71','#3498db','#9b59b6'];
+
+let DATA = null;
+
+async function init() {
+  // 尝试从 kaijiangdata/ 动态加载 JSON（GitHub Pages 环境下有效）
+  try {
+    const resp = await fetch('kaijiangdata/daletou_prediction.json?_t=' + Date.now());
+    if (resp.ok) {
+      DATA = await resp.json();
+    } else {
+      throw new Error('HTTP ' + resp.status);
+    }
+  } catch {
+    // fetch 失败（本地 file:// 等），使用内嵌兜底数据
+    DATA = EMBEDDED_DATA;
+  }
+  render();
+}
+
+function render() {
+  const { analysis, predictions } = DATA;
+  const app = document.getElementById('app');
+  let html = '';
+
+  // Header
+  html += `<div class="header">
+    <h1>超级大乐透 &mdash; 开奖预测分析</h1>
+    <p>基于 ${analysis.total_draws} 期历史开奖数据（2007&ndash;2026），5 种方法预测下一期号码</p>
+  </div>`;
+
+  // Prediction Cards
+  html += `<div class="pred-grid">`;
+  predictions.forEach((p, i) => {
+    const front = p.front_zone.map(n => `<span class="ball-front">${String(n).padStart(2,'0')}</span>`).join('');
+    const back = p.back_zone.map(n => `<span class="ball-back">${String(n).padStart(2,'0')}</span>`).join('');
+    html += `<div class="pred-card" style="border-top-color:${COLORS[i % COLORS.length]}">
+      <div class="method-name" style="color:${COLORS[i % COLORS.length]}">方法${i+1}: ${p.name}</div>
+      <div class="method-desc">${p.desc}</div>
+      <div class="label">前区 (5)</div>
+      <div class="balls">${front}</div>
+      <div class="label">后区 (2)</div>
+      <div class="balls">${back}</div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Tabs + Tables
+  html += `<div class="zone-section">
+    <div class="zone-title">号码间隔分析 <span class="badge">逾期比 &gt; 1 表示超过平均间隔</span></div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="front">前区 (1-35)</button>
+      <button class="tab-btn" data-tab="back">后区 (1-12)</button>
+    </div>`;
+
+  // Front zone table
+  html += `<div class="tab-panel active" id="tab-front"><div class="table-wrap"><table>
+    <thead><tr>
+      <th>号码</th><th>出现次数</th><th>平均间隔</th><th>中位间隔</th><th>最大间隔</th><th>当前未出</th><th>逾期比</th>
+    </tr></thead><tbody>`;
+  const frontArr = Object.entries(analysis.front_zone).map(([k,v]) => ({n:parseInt(k), ...v}));
+  const maxOverdueFront = Math.max(...frontArr.map(d => d.overdue_ratio || 0));
+  frontArr.sort((a,b) => (b.overdue_ratio||0) - (a.overdue_ratio||0)).forEach(d => {
+    const cls = d.overdue_ratio >= 2 ? 'overdue-high' : d.overdue_ratio >= 1 ? 'overdue-mid' : 'overdue-low';
+    const pct = maxOverdueFront > 0 ? (d.overdue_ratio / maxOverdueFront * 100) : 0;
+    const barColor = d.overdue_ratio >= 2 ? '#e94560' : d.overdue_ratio >= 1 ? '#e67e22' : '#27ae60';
+    html += `<tr>
+      <td class="num-cell">${String(d.n).padStart(2,'0')}</td>
+      <td>${d.count}</td>
+      <td>${d.avg_gap}</td>
+      <td>${d.median_gap}</td>
+      <td>${d.max_gap}</td>
+      <td>${d.last_gap}</td>
+      <td><div class="bar-wrap"><span class="${cls}">${d.overdue_ratio.toFixed(2)}</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div></div></td>
+    </tr>`;
+  });
+  html += `</tbody></table></div></div>`;
+
+  // Back zone table
+  html += `<div class="tab-panel" id="tab-back"><div class="table-wrap"><table>
+    <thead><tr>
+      <th>号码</th><th>出现次数</th><th>平均间隔</th><th>中位间隔</th><th>最大间隔</th><th>当前未出</th><th>逾期比</th>
+    </tr></thead><tbody>`;
+  const backArr = Object.entries(analysis.back_zone).map(([k,v]) => ({n:parseInt(k), ...v}));
+  const maxOverdueBack = Math.max(...backArr.map(d => d.overdue_ratio || 0));
+  backArr.sort((a,b) => (b.overdue_ratio||0) - (a.overdue_ratio||0)).forEach(d => {
+    const cls = d.overdue_ratio >= 2 ? 'overdue-high' : d.overdue_ratio >= 1 ? 'overdue-mid' : 'overdue-low';
+    const pct = maxOverdueBack > 0 ? (d.overdue_ratio / maxOverdueBack * 100) : 0;
+    const barColor = d.overdue_ratio >= 2 ? '#e94560' : d.overdue_ratio >= 1 ? '#e67e22' : '#27ae60';
+    html += `<tr>
+      <td class="num-cell">${String(d.n).padStart(2,'0')}</td>
+      <td>${d.count}</td>
+      <td>${d.avg_gap}</td>
+      <td>${d.median_gap}</td>
+      <td>${d.max_gap}</td>
+      <td>${d.last_gap}</td>
+      <td><div class="bar-wrap"><span class="${cls}">${d.overdue_ratio.toFixed(2)}</span><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div></div></td>
+    </tr>`;
+  });
+  html += `</tbody></table></div></div>`;
+
+  html += `</div>`;
+  html += `<div class="footer">数据来源: sporttery.cn 官方API &middot; 预测仅供参考</div>`;
+
+  app.innerHTML = html;
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
