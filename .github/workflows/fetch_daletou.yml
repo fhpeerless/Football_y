@@ -35,7 +35,7 @@ jobs:
         pip install requests
 
     - name: 抓取超级大乐透历史开奖数据（通过 SCF 代理）
-      working-directory: ./daletou
+      working-directory: ./daletou/requests
       run: |
         echo "=== 抓取超级大乐透历史开奖数据（代理模式） ==="
         python fetch_daletou_data.py
@@ -46,7 +46,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        git add daletou/daletou_history.json
+        git add daletou/kaijiangdata/daletou_history.json
 
         git commit -m "更新超级大乐透历史开奖数据" || {
           echo "数据无变化，跳过push步骤"

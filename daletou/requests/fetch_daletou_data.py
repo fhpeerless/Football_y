@@ -28,8 +28,8 @@ HEADERS = {
     "Accept": "application/json, text/javascript, */*; q=0.01",
 }
 
-# 输出目录（脚本所在目录）
-OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+# 输出目录：kaijiangdata（相对于脚本所在目录的上级）
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "kaijiangdata")
 
 
 def fetch_page(page_no: int) -> dict | None:
@@ -80,7 +80,13 @@ def fetch_all_data() -> list[dict]:
             print("该页无数据，结束。")
             break
 
-        all_records.extend(page_list)
+        # 只保留需要的字段：期号、开奖结果、开奖日期
+        for item in page_list:
+            all_records.append({
+                "lotteryDrawNum": item.get("lotteryDrawNum", ""),
+                "lotteryDrawResult": item.get("lotteryDrawResult", ""),
+                "lotteryDrawTime": item.get("lotteryDrawTime", ""),
+            })
         print(f"[OK] 获得 {len(page_list)} 条 (累计 {len(all_records)} 条)")
 
         # 结束条件
@@ -95,6 +101,9 @@ def fetch_all_data() -> list[dict]:
 
 def save_as_json(records: list[dict]):
     """将记录写入 JSON 文件"""
+    # 确保输出目录存在
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
     output = {
         "gameName": "超级大乐透",
         "gameNo": "85",
