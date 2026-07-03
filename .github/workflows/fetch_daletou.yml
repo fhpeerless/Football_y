@@ -41,14 +41,21 @@ jobs:
         python fetch_daletou_data.py
         echo "=== 抓取完成 ==="
 
+    - name: 执行5种方法预测号码
+      working-directory: ./daletou/requests
+      run: |
+        echo "=== 使用5种方法预测下一期号码 ==="
+        python predict_daletou.py
+        echo "=== 预测完成 ==="
+
     - name: 提交数据到仓库
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        git add daletou/kaijiangdata/daletou_history.json
+        git add daletou/kaijiangdata/daletou_history.json daletou/kaijiangdata/daletou_prediction.json
 
-        git commit -m "更新超级大乐透历史开奖数据" || {
+        git commit -m "更新超级大乐透历史开奖数据及5种方法预测" || {
           echo "数据无变化，跳过push步骤"
           exit 0
         }
