@@ -1003,7 +1003,7 @@
 
         
         // 加载Web JSON数据
-        async function loadWebData() {
+        async function loadWebData(isRetry = false) {
             // 从输入框读取当前期数
             const inputPeriod = periodInput.value.trim();
             if (inputPeriod) {
@@ -1021,55 +1021,90 @@
                 return null;
             }
             
-            try {
-                showStatus(`正在加载 ${currentPeriod}期_web.json 文件...`, 'info');
-                updateProgress(40);
-                
-                const timestamp = Date.now();
-                const fileUrl = `./14chang/result/${currentPeriod}期_web.json?t=${timestamp}`;
-                console.log(`正在加载: ${fileUrl}`);
-                
-                const response = await fetch(fileUrl);
-                
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        throw new Error(`文件不存在: ${fileUrl}，请确保已生成该文件`);
-                    } else {
-                        throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+            // 尝试加载，如果404则自动回退到前一期
+            const maxRetries = 10;
+            let tryPeriod = currentPeriod;
+            
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                try {
+                    const displayInfo = attempt > 0 ? `(回退尝试: 第${tryPeriod}期)` : '';
+                    showStatus(`正在加载 ${tryPeriod}期_web.json 文件... ${displayInfo}`, 'info');
+                    updateProgress(40);
+                    
+                    const timestamp = Date.now();
+                    const fileUrl = `./14chang/result/${tryPeriod}期_web.json?t=${timestamp}`;
+                    console.log(`正在加载: ${fileUrl}`);
+                    
+                    const response = await fetch(fileUrl);
+                    
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            // 文件不存在，回退到前一期
+                            console.log(`${tryPeriod}期_web.json 不存在，尝试回退到前一期`);
+                            const prevPeriod = (parseInt(tryPeriod) - 1).toString();
+                            if (prevPeriod !== tryPeriod) {
+                                tryPeriod = prevPeriod;
+                                continue;
+                            }
+                            throw new Error(`文件不存在: ${fileUrl}`);
+                        } else {
+                            throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                        }
                     }
+                    
+                    const data = await response.json();
+                    updateProgress(80);
+                    
+                    // 验证数据格式
+                    if (!data.期数 || !data.计算结果 || !Array.isArray(data.计算结果)) {
+                        throw new Error('web.json文件格式不正确');
+                    }
+                    
+                    webData = data;
+                    
+                    // 如果使用了回退期数，更新UI显示
+                    if (tryPeriod !== currentPeriod) {
+                        currentPeriod = tryPeriod;
+                        periodInput.value = tryPeriod;
+                        showStatus(`未找到${inputPeriod}期数据，已自动回退到 ${tryPeriod}期`, 'info');
+                    }
+                    
+                    updateProgress(100);
+                    showStatus(`成功加载 ${data.计算结果.length} 场比赛数据`, 'success');
+                    
+                    // 显示结果
+                    displayResults();
+                    
+                    // 生成下载链接
+                    generateDownloadLink();
+                    
+                    return webData;
+                } catch (error) {
+                    console.error(`加载 ${tryPeriod}期_web.json 错误:`, error);
+                    
+                    // 如果是404且还有重试次数，继续尝试前一期
+                    if (error.message.includes('文件不存在') && attempt < maxRetries - 1) {
+                        const prevPeriod = (parseInt(tryPeriod) - 1).toString();
+                        if (prevPeriod !== tryPeriod) {
+                            tryPeriod = prevPeriod;
+                            continue;
+                        }
+                    }
+                    
+                    updateProgress(0);
+                    showStatus(`加载失败: ${error.message}`, 'error');
+                    
+                    if (error.message.includes('文件不存在')) {
+                        showStatus(`未找到可用数据文件，请先运行 pipeline`, 'error');
+                    }
+                    
+                    return null;
                 }
-                
-                const data = await response.json();
-                updateProgress(80);
-                
-                // 验证数据格式
-                if (!data.期数 || !data.计算结果 || !Array.isArray(data.计算结果)) {
-                    throw new Error('web.json文件格式不正确');
-                }
-                
-                webData = data;
-                updateProgress(100);
-                showStatus(`成功加载 ${data.计算结果.length} 场比赛数据`, 'success');
-                
-                // 显示结果
-                displayResults();
-                
-                // 生成下载链接
-                generateDownloadLink();
-                
-                return webData;
-            } catch (error) {
-                console.error('加载Web数据错误:', error);
-                updateProgress(0);
-                showStatus(`加载失败: ${error.message}`, 'error');
-                
-                // 如果文件不存在，提示用户
-                if (error.message.includes('文件不存在')) {
-                    showStatus(`请先运行 combine_probability.js 生成 ${currentPeriod}期_web.json 文件`, 'error');
-                }
-                
-                return null;
             }
+            
+            updateProgress(0);
+            showStatus('加载失败: 未找到任何可用的期数数据', 'error');
+            return null;
         }
         
 
@@ -1855,6 +1890,11 @@
         
         // 页面加载后自动加载共同对手数据
         loadCommonMatchData();
+
+        // 页面加载后自动获取14场最新期数并加载数据
+        setTimeout(() => {
+            fetchCurrentPeriod();
+        }, 100);
 
         // ========== BQC 半全场数据逻辑 ==========
         const bqcStatusMessage = document.getElementById('bqcStatusMessage');

@@ -1,0 +1,60 @@
+name: 获取大乐透历史开奖数据
+
+on:
+  schedule:
+    # 每 3 天执行一次（UTC 00:00，北京时间 08:00）
+    # cron 不支持 66 小时，每 3 天（72 小时）是最接近的方案
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  fetch-lottery-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      SCF_FUNCTION_URL: ${{ secrets.SCF_FUNCTION_URL }}
+      SCF_TOKEN: ${{ secrets.SCF_TOKEN }}
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+        fetch-depth: 0
+
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 安装依赖
+      run: |
+        pip install requests
+
+    - name: 抓取超级大乐透历史开奖数据（通过 SCF 代理）
+      working-directory: ./daletou
+      run: |
+        echo "=== 抓取超级大乐透历史开奖数据（代理模式） ==="
+        python fetch_daletou_data.py
+        echo "=== 抓取完成 ==="
+
+    - name: 提交数据到仓库
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add daletou/daletou_history.json
+
+        git commit -m "更新超级大乐透历史开奖数据" || {
+          echo "数据无变化，跳过push步骤"
+          exit 0
+        }
+
+        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}" || {
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        }
