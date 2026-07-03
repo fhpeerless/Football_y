@@ -68,23 +68,16 @@ const EMBEDDED_DATA = {"analysis":{"total_draws":2891,"front_zone":{"1":{"last_p
 
 const COLORS = ['#e94560','#e67e22','#2ecc71','#3498db','#9b59b6'];
 
-let DATA = null;
+let DATA = EMBEDDED_DATA;
 
-async function init() {
-  // 尝试从 kaijiangdata/ 动态加载 JSON（GitHub Pages 环境下有效）
-  try {
-    const resp = await fetch('kaijiangdata/daletou_prediction.json?_t=' + Date.now());
-    if (resp.ok) {
-      DATA = await resp.json();
-    } else {
-      throw new Error('HTTP ' + resp.status);
-    }
-  } catch {
-    // fetch 失败（本地 file:// 等），使用内嵌兜底数据
-    DATA = EMBEDDED_DATA;
-  }
-  render();
-}
+// 立即渲染内嵌数据（本地 file:// 也能正常显示）
+render();
+
+// 异步加载最新 JSON（GitHub Pages 环境下覆盖更新）
+fetch('kaijiangdata/daletou_prediction.json?_t=' + Date.now())
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(data => { DATA = data; render(); })
+  .catch(() => {}); // 加载失败则直接使用已渲染的内嵌数据
 
 function render() {
   const { analysis, predictions } = DATA;
@@ -183,7 +176,7 @@ function render() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// DOMContentLoaded 不再需要——脚本在 body 底部已直接调用 render()
 </script>
 </body>
 </html>
