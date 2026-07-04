@@ -1,6 +1,7 @@
 {
-  "generate_time": "2026-07-03 12:58:39",
+  "generate_time": "2026-07-04 16:02:14",
   "period": "26127",
+  "lottery_sale_endtime": "2026-07-04 23:00:00",
   "total_matches": 6,
   "matches": [
     {
@@ -12,16 +13,16 @@
       "home_team": "加拿大",
       "away_team": "摩洛哥",
       "bqc_odds": {
-        "aa": "8.25",
-        "ac": "16.00",
-        "ab": "26.00",
-        "ca": "9.50",
-        "cc": "4.85",
+        "aa": "8.50",
+        "ac": "13.50",
+        "ab": "20.00",
+        "ca": "10.50",
+        "cc": "5.16",
         "cb": "4.15",
-        "ba": "40.00",
-        "bc": "16.00",
-        "bb": "2.55",
-        "updatetime": "2026-07-02 17:22:59"
+        "ba": "32.00",
+        "bc": "13.50",
+        "bb": "2.65",
+        "updatetime": "2026-07-04 14:48:44"
       },
       "history": {
         "home": {
@@ -1161,7 +1162,36 @@
             "uniformLeagueId": 104,
             "winningTeam": "home"
           }
-        ]
+        ],
+        "injury": {
+          "home": [
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 1,
+              "personId": 610682,
+              "personName": "约翰斯顿",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "2"
+            },
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 677759,
+              "personName": "I. Koné",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 2,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "8"
+            }
+          ],
+          "away": []
+        }
       }
     },
     {
@@ -1173,16 +1203,16 @@
       "home_team": "巴拉圭",
       "away_team": "法国",
       "bqc_odds": {
-        "aa": "27.00",
-        "ac": "28.00",
-        "ab": "29.00",
-        "ca": "30.00",
-        "cc": "9.75",
-        "cb": "3.75",
-        "ba": "100.00",
-        "bc": "28.00",
-        "bb": "1.43",
-        "updatetime": "2026-07-02 09:22:02"
+        "aa": "33.00",
+        "ac": "24.00",
+        "ab": "22.00",
+        "ca": "36.00",
+        "cc": "10.50",
+        "cb": "3.95",
+        "ba": "70.00",
+        "bc": "24.00",
+        "bb": "1.42",
+        "updatetime": "2026-07-04 15:22:36"
       },
       "history": {
         "home": {
@@ -2295,7 +2325,37 @@
             "uniformLeagueId": 104,
             "winningTeam": "home"
           }
-        ]
+        ],
+        "injury": {
+          "home": [
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 1,
+              "personId": 290235,
+              "personName": "阿尔德雷特",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "3"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 334250,
+              "personName": "图拉姆",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "9"
+            }
+          ]
+        }
       }
     },
     {
@@ -2307,16 +2367,16 @@
       "home_team": "巴西",
       "away_team": "挪威",
       "bqc_odds": {
-        "aa": "2.75",
-        "ac": "13.00",
+        "aa": "2.67",
+        "ac": "12.50",
         "ab": "26.00",
-        "ca": "4.55",
-        "cc": "6.00",
-        "cb": "9.00",
-        "ba": "19.00",
-        "bc": "13.00",
-        "bb": "6.75",
-        "updatetime": "2026-07-03 09:36:50"
+        "ca": "4.45",
+        "cc": "6.35",
+        "cb": "9.50",
+        "ba": "18.00",
+        "bc": "12.50",
+        "bb": "7.25",
+        "updatetime": "2026-07-04 10:11:07"
       },
       "history": {
         "home": {
@@ -3401,7 +3461,11 @@
             "winProbability": "75%"
           }
         },
-        "h2h": []
+        "h2h": [],
+        "injury": {
+          "home": [],
+          "away": []
+        }
       }
     },
     {
@@ -3414,15 +3478,15 @@
       "away_team": "英格兰",
       "bqc_odds": {
         "aa": "6.00",
-        "ac": "13.50",
-        "ab": "22.00",
+        "ac": "12.50",
+        "ab": "20.00",
         "ca": "7.25",
         "cc": "4.30",
-        "cb": "4.90",
-        "ba": "24.00",
-        "bc": "13.50",
-        "bb": "3.60",
-        "updatetime": "2026-07-03 09:36:50"
+        "cb": "5.20",
+        "ba": "21.00",
+        "bc": "12.50",
+        "bb": "3.75",
+        "updatetime": "2026-07-04 12:25:49"
       },
       "history": {
         "home": {
@@ -4507,7 +4571,11 @@
             "winProbability": "80%"
           }
         },
-        "h2h": []
+        "h2h": [],
+        "injury": {
+          "home": [],
+          "away": []
+        }
       }
     },
     {
@@ -4518,7 +4586,18 @@
       "league": "瑞超",
       "home_team": "哥德堡",
       "away_team": "索尔纳",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.45",
+        "ac": "13.00",
+        "ab": "30.00",
+        "ca": "5.25",
+        "cc": "5.70",
+        "cb": "6.50",
+        "ba": "25.00",
+        "bc": "13.00",
+        "bb": "4.60",
+        "updatetime": "2026-07-04 09:38:46"
+      },
       "history": {
         "home": {
           "team": "哥德堡",
@@ -6143,7 +6222,11 @@
             "uniformLeagueId": 1085,
             "winningTeam": "home"
           }
-        ]
+        ],
+        "injury": {
+          "home": [],
+          "away": []
+        }
       }
     },
     {
@@ -6154,7 +6237,18 @@
       "league": "瑞超",
       "home_team": "埃尔夫斯堡",
       "away_team": "哈马比",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "6.00",
+        "ac": "14.00",
+        "ab": "23.00",
+        "ca": "8.50",
+        "cc": "6.00",
+        "cb": "4.50",
+        "ba": "33.00",
+        "bc": "14.00",
+        "bb": "2.75",
+        "updatetime": "2026-07-04 09:38:46"
+      },
       "history": {
         "home": {
           "team": "埃尔夫斯堡",
@@ -7779,7 +7873,11 @@
             "uniformLeagueId": 1085,
             "winningTeam": "home"
           }
-        ]
+        ],
+        "injury": {
+          "home": [],
+          "away": []
+        }
       }
     }
   ]

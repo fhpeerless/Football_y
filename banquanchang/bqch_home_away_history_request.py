@@ -43,6 +43,8 @@ SPORTTERY_HEADERS = {
 MATCH_RESULT_API = "https://webapi.sporttery.cn/gateway/uniform/football/getMatchResultV1.qry"
 # getResultHistoryV1.qry - 返回两队历史交锋记录
 MATCH_HISTORY_API = "https://webapi.sporttery.cn/gateway/uniform/football/getResultHistoryV1.qry"
+# getInjurySuspensionV1.qry - 返回两队伤停数据
+INJURY_API = "https://webapi.sporttery.cn/gateway/uniform/football/getInjurySuspensionV1.qry"
 
 REQUEST_INTERVAL = 0.8     # 请求间隔(秒)
 MAX_RETRIES = 3            # 最大重试次数
@@ -89,17 +91,19 @@ def load_bqc_matches(period: str) -> list[dict]:
     with open(filepath, "r", encoding="utf-8") as f:
         data = json.load(f)
 
+    sale_endtime = data.get("lottery_sale_endtime", "")
+
     matches = data.get("data", [])
     if not matches:
         print(f"  跳过: 期数 {period} 没有比赛数据")
-        return []
+        return [], sale_endtime
 
     # 为每场比赛标注期数
     for m in matches:
         m["period"] = period
 
     print(f"  已加载 {len(matches)} 场比赛 (来源: {filepath})")
-    return matches
+    return matches, sale_endtime
 
 
 # ============================================================
@@ -174,6 +178,22 @@ def fetch_h2h_for_match(sporttery_match_id: str) -> list:
     return []
 
 
+def fetch_injury_suspension(sporttery_match_id: str) -> dict:
+    """调用 getInjurySuspensionV1.qry 获取两队伤停数据
+
+    参数:
+        sporttery_match_id: sporttery.cn 比赛ID
+    返回:
+        {home: {injuriesAndSuspensionsList, ...}, away: {...}}
+        失败返回空 dict
+    """
+    params = {"sportteryMatchId": sporttery_match_id}
+    data = api_request_with_retry(INJURY_API, params)
+    if data and data.get("success"):
+        return data.get("value", {})
+    return {}
+
+
 # ============================================================
 # 爬取历史数据
 # ============================================================
@@ -221,6 +241,13 @@ def fetch_all_history(bqc_matches: list[dict]) -> list[dict]:
         h2h_matches = fetch_h2h_for_match(match_id)
         print(f"  [结果] 历史交锋 {len(h2h_matches)} 场")
 
+        # ---- 调用 getInjurySuspensionV1.qry ----
+        print(f"  [请求] 调用 getInjurySuspensionV1.qry (sportteryMatchId={match_id})...")
+        injury_data = fetch_injury_suspension(match_id)
+        home_injuries = injury_data.get("home", {}).get("injuriesAndSuspensionsList", [])
+        away_injuries = injury_data.get("away", {}).get("injuriesAndSuspensionsList", [])
+        print(f"  [结果] 主队伤停 {len(home_injuries)} 条, 客队伤停 {len(away_injuries)} 条")
+
         match_record = {
             "match_id": match_id,
             "date": match_date,
@@ -234,6 +261,10 @@ def fetch_all_history(bqc_matches: list[dict]) -> list[dict]:
                 "home": home_record,
                 "away": away_record,
                 "h2h": h2h_matches,
+                "injury": {
+                    "home": home_injuries,
+                    "away": away_injuries,
+                },
             },
         }
         results.append(match_record)
@@ -260,11 +291,12 @@ def fetch_all_history(bqc_matches: list[dict]) -> list[dict]:
     return results
 
 
-def save_history(history_records: list[dict], period: str):
+def save_history(history_records: list[dict], period: str, sale_endtime: str = ""):
     """保存历史数据到 {period}_bqch_homaway_history.json（含期数信息）"""
     output = {
         "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
         "period": period,
+        "lottery_sale_endtime": sale_endtime,
         "total_matches": len(history_records),
         "matches": history_records,
     }
@@ -315,7 +347,7 @@ def main():
 
         # 加载该期数的比赛数据
         print(f"\n[步骤1] 加载期数 {period_str} 比赛数据...")
-        matches = load_bqc_matches(period_str)
+        matches, sale_endtime = load_bqc_matches(period_str)
         if not matches:
             print(f"  跳过期数 {period_str}（无比赛数据）")
             continue
@@ -330,7 +362,7 @@ def main():
 
         # 保存历史数据
         print(f"\n{'=' * 70}")
-        save_history(history_records, period=period_str)
+        save_history(history_records, period=period_str, sale_endtime=sale_endtime)
 
     print(f"\n全部完成！")
 

@@ -147,7 +147,7 @@ def fetch_available_periods() -> list:
 # 2. 获取指定期数的比赛数据
 # ============================================================
 
-def fetch_matches_for_period(period: str) -> list:
+def fetch_matches_for_period(period: str) -> tuple:
     """
     调用API获取指定期数的6场比赛数据
 
@@ -162,7 +162,10 @@ def fetch_matches_for_period(period: str) -> list:
       - h/d/a:          胜/平/负赔率
       - infohubMatchId: 比赛ID
 
-    返回: matchList 列表, 失败返回空列表
+    bqcMatch 顶层还包含投注截止时间:
+      - lotterySaleEndtime: 投注截止时间(如"2026-07-04 23:00:00")
+
+    返回: (matchList 列表, lotterySaleEndtime 字符串), 失败返回 ([], "")
     """
     params = {
         "param": "98,0",
@@ -176,21 +179,24 @@ def fetch_matches_for_period(period: str) -> list:
             body_sample = resp.text[:300] if resp.text else "(空)"
             print(f"  [错误] 期数{period} API请求失败, HTTP: {resp.status_code}")
             print(f"  [诊断] 响应内容: {body_sample}")
-            return []
+            return [], ""
         data = resp.json()
         if not data.get("success"):
             print(f"  [错误] 期数{period} API返回失败: {data.get('errorMessage', '未知错误')}")
-            return []
-        match_list = data["value"]["bqcMatch"].get("matchList", [])
+            return [], ""
+        bqc_match = data["value"]["bqcMatch"]
+        match_list = bqc_match.get("matchList", [])
+        sale_endtime = bqc_match.get("lotterySaleEndtime", "")
         print(f"  期数{period}: 获取到 {len(match_list)} 场比赛")
+        print(f"  投注截止时间: {sale_endtime}")
         for m in match_list:
             home = clean_team_name_cn(m.get("masterTeamAllName", "")) or m.get("masterTeamName", "").replace(" ", "")
             away = clean_team_name_cn(m.get("guestTeamAllName", "")) or m.get("guestTeamName", "").replace(" ", "")
             print(f"    #{m['matchNum']} {home} vs {away} ({m['matchName']})")
-        return match_list
+        return match_list, sale_endtime
     except Exception as e:
         print(f"  [错误] 获取期数{period}比赛数据异常: {e}")
-        return []
+        return [], ""
 
 
 # ============================================================
@@ -248,7 +254,7 @@ def parse_bqc_xml(xml_text: str) -> dict:
 # 4. 匹配逻辑：API比赛数据 + BQC赔率
 # ============================================================
 
-def match_bqc_odds(api_matches: list, bqc_odds_map: dict) -> list:
+def match_bqc_odds(api_matches: list, bqc_odds_map: dict, sale_endtime: str = "") -> list:
     """
     将API获取的比赛数据与BQC赔率XML匹配
 
@@ -284,6 +290,7 @@ def match_bqc_odds(api_matches: list, bqc_odds_map: dict) -> list:
                 "a": m.get("a", ""),
             },
             "bqc_odds": bqc_odds,
+            "lottery_sale_endtime": sale_endtime,
         }
         has_bqc = "✓" if bqc_odds else "✗(无赔率)"
         print(f"    #{m.get('matchNum', '?')} {home} vs {away} → match_id={match_id} {has_bqc}")
@@ -367,8 +374,8 @@ def main():
         period_str = str(period_num)
         print(f"\n  --- 期数 {period_str} ---")
 
-        # 2a. 获取该期数的比赛数据
-        api_matches = fetch_matches_for_period(period_str)
+        # 2a. 获取该期数的比赛数据（含投注截止时间）
+        api_matches, sale_endtime = fetch_matches_for_period(period_str)
         if not api_matches:
             print(f"  警告: 期数{period_str} 无比赛数据，跳过")
             continue
@@ -384,7 +391,7 @@ def main():
             print(f"  BQC XML 中共 {len(bqc_odds_map)} 场赔率")
 
         # 2c. 匹配BQC赔率
-        matched = match_bqc_odds(api_matches, bqc_odds_map)
+        matched = match_bqc_odds(api_matches, bqc_odds_map, sale_endtime)
         matched.sort(key=lambda x: int(x.get("match_num", 0)) if str(x.get("match_num", "")).isdigit() else 0)
 
         total = len(matched)
@@ -396,6 +403,7 @@ def main():
             "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
             "data_source": "webapi.sporttery.cn",
             "period": period_str,
+            "lottery_sale_endtime": sale_endtime,
             "total_matches": total,
             "data": matched,
         }

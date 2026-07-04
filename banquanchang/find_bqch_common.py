@@ -41,17 +41,23 @@ def get_target_period() -> str:
 
 def normalize_match_record(match: dict) -> dict:
     """将新API格式(sporttery.cn)的比赛记录转换为旧格式(兼容 fenxi.html)"""
+    def parse_score(score_str):
+        """解析比分字符串 "2:1" -> (2, 1)，处理无效值返回 (0, 0)"""
+        try:
+            parts = score_str.split(":")
+            if len(parts) == 2:
+                return int(parts[0]), int(parts[1])
+        except (ValueError, TypeError):
+            pass
+        return 0, 0
+
     # 解析全场比分 "2:2" -> (2, 2)
     full_goal = match.get("fullCourtGoal", "0:0")
-    parts = full_goal.split(":")
-    homescore = int(parts[0]) if len(parts) == 2 else 0
-    awayscore = int(parts[1]) if len(parts) == 2 else 0
+    homescore, awayscore = parse_score(full_goal)
 
     # 解析半场比分 "1:0" -> (1, 0)
     half_goal = match.get("halfTimeGoal", "0:0")
-    parts = half_goal.split(":")
-    homehalfscore = int(parts[0]) if len(parts) == 2 else 0
-    awayhalfscore = int(parts[1]) if len(parts) == 2 else 0
+    homehalfscore, awayhalfscore = parse_score(half_goal)
 
     # 转换胜负结果: 新API用 "home"/"draw"/"away", 旧格式用 "胜"/"平"/"负"
     winning_team = match.get("winningTeam", "draw")
@@ -244,6 +250,8 @@ def process_single_match(match_record: dict) -> dict:
         "common_opponent_count": 0,
         "common_opponent_data": {},
         "bqc_odds": match_record.get("bqc_odds"),
+        "injury": history_data.get("injury", {}) if history_data else {},
+        "h2h": [normalize_match_record(m) for m in (history_data.get("h2h", []) if history_data else [])],
     }
 
     if not history_data:
@@ -282,6 +290,8 @@ def analyze_common_opponents(period: str) -> list[dict]:
     with open(history_path, "r", encoding="utf-8") as f:
         history_data = json.load(f)
 
+    sale_endtime = history_data.get("lottery_sale_endtime", "")
+
     match_records = history_data.get("matches", [])
     total = len(match_records)
     print(f"\n{'=' * 70}")
@@ -310,16 +320,17 @@ def analyze_common_opponents(period: str) -> list[dict]:
     print(f"  有共同对手: {with_common}")
     print(f"  无共同对手: {len(results) - with_common}")
 
-    return results
+    return results, sale_endtime
 
 
-def save_common_match(results: list[dict], period: str):
+def save_common_match(results: list[dict], period: str, sale_endtime: str = ""):
     """保存共同对手数据到 {period}_bqch_common.json"""
     data_dir = os.path.join(get_project_root(), "data")
 
     output = {
         "generate_time": datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M:%S"),
         "period": period,
+        "lottery_sale_endtime": sale_endtime,
         "total_matches": len(results),
         "matches": results,
     }
@@ -361,12 +372,12 @@ def main():
         print(f"处理期数: {period_str}")
         print(f"{'=' * 70}")
 
-        results = analyze_common_opponents(period_str)
+        results, sale_endtime = analyze_common_opponents(period_str)
         if not results:
             print(f"  跳过期数 {period_str}（无历史数据）")
             continue
 
-        save_common_match(results, period=period_str)
+        save_common_match(results, period=period_str, sale_endtime=sale_endtime)
 
     print(f"\n全部完成！")
 
