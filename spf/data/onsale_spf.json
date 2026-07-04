@@ -2,12 +2,19 @@
   {
     "match_id": "2040359",
     "date": "2026-07-05",
-    "dayofweek": "星期天",
+    "match_time": "01:00:00",
+    "dayofweek": "周六",
     "match_num": "6089",
+    "match_num_str": "周六089",
     "league": "世界杯",
+    "league_id": "72",
     "home_team": "加拿大",
     "away_team": "摩洛哥",
+    "home_team_id": "542",
+    "away_team_id": "424",
+    "match_status": "Selling",
     "spf_odds": {
+<<<<<<< Updated upstream
       "win": "2.08",
       "draw": "3.07",
       "lost": "3.10"
@@ -19,25 +26,55 @@
       "lost": "1.57"
     },
     "nspf_update_time": "2026-07-03 15:49:16"
+=======
+      "win": "5.24",
+      "draw": "3.32",
+      "lost": "1.57"
+    },
+    "spf_update_time": "2026-07-03 15:49:16",
+    "nspf_odds": {
+      "win": "2.08",
+      "draw": "3.07",
+      "lost": "3.10"
+    },
+    "nspf_goal_line": "+1",
+    "nspf_update_time": "2026-07-03 15:49:17"
+>>>>>>> Stashed changes
   },
   {
     "match_id": "2040373",
     "date": "2026-07-05",
-    "dayofweek": "星期天",
+    "match_time": "05:00:00",
+    "dayofweek": "周六",
     "match_num": "6090",
+    "match_num_str": "周六090",
     "league": "世界杯",
+    "league_id": "72",
     "home_team": "巴拉圭",
     "away_team": "法国",
+<<<<<<< Updated upstream
     "spf_odds": {
+=======
+    "home_team_id": "418",
+    "away_team_id": "375",
+    "match_status": "Selling",
+    "nspf_odds": {
+>>>>>>> Stashed changes
       "win": "2.28",
       "draw": "3.65",
       "lost": "2.40"
     },
+<<<<<<< Updated upstream
     "spf_update_time": "2026-07-03 21:42:14"
+=======
+    "nspf_goal_line": "+2",
+    "nspf_update_time": "2026-07-03 21:42:14"
+>>>>>>> Stashed changes
   },
   {
     "match_id": "2040396",
     "date": "2026-07-04",
+<<<<<<< Updated upstream
     "dayofweek": "星期六",
     "match_num": "6201",
     "league": "韩国职业联赛",
@@ -50,15 +87,40 @@
     },
     "spf_update_time": "2026-07-03 09:36:50",
     "nspf_odds": {
+=======
+    "match_time": "18:30:00",
+    "dayofweek": "周六",
+    "match_num": "6201",
+    "match_num_str": "周六201",
+    "league": "韩职",
+    "league_id": "48",
+    "home_team": "安养FC",
+    "away_team": "浦项制铁",
+    "home_team_id": "1035899",
+    "away_team_id": "1088",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "2.70",
       "draw": "2.80",
       "lost": "2.49"
     },
+<<<<<<< Updated upstream
+=======
+    "spf_update_time": "2026-07-03 09:36:50",
+    "nspf_odds": {
+      "win": "1.40",
+      "draw": "3.85",
+      "lost": "6.45"
+    },
+    "nspf_goal_line": "+1",
+>>>>>>> Stashed changes
     "nspf_update_time": "2026-07-03 09:36:50"
   },
   {
     "match_id": "2040397",
     "date": "2026-07-04",
+<<<<<<< Updated upstream
     "dayofweek": "星期六",
     "match_num": "6202",
     "league": "韩国职业联赛",
@@ -71,15 +133,40 @@
     },
     "spf_update_time": "2026-07-03 09:36:50",
     "nspf_odds": {
+=======
+    "match_time": "18:30:00",
+    "dayofweek": "周六",
+    "match_num": "6202",
+    "match_num_str": "周六202",
+    "league": "韩职",
+    "league_id": "48",
+    "home_team": "大田市民",
+    "away_team": "富川FC",
+    "home_team_id": "1083",
+    "away_team_id": "2437",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "1.62",
       "draw": "3.30",
       "lost": "4.80"
     },
+<<<<<<< Updated upstream
+=======
+    "spf_update_time": "2026-07-03 09:36:50",
+    "nspf_odds": {
+      "win": "3.18",
+      "draw": "3.20",
+      "lost": "1.99"
+    },
+    "nspf_goal_line": "-1",
+>>>>>>> Stashed changes
     "nspf_update_time": "2026-07-03 09:36:50"
   },
   {
     "match_id": "2040398",
     "date": "2026-07-04",
+<<<<<<< Updated upstream
     "dayofweek": "星期六",
     "match_num": "6203",
     "league": "韩国职业联赛",
@@ -92,15 +179,40 @@
     },
     "spf_update_time": "2026-07-03 09:36:50",
     "nspf_odds": {
+=======
+    "match_time": "18:30:00",
+    "dayofweek": "周六",
+    "match_num": "6203",
+    "match_num_str": "周六203",
+    "league": "韩职",
+    "league_id": "48",
+    "home_team": "全北现代",
+    "away_team": "江原FC",
+    "home_team_id": "860",
+    "away_team_id": "1192",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "2.42",
       "draw": "2.95",
       "lost": "2.65"
     },
+<<<<<<< Updated upstream
+=======
+    "spf_update_time": "2026-07-03 09:36:50",
+    "nspf_odds": {
+      "win": "5.75",
+      "draw": "3.90",
+      "lost": "1.43"
+    },
+    "nspf_goal_line": "-1",
+>>>>>>> Stashed changes
     "nspf_update_time": "2026-07-03 09:36:50"
   },
   {
     "match_id": "2040374",
     "date": "2026-07-06",
+<<<<<<< Updated upstream
     "dayofweek": "星期一",
     "match_num": "7091",
     "league": "世界杯",
@@ -113,15 +225,41 @@
     },
     "spf_update_time": "2026-07-03 16:48:43",
     "nspf_odds": {
+=======
+    "match_time": "04:00:00",
+    "dayofweek": "周日",
+    "match_num": "7091",
+    "match_num_str": "周日091",
+    "league": "世界杯",
+    "league_id": "72",
+    "home_team": "巴西",
+    "away_team": "挪威",
+    "home_team_id": "417",
+    "away_team_id": "391",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "1.67",
       "draw": "3.45",
       "lost": "4.15"
     },
+<<<<<<< Updated upstream
     "nspf_update_time": "2026-07-03 16:48:45"
+=======
+    "spf_update_time": "2026-07-03 16:48:45",
+    "nspf_odds": {
+      "win": "3.25",
+      "draw": "3.25",
+      "lost": "1.95"
+    },
+    "nspf_goal_line": "-1",
+    "nspf_update_time": "2026-07-03 16:48:43"
+>>>>>>> Stashed changes
   },
   {
     "match_id": "2040394",
     "date": "2026-07-06",
+<<<<<<< Updated upstream
     "dayofweek": "星期一",
     "match_num": "7092",
     "league": "世界杯",
@@ -134,15 +272,41 @@
     },
     "spf_update_time": "2026-07-03 16:55:47",
     "nspf_odds": {
+=======
+    "match_time": "08:00:00",
+    "dayofweek": "周日",
+    "match_num": "7092",
+    "match_num_str": "周日092",
+    "league": "世界杯",
+    "league_id": "72",
+    "home_team": "墨西哥",
+    "away_team": "英格兰",
+    "home_team_id": "416",
+    "away_team_id": "370",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "3.28",
       "draw": "2.87",
       "lost": "2.10"
     },
+<<<<<<< Updated upstream
     "nspf_update_time": "2026-07-03 16:55:52"
+=======
+    "spf_update_time": "2026-07-03 16:55:52",
+    "nspf_odds": {
+      "win": "1.57",
+      "draw": "3.45",
+      "lost": "4.95"
+    },
+    "nspf_goal_line": "+1",
+    "nspf_update_time": "2026-07-03 16:55:47"
+>>>>>>> Stashed changes
   },
   {
     "match_id": "2040405",
     "date": "2026-07-05",
+<<<<<<< Updated upstream
     "dayofweek": "星期天",
     "match_num": "7201",
     "league": "韩国职业联赛",
@@ -155,15 +319,40 @@
     },
     "spf_update_time": "2026-07-03 09:36:50",
     "nspf_odds": {
+=======
+    "match_time": "18:30:00",
+    "dayofweek": "周日",
+    "match_num": "7201",
+    "match_num_str": "周日201",
+    "league": "韩职",
+    "league_id": "48",
+    "home_team": "首尔FC",
+    "away_team": "仁川联",
+    "home_team_id": "929",
+    "away_team_id": "1086",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "1.68",
       "draw": "3.30",
       "lost": "4.35"
     },
+<<<<<<< Updated upstream
+=======
+    "spf_update_time": "2026-07-03 09:36:50",
+    "nspf_odds": {
+      "win": "3.35",
+      "draw": "3.28",
+      "lost": "1.90"
+    },
+    "nspf_goal_line": "-1",
+>>>>>>> Stashed changes
     "nspf_update_time": "2026-07-03 09:36:50"
   },
   {
     "match_id": "2040406",
     "date": "2026-07-05",
+<<<<<<< Updated upstream
     "dayofweek": "星期天",
     "match_num": "7202",
     "league": "韩国职业联赛",
@@ -176,15 +365,40 @@
     },
     "spf_update_time": "2026-07-03 09:36:50",
     "nspf_odds": {
+=======
+    "match_time": "18:30:00",
+    "dayofweek": "周日",
+    "match_num": "7202",
+    "match_num_str": "周日202",
+    "league": "韩职",
+    "league_id": "48",
+    "home_team": "光州FC",
+    "away_team": "蔚山现代",
+    "home_team_id": "1557",
+    "away_team_id": "1090",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "5.95",
       "draw": "3.90",
       "lost": "1.42"
     },
+<<<<<<< Updated upstream
+=======
+    "spf_update_time": "2026-07-03 09:36:50",
+    "nspf_odds": {
+      "win": "2.45",
+      "draw": "3.25",
+      "lost": "2.42"
+    },
+    "nspf_goal_line": "+1",
+>>>>>>> Stashed changes
     "nspf_update_time": "2026-07-03 09:36:50"
   },
   {
     "match_id": "2040407",
     "date": "2026-07-05",
+<<<<<<< Updated upstream
     "dayofweek": "星期天",
     "match_num": "7203",
     "league": "韩国职业联赛",
@@ -197,10 +411,34 @@
     },
     "spf_update_time": "2026-07-03 09:36:50",
     "nspf_odds": {
+=======
+    "match_time": "18:30:00",
+    "dayofweek": "周日",
+    "match_num": "7203",
+    "match_num_str": "周日203",
+    "league": "韩职",
+    "league_id": "48",
+    "home_team": "金泉尚武",
+    "away_team": "济州SK",
+    "home_team_id": "1084",
+    "away_team_id": "1087",
+    "match_status": "Selling",
+    "spf_odds": {
+>>>>>>> Stashed changes
       "win": "2.38",
       "draw": "3.05",
       "lost": "2.62"
     },
+<<<<<<< Updated upstream
+=======
+    "spf_update_time": "2026-07-03 09:36:50",
+    "nspf_odds": {
+      "win": "5.60",
+      "draw": "3.90",
+      "lost": "1.44"
+    },
+    "nspf_goal_line": "-1",
+>>>>>>> Stashed changes
     "nspf_update_time": "2026-07-03 09:36:50"
   }
 ]

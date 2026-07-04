@@ -1,48 +1,40 @@
 """
-模拟手机端(移动端)获取500彩票网竞彩足球胜平负(SPF)和让球胜平负(NSPF)数据
+从中国体育彩票官网(sporttery.cn)获取竞彩足球胜平负(SPF/HAD)和让球胜平负(NSPF/HHAD)数据
 
-从HAR文件分析得到的API接口:
-  1. pl_spf_2.xml   - 胜平负赔率
-  2. pl_nspf_2.xml  - 让球胜平负赔率
-
-请求头使用iPhone Safari移动端UA, 模拟手机浏览器访问
+数据源从HAR文件分析得到:
+  https://webapi.sporttery.cn/gateway/uniform/football/getMatchCalculatorV1.qry?channel=c&poolCode=hhad,had
 """
 
 import requests
-import xml.etree.ElementTree as ET
 import json
 import os
 from datetime import datetime, timezone, timedelta
 from typing import Optional
 
 
-# 移动端请求头（从HAR文件中提取的iPhone请求）
-MOBILE_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1",
-    "Accept": "application/xml, text/xml, */*; q=0.01",
+# 请求头（从HAR文件中提取）
+API_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    "Accept": "application/json, text/javascript, */*; q=0.01",
     "Accept-Language": "zh-CN,zh;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "X-Requested-With": "XMLHttpRequest",
-    "Referer": "https://trade.500.com/jczq/",
-    "sec-ch-ua": '"Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"',
-    "sec-ch-ua-mobile": "?1",
-    "sec-ch-ua-platform": '"iOS"',
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "Origin": "https://www.sporttery.cn",
+    "Referer": "https://www.sporttery.cn/",
 }
 
-# API接口地址
-SPF_URL = "https://trade.500.com/static/public/jczq/newxml/pl/pl_spf_2.xml"
-NSPF_URL = "https://trade.500.com/static/public/jczq/newxml/pl/pl_nspf_2.xml"
+# API接口地址（一次性获取胜平负+让球胜平负）
+API_URL = (
+    "https://webapi.sporttery.cn/gateway/uniform/football/"
+    "getMatchCalculatorV1.qry?channel=c&poolCode=hhad,had"
+)
 
 
-def fetch_xml(url: str, timeout: int = 15) -> Optional[str]:
-    """
-    使用移动端请求头获取XML数据
-    """
+def fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
+    """请求API获取JSON数据"""
     try:
-        resp = requests.get(url, headers=MOBILE_HEADERS, timeout=timeout)
-        resp.encoding = "utf-8"
+        resp = requests.get(url, headers=API_HEADERS, timeout=timeout)
         if resp.status_code == 200:
-            return resp.text
+            return resp.json()
         else:
             print(f"请求失败, HTTP状态码: {resp.status_code}")
             return None
@@ -51,117 +43,140 @@ def fetch_xml(url: str, timeout: int = 15) -> Optional[str]:
         return None
 
 
-def parse_spf_xml(xml_text: str) -> list[dict]:
+def parse_matches(data: dict) -> dict:
     """
-    解析胜平负(SPF) XML数据
+    解析API返回的JSON数据，分离出胜平负(HAD)和让球胜平负(HHAD)
 
-    XML结构:
-    <xml>
-      <m id="2040174" date="2026-06-16" dayofweek="星期二"
-         matchnum="1013" league="世界杯" home="西班牙" away="佛得角">
-        <row win="1.61" draw="4.40" lost="3.56" w="0" d="0" l="0" .../>
-        <!-- 最新赔率为第一个row, 后续为历史变化 -->
-      </m>
-    </xml>
+    API返回结构:
+    {
+      "errorCode": "0",
+      "value": {
+        "matchInfoList": [
+          {
+            "businessDate": "2026-07-04",
+            "weekday": "周六",
+            "subMatchList": [
+              {
+                "matchId": 2040357,
+                "matchNum": 5088,
+                "matchNumStr": "周五088",
+                "leagueAbbName": "世界杯",
+                "homeTeamAbbName": "哥伦比亚",
+                "awayTeamAbbName": "加纳",
+                "matchDate": "2026-07-04",
+                "matchTime": "09:30:00",
+                "matchWeek": "周五",
+                "matchStatus": "Selling",
+                "had": {"h": "1.30", "d": "4.25", "a": "8.00", ...},
+                "hhad": {"h": "2.35", "d": "2.76", "a": "2.93", "goalLine": "-1", ...},
+              }
+            ]
+          }
+        ]
+      }
+    }
     """
-    matches = []
-    root = ET.fromstring(xml_text)
+    spf_matches = []   # 胜平负 HAD
+    nspf_matches = []  # 让球胜平负 HHAD
 
-    for m_elem in root.findall("m"):
-        match_id = m_elem.get("id", "")
-        match_date = m_elem.get("date", "")
-        day_of_week = m_elem.get("dayofweek", "")
-        match_num = m_elem.get("matchnum", "")
-        league = m_elem.get("league", "")
-        home_team = m_elem.get("home", "")
-        away_team = m_elem.get("away", "")
+    if data.get("errorCode") != "0":
+        print(f"API返回错误: {data.get('errorMessage', '未知错误')}")
+        return {"spf": spf_matches, "nspf": nspf_matches}
 
-        # 获取所有row, 第一个为最新赔率
-        rows = m_elem.findall("row")
-        latest_odds = rows[0] if rows else None
+    match_info_list = data.get("value", {}).get("matchInfoList", [])
 
-        match_info = {
-            "match_id": match_id,
-            "date": match_date,
-            "dayofweek": day_of_week,
-            "match_num": match_num,
-            "league": league,
-            "home_team": home_team,  # 主队
-            "away_team": away_team,  # 客队
-            "odds": {
-                "win": latest_odds.get("win") if latest_odds is not None else None,
-                "draw": latest_odds.get("draw") if latest_odds is not None else None,
-                "lost": latest_odds.get("lost") if latest_odds is not None else None,
-            },
-            "update_time": latest_odds.get("updatetime") if latest_odds is not None else None,
-        }
-        matches.append(match_info)
+    for day_group in match_info_list:
+        weekday = day_group.get("weekday", "")
+        sub_matches = day_group.get("subMatchList", [])
 
-    return matches
+        for m in sub_matches:
+            match_id = str(m.get("matchId", ""))
+            match_num = str(m.get("matchNum", ""))
+            match_num_str = m.get("matchNumStr", "")
+            league = m.get("leagueAbbName", "")
+            league_id = str(m.get("leagueId", ""))
+            home_team = m.get("homeTeamAbbName", "")
+            away_team = m.get("awayTeamAbbName", "")
+            home_team_id = str(m.get("homeTeamId", ""))
+            away_team_id = str(m.get("awayTeamId", ""))
+            match_date = m.get("matchDate", "")
+            match_time = m.get("matchTime", "")
+            match_status = m.get("matchStatus", "")
 
+            # 基础信息（共用的字段）
+            base_info = {
+                "match_id": match_id,
+                "date": match_date,
+                "match_time": match_time,
+                "dayofweek": weekday,
+                "match_num": match_num,
+                "match_num_str": match_num_str,
+                "league": league,
+                "league_id": league_id,
+                "home_team": home_team,
+                "away_team": away_team,
+                "home_team_id": home_team_id,
+                "away_team_id": away_team_id,
+                "match_status": match_status,
+            }
 
-def parse_nspf_xml(xml_text: str) -> list[dict]:
-    """
-    解析让球胜平负(NSPF) XML数据
+            # 胜平负(HAD)赔率
+            had = m.get("had")
+            if had:
+                spf_info = base_info.copy()
+                spf_info["odds"] = {
+                    "win": had.get("h"),
+                    "draw": had.get("d"),
+                    "lost": had.get("a"),
+                }
+                spf_info["update_time"] = f"{had.get('updateDate', '')} {had.get('updateTime', '')}"
+                spf_matches.append(spf_info)
 
-    结构与SPF一致, 但赔率是让球后的赔率
-    """
-    matches = []
-    root = ET.fromstring(xml_text)
+            # 让球胜平负(HHAD)赔率
+            hhad = m.get("hhad")
+            if hhad:
+                nspf_info = base_info.copy()
+                nspf_info["odds"] = {
+                    "win": hhad.get("h"),
+                    "draw": hhad.get("d"),
+                    "lost": hhad.get("a"),
+                }
+                nspf_info["goal_line"] = hhad.get("goalLine", "")
+                nspf_info["update_time"] = f"{hhad.get('updateDate', '')} {hhad.get('updateTime', '')}"
+                nspf_matches.append(nspf_info)
 
-    for m_elem in root.findall("m"):
-        match_id = m_elem.get("id", "")
-        match_date = m_elem.get("date", "")
-        day_of_week = m_elem.get("dayofweek", "")
-        match_num = m_elem.get("matchnum", "")
-        league = m_elem.get("league", "")
-        home_team = m_elem.get("home", "")
-        away_team = m_elem.get("away", "")
-
-        rows = m_elem.findall("row")
-        latest_odds = rows[0] if rows else None
-
-        match_info = {
-            "match_id": match_id,
-            "date": match_date,
-            "dayofweek": day_of_week,
-            "match_num": match_num,
-            "league": league,
-            "home_team": home_team,
-            "away_team": away_team,
-            "odds": {
-                "win": latest_odds.get("win") if latest_odds is not None else None,
-                "draw": latest_odds.get("draw") if latest_odds is not None else None,
-                "lost": latest_odds.get("lost") if latest_odds is not None else None,
-            },
-            "update_time": latest_odds.get("updatetime") if latest_odds is not None else None,
-        }
-        matches.append(match_info)
-
-    return matches
+    return {"spf": spf_matches, "nspf": nspf_matches}
 
 
-def display_matches(matches: list[dict], title: str):
+def display_matches(matches: list[dict], title: str, show_goal_line: bool = False):
     """格式化输出比赛信息"""
-    print(f"\n{'='*70}")
+    print(f"\n{'='*95}")
     print(f"  {title}")
-    print(f"{'='*70}")
-    print(f"{'场次':<8}{'联赛':<12}{'主队':<12}{'客队':<12}{'胜':<8}{'平':<8}{'负':<8}")
-    print(f"{'-'*70}")
+    print(f"{'='*95}")
+    header = f"{'场次':<8}{'赛事类型':<14}{'主队':<12}{'客队':<12}{'胜':<8}{'平':<8}{'负':<8}{'开赛时间':<14}"
+    if show_goal_line:
+        header += f"{'让球':<6}"
+    print(header)
+    print(f"{'-'*95}")
 
     for m in matches:
         odds = m["odds"]
-        print(
+        match_dt = f"{m['date'][5:]}-{m['match_time'][:5]}"  # 07-04 09:30 格式
+        line = (
             f"{m['match_num']:<8}"
-            f"{m['league']:<12}"
+            f"{m['league']:<14}"
             f"{m['home_team']:<12}"
             f"{m['away_team']:<12}"
             f"{odds['win']:<8}"
             f"{odds['draw']:<8}"
             f"{odds['lost']:<8}"
+            f"{match_dt:<14}"
         )
+        if show_goal_line:
+            line += f"{m.get('goal_line', ''):<6}"
+        print(line)
 
-    print(f"{'='*70}")
+    print(f"{'='*95}")
     print(f"共 {len(matches)} 场比赛")
 
 
@@ -183,7 +198,7 @@ def save_to_data_file(matches: list[dict], filename: str):
 
 
 def main():
-    # 获取今天的文件名标记（如 6.15）
+    # 获取今天的文件名标记（如 7.4）
     bj_tz = timezone(timedelta(hours=8))
     today = datetime.now(bj_tz)
     date_tag = f"{today.month}.{today.day}"
@@ -191,52 +206,68 @@ def main():
     print(f"日期标记: {date_tag}")
     print("----------------------------------------")
 
-    # 同时获取SPF和NSPF数据，合并保存到一个文件
-    all_matches = {}  # key=match_id, value={...spf_odds, nspf_odds, match_info}
+    print("正在从 sporttery.cn 获取竞彩足球数据...")
+    json_data = fetch_json(API_URL)
 
-    print("正在获取胜平负(SPF)数据...")
-    spf_xml = fetch_xml(SPF_URL)
-    if spf_xml:
-        spf_matches = parse_spf_xml(spf_xml)
-        display_matches(spf_matches, "胜平负 (SPF) 赔率 - 最新数据")
-        for m in spf_matches:
-            mid = m["match_id"]
-            all_matches.setdefault(mid, {
-                "match_id": mid,
-                "date": m["date"],
-                "dayofweek": m["dayofweek"],
-                "match_num": m["match_num"],
-                "league": m["league"],
-                "home_team": m["home_team"],
-                "away_team": m["away_team"],
-            })
-            all_matches[mid]["spf_odds"] = m["odds"]
-            all_matches[mid]["spf_update_time"] = m["update_time"]
-    else:
-        print("获取胜平负数据失败")
+    if not json_data:
+        print("获取数据失败，程序退出")
+        return
 
-    print("\n\n正在获取让球胜平负(NSPF)数据...")
-    nspf_xml = fetch_xml(NSPF_URL)
-    if nspf_xml:
-        nspf_matches = parse_nspf_xml(nspf_xml)
-        display_matches(nspf_matches, "让球胜平负 (NSPF) 赔率 - 最新数据")
-        for m in nspf_matches:
-            mid = m["match_id"]
-            all_matches.setdefault(mid, {
-                "match_id": mid,
-                "date": m["date"],
-                "dayofweek": m["dayofweek"],
-                "match_num": m["match_num"],
-                "league": m["league"],
-                "home_team": m["home_team"],
-                "away_team": m["away_team"],
-            })
-            all_matches[mid]["nspf_odds"] = m["odds"]
-            all_matches[mid]["nspf_update_time"] = m["update_time"]
-    else:
-        print("获取让球胜平负数据失败")
+    parsed = parse_matches(json_data)
+    spf_matches = parsed["spf"]
+    nspf_matches = parsed["nspf"]
 
-    # 合并保存为单个文件（onsale_spf.json），包含所有日期的比赛
+    # 显示胜平负
+    display_matches(spf_matches, "胜平负 (SPF/HAD) 赔率 - 最新数据")
+
+    # 显示让球胜平负（包含让球数）
+    print("\n")
+    display_matches(nspf_matches, "让球胜平负 (NSPF/HHAD) 赔率 - 最新数据", show_goal_line=True)
+
+    # 合并所有比赛（去重），包含spf和nspf赔率
+    all_matches = {}
+    for m in spf_matches:
+        mid = m["match_id"]
+        all_matches.setdefault(mid, {
+            "match_id": mid,
+            "date": m["date"],
+            "match_time": m["match_time"],
+            "dayofweek": m["dayofweek"],
+            "match_num": m["match_num"],
+            "match_num_str": m["match_num_str"],
+            "league": m["league"],
+            "league_id": m.get("league_id", ""),
+            "home_team": m["home_team"],
+            "away_team": m["away_team"],
+            "home_team_id": m.get("home_team_id", ""),
+            "away_team_id": m.get("away_team_id", ""),
+            "match_status": m["match_status"],
+        })
+        all_matches[mid]["spf_odds"] = m["odds"]
+        all_matches[mid]["spf_update_time"] = m["update_time"]
+
+    for m in nspf_matches:
+        mid = m["match_id"]
+        all_matches.setdefault(mid, {
+            "match_id": mid,
+            "date": m["date"],
+            "match_time": m["match_time"],
+            "dayofweek": m["dayofweek"],
+            "match_num": m["match_num"],
+            "match_num_str": m["match_num_str"],
+            "league": m["league"],
+            "league_id": m.get("league_id", ""),
+            "home_team": m["home_team"],
+            "away_team": m["away_team"],
+            "home_team_id": m.get("home_team_id", ""),
+            "away_team_id": m.get("away_team_id", ""),
+            "match_status": m["match_status"],
+        })
+        all_matches[mid]["nspf_odds"] = m["odds"]
+        all_matches[mid]["nspf_goal_line"] = m.get("goal_line", "")
+        all_matches[mid]["nspf_update_time"] = m["update_time"]
+
+    # 合并保存为单个文件（onsale_spf.json）
     merged = list(all_matches.values())
     merged.sort(key=lambda x: x["match_num"])
     saved_path = save_to_data_file(merged, "onsale_spf")
