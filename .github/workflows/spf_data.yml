@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      SCF_FUNCTION_URL: ${{ secrets.SCF_FUNCTION_URL }}
+      SCF_TOKEN: ${{ secrets.SCF_TOKEN }}
 
     steps:
     - name: 检出代码

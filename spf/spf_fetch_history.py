@@ -23,6 +23,7 @@ import time
 import requests
 import warnings
 from datetime import datetime, timezone, timedelta
+from daili.scf_proxy_util import proxy_get
 
 warnings.filterwarnings("ignore")
 
@@ -60,7 +61,7 @@ def fetch_api(api_path: str, params: dict, timeout: int = 20) -> dict:
     """调用 sporttery.cn API，返回JSON响应"""
     url = f"{API_BASE}/{api_path}"
     try:
-        resp = requests.get(url, params=params, headers=API_HEADERS, timeout=timeout)
+        resp = proxy_get(url, params=params, headers=API_HEADERS, timeout=timeout)
         if resp.status_code == 200:
             data = resp.json()
             if data.get("errorCode") == "0":

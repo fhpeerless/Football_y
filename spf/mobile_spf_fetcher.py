@@ -10,6 +10,7 @@ import json
 import os
 from datetime import datetime, timezone, timedelta
 from typing import Optional
+from daili.scf_proxy_util import proxy_get
 
 
 # 请求头（从HAR文件中提取）
@@ -32,7 +33,7 @@ API_URL = (
 def fetch_json(url: str, timeout: int = 15) -> Optional[dict]:
     """请求API获取JSON数据"""
     try:
-        resp = requests.get(url, headers=API_HEADERS, timeout=timeout)
+        resp = proxy_get(url, headers=API_HEADERS, timeout=timeout)
         if resp.status_code == 200:
             return resp.json()
         else:
