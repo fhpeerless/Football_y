@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-08 23:57:24",
+  "generate_time": "2026-07-09 09:57:08",
   "total_matches": 2,
   "matches": [
     {
@@ -254,7 +254,7 @@
                 "goalAvgCnt": "0.6",
                 "goalCnt": 3,
                 "goalProbability": "30%",
-                "injuryFlag": 0,
+                "injuryFlag": 1,
                 "personId": 632481,
                 "personName": "伊斯梅尔 塞巴里",
                 "playerPositionCode": "Midfielder",
@@ -377,7 +377,20 @@
         },
         "injury_suspension": {
           "away": {
-            "injuriesAndSuspensionsList": [],
+            "injuriesAndSuspensionsList": [
+              {
+                "appearanceCnt": 5,
+                "injuryFlag": 1,
+                "personId": 632481,
+                "personName": "伊斯梅尔 塞巴里",
+                "playerPositionCode": "Midfielder",
+                "playerPositionDesc": "中场",
+                "startedMatchCnt": 5,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 0,
+                "uniformNo": "11"
+              }
+            ],
             "sportteryTeamId": 424,
             "teamId": 1509,
             "teamShortName": "摩洛哥",
