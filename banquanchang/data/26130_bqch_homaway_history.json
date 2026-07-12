@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-09 23:28:55",
+  "generate_time": "2026-07-12 21:45:35",
   "period": "26130",
   "lottery_sale_endtime": "2026-07-12 22:00:00",
   "total_matches": 6,
@@ -12,7 +12,18 @@
       "league": "瑞超",
       "home_team": "布鲁马波卡纳",
       "away_team": "天狼星",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "8.25",
+        "ac": "16.00",
+        "ab": "20.00",
+        "ca": "12.50",
+        "cc": "7.60",
+        "cb": "4.15",
+        "ba": "40.00",
+        "bc": "16.00",
+        "bb": "2.08",
+        "updatetime": "2026-07-12 21:08:09"
+      },
       "history": {
         "home": {
           "team": "布鲁马波卡纳",
@@ -45,13 +56,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 602,
+              "awayTeamId": 0,
               "awayTeamShortName": "卡尔马",
               "fullCourtGoal": "0:2",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 888,
+              "homeTeamId": 0,
               "homeTeamShortName": "布鲁马波",
               "matchDate": "2026-06-27",
               "matchId": 2537283,
@@ -383,13 +394,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 888,
+              "awayTeamId": 0,
               "awayTeamShortName": "布鲁马波",
               "fullCourtGoal": "2:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 608,
+              "homeTeamId": 0,
               "homeTeamShortName": "埃夫斯堡",
               "matchDate": "2026-03-14",
               "matchId": 2509197,
@@ -409,13 +420,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 888,
+              "awayTeamId": 0,
               "awayTeamShortName": "布鲁马波",
               "fullCourtGoal": "2:0",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 352,
+              "homeTeamId": 0,
               "homeTeamShortName": "哈马比",
               "matchDate": "2026-03-09",
               "matchId": 2508483,
@@ -1517,7 +1528,18 @@
       "league": "瑞超",
       "home_team": "哥德堡盖斯",
       "away_team": "埃尔夫斯堡",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.70",
+        "ac": "15.00",
+        "ab": "38.00",
+        "ca": "4.25",
+        "cc": "5.10",
+        "cb": "9.50",
+        "ba": "23.00",
+        "bc": "15.00",
+        "bb": "7.00",
+        "updatetime": "2026-07-12 21:36:00"
+      },
       "history": {
         "home": {
           "team": "哥德堡盖斯",
@@ -2091,13 +2113,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 608,
+              "awayTeamId": 0,
               "awayTeamShortName": "埃夫斯堡",
               "fullCourtGoal": "0:0",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 616,
+              "homeTeamId": 0,
               "homeTeamShortName": "腓特烈",
               "matchDate": "2026-06-28",
               "matchId": 2537289,
@@ -2429,13 +2451,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 888,
+              "awayTeamId": 0,
               "awayTeamShortName": "布鲁马波",
               "fullCourtGoal": "2:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 608,
+              "homeTeamId": 0,
               "homeTeamShortName": "埃夫斯堡",
               "matchDate": "2026-03-14",
               "matchId": 2509197,
@@ -3049,7 +3071,18 @@
       "league": "挪超",
       "home_team": "布兰",
       "away_team": "斯达",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.75",
+        "ac": "18.00",
+        "ab": "45.00",
+        "ca": "4.20",
+        "cc": "8.50",
+        "cb": "16.00",
+        "ba": "21.00",
+        "bc": "18.00",
+        "bb": "12.00",
+        "updatetime": "2026-07-11 09:41:46"
+      },
       "history": {
         "home": {
           "team": "布兰",
@@ -4676,7 +4709,32 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 423033,
+              "personName": "S. Magnusson",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 545476,
+              "personName": "S. Opsahl",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "5"
+            }
+          ],
           "away": []
         }
       }
@@ -4689,7 +4747,18 @@
       "league": "挪超",
       "home_team": "罗森博格",
       "away_team": "克里斯蒂安松",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.05",
+        "ac": "17.00",
+        "ab": "35.00",
+        "ca": "4.30",
+        "cc": "6.75",
+        "cb": "12.00",
+        "ba": "22.00",
+        "bc": "17.00",
+        "bb": "9.00",
+        "updatetime": "2026-07-11 09:41:46"
+      },
       "history": {
         "home": {
           "team": "罗森博格",
@@ -6329,7 +6398,18 @@
       "league": "挪超",
       "home_team": "桑纳菲尤尔",
       "away_team": "汉坎",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.85",
+        "ac": "13.50",
+        "ab": "24.00",
+        "ca": "4.90",
+        "cc": "5.75",
+        "cb": "8.60",
+        "ba": "19.00",
+        "bc": "13.50",
+        "bb": "6.00",
+        "updatetime": "2026-07-12 21:30:45"
+      },
       "history": {
         "home": {
           "team": "桑纳菲尤尔",
@@ -7699,7 +7779,18 @@
       "league": "挪超",
       "home_team": "萨尔普斯堡",
       "away_team": "维京",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "7.50",
+        "ac": "13.50",
+        "ab": "15.00",
+        "ca": "11.50",
+        "cc": "8.00",
+        "cb": "4.60",
+        "ba": "24.00",
+        "bc": "13.50",
+        "bb": "2.30",
+        "updatetime": "2026-07-12 17:21:56"
+      },
       "history": {
         "home": {
           "team": "萨尔普斯堡",
@@ -9326,7 +9417,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 11,
+              "injuryFlag": 1,
+              "personId": 248514,
+              "personName": "B. Utvik",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 11,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "4"
+            }
+          ],
           "away": []
         }
       }
