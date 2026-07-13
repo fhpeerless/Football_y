@@ -1,6 +1,6 @@
 {
-  "generate_time": "2026-07-13 09:48:57",
-  "total_matches": 2,
+  "generate_time": "2026-07-13 13:59:05",
+  "total_matches": 3,
   "matches": [
     {
       "match_num": "1201",
@@ -1394,6 +1394,97 @@
           "teamId": 944,
           "teamShortName": "法国",
           "uniformTeamId": 748
+        }
+      }
+    },
+    {
+      "match_num": "3102",
+      "league": "世界杯",
+      "home_team": "英格兰",
+      "away_team": "阿根廷",
+      "date": "2026-07-16",
+      "home_opponents_count": 16,
+      "away_opponents_count": 19,
+      "common_opponent_count": 1,
+      "common_opponents": [
+        {
+          "team_name": "乌拉圭",
+          "home_vs_count": 1,
+          "away_vs_count": 1,
+          "home_vs_matches": [
+            {
+              "awayTeamFullCourtGoalCnt": "1",
+              "awayTeamId": 414,
+              "awayTeamShortName": "乌拉圭",
+              "fullCourtGoal": "1:1",
+              "halfTimeGoal": "0:0",
+              "homeMatchResult": "",
+              "homeTeamFullCourtGoalCnt": "1",
+              "homeTeamId": 370,
+              "homeTeamShortName": "英格兰",
+              "matchDate": "2026-03-28",
+              "matchId": 2480731,
+              "seasonId": 14311,
+              "sportteryAwayTeamId": 0,
+              "sportteryHomeTeamId": 0,
+              "sportteryMatchId": 2038645,
+              "sportteryTournamentId": 39,
+              "teamMatchResult": "draw",
+              "totalTeamFullCourtGoalCnt": 0,
+              "tournamentId": 1012,
+              "tournamentShortName": "国际赛",
+              "uniformAwayTeamId": 1198,
+              "uniformHomeTeamId": 1730,
+              "uniformLeagueId": 104,
+              "winningTeam": "draw"
+            }
+          ],
+          "away_vs_matches": [
+            {
+              "awayTeamFullCourtGoalCnt": "1",
+              "awayTeamId": 413,
+              "awayTeamShortName": "阿根廷",
+              "fullCourtGoal": "0:1",
+              "halfTimeGoal": "0:0",
+              "homeMatchResult": "",
+              "homeTeamFullCourtGoalCnt": "0",
+              "homeTeamId": 414,
+              "homeTeamShortName": "乌拉圭",
+              "matchDate": "2025-03-22",
+              "matchId": 1858319,
+              "seasonId": 9811,
+              "sportteryAwayTeamId": 0,
+              "sportteryHomeTeamId": 0,
+              "sportteryMatchId": 2030627,
+              "sportteryTournamentId": 73,
+              "teamMatchResult": "home",
+              "totalTeamFullCourtGoalCnt": 0,
+              "tournamentId": 1094,
+              "tournamentShortName": "世预赛",
+              "uniformAwayTeamId": 1363,
+              "uniformHomeTeamId": 1198,
+              "uniformLeagueId": 941,
+              "winningTeam": ""
+            }
+          ]
+        }
+      ],
+      "direct_match_info": null,
+      "match_time": "03:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 413,
+          "teamId": 132,
+          "teamShortName": "阿根廷",
+          "uniformTeamId": 1363
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 370,
+          "teamId": 774,
+          "teamShortName": "英格兰",
+          "uniformTeamId": 1730
         }
       }
     }
