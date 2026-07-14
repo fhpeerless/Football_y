@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-14 13:21:43",
+  "generate_time": "2026-07-14 15:47:26",
   "total_matches": 4,
   "matches": [
     {
@@ -372,16 +372,50 @@
       "away_team": "萨巴赫",
       "date": "2026-07-15",
       "home_opponents_count": 11,
-      "away_opponents_count": 0,
+      "away_opponents_count": 14,
       "common_opponent_count": 0,
       "common_opponents": [],
-      "direct_match_info": null,
+      "direct_match_info": {
+        "match_count": 1,
+        "home_wins": 1,
+        "away_wins": 0,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 6787,
+            "awayTeamShortName": "新圣徒",
+            "fullCourtGoal": "2:0",
+            "gmLeagueId": 0,
+            "halfTimeGoal": "0:0",
+            "homeMatchResult": "away",
+            "homeTeamFullCourtGoalCnt": "2",
+            "homeTeamId": 40739,
+            "homeTeamShortName": "萨巴赫",
+            "matchDate": "2026-07-08",
+            "matchId": 2531625,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 0,
+            "sportteryHomeTeamId": 1046309,
+            "sportteryMatchId": 0,
+            "sportteryTournamentId": 0,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 2,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 415,
+            "uniformHomeTeamId": 57467,
+            "uniformLeagueId": 30,
+            "winningTeam": "home"
+          }
+        ]
+      },
       "match_time": "01:30",
       "injury_suspension": {
         "away": {
           "injuriesAndSuspensionsList": [],
           "sportteryTeamId": 1046309,
-          "teamId": 0,
+          "teamId": 40739,
           "teamShortName": "萨巴赫",
           "uniformTeamId": 57467
         },
