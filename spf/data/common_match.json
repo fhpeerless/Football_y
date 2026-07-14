@@ -1,6 +1,6 @@
 {
-  "generate_time": "2026-07-14 09:26:05",
-  "total_matches": 2,
+  "generate_time": "2026-07-14 13:21:43",
+  "total_matches": 4,
   "matches": [
     {
       "match_num": "2101",
@@ -299,6 +299,98 @@
           "teamId": 944,
           "teamShortName": "法国",
           "uniformTeamId": 748
+        }
+      }
+    },
+    {
+      "match_num": "2201",
+      "league": "欧冠",
+      "home_team": "杰尔",
+      "away_team": "雷克维京",
+      "date": "2026-07-15",
+      "home_opponents_count": 16,
+      "away_opponents_count": 14,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 1,
+        "home_wins": 1,
+        "away_wins": 0,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 1110,
+            "awayTeamShortName": "杰尔",
+            "fullCourtGoal": "1:0",
+            "gmLeagueId": 69,
+            "halfTimeGoal": "0:0",
+            "homeMatchResult": "away",
+            "homeTeamFullCourtGoalCnt": "1",
+            "homeTeamId": 1139,
+            "homeTeamShortName": "雷克维京",
+            "matchDate": "2026-07-08",
+            "matchId": 2531651,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 1152,
+            "sportteryHomeTeamId": 1036991,
+            "sportteryMatchId": 2040461,
+            "sportteryTournamentId": 69,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 1,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 1075,
+            "uniformHomeTeamId": 3043,
+            "uniformLeagueId": 30,
+            "winningTeam": "home"
+          }
+        ]
+      },
+      "match_time": "01:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1036991,
+          "teamId": 1139,
+          "teamShortName": "雷克维京",
+          "uniformTeamId": 3043
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1152,
+          "teamId": 1110,
+          "teamShortName": "杰尔",
+          "uniformTeamId": 1075
+        }
+      }
+    },
+    {
+      "match_num": "2202",
+      "league": "欧冠",
+      "home_team": "新圣徒",
+      "away_team": "萨巴赫",
+      "date": "2026-07-15",
+      "home_opponents_count": 11,
+      "away_opponents_count": 0,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": null,
+      "match_time": "01:30",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1046309,
+          "teamId": 0,
+          "teamShortName": "萨巴赫",
+          "uniformTeamId": 57467
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 674,
+          "teamId": 6787,
+          "teamShortName": "新圣徒",
+          "uniformTeamId": 415
         }
       }
     },
