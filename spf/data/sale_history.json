@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-14 15:47:26",
+  "generate_time": "2026-07-14 21:08:04",
   "total_matches": 4,
   "matches": [
     {
@@ -2939,19 +2939,19 @@
           "homeTeamLogoPath": "//static.sporttery.cn/res_1_0/jcw/upload/mnjc/zq/674.png",
           "homeTeamShortName": "新圣徒",
           "matchDateTime": "2026-07-15 01:30",
-          "matchId": 0,
+          "matchId": 2531624,
           "matchNum": "周二202",
-          "phaseId": 0,
-          "phaseName": "",
-          "seasonId": 0,
-          "seasonName": "",
+          "phaseId": 48791,
+          "phaseName": "1st Qualifying Round",
+          "seasonId": 15574,
+          "seasonName": "2026/2027",
           "sportteryAwayTeamId": 1046309,
           "sportteryHomeTeamId": 674,
           "sportteryMatchId": 2040512,
           "sportteryTournamentId": 69,
           "tournamentCnName": "欧洲冠军联赛",
           "tournamentCnShortName": "欧冠",
-          "tournamentId": 0,
+          "tournamentId": 1096,
           "uniformAwayTeamId": 57467,
           "uniformHomeTeamId": 415,
           "uniformLeagueId": 30,
@@ -2999,7 +2999,7 @@
               "matchDate": "2026-07-08",
               "matchId": 2531625,
               "seasonId": 15574,
-              "sportteryAwayTeamId": 0,
+              "sportteryAwayTeamId": 674,
               "sportteryHomeTeamId": 1046309,
               "sportteryMatchId": 0,
               "sportteryTournamentId": 0,
@@ -3034,18 +3034,73 @@
           "gmLeagueId": 69,
           "homeTables": {},
           "leagueShortName": "欧冠",
-          "phaseId": 0,
-          "seasonId": 0,
-          "seasonName": "",
-          "tournamentId": 0,
+          "phaseId": 48791,
+          "seasonId": 15574,
+          "seasonName": "2026/2027",
+          "tournamentId": 1096,
           "uniformLeagueId": 30,
           "uniformMatchId": 2447638
         },
         "match_player": {
           "away": {
-            "playerList": [],
+            "playerList": [
+              {
+                "appearanceCnt": 1,
+                "assistAvgCnt": "1.0",
+                "assistCnt": 1,
+                "assistProbability": "50%",
+                "goalAvgCnt": "1.0",
+                "goalCnt": 1,
+                "goalProbability": "50%",
+                "injuryFlag": 0,
+                "personId": 213871,
+                "personName": "V. Simić",
+                "playerPositionCode": "Forward",
+                "playerPositionDesc": "前锋",
+                "startedMatchCnt": 1,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 0,
+                "uniformNo": "21"
+              },
+              {
+                "appearanceCnt": 1,
+                "assistAvgCnt": "0",
+                "assistCnt": 0,
+                "assistProbability": "0%",
+                "goalAvgCnt": "1.0",
+                "goalCnt": 1,
+                "goalProbability": "50%",
+                "injuryFlag": 0,
+                "personId": 479921,
+                "personName": "K.帕里斯",
+                "playerPositionCode": "Midfielder",
+                "playerPositionDesc": "中场",
+                "startedMatchCnt": 0,
+                "substituteMatchCnt": 1,
+                "suspensionFlag": 0,
+                "uniformNo": "11"
+              },
+              {
+                "appearanceCnt": 1,
+                "assistAvgCnt": "1.0",
+                "assistCnt": 1,
+                "assistProbability": "50%",
+                "goalAvgCnt": "0",
+                "goalCnt": 0,
+                "goalProbability": "0%",
+                "injuryFlag": 0,
+                "personId": 427520,
+                "personName": "普哈奇",
+                "playerPositionCode": "Defender",
+                "playerPositionDesc": "后卫",
+                "startedMatchCnt": 1,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 0,
+                "uniformNo": "27"
+              }
+            ],
             "sportteryTeamId": 1046309,
-            "teamId": 0,
+            "teamId": 40739,
             "teamShortName": "萨巴赫",
             "uniformTeamId": 57467
           },
@@ -3056,9 +3111,9 @@
             "teamShortName": "新圣徒",
             "uniformTeamId": 415
           },
-          "seasonId": 0,
-          "seasonName": "",
-          "tournamentId": 0,
+          "seasonId": 15574,
+          "seasonName": "2026/2027",
+          "tournamentId": 1096,
           "tournamentShortName": "欧冠",
           "uniformLeagueId": 30,
           "uniformMatchId": 2447638
@@ -3072,7 +3127,20 @@
             "uniformTeamId": 57467
           },
           "home": {
-            "injuriesAndSuspensionsList": [],
+            "injuriesAndSuspensionsList": [
+              {
+                "appearanceCnt": 1,
+                "injuryFlag": 1,
+                "personId": 623091,
+                "personName": "D. Corness",
+                "playerPositionCode": "Midfielder",
+                "playerPositionDesc": "中场",
+                "startedMatchCnt": 1,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 0,
+                "uniformNo": "4"
+              }
+            ],
             "sportteryTeamId": 674,
             "teamId": 6787,
             "teamShortName": "新圣徒",
@@ -3084,7 +3152,7 @@
             "matchList": [
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 674,
                 "awayTeamShortName": "新圣徒",
                 "fullCourtGoal": "2:0",
                 "halfTimeGoal": "0:0",
@@ -3624,7 +3692,7 @@
             "matchList": [
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 674,
                 "awayTeamShortName": "新圣徒",
                 "fullCourtGoal": "2:0",
                 "halfTimeGoal": "0:0",

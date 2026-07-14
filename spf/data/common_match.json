@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-14 15:47:26",
+  "generate_time": "2026-07-14 21:08:04",
   "total_matches": 4,
   "matches": [
     {
@@ -395,7 +395,7 @@
             "matchDate": "2026-07-08",
             "matchId": 2531625,
             "seasonId": 15574,
-            "sportteryAwayTeamId": 0,
+            "sportteryAwayTeamId": 674,
             "sportteryHomeTeamId": 1046309,
             "sportteryMatchId": 0,
             "sportteryTournamentId": 0,
@@ -420,7 +420,20 @@
           "uniformTeamId": 57467
         },
         "home": {
-          "injuriesAndSuspensionsList": [],
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 623091,
+              "personName": "D. Corness",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "4"
+            }
+          ],
           "sportteryTeamId": 674,
           "teamId": 6787,
           "teamShortName": "新圣徒",
