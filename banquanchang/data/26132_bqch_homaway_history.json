@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-14 22:03:56",
+  "generate_time": "2026-07-15 22:01:20",
   "period": "26132",
   "lottery_sale_endtime": "2026-07-16 22:00:00",
   "total_matches": 6,
@@ -12,7 +12,18 @@
       "league": "挪超",
       "home_team": "瓦勒伦加",
       "away_team": "奥勒松",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.15",
+        "ac": "16.00",
+        "ab": "30.00",
+        "ca": "4.60",
+        "cc": "7.50",
+        "cb": "11.00",
+        "ba": "18.00",
+        "bc": "16.00",
+        "bb": "7.50",
+        "updatetime": "2026-07-15 09:39:38"
+      },
       "history": {
         "home": {
           "team": "瓦勒伦加",
@@ -1652,7 +1663,18 @@
       "league": "巴甲",
       "home_team": "博塔弗戈",
       "away_team": "桑托斯",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.95",
+        "ac": "14.00",
+        "ab": "32.00",
+        "ca": "4.65",
+        "cc": "5.90",
+        "cb": "7.50",
+        "ba": "21.00",
+        "bc": "14.00",
+        "bb": "5.70",
+        "updatetime": "2026-07-15 09:39:38"
+      },
       "history": {
         "home": {
           "team": "博塔弗戈",
@@ -1795,7 +1817,7 @@
               "halfTimeGoal": "2:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 0,
+              "homeTeamId": 1947,
               "homeTeamShortName": "沙佩科",
               "matchDate": "2026-05-15",
               "matchId": 2513060,
@@ -1945,7 +1967,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 0,
+              "awayTeamId": 1947,
               "awayTeamShortName": "沙佩科",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "0:0",
@@ -3279,8 +3301,34 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 15,
+              "injuryFlag": 0,
+              "personId": 840147,
+              "personName": "Á. Montoro",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 11,
+              "substituteMatchCnt": 4,
+              "suspensionFlag": 1,
+              "uniformNo": "10"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 12,
+              "injuryFlag": 0,
+              "personId": 297700,
+              "personName": "加布里埃尔",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 9,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 1,
+              "uniformNo": "9"
+            }
+          ]
         }
       }
     },
@@ -3292,7 +3340,18 @@
       "league": "巴甲",
       "home_team": "维多利亚",
       "away_team": "瓦斯科达伽马",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.90",
+        "ac": "14.00",
+        "ab": "30.00",
+        "ca": "5.40",
+        "cc": "5.00",
+        "cb": "6.00",
+        "ba": "27.00",
+        "bc": "14.00",
+        "bb": "4.30",
+        "updatetime": "2026-07-15 09:39:38"
+      },
       "history": {
         "home": {
           "team": "维多利亚",
@@ -4062,7 +4121,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 6,
               "teamMatchResult": "draw",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -4757,7 +4816,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 15,
+              "injuryFlag": 0,
+              "personId": 395234,
+              "personName": "凯克",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 15,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "95"
+            }
+          ],
           "away": []
         }
       }
@@ -4770,7 +4842,18 @@
       "league": "美职",
       "home_team": "芝加哥火焰",
       "away_team": "温哥华白帽",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.20",
+        "ac": "12.00",
+        "ab": "17.00",
+        "ca": "6.50",
+        "cc": "7.25",
+        "cb": "6.00",
+        "ba": "19.00",
+        "bc": "12.00",
+        "bb": "3.60",
+        "updatetime": "2026-07-15 09:39:38"
+      },
       "history": {
         "home": {
           "team": "芝加哥火焰",
@@ -4817,7 +4900,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 50,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 124,
@@ -5155,7 +5238,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 50,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 124,
@@ -6221,7 +6304,18 @@
       "league": "美职",
       "home_team": "圣路易斯城",
       "away_team": "堪萨斯城竞技",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.90",
+        "ac": "16.00",
+        "ab": "33.00",
+        "ca": "4.30",
+        "cc": "9.00",
+        "cb": "14.00",
+        "ba": "17.50",
+        "bc": "16.00",
+        "bb": "10.00",
+        "updatetime": "2026-07-15 09:39:38"
+      },
       "history": {
         "home": {
           "team": "圣路易斯城",
@@ -7578,7 +7672,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 13,
+              "injuryFlag": 0,
+              "personId": 403761,
+              "personName": "C. Durkin",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 13,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "8"
+            }
+          ],
           "away": []
         }
       }
@@ -7591,7 +7698,18 @@
       "league": "美职",
       "home_team": "西雅图海湾人",
       "away_team": "波特兰伐木工",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.04",
+        "ac": "14.00",
+        "ab": "30.00",
+        "ca": "4.70",
+        "cc": "8.50",
+        "cb": "12.00",
+        "ba": "16.00",
+        "bc": "14.00",
+        "bb": "9.00",
+        "updatetime": "2026-07-15 09:39:38"
+      },
       "history": {
         "home": {
           "team": "西雅图海湾人",
@@ -8205,7 +8323,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 50,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "draw",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 124,
