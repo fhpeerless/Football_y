@@ -1,250 +1,7 @@
 {
-  "generate_time": "2026-07-15 23:20:30",
-  "total_matches": 10,
+  "generate_time": "2026-07-16 09:44:16",
+  "total_matches": 7,
   "matches": [
-    {
-      "match_num": "3102",
-      "league": "世界杯",
-      "home_team": "英格兰",
-      "away_team": "阿根廷",
-      "date": "2026-07-16",
-      "home_opponents_count": 16,
-      "away_opponents_count": 19,
-      "common_opponent_count": 1,
-      "common_opponents": [
-        {
-          "team_name": "乌拉圭",
-          "home_vs_count": 1,
-          "away_vs_count": 1,
-          "home_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 414,
-              "awayTeamShortName": "乌拉圭",
-              "fullCourtGoal": "1:1",
-              "halfTimeGoal": "0:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 370,
-              "homeTeamShortName": "英格兰",
-              "matchDate": "2026-03-28",
-              "matchId": 2480731,
-              "seasonId": 14311,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 2038645,
-              "sportteryTournamentId": 39,
-              "teamMatchResult": "draw",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 1012,
-              "tournamentShortName": "国际赛",
-              "uniformAwayTeamId": 1198,
-              "uniformHomeTeamId": 1730,
-              "uniformLeagueId": 104,
-              "winningTeam": "draw"
-            }
-          ],
-          "away_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 413,
-              "awayTeamShortName": "阿根廷",
-              "fullCourtGoal": "0:1",
-              "halfTimeGoal": "0:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 414,
-              "homeTeamShortName": "乌拉圭",
-              "matchDate": "2025-03-22",
-              "matchId": 1858319,
-              "seasonId": 9811,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 2030627,
-              "sportteryTournamentId": 73,
-              "teamMatchResult": "home",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 1094,
-              "tournamentShortName": "世预赛",
-              "uniformAwayTeamId": 1363,
-              "uniformHomeTeamId": 1198,
-              "uniformLeagueId": 941,
-              "winningTeam": ""
-            }
-          ]
-        }
-      ],
-      "direct_match_info": null,
-      "match_time": "03:00",
-      "injury_suspension": {
-        "away": {
-          "injuriesAndSuspensionsList": [
-            {
-              "appearanceCnt": 2,
-              "injuryFlag": 1,
-              "personId": 687426,
-              "personName": "N. Paz",
-              "playerPositionCode": "Forward",
-              "playerPositionDesc": "前锋",
-              "startedMatchCnt": 1,
-              "substituteMatchCnt": 1,
-              "suspensionFlag": 0,
-              "uniformNo": "18"
-            }
-          ],
-          "sportteryTeamId": 413,
-          "teamId": 132,
-          "teamShortName": "阿根廷",
-          "uniformTeamId": 1363
-        },
-        "home": {
-          "injuriesAndSuspensionsList": [
-            {
-              "appearanceCnt": 1,
-              "injuryFlag": 1,
-              "personId": 48010,
-              "personName": "亨德森",
-              "playerPositionCode": "Midfielder",
-              "playerPositionDesc": "中场",
-              "startedMatchCnt": 0,
-              "substituteMatchCnt": 1,
-              "suspensionFlag": 0,
-              "uniformNo": "14"
-            }
-          ],
-          "sportteryTeamId": 370,
-          "teamId": 774,
-          "teamShortName": "英格兰",
-          "uniformTeamId": 1730
-        }
-      }
-    },
-    {
-      "match_num": "3201",
-      "league": "欧冠",
-      "home_team": "比森",
-      "away_team": "克拉克斯",
-      "date": "2026-07-16",
-      "home_opponents_count": 17,
-      "away_opponents_count": 11,
-      "common_opponent_count": 0,
-      "common_opponents": [],
-      "direct_match_info": {
-        "match_count": 1,
-        "home_wins": 1,
-        "away_wins": 0,
-        "draws": 0,
-        "matches": [
-          {
-            "awayTeamFullCourtGoalCnt": "1",
-            "awayTeamId": 8847,
-            "awayTeamShortName": "比森",
-            "fullCourtGoal": "2:1",
-            "gmLeagueId": 0,
-            "halfTimeGoal": "1:0",
-            "homeMatchResult": "away",
-            "homeTeamFullCourtGoalCnt": "2",
-            "homeTeamId": 798,
-            "homeTeamShortName": "克拉克斯",
-            "matchDate": "2026-07-08",
-            "matchId": 2531649,
-            "seasonId": 15574,
-            "sportteryAwayTeamId": 2074002,
-            "sportteryHomeTeamId": 2524,
-            "sportteryMatchId": 0,
-            "sportteryTournamentId": 0,
-            "teamMatchResult": "",
-            "totalTeamFullCourtGoalCnt": 3,
-            "tournamentId": 1096,
-            "tournamentShortName": "欧冠",
-            "uniformAwayTeamId": 57470,
-            "uniformHomeTeamId": 1150,
-            "uniformLeagueId": 30,
-            "winningTeam": "home"
-          }
-        ]
-      },
-      "match_time": "02:15",
-      "injury_suspension": {
-        "away": {
-          "injuriesAndSuspensionsList": [],
-          "sportteryTeamId": 2524,
-          "teamId": 798,
-          "teamShortName": "克拉克斯",
-          "uniformTeamId": 1150
-        },
-        "home": {
-          "injuriesAndSuspensionsList": [],
-          "sportteryTeamId": 2074002,
-          "teamId": 8847,
-          "teamShortName": "比森",
-          "uniformTeamId": 57470
-        }
-      }
-    },
-    {
-      "match_num": "3202",
-      "league": "欧冠",
-      "home_team": "苏捷斯卡",
-      "away_team": "阿拉木图",
-      "date": "2026-07-16",
-      "home_opponents_count": 12,
-      "away_opponents_count": 16,
-      "common_opponent_count": 0,
-      "common_opponents": [],
-      "direct_match_info": {
-        "match_count": 1,
-        "home_wins": 1,
-        "away_wins": 0,
-        "draws": 0,
-        "matches": [
-          {
-            "awayTeamFullCourtGoalCnt": "1",
-            "awayTeamId": 1949,
-            "awayTeamShortName": "苏捷斯卡",
-            "fullCourtGoal": "2:1",
-            "gmLeagueId": 69,
-            "halfTimeGoal": "0:0",
-            "homeMatchResult": "away",
-            "homeTeamFullCourtGoalCnt": "2",
-            "homeTeamId": 1358,
-            "homeTeamShortName": "阿拉木图",
-            "matchDate": "2026-07-08",
-            "matchId": 2531650,
-            "seasonId": 15574,
-            "sportteryAwayTeamId": 2193,
-            "sportteryHomeTeamId": 2182,
-            "sportteryMatchId": 2040454,
-            "sportteryTournamentId": 69,
-            "teamMatchResult": "",
-            "totalTeamFullCourtGoalCnt": 3,
-            "tournamentId": 1096,
-            "tournamentShortName": "欧冠",
-            "uniformAwayTeamId": 57466,
-            "uniformHomeTeamId": 2185,
-            "uniformLeagueId": 30,
-            "winningTeam": "home"
-          }
-        ]
-      },
-      "match_time": "03:00",
-      "injury_suspension": {
-        "away": {
-          "injuriesAndSuspensionsList": [],
-          "sportteryTeamId": 2182,
-          "teamId": 1358,
-          "teamShortName": "阿拉木图",
-          "uniformTeamId": 2185
-        },
-        "home": {
-          "injuriesAndSuspensionsList": [],
-          "sportteryTeamId": 2193,
-          "teamId": 1949,
-          "teamShortName": "苏捷斯卡",
-          "uniformTeamId": 57466
-        }
-      }
-    },
     {
       "match_num": "4201",
       "league": "挪超",
@@ -3781,6 +3538,54 @@
               "substituteMatchCnt": 0,
               "suspensionFlag": 1,
               "uniformNo": "21"
+            },
+            {
+              "appearanceCnt": 5,
+              "injuryFlag": 1,
+              "personId": 476447,
+              "personName": "米哈伊洛维奇",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "10"
+            },
+            {
+              "appearanceCnt": 7,
+              "injuryFlag": 1,
+              "personId": 497208,
+              "personName": "D.克尔",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 0,
+              "uniformNo": "29"
+            },
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 536819,
+              "personName": "马修斯 佩雷拉",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "3"
+            },
+            {
+              "appearanceCnt": 6,
+              "injuryFlag": 1,
+              "personId": 777780,
+              "personName": "L. Stefanovic",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 5,
+              "suspensionFlag": 0,
+              "uniformNo": "76"
             }
           ],
           "sportteryTeamId": 1672,
@@ -3801,6 +3606,54 @@
               "substituteMatchCnt": 1,
               "suspensionFlag": 1,
               "uniformNo": "9"
+            },
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 1,
+              "personId": 510576,
+              "personName": "B.戴维斯",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 2,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "19"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 512199,
+              "personName": "F. Amaya",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "25"
+            },
+            {
+              "appearanceCnt": 12,
+              "injuryFlag": 1,
+              "personId": 600969,
+              "personName": "W. Carmona",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 10,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "16"
+            },
+            {
+              "appearanceCnt": 12,
+              "injuryFlag": 1,
+              "personId": 777804,
+              "personName": "O. Escobar",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 8,
+              "suspensionFlag": 0,
+              "uniformNo": "29"
             }
           ],
           "sportteryTeamId": 1671,
@@ -4667,14 +4520,100 @@
       "match_time": "08:30",
       "injury_suspension": {
         "away": {
-          "injuriesAndSuspensionsList": [],
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 12,
+              "injuryFlag": 1,
+              "personId": 38215,
+              "personName": "穆勒",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 9,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 0,
+              "uniformNo": "13"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 294545,
+              "personName": "阿德库贝",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "3"
+            },
+            {
+              "appearanceCnt": 11,
+              "injuryFlag": 1,
+              "personId": 474564,
+              "personName": "E.  Sabbi",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 4,
+              "suspensionFlag": 0,
+              "uniformNo": "11"
+            },
+            {
+              "appearanceCnt": 10,
+              "injuryFlag": 1,
+              "personId": 538032,
+              "personName": "C. Sabaly",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 653834,
+              "personName": "B.哈尔布尼",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "12"
+            }
+          ],
           "sportteryTeamId": 1553,
           "teamId": 17500,
           "teamShortName": "温哥华",
           "uniformTeamId": 33
         },
         "home": {
-          "injuriesAndSuspensionsList": [],
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 460207,
+              "personName": "André Franco",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "10"
+            },
+            {
+              "appearanceCnt": 7,
+              "injuryFlag": 1,
+              "personId": 721580,
+              "personName": "Leonardo Barroso",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "2"
+            }
+          ],
           "sportteryTeamId": 902,
           "teamId": 2273,
           "teamShortName": "芝加哥",
@@ -5880,6 +5819,30 @@
               "substituteMatchCnt": 0,
               "suspensionFlag": 1,
               "uniformNo": "8"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 478433,
+              "personName": "T. Ostrák",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            },
+            {
+              "appearanceCnt": 14,
+              "injuryFlag": 1,
+              "personId": 684003,
+              "personName": "D. Polvara",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 14,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "21"
             }
           ],
           "sportteryTeamId": 1042694,
@@ -7129,14 +7092,76 @@
       "match_time": "10:30",
       "injury_suspension": {
         "away": {
-          "injuriesAndSuspensionsList": [],
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 454311,
+              "personName": "O. Fernandez",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            },
+            {
+              "appearanceCnt": 7,
+              "injuryFlag": 1,
+              "personId": 600107,
+              "personName": "J. Caicedo",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "30"
+            }
+          ],
           "sportteryTeamId": 1420,
           "teamId": 17501,
           "teamShortName": "波特兰",
           "uniformTeamId": 472
         },
         "home": {
-          "injuriesAndSuspensionsList": [],
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 8,
+              "injuryFlag": 1,
+              "personId": 172780,
+              "personName": "P. Arriola",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 5,
+              "suspensionFlag": 0,
+              "uniformNo": "17"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 571469,
+              "personName": "P.德 拉 维加",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "10"
+            },
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 1,
+              "personId": 641030,
+              "personName": "N. Petkovic",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 2,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "44"
+            }
+          ],
           "sportteryTeamId": 1210,
           "teamId": 13024,
           "teamShortName": "西雅图",
