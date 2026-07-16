@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-15 22:01:20",
+  "generate_time": "2026-07-16 14:27:28",
   "period": "26132",
   "lottery_sale_endtime": "2026-07-16 22:00:00",
   "total_matches": 6,
@@ -3341,16 +3341,16 @@
       "home_team": "维多利亚",
       "away_team": "瓦斯科达伽马",
       "bqc_odds": {
-        "aa": "3.90",
+        "aa": "3.65",
         "ac": "14.00",
         "ab": "30.00",
-        "ca": "5.40",
-        "cc": "5.00",
-        "cb": "6.00",
-        "ba": "27.00",
+        "ca": "5.25",
+        "cc": "5.10",
+        "cb": "6.45",
+        "ba": "25.00",
         "bc": "14.00",
-        "bb": "4.30",
-        "updatetime": "2026-07-15 09:39:38"
+        "bb": "4.50",
+        "updatetime": "2026-07-16 11:37:09"
       },
       "history": {
         "home": {
@@ -4900,7 +4900,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 50,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 124,
@@ -5238,7 +5238,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 50,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 124,
@@ -6291,8 +6291,94 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 460207,
+              "personName": "André Franco",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "10"
+            },
+            {
+              "appearanceCnt": 7,
+              "injuryFlag": 1,
+              "personId": 721580,
+              "personName": "Leonardo Barroso",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "2"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 12,
+              "injuryFlag": 1,
+              "personId": 38215,
+              "personName": "穆勒",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 9,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 0,
+              "uniformNo": "13"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 294545,
+              "personName": "阿德库贝",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "3"
+            },
+            {
+              "appearanceCnt": 11,
+              "injuryFlag": 1,
+              "personId": 474564,
+              "personName": "E.  Sabbi",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 4,
+              "suspensionFlag": 0,
+              "uniformNo": "11"
+            },
+            {
+              "appearanceCnt": 10,
+              "injuryFlag": 1,
+              "personId": 538032,
+              "personName": "C. Sabaly",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 653834,
+              "personName": "B.哈尔布尼",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "12"
+            }
+          ]
         }
       }
     },
@@ -7684,6 +7770,30 @@
               "substituteMatchCnt": 0,
               "suspensionFlag": 1,
               "uniformNo": "8"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 478433,
+              "personName": "T. Ostrák",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            },
+            {
+              "appearanceCnt": 14,
+              "injuryFlag": 1,
+              "personId": 684003,
+              "personName": "D. Polvara",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 14,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "21"
             }
           ],
           "away": []
@@ -7699,16 +7809,16 @@
       "home_team": "西雅图海湾人",
       "away_team": "波特兰伐木工",
       "bqc_odds": {
-        "aa": "2.04",
-        "ac": "14.00",
+        "aa": "1.95",
+        "ac": "14.50",
         "ab": "30.00",
-        "ca": "4.70",
-        "cc": "8.50",
-        "cb": "12.00",
+        "ca": "4.60",
+        "cc": "8.75",
+        "cb": "13.50",
         "ba": "16.00",
-        "bc": "14.00",
-        "bb": "9.00",
-        "updatetime": "2026-07-15 09:39:38"
+        "bc": "14.50",
+        "bb": "9.75",
+        "updatetime": "2026-07-16 12:47:24"
       },
       "history": {
         "home": {
@@ -8323,7 +8433,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 50,
               "teamMatchResult": "draw",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 124,
@@ -9336,8 +9446,70 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 8,
+              "injuryFlag": 1,
+              "personId": 172780,
+              "personName": "P. Arriola",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 5,
+              "suspensionFlag": 0,
+              "uniformNo": "17"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 571469,
+              "personName": "P.德 拉 维加",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "10"
+            },
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 1,
+              "personId": 641030,
+              "personName": "N. Petkovic",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 2,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "44"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 454311,
+              "personName": "O. Fernandez",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            },
+            {
+              "appearanceCnt": 7,
+              "injuryFlag": 1,
+              "personId": 600107,
+              "personName": "J. Caicedo",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 7,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "30"
+            }
+          ]
         }
       }
     }
