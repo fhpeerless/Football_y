@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-16 14:29:14",
+  "generate_time": "2026-07-16 22:13:55",
   "period": "26134",
   "lottery_sale_endtime": "2026-07-18 21:30:00",
   "total_matches": 6,
@@ -48,38 +48,6 @@
             }
           ]
         },
-        "塞内加尔": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "法国",
-              "awaysxname": "塞内加尔",
-              "homescore": 3,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-06-17",
-              "tournamentShortName": "世界杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "塞内加尔"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "英格兰",
-              "awaysxname": "塞内加尔",
-              "homescore": 1,
-              "awayscore": 3,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2025-06-11",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "塞内加尔"
-            }
-          ]
-        },
         "克罗地亚": {
           "home_vs_opponent": [
             {
@@ -111,19 +79,51 @@
               "_opponent": "克罗地亚"
             }
           ]
+        },
+        "塞内加尔": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "法国",
+              "awaysxname": "塞内加尔",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-17",
+              "tournamentShortName": "世界杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "塞内加尔"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "英格兰",
+              "awaysxname": "塞内加尔",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2025-06-11",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "塞内加尔"
+            }
+          ]
         }
       },
       "bqc_odds": {
         "aa": "2.77",
         "ac": "13.00",
-        "ab": "24.00",
+        "ab": "22.00",
         "ca": "5.10",
-        "cc": "7.00",
+        "cc": "7.20",
         "cb": "8.50",
-        "ba": "17.00",
+        "ba": "15.00",
         "bc": "13.00",
-        "bb": "5.50",
-        "updatetime": "2026-07-16 09:35:50"
+        "bb": "5.80",
+        "updatetime": "2026-07-16 20:07:47"
       },
       "injury": {
         "home": [],
@@ -185,115 +185,3480 @@
       "away_team_fifa_points": 1828
     },
     {
-      "match_id": "0",
+      "match_id": "2040555",
       "matchnum": 2,
       "period": "26134",
       "league": "挪超",
       "home_team": "克里斯蒂安松",
       "away_team": "萨尔普斯堡",
       "date": "2026-07-18",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 11,
+      "common_opponent_data": {
+        "瓦勒伦加": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "克里斯蒂",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "瓦勒伦加"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "萨普斯堡",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-17",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "瓦勒伦加"
+            }
+          ]
+        },
+        "腓特烈": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "腓特烈",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "腓特烈"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "腓特烈",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-09",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "腓特烈"
+            },
+            {
+              "homesxname": "腓特烈",
+              "awaysxname": "萨普斯堡",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-09",
+              "tournamentShortName": "挪威杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "腓特烈"
+            }
+          ]
+        },
+        "汉坎": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "汉坎",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "汉坎"
+            },
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "汉坎",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-18",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "汉坎"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "汉坎",
+              "awaysxname": "萨普斯堡",
+              "homescore": 2,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-13",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "汉坎"
+            }
+          ]
+        },
+        "博德闪耀": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "博德闪耀",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-06",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "博德闪耀",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-16",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            }
+          ]
+        },
+        "布兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "克里斯蒂",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-03",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "布兰"
+            },
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "布兰",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-15",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "布兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "萨普斯堡",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "布兰"
+            }
+          ]
+        },
+        "罗森博格": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "克里斯蒂",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-12",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗森博格"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "萨普斯堡",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗森博格"
+            }
+          ]
+        },
+        "维京": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "维京",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "维京"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "维京",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-13",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维京"
+            },
+            {
+              "homesxname": "维京",
+              "awaysxname": "萨普斯堡",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-01",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维京"
+            }
+          ]
+        },
+        "桑纳菲": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "克里斯蒂",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "桑纳菲"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "萨普斯堡",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-03-23",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "桑纳菲"
+            }
+          ]
+        },
+        "利勒斯特": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "克里斯蒂",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-21",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "利勒斯特"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "萨普斯堡",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "利勒斯特"
+            }
+          ]
+        },
+        "莫尔德": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "克里斯蒂",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莫尔德"
+            },
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "克里斯蒂",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-06",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "莫尔德"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "莫尔德",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莫尔德"
+            }
+          ]
+        },
+        "特罗姆瑟": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "克里斯蒂",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-11",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "特罗姆瑟"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "特罗姆瑟",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2026-02-26",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2025-08-26",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2025-07-13",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2024-09-15",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2024-06-02",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 2,
+          "matchdate": "2022-11-07",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 2,
+          "awayscore": 3,
+          "homehalfscore": 0,
+          "awayhalfscore": 3,
+          "matchdate": "2022-04-11",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 1,
+          "awayscore": 3,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2021-10-24",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-05-28",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2020-12-03",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 4,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-08-23",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2019-11-11",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-05-13",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2018-08-27",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2018-07-02",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "克里斯蒂",
+          "awaysxname": "萨普斯堡",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2017-08-14",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "萨普斯堡",
+          "awaysxname": "克里斯蒂",
+          "homescore": 5,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2017-04-24",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040553",
       "matchnum": 3,
       "period": "26134",
       "league": "挪超",
       "home_team": "利勒斯特罗姆",
       "away_team": "奥斯陆KFUM",
       "date": "2026-07-18",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 13,
+      "common_opponent_data": {
+        "瓦勒伦加": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "利勒斯特",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "瓦勒伦加"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-04",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "瓦勒伦加"
+            }
+          ]
+        },
+        "奥勒松": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "奥勒松",
+              "awaysxname": "利勒斯特",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-16",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥勒松"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥勒松",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥勒松"
+            }
+          ]
+        },
+        "孔斯温": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "孔斯温",
+              "homescore": 2,
+              "awayscore": 4,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-24",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "孔斯温"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "孔斯温",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-13",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "孔斯温"
+            }
+          ]
+        },
+        "腓特烈": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "腓特烈",
+              "awaysxname": "利勒斯特",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-11",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "腓特烈"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "腓特烈",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-23",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "腓特烈"
+            },
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "腓特烈",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-20",
+              "tournamentShortName": "挪威杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "腓特烈"
+            },
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "腓特烈",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-17",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "腓特烈"
+            }
+          ]
+        },
+        "汉坎": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "汉坎",
+              "awaysxname": "利勒斯特",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "汉坎"
+            },
+            {
+              "homesxname": "汉坎",
+              "awaysxname": "利勒斯特",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "挪威杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "汉坎"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "汉坎",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "汉坎"
+            }
+          ]
+        },
+        "博德闪耀": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "博德闪耀",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-27",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            },
+            {
+              "homesxname": "博德闪耀",
+              "awaysxname": "利勒斯特",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-23",
+              "tournamentShortName": "挪威杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "博德闪耀"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "博德闪耀",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-07-12",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            },
+            {
+              "homesxname": "博德闪耀",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-23",
+              "tournamentShortName": "挪威杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            }
+          ]
+        },
+        "萨普斯堡": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "萨普斯堡",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨普斯堡"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "萨普斯堡",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-26",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨普斯堡"
+            }
+          ]
+        },
+        "罗森博格": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "利勒斯特",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗森博格"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "罗森博格",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗森博格"
+            }
+          ]
+        },
+        "斯特罗姆": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "斯特罗姆",
+              "homescore": 4,
+              "awayscore": 4,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-13",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "斯特罗姆"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "斯特罗姆",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-28",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯特罗姆"
+            }
+          ]
+        },
+        "桑纳菲": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "桑纳菲",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "桑纳菲"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "桑纳菲",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-08",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "桑纳菲"
+            }
+          ]
+        },
+        "莫尔德": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "利勒斯特",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-06",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "莫尔德"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 5,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-22",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莫尔德"
+            }
+          ]
+        },
+        "斯达": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "斯达",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-11",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯达"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "斯达",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯达"
+            }
+          ]
+        },
+        "特罗姆瑟": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "利勒斯特",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-16",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            },
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "利勒斯特",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-28",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "特罗姆瑟",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            },
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "特罗姆瑟",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-07",
+              "tournamentShortName": "挪威杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "特罗姆瑟"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "利勒斯特",
+          "awaysxname": "奥斯KFUM",
+          "homescore": 7,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2026-02-07",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "利勒斯特",
+          "awaysxname": "奥斯KFUM",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2025-06-26",
+          "tournamentShortName": "挪威杯",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "利勒斯特",
+          "awaysxname": "奥斯KFUM",
+          "homescore": 0,
+          "awayscore": 5,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2025-02-28",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "奥斯KFUM",
+          "awaysxname": "利勒斯特",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2024-08-31",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "利勒斯特",
+          "awaysxname": "奥斯KFUM",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2024-06-28",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "利勒斯特",
+          "awaysxname": "奥斯KFUM",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2024-03-09",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "利勒斯特",
+          "awaysxname": "奥斯KFUM",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2020-12-03",
+          "tournamentShortName": "挪甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "奥斯KFUM",
+          "awaysxname": "利勒斯特",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2020-08-12",
+          "tournamentShortName": "挪甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "奥斯KFUM",
+          "awaysxname": "利勒斯特",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-06-20",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "奥斯KFUM",
+          "awaysxname": "利勒斯特",
+          "homescore": 1,
+          "awayscore": 3,
+          "homehalfscore": 0,
+          "awayhalfscore": 2,
+          "matchdate": "2018-05-10",
+          "tournamentShortName": "挪威杯",
+          "result1": "负",
+          "result2": "胜"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040554",
       "matchnum": 4,
       "period": "26134",
       "league": "挪超",
       "home_team": "斯达",
       "away_team": "罗森博格",
       "date": "2026-07-18",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 13,
+      "common_opponent_data": {
+        "瓦勒伦加": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "斯达",
+              "awaysxname": "瓦勒伦加",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "瓦勒伦加"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "瓦勒伦加",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-22",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "瓦勒伦加"
+            },
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "罗森博格",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-27",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "瓦勒伦加"
+            }
+          ]
+        },
+        "奥勒松": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "斯达",
+              "awaysxname": "奥勒松",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-21",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥勒松"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "奥勒松",
+              "homescore": 2,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥勒松"
+            }
+          ]
+        },
+        "博德闪耀": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "博德闪耀",
+              "awaysxname": "斯达",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-04",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "博德闪耀"
+            },
+            {
+              "homesxname": "斯达",
+              "awaysxname": "博德闪耀",
+              "homescore": 1,
+              "awayscore": 4,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-21",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            },
+            {
+              "homesxname": "博德闪耀",
+              "awaysxname": "斯达",
+              "homescore": 5,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-01",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "博德闪耀"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "博德闪耀",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            }
+          ]
+        },
+        "萨普斯堡": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "斯达",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-06",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "萨普斯堡"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "萨普斯堡",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨普斯堡"
+            }
+          ]
+        },
+        "布兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "斯达",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-12",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "布兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "布兰",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-26",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "布兰"
+            }
+          ]
+        },
+        "布莱尼": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "布莱尼",
+              "awaysxname": "斯达",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-28",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "布莱尼"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布莱尼",
+              "awaysxname": "罗森博格",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "挪威杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "布莱尼"
+            }
+          ]
+        },
+        "维京": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "斯达",
+              "homescore": 6,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 3,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维京"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "罗森博格",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-02",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维京"
+            }
+          ]
+        },
+        "桑纳菲": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "斯达",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "桑纳菲"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "罗森博格",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-18",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "桑纳菲"
+            }
+          ]
+        },
+        "利勒斯特": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利勒斯特",
+              "awaysxname": "斯达",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-11",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "利勒斯特"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "利勒斯特",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "利勒斯特"
+            }
+          ]
+        },
+        "莫尔德": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "斯达",
+              "awaysxname": "莫尔德",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-20",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "莫尔德"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "莫尔德",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-05",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莫尔德"
+            },
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "罗森博格",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-15",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莫尔德"
+            }
+          ]
+        },
+        "特罗姆瑟": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "斯达",
+              "awaysxname": "特罗姆瑟",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            },
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "斯达",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-27",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "特罗姆瑟"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "罗森博格",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-07",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "特罗姆瑟"
+            }
+          ]
+        },
+        "奥斯KFUM": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "斯达",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥斯KFUM"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "罗森博格",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥斯KFUM"
+            }
+          ]
+        },
+        "直接对战(斯达 vs 罗森博格)": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "斯达",
+              "awaysxname": "罗森博格",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-25",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "罗森博格"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "斯达",
+              "awaysxname": "罗森博格",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-25",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "斯达"
+            }
+          ],
+          "_is_direct_match": true
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2026-02-25",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-11-02",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-07-17",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2018-11-12",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2018-11-02",
+          "tournamentShortName": "挪威杯",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2018-04-23",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2016-09-19",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2016-05-13",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 0,
+          "awayscore": 4,
+          "homehalfscore": 0,
+          "awayhalfscore": 3,
+          "matchdate": "2015-10-05",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2015-05-01",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 2,
+          "awayhalfscore": 2,
+          "matchdate": "2014-08-11",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 2,
+          "awayscore": 4,
+          "homehalfscore": 0,
+          "awayhalfscore": 2,
+          "matchdate": "2014-06-13",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2013-10-20",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2013-04-13",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 4,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2011-09-20",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2011-05-20",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "斯达",
+          "awaysxname": "罗森博格",
+          "homescore": 2,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2010-08-30",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 4,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 2,
+          "matchdate": "2010-08-15",
+          "tournamentShortName": "挪威杯",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 3,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 2,
+          "matchdate": "2010-03-23",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "罗森博格",
+          "awaysxname": "斯达",
+          "homescore": 2,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2009-10-05",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040558",
       "matchnum": 5,
       "period": "26134",
       "league": "挪超",
       "home_team": "莫尔德",
       "away_team": "布兰",
       "date": "2026-07-19",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 11,
+      "common_opponent_data": {
+        "奥勒松": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "奥勒松",
+              "awaysxname": "莫尔德",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-07-11",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥勒松"
+            },
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "奥勒松",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-27",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥勒松"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥勒松",
+              "awaysxname": "布兰",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-21",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥勒松"
+            },
+            {
+              "homesxname": "布兰",
+              "awaysxname": "奥勒松",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-23",
+              "tournamentShortName": "挪威杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥勒松"
+            }
+          ]
+        },
+        "汉坎": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "汉坎",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "汉坎"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "汉坎",
+              "awaysxname": "布兰",
+              "homescore": 1,
+              "awayscore": 5,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-06",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "汉坎"
+            }
+          ]
+        },
+        "博德闪耀": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "博德闪耀",
+              "homescore": 1,
+              "awayscore": 4,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-28",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            },
+            {
+              "homesxname": "博德闪耀",
+              "awaysxname": "莫尔德",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-05",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            },
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "博德闪耀",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-06",
+              "tournamentShortName": "挪威杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "博德闪耀",
+              "awaysxname": "布兰",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-24",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "博德闪耀"
+            },
+            {
+              "homesxname": "博德闪耀",
+              "awaysxname": "布兰",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "挪威杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博德闪耀"
+            }
+          ]
+        },
+        "萨普斯堡": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "莫尔德",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨普斯堡"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "萨普斯堡",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "萨普斯堡"
+            }
+          ]
+        },
+        "克里斯蒂": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "克里斯蒂",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "克里斯蒂"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "克里斯蒂",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-03",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "克里斯蒂"
+            },
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "布兰",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-15",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "克里斯蒂"
+            }
+          ]
+        },
+        "罗森博格": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "莫尔德",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-05",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗森博格"
+            },
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "罗森博格",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-15",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗森博格"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗森博格",
+              "awaysxname": "布兰",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-26",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "罗森博格"
+            }
+          ]
+        },
+        "维京": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "莫尔德",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-22",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维京"
+            },
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "维京",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-17",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "维京"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "布兰",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维京"
+            }
+          ]
+        },
+        "桑纳菲": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "桑纳菲",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "桑纳菲"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "桑纳菲",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-13",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "桑纳菲"
+            }
+          ]
+        },
+        "斯达": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "斯达",
+              "awaysxname": "莫尔德",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-20",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "斯达"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "斯达",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-12",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯达"
+            }
+          ]
+        },
+        "特罗姆瑟": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "莫尔德",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "特罗姆瑟"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "布兰",
+              "homescore": 0,
+              "awayscore": 5,
+              "homehalfscore": 0,
+              "awayhalfscore": 3,
+              "matchdate": "2026-04-30",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            },
+            {
+              "homesxname": "布兰",
+              "awaysxname": "特罗姆瑟",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-23",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            }
+          ]
+        },
+        "奥斯KFUM": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 5,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-22",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥斯KFUM"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "奥斯KFUM",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥斯KFUM"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2025-11-23",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 0,
+          "awayscore": 3,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2025-05-30",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2024-11-24",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 1,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2024-05-27",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2024-03-19",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2023-10-22",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2023-07-10",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-11-29",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 3,
+          "awayhalfscore": 0,
+          "matchdate": "2021-05-17",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-02-04",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2020-10-05",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2020-08-11",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-06-08",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-10-07",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-07-01",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 5,
+          "awayscore": 1,
+          "homehalfscore": 3,
+          "awayhalfscore": 1,
+          "matchdate": "2018-08-13",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 0,
+          "awayscore": 4,
+          "homehalfscore": 0,
+          "awayhalfscore": 4,
+          "matchdate": "2018-07-02",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "莫尔德",
+          "awaysxname": "布兰",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2017-10-16",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 4,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2017-05-14",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "布兰",
+          "awaysxname": "莫尔德",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2016-10-23",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040559",
       "matchnum": 6,
       "period": "26134",
       "league": "挪超",
       "home_team": "维京",
       "away_team": "桑纳菲尤尔",
       "date": "2026-07-19",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 12,
+      "common_opponent_data": {
+        "瓦勒伦加": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "维京",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-06",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "瓦勒伦加"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "桑纳菲",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "瓦勒伦加"
+            },
+            {
+              "homesxname": "瓦勒伦加",
+              "awaysxname": "桑纳菲",
+              "homescore": 5,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-06",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "瓦勒伦加"
+            }
+          ]
+        },
+        "奥勒松": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "奥勒松",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-19",
+              "tournamentShortName": "挪威杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥勒松"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "奥勒松",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "奥勒松"
+            }
+          ]
+        },
+        "汉坎": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "汉坎",
+              "awaysxname": "维京",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-14",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "汉坎"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "汉坎",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-12",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "汉坎"
+            }
+          ]
+        },
+        "腓特烈": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "腓特烈",
+              "awaysxname": "维京",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-25",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "腓特烈"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "腓特烈",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-26",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "腓特烈"
+            }
+          ]
+        },
+        "萨普斯堡": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "萨普斯堡",
+              "awaysxname": "维京",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-13",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨普斯堡"
+            },
+            {
+              "homesxname": "维京",
+              "awaysxname": "萨普斯堡",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-01",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨普斯堡"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "萨普斯堡",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-03-23",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "萨普斯堡"
+            }
+          ]
+        },
+        "克里斯蒂": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克里斯蒂",
+              "awaysxname": "维京",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "克里斯蒂"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "克里斯蒂",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "克里斯蒂"
+            }
+          ]
+        },
+        "布兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "布兰",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "布兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布兰",
+              "awaysxname": "桑纳菲",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-13",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "布兰"
+            }
+          ]
+        },
+        "罗森博格": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "罗森博格",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-02",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗森博格"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "罗森博格",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-18",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "罗森博格"
+            }
+          ]
+        },
+        "莫尔德": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "莫尔德",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-22",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莫尔德"
+            },
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "维京",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-17",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "莫尔德"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "莫尔德",
+              "awaysxname": "桑纳菲",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莫尔德"
+            }
+          ]
+        },
+        "斯达": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "维京",
+              "awaysxname": "斯达",
+              "homescore": 6,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 3,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯达"
+            },
+            {
+              "homesxname": "维京",
+              "awaysxname": "斯达",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-06",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯达"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "桑纳菲",
+              "awaysxname": "斯达",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯达"
+            }
+          ]
+        },
+        "特罗姆瑟": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "维京",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-20",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "特罗姆瑟"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "特罗姆瑟",
+              "awaysxname": "桑纳菲",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-26",
+              "tournamentShortName": "挪超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "特罗姆瑟"
+            }
+          ]
+        },
+        "奥斯KFUM": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "维京",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥斯KFUM"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "奥斯KFUM",
+              "awaysxname": "桑纳菲",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-08",
+              "tournamentShortName": "挪超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "奥斯KFUM"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2025-08-11",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2025-05-17",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 2,
+          "awayhalfscore": 2,
+          "matchdate": "2024-11-03",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 0,
+          "awayscore": 3,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2024-05-20",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 4,
+          "awayscore": 3,
+          "homehalfscore": 2,
+          "awayhalfscore": 2,
+          "matchdate": "2023-09-24",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2023-05-13",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2022-08-08",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2022-06-20",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-10-03",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2021-06-19",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2020-12-07",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-07-02",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-02-18",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2017-09-11",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2017-05-08",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2015-08-30",
+          "tournamentShortName": "挪超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2015-05-01",
+          "tournamentShortName": "挪超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2010-08-02",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "桑纳菲",
+          "awaysxname": "维京",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2010-05-17",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "维京",
+          "awaysxname": "桑纳菲",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2009-08-31",
+          "tournamentShortName": "挪超",
+          "result1": "平",
+          "result2": "平"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
