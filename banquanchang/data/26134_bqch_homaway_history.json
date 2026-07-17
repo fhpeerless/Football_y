@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-16 22:13:20",
+  "generate_time": "2026-07-17 23:20:22",
   "period": "26134",
   "lottery_sale_endtime": "2026-07-18 21:30:00",
   "total_matches": 6,
@@ -2778,7 +2778,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 12,
+              "injuryFlag": 1,
+              "personId": 248514,
+              "personName": "B. Utvik",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 12,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "4"
+            }
+          ]
         }
       }
     },
