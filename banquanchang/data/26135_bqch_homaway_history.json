@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-17 23:20:51",
+  "generate_time": "2026-07-18 21:39:35",
   "period": "26135",
   "lottery_sale_endtime": "2026-07-19 22:00:00",
   "total_matches": 6,
@@ -1150,7 +1150,18 @@
       "league": "瑞超",
       "home_team": "埃尔夫斯堡",
       "away_team": "天狼星",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "5.60",
+        "ac": "15.00",
+        "ab": "22.00",
+        "ca": "8.00",
+        "cc": "6.25",
+        "cb": "4.65",
+        "ba": "30.00",
+        "bc": "15.00",
+        "bb": "2.75",
+        "updatetime": "2026-07-18 09:33:59"
+      },
       "history": {
         "home": {
           "team": "埃尔夫斯堡",
@@ -2790,7 +2801,18 @@
       "league": "瑞超",
       "home_team": "哈尔姆斯塔德",
       "away_team": "赫根",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "8.00",
+        "ac": "16.00",
+        "ab": "20.00",
+        "ca": "11.00",
+        "cc": "7.00",
+        "cb": "4.30",
+        "ba": "40.00",
+        "bc": "16.00",
+        "bb": "2.16",
+        "updatetime": "2026-07-18 09:33:59"
+      },
       "history": {
         "home": {
           "team": "哈尔姆斯塔德",
@@ -4418,7 +4440,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 403682,
+              "personName": "L. Väisänen",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "15"
+            }
+          ]
         }
       }
     },
@@ -4430,7 +4465,18 @@
       "league": "瑞超",
       "home_team": "哈马比",
       "away_team": "代格福什",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.55",
+        "ac": "23.00",
+        "ab": "70.00",
+        "ca": "3.75",
+        "cc": "9.50",
+        "cb": "23.00",
+        "ba": "24.00",
+        "bc": "23.00",
+        "bb": "20.00",
+        "updatetime": "2026-07-18 09:33:59"
+      },
       "history": {
         "home": {
           "team": "哈马比",
@@ -5452,7 +5498,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 1110,
+              "homeTeamId": 1026400,
               "homeTeamShortName": "韦斯特罗",
               "matchDate": "2026-02-14",
               "matchId": 2490752,
@@ -5746,7 +5792,18 @@
       "league": "瑞超",
       "home_team": "卡尔马",
       "away_team": "马尔默",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.65",
+        "ac": "14.00",
+        "ab": "27.00",
+        "ca": "5.50",
+        "cc": "6.00",
+        "cb": "6.25",
+        "ba": "24.00",
+        "bc": "14.00",
+        "bb": "4.00",
+        "updatetime": "2026-07-18 09:33:59"
+      },
       "history": {
         "home": {
           "team": "卡尔马",
@@ -6143,13 +6200,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 0,
+              "awayTeamId": 602,
               "awayTeamShortName": "卡尔马",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 606,
               "homeTeamShortName": "马尔默",
               "matchDate": "2026-03-20",
               "matchId": 2511286,
@@ -6352,7 +6409,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 0,
+              "homeTeamId": 606,
               "homeTeamShortName": "马尔默",
               "matchDate": "2026-06-26",
               "matchId": 2523680,
@@ -6638,7 +6695,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 606,
               "homeTeamShortName": "马尔默",
               "matchDate": "2026-03-26",
               "matchId": 2509202,
@@ -6658,13 +6715,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 0,
+              "awayTeamId": 602,
               "awayTeamShortName": "卡尔马",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 606,
               "homeTeamShortName": "马尔默",
               "matchDate": "2026-03-20",
               "matchId": 2511286,
@@ -6684,13 +6741,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 0,
+              "awayTeamId": 606,
               "awayTeamShortName": "马尔默",
               "fullCourtGoal": "4:0",
               "halfTimeGoal": "2:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 0,
+              "homeTeamId": 974,
               "homeTeamShortName": "米亚尔比",
               "matchDate": "2026-03-14",
               "matchId": 2508517,
@@ -6794,7 +6851,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 0,
+              "homeTeamId": 606,
               "homeTeamShortName": "马尔默",
               "matchDate": "2026-02-10",
               "matchId": 2497228,
@@ -6845,8 +6902,8 @@
             "matchDate": "2026-03-20",
             "matchId": 2511286,
             "seasonId": 14345,
-            "sportteryAwayTeamId": 0,
-            "sportteryHomeTeamId": 0,
+            "sportteryAwayTeamId": 602,
+            "sportteryHomeTeamId": 606,
             "sportteryMatchId": 0,
             "sportteryTournamentId": 0,
             "teamMatchResult": "",
@@ -7386,7 +7443,18 @@
       "league": "瑞超",
       "home_team": "厄尔格里特",
       "away_team": "佐加顿斯",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "11.00",
+        "ac": "19.00",
+        "ab": "20.00",
+        "ca": "16.00",
+        "cc": "9.50",
+        "cb": "4.10",
+        "ba": "55.00",
+        "bc": "19.00",
+        "bb": "1.73",
+        "updatetime": "2026-07-18 09:33:59"
+      },
       "history": {
         "home": {
           "team": "厄尔格里特",
