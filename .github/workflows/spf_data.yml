@@ -39,6 +39,13 @@ jobs:
         python mobile_spf_fetcher.py
         echo "=== 数据获取完成 ==="
 
+    - name: 获取半全场赔率数据
+      working-directory: ./spf/banqch_spf
+      run: |
+        echo "=== 获取半全场赔率数据 ==="
+        python mobile_bqc_fetcher.py
+        echo "=== 数据获取完成 ==="
+
     - name: 爬取历史数据
       working-directory: ./spf
       run: |
@@ -60,7 +67,7 @@ jobs:
 
         git add spf/data/
 
-        git commit -m "更新SPF赔率数据/共同对手数据" || {
+        git commit -m "更新SPF/BQC赔率数据及共同对手数据" || {
           echo "没有更改可提交，跳过push步骤"
           exit 0
         }
