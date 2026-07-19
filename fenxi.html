@@ -787,6 +787,27 @@
             </div>
         </div>
         
+        <!-- 实时赔率 -->
+        <div class="spf-panel" style="margin-top: 30px;">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> 实时赔率 <span style="font-size: 0.6em; opacity: 0.5;">(来自 sporttery.cn)</span></h2>
+            <div class="form-group">
+                <div class="btn-group" style="margin-top: 0;">
+                    <button id="loadOddsBtn">
+                        <i class="fas fa-sync-alt"></i> 加载赔率数据
+                    </button>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="oddsProgressFill"></div>
+            </div>
+            <div class="status" id="oddsStatusMessage"></div>
+        </div>
+        <div id="oddsSection" style="display: none;">
+            <div class="spf-panel">
+                <div id="oddsBody"></div>
+            </div>
+        </div>
+        
         <!-- 14场分析页面（原内容） -->
         <div id="tab-f14" class="tab-content">
         <div class="main-content">
@@ -2022,6 +2043,123 @@
         
         // 页面加载后自动加载共同对手数据
         loadCommonMatchData();
+
+        // ========== SPF 实时赔率逻辑 ==========
+        const loadOddsBtn = document.getElementById('loadOddsBtn');
+        const oddsStatusMessage = document.getElementById('oddsStatusMessage');
+        const oddsProgressFill = document.getElementById('oddsProgressFill');
+        const oddsSection = document.getElementById('oddsSection');
+        const oddsBody = document.getElementById('oddsBody');
+
+        function showOddsStatus(message, type = 'info') {
+            oddsStatusMessage.textContent = message;
+            oddsStatusMessage.className = `status ${type}`;
+            setTimeout(() => {
+                oddsStatusMessage.className = 'status';
+            }, type === 'error' ? 5000 : 3000);
+        }
+
+        function updateOddsProgress(percent) {
+            oddsProgressFill.style.width = `${percent}%`;
+        }
+
+        // 赔率变化箭头渲染
+        function renderOddsArrow(value) {
+            if (!value) return '-';
+            const num = parseFloat(value);
+            return num.toFixed(2);
+        }
+
+        async function loadOddsData() {
+            showOddsStatus('正在加载赔率数据...', 'info');
+            updateOddsProgress(20);
+
+            const url = `./spf/data/onsale_spf.json?t=${Date.now()}`;
+            try {
+                const resp = await fetch(url);
+                if (!resp.ok) {
+                    throw new Error('onsale_spf.json 不存在，请先运行 mobile_spf_fetcher.py 获取赔率');
+                }
+                const data = await resp.json();
+                if (!data || data.length === 0) {
+                    throw new Error('赔率数据为空');
+                }
+                updateOddsProgress(60);
+
+                // 渲染赔率表格
+                let html = `<p style="margin-bottom: 15px; opacity: 0.8;">共有 ${data.length} 场比赛 <span style="font-size: 0.85em; opacity: 0.6;">(数据来源: sporttery.cn 竞彩官方)</span></p>`;
+                html += `
+                <div style="overflow-x: auto;">
+                    <table style="width:100%; border-collapse: collapse; font-size: 0.85em;" class="spf-table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; min-width: 40px;">场次</th>
+                                <th style="text-align: left; min-width: 60px;">联赛</th>
+                                <th style="text-align: center; min-width: 65px;">主队</th>
+                                <th style="text-align: center; min-width: 65px;">客队</th>
+                                <th style="text-align: center; min-width: 55px; background: rgba(76,175,80,0.08);">胜</th>
+                                <th style="text-align: center; min-width: 55px; background: rgba(255,152,0,0.08);">平</th>
+                                <th style="text-align: center; min-width: 55px; background: rgba(244,67,54,0.08);">负</th>
+                                <th style="text-align: center; min-width: 40px; background: rgba(156,39,176,0.06);">让球</th>
+                                <th style="text-align: center; min-width: 50px; background: rgba(76,175,80,0.06);">让胜</th>
+                                <th style="text-align: center; min-width: 50px; background: rgba(255,152,0,0.06);">让平</th>
+                                <th style="text-align: center; min-width: 50px; background: rgba(244,67,54,0.06);">让负</th>
+                                <th style="text-align: center; min-width: 75px;">开赛时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+                data.forEach((m, idx) => {
+                    const spf = m.spf_odds || {};
+                    const nspf = m.nspf_odds || {};
+                    const goalLine = m.nspf_goal_line || '';
+                    const matchDt = m.match_time ? `${m.date} ${m.match_time}` : m.date || '';
+                    
+                    // 对赔率着色 (赔率越低颜色越深)
+                    const getOddsStyle = (val, isLow = true) => {
+                        if (!val) return '';
+                        const num = parseFloat(val);
+                        if (!num) return '';
+                        if (num <= 1.80) return 'color: #ff5722; font-weight: 700;';
+                        if (num <= 2.50) return 'color: #ff9800; font-weight: 600;';
+                        if (num <= 4.00) return 'color: #8bc34a;';
+                        if (num <= 6.00) return 'color: #9e9e9e;';
+                        return 'color: #757575;';
+                    };
+
+                    html += `<tr>
+                        <td style="text-align: center; font-weight: 600;">${m.match_num || ''}</td>
+                        <td style="text-align: left;">${m.league || ''}</td>
+                        <td style="text-align: center; color: #00bcd4; font-weight: 500;">${m.home_team || ''}</td>
+                        <td style="text-align: center; color: #ff9800; font-weight: 500;">${m.away_team || ''}</td>
+                        <td style="text-align: center; ${getOddsStyle(spf.win)}">${renderOddsArrow(spf.win)}</td>
+                        <td style="text-align: center; ${getOddsStyle(spf.draw)}">${renderOddsArrow(spf.draw)}</td>
+                        <td style="text-align: center; ${getOddsStyle(spf.lost)}">${renderOddsArrow(spf.lost)}</td>
+                        <td style="text-align: center; color: #ce93d8; font-weight: 500;">${goalLine || '-'}</td>
+                        <td style="text-align: center; ${getOddsStyle(nspf.win)}">${renderOddsArrow(nspf.win)}</td>
+                        <td style="text-align: center; ${getOddsStyle(nspf.draw)}">${renderOddsArrow(nspf.draw)}</td>
+                        <td style="text-align: center; ${getOddsStyle(nspf.lost)}">${renderOddsArrow(nspf.lost)}</td>
+                        <td style="text-align: center; font-size: 0.85em; opacity: 0.7;">${matchDt}</td>
+                    </tr>`;
+                });
+
+                html += '</tbody></table></div>';
+                oddsBody.innerHTML = html;
+                oddsSection.style.display = 'block';
+                updateOddsProgress(100);
+                showOddsStatus(`成功加载 ${data.length} 场比赛赔率数据`, 'success');
+            } catch (e) {
+                updateOddsProgress(0);
+                showOddsStatus(`加载失败: ${e.message}`, 'error');
+            }
+        }
+
+        loadOddsBtn.addEventListener('click', loadOddsData);
+
+        // 页面加载后自动加载赔率数据
+        setTimeout(() => {
+            loadOddsData();
+        }, 200);
 
         // 页面加载后自动获取14场最新期数并加载数据
         setTimeout(() => {
