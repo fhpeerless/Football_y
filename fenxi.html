@@ -1815,6 +1815,23 @@
             return 'color: #757575;';
         }
 
+        // 构建赔率网格（类似九宫格风格的三列网格）
+        function buildOddsGrid(title, items, styleFn) {
+            if (!items || items.length === 0) return '';
+            let html = `<div style="margin-top: 3px; padding-top: 3px; border-top: 1px solid rgba(255,255,255,0.04);">`;
+            html += `<span style="font-size: 0.65em; opacity: 0.4; display: block; margin-bottom: 2px;">${title}</span>`;
+            html += `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;">`;
+            items.forEach(item => {
+                const st = styleFn ? styleFn(item.val) : {};
+                const bg = st.bg || 'rgba(255,255,255,0.03)';
+                const color = st.color || '#9e9e9e';
+                const displayVal = item.val && !isNaN(parseFloat(item.val)) ? parseFloat(item.val).toFixed(2) : '-';
+                html += `<div style="text-align: center; padding: 3px 1px; background:${bg}; border-radius: 2px; font-size: 0.65em; color:${color};">${item.label}<br><span style="font-size: 1em;">${displayVal}</span></div>`;
+            });
+            html += `</div></div>`;
+            return html;
+        }
+
         // 渲染单场比赛的赔率
         function renderMatchOdds(homeTeam, awayTeam) {
             const key = (homeTeam || '') + '|' + (awayTeam || '');
@@ -1827,42 +1844,38 @@
             const nspf = odds.nspf || {};
             const goalLine = odds.goal_line || '';
             
-            const winVal = spf.win ? parseFloat(spf.win).toFixed(2) : '-';
-            const drawVal = spf.draw ? parseFloat(spf.draw).toFixed(2) : '-';
-            const lostVal = spf.lost ? parseFloat(spf.lost).toFixed(2) : '-';
-            const nWinVal = nspf.win ? parseFloat(nspf.win).toFixed(2) : '-';
-            const nDrawVal = nspf.draw ? parseFloat(nspf.draw).toFixed(2) : '-';
-            const nLostVal = nspf.lost ? parseFloat(nspf.lost).toFixed(2) : '-';
+            // 赔率颜色映射（与九宫格一致）
+            function getGridStyle(val) {
+                if (!val) return { bg: 'rgba(255,255,255,0.03)', color: '#9e9e9e' };
+                const num = parseFloat(val);
+                if (!num) return { bg: 'rgba(255,255,255,0.03)', color: '#9e9e9e' };
+                if (num <= 1.80) return { bg: 'rgba(255,87,34,0.15)', color: '#ff5722' };
+                if (num <= 2.50) return { bg: 'rgba(255,152,0,0.12)', color: '#ff9800' };
+                if (num <= 4.00) return { bg: 'rgba(139,195,74,0.1)', color: '#8bc34a' };
+                if (num <= 6.00) return { bg: 'rgba(158,158,158,0.08)', color: '#9e9e9e' };
+                return { bg: 'rgba(117,117,117,0.05)', color: '#757575' };
+            }
             
-            const matchNum = odds.match_num_str || '';
-            
-            // 三行式赔率布局：每行代表一个结果(胜/平/负)，显示SPF和NSPF
-            const rows = [
-                { label: '胜', spfVal: winVal, nspfVal: nWinVal, oddsKey: spf.win, nspfOddsKey: nspf.win },
-                { label: '平', spfVal: drawVal, nspfVal: nDrawVal, oddsKey: spf.draw, nspfOddsKey: nspf.draw },
-                { label: '负', spfVal: lostVal, nspfVal: nLostVal, oddsKey: spf.lost, nspfOddsKey: nspf.lost },
+            const spfItems = [
+                { label: '胜', val: spf.win },
+                { label: '平', val: spf.draw },
+                { label: '负', val: spf.lost },
+            ];
+            const nspfItems = [
+                { label: '胜', val: nspf.win },
+                { label: '平', val: nspf.draw },
+                { label: '负', val: nspf.lost },
             ];
             
-            let rowsHtml = '';
-            rows.forEach(r => {
-                rowsHtml += `
-                    <div style="display: grid; grid-template-columns: 22px 1fr 1fr; gap: 3px 6px; align-items: center; padding: 1px 0;">
-                        <span style="font-size: 0.75em; opacity: 0.6; text-align: center;">${r.label}</span>
-                        <span style="font-size: 0.78em; font-weight: 500; ${getOddsStyle(r.oddsKey)}; padding: 0 4px;">${r.spfVal}</span>
-                        <span style="font-size: 0.76em; font-weight: 500; ${getOddsStyle(r.nspfOddsKey)}; padding: 0 4px;">${r.nspfVal}</span>
-                    </div>`;
-            });
-            
+            const spfHtml = buildOddsGrid('赔率', spfItems, getGridStyle);
+            const nspfTitle = goalLine ? `让球 (${goalLine})` : '让球';
+            const nspfHtml = buildOddsGrid(nspfTitle, nspfItems, getGridStyle);
             const bqcHtml = buildBqcHtml(odds);
             
             return `
-                <div style="padding: 5px 12px 4px 12px; margin-top: 3px; border-top: 1px solid rgba(255,255,255,0.06);">
-                    <div style="display: grid; grid-template-columns: 22px 1fr 1fr; gap: 3px 6px; align-items: center; margin-bottom: 2px;">
-                        <span style="font-size: 0.68em; opacity: 0.4; text-align: center;"></span>
-                        <span style="font-size: 0.68em; opacity: 0.45;">赔率</span>
-                        <span style="font-size: 0.68em; opacity: 0.45;">让球${goalLine ? ' ('+goalLine+')' : ''}</span>
-                    </div>
-                    ${rowsHtml}
+                <div style="padding: 4px 12px 6px 12px; margin-top: 2px; border-top: 1px solid rgba(255,255,255,0.06);">
+                    ${spfHtml}
+                    ${nspfHtml}
                     ${bqcHtml}
                 </div>`;
         }
