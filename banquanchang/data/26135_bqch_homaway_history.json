@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-18 21:39:35",
+  "generate_time": "2026-07-19 21:42:11",
   "period": "26135",
   "lottery_sale_endtime": "2026-07-19 22:00:00",
   "total_matches": 6,
@@ -13,16 +13,16 @@
       "home_team": "西班牙",
       "away_team": "阿根廷",
       "bqc_odds": {
-        "aa": "3.45",
-        "ac": "14.00",
-        "ab": "23.00",
-        "ca": "4.70",
-        "cc": "4.45",
+        "aa": "3.75",
+        "ac": "13.00",
+        "ab": "16.00",
+        "ca": "5.05",
+        "cc": "4.65",
         "cb": "7.50",
-        "ba": "20.00",
-        "bc": "14.00",
-        "bb": "6.35",
-        "updatetime": "2026-07-17 19:34:01"
+        "ba": "15.00",
+        "bc": "13.00",
+        "bb": "6.30",
+        "updatetime": "2026-07-19 20:40:19"
       },
       "history": {
         "home": {
@@ -1137,8 +1137,34 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 7,
+              "injuryFlag": 1,
+              "personId": 362649,
+              "personName": "梅里诺",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 6,
+              "suspensionFlag": 0,
+              "uniformNo": "6"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 687426,
+              "personName": "N. Paz",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "18"
+            }
+          ]
         }
       }
     },
@@ -1151,16 +1177,16 @@
       "home_team": "埃尔夫斯堡",
       "away_team": "天狼星",
       "bqc_odds": {
-        "aa": "5.60",
+        "aa": "6.40",
         "ac": "15.00",
-        "ab": "22.00",
-        "ca": "8.00",
-        "cc": "6.25",
-        "cb": "4.65",
+        "ab": "21.00",
+        "ca": "8.80",
+        "cc": "6.70",
+        "cb": "4.40",
         "ba": "30.00",
         "bc": "15.00",
-        "bb": "2.75",
-        "updatetime": "2026-07-18 09:33:59"
+        "bb": "2.55",
+        "updatetime": "2026-07-19 20:16:11"
       },
       "history": {
         "home": {
@@ -2802,16 +2828,16 @@
       "home_team": "哈尔姆斯塔德",
       "away_team": "赫根",
       "bqc_odds": {
-        "aa": "8.00",
+        "aa": "9.00",
         "ac": "16.00",
-        "ab": "20.00",
-        "ca": "11.00",
-        "cc": "7.00",
-        "cb": "4.30",
+        "ab": "18.00",
+        "ca": "13.00",
+        "cc": "7.75",
+        "cb": "4.25",
         "ba": "40.00",
         "bc": "16.00",
-        "bb": "2.16",
-        "updatetime": "2026-07-18 09:33:59"
+        "bb": "2.02",
+        "updatetime": "2026-07-19 20:49:12"
       },
       "history": {
         "home": {
@@ -4466,16 +4492,16 @@
       "home_team": "哈马比",
       "away_team": "代格福什",
       "bqc_odds": {
-        "aa": "1.55",
+        "aa": "1.50",
         "ac": "23.00",
         "ab": "70.00",
         "ca": "3.75",
-        "cc": "9.50",
-        "cb": "23.00",
+        "cc": "10.00",
+        "cb": "27.00",
         "ba": "24.00",
         "bc": "23.00",
-        "bb": "20.00",
-        "updatetime": "2026-07-18 09:33:59"
+        "bb": "24.00",
+        "updatetime": "2026-07-19 19:14:50"
       },
       "history": {
         "home": {
