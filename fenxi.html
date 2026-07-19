@@ -1725,6 +1725,24 @@
                 // 赔率加载失败不影响主要数据加载
                 console.warn('赔率数据加载失败:', e.message);
             }
+
+            // 加载半全场赔率数据
+            try {
+                const bqcResp = await fetch(`./spf/data/onsale_bqc.json?t=${Date.now()}`);
+                if (bqcResp.ok) {
+                    const bqcData = await bqcResp.json();
+                    bqcData.forEach(m => {
+                        const key = (m.home_team || '') + '|' + (m.away_team || '');
+                        if (!oddsLookup[key]) {
+                            oddsLookup[key] = {};
+                        }
+                        oddsLookup[key].bqc = m.bqc_odds || {};
+                        oddsLookup[key].bqc_update_time = m.bqc_update_time || '';
+                    });
+                }
+            } catch (e) {
+                console.warn('半全场赔率数据加载失败:', e.message);
+            }
             
             const url = `./spf/data/common_match.json?t=${Date.now()}`;
             try {
@@ -1833,7 +1851,41 @@
                         <span style="font-size: 0.78em; ${getOddsStyle(nspf.draw)}">${nDrawVal}</span>
                         <span style="font-size: 0.78em; ${getOddsStyle(nspf.lost)}">${nLostVal}</span>
                     </div>` : ''}
-                </div>`;
+                </div>
+                ${buildBqcHtml(odds)}
+                `;
+        }
+        
+        // 构建半全场赔率HTML
+        function buildBqcHtml(odds) {
+            const bqc = odds.bqc || {};
+            const bqcUpdate = odds.bqc_update_time || '';
+            if (Object.keys(bqc).length === 0) return '';
+            
+            const bqcKeys = ['aa', 'ac', 'ab', 'ca', 'cc', 'cb', 'ba', 'bc', 'bb'];
+            const bqcLabels = {'aa':'胜胜','ac':'胜平','ab':'胜负','ca':'平胜','cc':'平平','cb':'平负','ba':'负胜','bc':'负平','bb':'负负'};
+            
+            let html = `<div style="display: flex; flex-wrap: wrap; gap: 2px; margin-top: 3px; padding: 6px 12px 8px 12px; border-top: 1px solid rgba(255,255,255,0.04);">`;
+            html += `<span style="font-size: 0.7em; opacity: 0.45; width: 100%; margin-bottom: 3px;">半全场 ${bqcUpdate ? '· '+bqcUpdate : ''}</span>`;
+            
+            bqcKeys.forEach(k => {
+                const val = bqc[k];
+                const label = bqcLabels[k] || k;
+                const num = parseFloat(val);
+                let color = '#9e9e9e';
+                let bg = 'rgba(255,255,255,0.03)';
+                if (!isNaN(num)) {
+                    if (num < 5) { color = '#4caf50'; bg = 'rgba(76,175,80,0.12)'; }
+                    else if (num < 10) { color = '#8bc34a'; bg = 'rgba(139,195,74,0.08)'; }
+                    else if (num < 20) { color = '#ff9800'; bg = 'rgba(255,152,0,0.08)'; }
+                    else { color = '#f44336'; bg = 'rgba(244,67,54,0.08)'; }
+                }
+                const displayVal = val && !isNaN(num) ? num.toFixed(2) : '-';
+                html += `<span style="font-size: 0.7em; padding: 2px 5px; background:${bg}; border-radius: 3px; color:${color};">${label} ${displayVal}</span>`;
+            });
+            
+            html += `</div>`;
+            return html;
         }
 
         // 渲染共同对手数据
