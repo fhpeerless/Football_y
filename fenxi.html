@@ -488,6 +488,17 @@
             box-shadow: 0 0 6px rgba(244, 67, 54, 0.3) !important;
         }
 
+        /* 半全场九宫格 - 可点击选中 */
+        .bqc-grid-cell.bqc-selected {
+            background: rgba(0, 188, 212, 0.35) !important;
+            color: #00bcd4 !important;
+            outline: 1px solid #00bcd4 !important;
+            box-shadow: 0 0 6px rgba(0, 188, 212, 0.3) !important;
+        }
+        .bqc-grid-cell.bqc-selected span {
+            color: #00bcd4 !important;
+        }
+
         /* 半全场赔率单元格 - 可点击选中 */
         .bqc-odds-cell {
             transition: all 0.2s ease;
@@ -1943,7 +1954,7 @@
                         else { color = '#f44336'; bg = 'rgba(244,67,54,0.08)'; }
                     }
                     const displayVal = val && !isNaN(num) ? num.toFixed(2) : '-';
-                    gridHtml += `<div style="text-align: center; padding: 2px 1px; background:${bg}; border-radius: 2px; font-size: 0.65em; color:${color};">${label}<br><span style="font-size: 1em;">${displayVal}</span></div>`;
+                    gridHtml += `<div class="bqc-grid-cell" onclick="this.classList.toggle('bqc-selected')" style="text-align: center; padding: 2px 1px; background:${bg}; border-radius: 2px; font-size: 0.65em; color:${color}; cursor: pointer; user-select: none;">${label}<br><span style="font-size: 1em;">${displayVal}</span></div>`;
                 });
             });
             
