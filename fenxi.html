@@ -488,9 +488,20 @@
             box-shadow: 0 0 6px rgba(244, 67, 54, 0.3) !important;
         }
 
-        /* 半全场赔率单元格 - 仅展示，不可点选 */
+        /* 半全场赔率单元格 - 可点击选中 */
         .bqc-odds-cell {
             transition: all 0.2s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        .bqc-odds-cell.selected {
+            background: rgba(0, 188, 212, 0.35) !important;
+            color: #00bcd4 !important;
+            border: 1px solid #00bcd4 !important;
+            box-shadow: 0 0 6px rgba(0, 188, 212, 0.3) !important;
+        }
+        .bqc-odds-cell.selected div {
+            color: #00bcd4 !important;
         }
 
         /* 半全场 3/1/0 选择器按钮 */
@@ -2397,9 +2408,9 @@
                         }
                         if (i % 3 === 0) html += '</tr><tr>';
                         html += `
-                            <td class="bqc-odds-cell" data-key="${key}" style="padding: 8px 6px; text-align: center; border: 1px solid rgba(255,255,255,0.08);">
+                            <td class="bqc-odds-cell" data-key="${key}" onclick="this.classList.toggle('selected')" style="padding: 8px 6px; text-align: center; border: 1px solid rgba(255,255,255,0.08);">
                                 <div style="font-weight: 600; color: ${color}; font-size: 1.1em;">${oddsVal}</div>
-                                <div style="font-size: 0.8em; opacity: 0.7;">${info.label}</div>
+                                <div style="font-size: 0.85em; opacity: 0.85;">${info.label}</div>
                                 <div style="font-size: 0.7em; opacity: 0.5;">${info.desc}</div>
                             </td>
                         `;
