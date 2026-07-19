@@ -468,6 +468,26 @@
             box-shadow: 0 0 10px rgba(244, 67, 54, 0.3);
         }
 
+        /* 赔率网格格子 - 可点击选中 */
+        .grid-cell.selected-win {
+            background: rgba(76, 175, 80, 0.35) !important;
+            color: #4caf50 !important;
+            border: 1px solid #4caf50 !important;
+            box-shadow: 0 0 6px rgba(76, 175, 80, 0.3) !important;
+        }
+        .grid-cell.selected-draw {
+            background: rgba(255, 193, 7, 0.35) !important;
+            color: #ffc107 !important;
+            border: 1px solid #ffc107 !important;
+            box-shadow: 0 0 6px rgba(255, 193, 7, 0.3) !important;
+        }
+        .grid-cell.selected-lose {
+            background: rgba(244, 67, 54, 0.35) !important;
+            color: #f44336 !important;
+            border: 1px solid #f44336 !important;
+            box-shadow: 0 0 6px rgba(244, 67, 54, 0.3) !important;
+        }
+
         /* 半全场赔率单元格 - 仅展示，不可点选 */
         .bqc-odds-cell {
             transition: all 0.2s ease;
@@ -1826,7 +1846,8 @@
                 const bg = st.bg || 'rgba(255,255,255,0.03)';
                 const color = st.color || '#9e9e9e';
                 const displayVal = item.val && !isNaN(parseFloat(item.val)) ? parseFloat(item.val).toFixed(2) : '-';
-                html += `<div style="text-align: center; padding: 3px 1px; background:${bg}; border-radius: 2px; font-size: 0.65em; color:${color};">${item.label}<br><span style="font-size: 1em;">${displayVal}</span></div>`;
+                const outcomeAttr = item.outcome ? ` onclick="selectGridOutcome(this, '${item.outcome}')"` : '';
+                html += `<div class="grid-cell"${outcomeAttr} style="text-align: center; padding: 3px 1px; background:${bg}; border-radius: 2px; font-size: 0.65em; color:${color}; cursor:${item.outcome ? 'pointer' : 'default'};">${item.label}<br><span style="font-size: 1em;">${displayVal}</span></div>`;
             });
             html += `</div></div>`;
             return html;
@@ -1857,14 +1878,14 @@
             }
             
             const spfItems = [
-                { label: '胜', val: spf.win },
-                { label: '平', val: spf.draw },
-                { label: '负', val: spf.lost },
+                { label: '胜', val: spf.win, outcome: 'win' },
+                { label: '平', val: spf.draw, outcome: 'draw' },
+                { label: '负', val: spf.lost, outcome: 'lose' },
             ];
             const nspfItems = [
-                { label: '胜', val: nspf.win },
-                { label: '平', val: nspf.draw },
-                { label: '负', val: nspf.lost },
+                { label: '胜', val: nspf.win, outcome: 'win' },
+                { label: '平', val: nspf.draw, outcome: 'draw' },
+                { label: '负', val: nspf.lost, outcome: 'lose' },
             ];
             
             const spfHtml = buildOddsGrid('赔率', spfItems, getGridStyle);
@@ -1956,12 +1977,7 @@
                                 <span class="opponent-tag ${tagClass}">${tagText}</span>
                             </div>
                         </div>
-                        <div class="spf-predict-section">
-                            <span class="spf-predict-btn" onclick="selectPredict(this, 'win')">胜</span>
-                            <span class="spf-predict-btn" onclick="selectPredict(this, 'draw')">平</span>
-                            <span class="spf-predict-btn" onclick="selectPredict(this, 'lose')">负</span>
-                        </div>
-                        <!-- 赔率显示区域 -->
+                        <!-- 赔率显示区域（可点击选中） -->
                         ${renderMatchOdds(match.home_team, match.away_team)}
                 `;
                 
@@ -2166,9 +2182,10 @@
             spfCommonBody.innerHTML = html;
         }
         
-        // SPF 预测按钮点击切换函数 - 每个按钮独立切换，互不影响
-        function selectPredict(btn, outcome) {
-            btn.classList.toggle('selected-' + outcome);
+        // 赔率网格格子点击切换 - 点击变色选中，再点击取消
+        function selectGridOutcome(el, outcome) {
+            const cls = outcome === 'win' ? 'selected-win' : outcome === 'draw' ? 'selected-draw' : 'selected-lose';
+            el.classList.toggle(cls);
         }
         
         // 半全场 3/1/0 选择器 - 独立点选，可同时选中多个
