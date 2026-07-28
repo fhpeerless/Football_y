@@ -1,5 +1,325 @@
 {
-  "generate_time": "2026-07-28 09:40:13",
-  "total_matches": 0,
-  "matches": []
+  "generate_time": "2026-07-28 13:38:10",
+  "total_matches": 4,
+  "matches": [
+    {
+      "match_num": "2001",
+      "league": "欧冠",
+      "home_team": "库奥皮奥",
+      "away_team": "萨巴赫",
+      "date": "2026-07-28",
+      "home_opponents_count": 14,
+      "away_opponents_count": 15,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 1,
+        "home_wins": 1,
+        "away_wins": 0,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 821,
+            "awayTeamShortName": "库奥皮奥",
+            "fullCourtGoal": "1:0",
+            "gmLeagueId": 69,
+            "halfTimeGoal": "1:0",
+            "homeMatchResult": "away",
+            "homeTeamFullCourtGoalCnt": "1",
+            "homeTeamId": 40739,
+            "homeTeamShortName": "萨巴赫",
+            "matchDate": "2026-07-22",
+            "matchId": 2581669,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 586,
+            "sportteryHomeTeamId": 1046309,
+            "sportteryMatchId": 2040595,
+            "sportteryTournamentId": 69,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 1,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 166,
+            "uniformHomeTeamId": 57467,
+            "uniformLeagueId": 30,
+            "winningTeam": "home"
+          }
+        ]
+      },
+      "match_time": "23:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1046309,
+          "teamId": 40739,
+          "teamShortName": "萨巴赫",
+          "uniformTeamId": 57467
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 1,
+              "personId": 369345,
+              "personName": "布尔基",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "4"
+            }
+          ],
+          "sportteryTeamId": 586,
+          "teamId": 821,
+          "teamShortName": "库奥皮奥",
+          "uniformTeamId": 166
+        }
+      }
+    },
+    {
+      "match_num": "2002",
+      "league": "欧冠",
+      "home_team": "哈茨",
+      "away_team": "格风暴",
+      "date": "2026-07-29",
+      "home_opponents_count": 14,
+      "away_opponents_count": 15,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 1,
+        "home_wins": 1,
+        "away_wins": 0,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 1900,
+            "awayTeamShortName": "哈茨",
+            "fullCourtGoal": "4:0",
+            "gmLeagueId": 69,
+            "halfTimeGoal": "1:0",
+            "homeMatchResult": "away",
+            "homeTeamFullCourtGoalCnt": "4",
+            "homeTeamId": 164,
+            "homeTeamShortName": "格风暴",
+            "matchDate": "2026-07-22",
+            "matchId": 2533141,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 215,
+            "sportteryHomeTeamId": 1276,
+            "sportteryMatchId": 2040602,
+            "sportteryTournamentId": 69,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 4,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 1585,
+            "uniformHomeTeamId": 842,
+            "uniformLeagueId": 30,
+            "winningTeam": "home"
+          }
+        ]
+      },
+      "match_time": "02:45",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1276,
+          "teamId": 164,
+          "teamShortName": "格风暴",
+          "uniformTeamId": 842
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 215,
+          "teamId": 1900,
+          "teamShortName": "哈茨",
+          "uniformTeamId": 1585
+        }
+      }
+    },
+    {
+      "match_num": "3001",
+      "league": "欧冠",
+      "home_team": "阿拉木图",
+      "away_team": "奥莫尼亚",
+      "date": "2026-07-29",
+      "home_opponents_count": 13,
+      "away_opponents_count": 13,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 3,
+        "home_wins": 1,
+        "away_wins": 0,
+        "draws": 2,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 1358,
+            "awayTeamShortName": "阿拉木图",
+            "fullCourtGoal": "1:0",
+            "gmLeagueId": 69,
+            "halfTimeGoal": "1:0",
+            "homeMatchResult": "away",
+            "homeTeamFullCourtGoalCnt": "1",
+            "homeTeamId": 517,
+            "homeTeamShortName": "奥莫尼亚",
+            "matchDate": "2026-07-23",
+            "matchId": 2533127,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 2182,
+            "sportteryHomeTeamId": 1156,
+            "sportteryMatchId": 2040596,
+            "sportteryTournamentId": 69,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 1,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 2185,
+            "uniformHomeTeamId": 1365,
+            "uniformLeagueId": 30,
+            "winningTeam": "home"
+          },
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 1358,
+            "awayTeamShortName": "阿拉木图",
+            "fullCourtGoal": "0:0",
+            "gmLeagueId": 0,
+            "halfTimeGoal": "0:0",
+            "homeMatchResult": "draw",
+            "homeTeamFullCourtGoalCnt": "0",
+            "homeTeamId": 517,
+            "homeTeamShortName": "奥莫尼亚",
+            "matchDate": "2021-12-10",
+            "matchId": 1499962,
+            "seasonId": 8589,
+            "sportteryAwayTeamId": 2182,
+            "sportteryHomeTeamId": 1156,
+            "sportteryMatchId": 0,
+            "sportteryTournamentId": 0,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 0,
+            "tournamentId": 1689,
+            "tournamentShortName": "欧协联",
+            "uniformAwayTeamId": 2185,
+            "uniformHomeTeamId": 1365,
+            "uniformLeagueId": 354,
+            "winningTeam": "draw"
+          },
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 517,
+            "awayTeamShortName": "奥莫尼亚",
+            "fullCourtGoal": "0:0",
+            "gmLeagueId": 0,
+            "halfTimeGoal": "0:0",
+            "homeMatchResult": "draw",
+            "homeTeamFullCourtGoalCnt": "0",
+            "homeTeamId": 1358,
+            "homeTeamShortName": "阿拉木图",
+            "matchDate": "2021-09-16",
+            "matchId": 1511399,
+            "seasonId": 8589,
+            "sportteryAwayTeamId": 1156,
+            "sportteryHomeTeamId": 2182,
+            "sportteryMatchId": 0,
+            "sportteryTournamentId": 0,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 0,
+            "tournamentId": 1689,
+            "tournamentShortName": "欧协联",
+            "uniformAwayTeamId": 1365,
+            "uniformHomeTeamId": 2185,
+            "uniformLeagueId": 354,
+            "winningTeam": "draw"
+          }
+        ]
+      },
+      "match_time": "23:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1156,
+          "teamId": 517,
+          "teamShortName": "奥莫尼亚",
+          "uniformTeamId": 1365
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 2182,
+          "teamId": 1358,
+          "teamShortName": "阿拉木图",
+          "uniformTeamId": 2185
+        }
+      }
+    },
+    {
+      "match_num": "3002",
+      "league": "欧冠",
+      "home_team": "波兹南",
+      "away_team": "奥胡斯",
+      "date": "2026-07-30",
+      "home_opponents_count": 18,
+      "away_opponents_count": 10,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 1,
+        "home_wins": 0,
+        "away_wins": 1,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "4",
+            "awayTeamId": 1653,
+            "awayTeamShortName": "波兹南",
+            "fullCourtGoal": "1:4",
+            "gmLeagueId": 69,
+            "halfTimeGoal": "0:2",
+            "homeMatchResult": "home",
+            "homeTeamFullCourtGoalCnt": "1",
+            "homeTeamId": 605,
+            "homeTeamShortName": "奥胡斯",
+            "matchDate": "2026-07-22",
+            "matchId": 2533124,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 1163,
+            "sportteryHomeTeamId": 2298,
+            "sportteryMatchId": 2040601,
+            "sportteryTournamentId": 69,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 5,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 1600,
+            "uniformHomeTeamId": 2197,
+            "uniformLeagueId": 30,
+            "winningTeam": "away"
+          }
+        ]
+      },
+      "match_time": "01:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 2298,
+          "teamId": 605,
+          "teamShortName": "奥胡斯",
+          "uniformTeamId": 2197
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1163,
+          "teamId": 1653,
+          "teamShortName": "波兹南",
+          "uniformTeamId": 1600
+        }
+      }
+    }
+  ]
 }
