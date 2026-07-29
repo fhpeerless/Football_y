@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-28 22:28:06",
+  "generate_time": "2026-07-29 22:26:32",
   "period": "26141",
   "lottery_sale_endtime": "2026-07-30 22:00:00",
   "total_matches": 6,
@@ -612,7 +612,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 0,
+              "awayTeamId": 279,
               "awayTeamShortName": "贝西克塔",
               "fullCourtGoal": "0:0",
               "halfTimeGoal": "0:0",
@@ -1256,7 +1256,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 0,
+              "homeTeamId": 1055702,
               "homeTeamShortName": "帕福斯",
               "matchDate": "2026-07-03",
               "matchId": 2547052,
@@ -2357,7 +2357,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 0,
+              "homeTeamId": 223,
               "homeTeamShortName": "安德莱",
               "matchDate": "2026-07-04",
               "matchId": 2535654,
@@ -2513,7 +2513,7 @@
               "halfTimeGoal": "0:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 223,
+              "homeTeamId": 0,
               "homeTeamShortName": "安德莱",
               "matchDate": "2026-05-04",
               "matchId": 2512978,
@@ -3400,7 +3400,7 @@
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 0,
+              "awayTeamId": 295,
               "awayTeamShortName": "费伦茨",
               "fullCourtGoal": "4:2",
               "halfTimeGoal": "2:2",
@@ -4045,7 +4045,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 254,
+              "awayTeamId": 0,
               "awayTeamShortName": "特温特",
               "fullCourtGoal": "2:3",
               "halfTimeGoal": "",
@@ -4077,7 +4077,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 0,
+              "homeTeamId": 254,
               "homeTeamShortName": "特温特",
               "matchDate": "2026-07-11",
               "matchId": 2575285,
@@ -5380,7 +5380,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 0,
+              "awayTeamId": 1255,
               "awayTeamShortName": "圣加仑",
               "fullCourtGoal": "0:2",
               "halfTimeGoal": "0:1",
@@ -5850,7 +5850,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 6,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "away",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -5902,7 +5902,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 6,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -6058,7 +6058,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 6,
               "teamMatchResult": "draw",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -7274,7 +7274,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 8,
+              "injuryFlag": 0,
+              "personId": 284254,
+              "personName": "F·安吉利厄里",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 4,
+              "suspensionFlag": 1,
+              "uniformNo": "26"
+            }
+          ],
           "away": []
         }
       }
