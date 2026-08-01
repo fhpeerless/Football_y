@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-07-30 22:24:45",
+  "generate_time": "2026-08-01 21:45:14",
   "period": "26143",
   "lottery_sale_endtime": "2026-08-02 19:30:00",
   "total_matches": 6,
@@ -12,7 +12,18 @@
       "league": "瑞超",
       "home_team": "布鲁马波卡纳",
       "away_team": "马尔默",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.50",
+        "ac": "13.50",
+        "ab": "20.00",
+        "ca": "6.75",
+        "cc": "6.00",
+        "cb": "5.30",
+        "ba": "28.00",
+        "bc": "13.50",
+        "bb": "3.40",
+        "updatetime": "2026-08-01 09:41:52"
+      },
       "history": {
         "home": {
           "team": "布鲁马波卡纳",
@@ -1559,7 +1570,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 1,
+              "personId": 95613,
+              "personName": "扬松",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "18"
+            }
+          ]
         }
       }
     },
@@ -1571,11 +1595,48 @@
       "league": "瑞超",
       "home_team": "哥德堡",
       "away_team": "代格福什",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.65",
+        "ac": "15.00",
+        "ab": "33.00",
+        "ca": "4.40",
+        "cc": "5.75",
+        "cb": "8.75",
+        "ba": "23.00",
+        "bc": "15.00",
+        "bb": "6.50",
+        "updatetime": "2026-08-01 09:41:52"
+      },
       "history": {
         "home": {
           "team": "哥德堡",
           "matches": [
+            {
+              "awayTeamFullCourtGoalCnt": "1",
+              "awayTeamId": 600,
+              "awayTeamShortName": "哥德堡",
+              "fullCourtGoal": "0:1",
+              "halfTimeGoal": "0:0",
+              "homeMatchResult": "",
+              "homeTeamFullCourtGoalCnt": "0",
+              "homeTeamId": 0,
+              "homeTeamShortName": "利瓦迪亚",
+              "matchDate": "2026-07-31",
+              "matchId": 2584819,
+              "seasonId": 15536,
+              "sportteryAwayTeamId": 0,
+              "sportteryHomeTeamId": 0,
+              "sportteryMatchId": 0,
+              "sportteryTournamentId": 0,
+              "teamMatchResult": "home",
+              "totalTeamFullCourtGoalCnt": 0,
+              "tournamentId": 1689,
+              "tournamentShortName": "欧协联",
+              "uniformAwayTeamId": 484,
+              "uniformHomeTeamId": 783,
+              "uniformLeagueId": 354,
+              "winningTeam": ""
+            },
             {
               "awayTeamFullCourtGoalCnt": "1",
               "awayTeamId": 600,
@@ -2069,49 +2130,23 @@
               "uniformHomeTeamId": 484,
               "uniformLeagueId": 719,
               "winningTeam": "home"
-            },
-            {
-              "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 600,
-              "awayTeamShortName": "哥德堡",
-              "fullCourtGoal": "0:0",
-              "halfTimeGoal": "0:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 1917,
-              "homeTeamShortName": "天狼星",
-              "matchDate": "2026-03-16",
-              "matchId": 2508518,
-              "seasonId": 13272,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
-              "teamMatchResult": "draw",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 566,
-              "tournamentShortName": "瑞典杯",
-              "uniformAwayTeamId": 484,
-              "uniformHomeTeamId": 312,
-              "uniformLeagueId": 47,
-              "winningTeam": "draw"
             }
           ],
           "statistics": {
-            "drawMatchCnt": 7,
-            "drawProbability": "35%",
-            "goalCnt": 25,
+            "drawMatchCnt": 6,
+            "drawProbability": "30%",
+            "goalCnt": 26,
             "lossGoalCnt": 42,
             "lossGoalMatchCnt": 9,
             "lossProbability": "45%",
-            "netGoal": -17,
+            "netGoal": -16,
             "sportteryTeamId": 0,
             "teamId": 600,
             "teamShortName": "哥德堡",
             "totalLegCnt": 20,
             "uniformTeamId": 484,
-            "winGoalMatchCnt": 4,
-            "winProbability": "20%"
+            "winGoalMatchCnt": 5,
+            "winProbability": "25%"
           }
         },
         "away": {
@@ -2509,13 +2544,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 294,
+              "awayTeamId": 0,
               "awayTeamShortName": "佐加顿斯",
               "fullCourtGoal": "1:2",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 1110,
+              "homeTeamId": 0,
               "homeTeamShortName": "代格福什",
               "matchDate": "2026-03-21",
               "matchId": 2510792,
@@ -2955,7 +2990,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 138455,
+              "personName": "拉尔森",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "8"
+            }
+          ],
           "away": []
         }
       }
@@ -2968,7 +3016,18 @@
       "league": "瑞超",
       "home_team": "索尔纳",
       "away_team": "厄尔格里特",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.90",
+        "ac": "17.00",
+        "ab": "45.00",
+        "ca": "4.10",
+        "cc": "7.60",
+        "cb": "14.50",
+        "ba": "21.00",
+        "bc": "17.00",
+        "bb": "10.50",
+        "updatetime": "2026-08-01 09:41:52"
+      },
       "history": {
         "home": {
           "team": "索尔纳",
@@ -3417,13 +3476,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 788,
+              "awayTeamId": 0,
               "awayTeamShortName": "索尔纳",
               "fullCourtGoal": "3:2",
               "halfTimeGoal": "1:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 789,
+              "homeTeamId": 0,
               "homeTeamShortName": "盖斯",
               "matchDate": "2026-03-14",
               "matchId": 2508520,
@@ -3620,13 +3679,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 601,
+              "awayTeamId": 0,
               "awayTeamShortName": "厄格里特",
               "fullCourtGoal": "4:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 617,
+              "homeTeamId": 0,
               "homeTeamShortName": "特罗姆瑟",
               "matchDate": "2026-06-25",
               "matchId": 2538438,
@@ -4191,7 +4250,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 313602,
+              "personName": "R. Alm",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "10"
+            }
+          ]
         }
       }
     },
@@ -4203,7 +4275,18 @@
       "league": "瑞超",
       "home_team": "佐加顿斯",
       "away_team": "韦斯特罗斯",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.92",
+        "ac": "17.00",
+        "ab": "40.00",
+        "ca": "4.30",
+        "cc": "8.00",
+        "cb": "13.50",
+        "ba": "19.00",
+        "bc": "17.00",
+        "bb": "9.50",
+        "updatetime": "2026-08-01 09:41:52"
+      },
       "history": {
         "home": {
           "team": "佐加顿斯",
@@ -4314,13 +4397,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 294,
+              "awayTeamId": 0,
               "awayTeamShortName": "佐加顿斯",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 1917,
+              "homeTeamId": 0,
               "homeTeamShortName": "天狼星",
               "matchDate": "2026-06-26",
               "matchId": 2537292,
@@ -4600,13 +4683,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 294,
+              "awayTeamId": 0,
               "awayTeamShortName": "佐加顿斯",
               "fullCourtGoal": "1:2",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 1110,
+              "homeTeamId": 0,
               "homeTeamShortName": "代格福什",
               "matchDate": "2026-03-21",
               "matchId": 2510792,
@@ -4626,13 +4709,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 294,
+              "awayTeamId": 0,
               "awayTeamShortName": "佐加顿斯",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "0:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 352,
+              "homeTeamId": 0,
               "homeTeamShortName": "哈马比",
               "matchDate": "2026-03-15",
               "matchId": 2508516,
@@ -5438,7 +5521,18 @@
       "league": "瑞超",
       "home_team": "哈尔姆斯塔德",
       "away_team": "天狼星",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "12.00",
+        "ac": "19.00",
+        "ab": "20.00",
+        "ca": "17.00",
+        "cc": "9.20",
+        "cb": "4.10",
+        "ba": "60.00",
+        "bc": "19.00",
+        "bb": "1.70",
+        "updatetime": "2026-08-01 09:41:52"
+      },
       "history": {
         "home": {
           "team": "哈尔姆斯塔德",
@@ -5575,13 +5669,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 609,
+              "awayTeamId": 0,
               "awayTeamShortName": "哈尔姆斯",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 789,
+              "homeTeamId": 0,
               "homeTeamShortName": "盖斯",
               "matchDate": "2026-06-17",
               "matchId": 2537286,
@@ -6090,13 +6184,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 294,
+              "awayTeamId": 0,
               "awayTeamShortName": "佐加顿斯",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 1917,
+              "homeTeamId": 0,
               "homeTeamShortName": "天狼星",
               "matchDate": "2026-06-26",
               "matchId": 2537292,
@@ -6889,11 +6983,48 @@
       "league": "巴西杯",
       "home_team": "巴拉纳竞技",
       "away_team": "维多利亚",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.10",
+        "ac": "18.00",
+        "ab": "55.00",
+        "ca": "3.90",
+        "cc": "6.00",
+        "cb": "12.00",
+        "ba": "25.00",
+        "bc": "18.00",
+        "bb": "9.75",
+        "updatetime": "2026-08-01 09:41:52"
+      },
       "history": {
         "home": {
           "team": "巴拉纳竞技",
           "matches": [
+            {
+              "awayTeamFullCourtGoalCnt": "0",
+              "awayTeamId": 564,
+              "awayTeamShortName": "巴竞技",
+              "fullCourtGoal": "0:0",
+              "halfTimeGoal": "0:0",
+              "homeMatchResult": "",
+              "homeTeamFullCourtGoalCnt": "0",
+              "homeTeamId": 567,
+              "homeTeamShortName": "科林蒂安",
+              "matchDate": "2026-07-31",
+              "matchId": 2468778,
+              "seasonId": 14239,
+              "sportteryAwayTeamId": 0,
+              "sportteryHomeTeamId": 0,
+              "sportteryMatchId": 2040656,
+              "sportteryTournamentId": 6,
+              "teamMatchResult": "draw",
+              "totalTeamFullCourtGoalCnt": 0,
+              "tournamentId": 84,
+              "tournamentShortName": "巴甲",
+              "uniformAwayTeamId": 53,
+              "uniformHomeTeamId": 85,
+              "uniformLeagueId": 31,
+              "winningTeam": "draw"
+            },
             {
               "awayTeamFullCourtGoalCnt": "0",
               "awayTeamId": 575,
@@ -6948,7 +7079,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 564,
+              "awayTeamId": 0,
               "awayTeamShortName": "巴竞技",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "",
@@ -7014,7 +7145,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 6,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -7326,7 +7457,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 6,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -7387,39 +7518,13 @@
               "uniformHomeTeamId": 47,
               "uniformLeagueId": 31,
               "winningTeam": "home"
-            },
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 564,
-              "awayTeamShortName": "巴竞技",
-              "fullCourtGoal": "1:1",
-              "halfTimeGoal": "1:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 2734,
-              "homeTeamShortName": "布拉干RB",
-              "matchDate": "2026-02-26",
-              "matchId": 2469056,
-              "seasonId": 14239,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 0,
-              "sportteryTournamentId": 6,
-              "teamMatchResult": "draw",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 84,
-              "tournamentShortName": "巴甲",
-              "uniformAwayTeamId": 53,
-              "uniformHomeTeamId": 18,
-              "uniformLeagueId": 31,
-              "winningTeam": "draw"
             }
           ],
           "statistics": {
             "drawMatchCnt": 5,
             "drawProbability": "25%",
-            "goalCnt": 25,
-            "lossGoalCnt": 18,
+            "goalCnt": 24,
+            "lossGoalCnt": 17,
             "lossGoalMatchCnt": 6,
             "lossProbability": "30%",
             "netGoal": 7,
@@ -7477,7 +7582,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 6,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "away",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -7815,7 +7920,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 6,
+              "sportteryTournamentId": 0,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
