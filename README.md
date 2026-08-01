@@ -1,3 +1,10 @@
+# 环境变量
+AI_PASSWORD 你的明文访问密码 
+
+DEEPSEEK_API_KEY 你的 DeepSeek 密钥 
+
+SEARCH_API_KEY Tavily 密钥（可选）
+
 # Football_y
 backup是旧版，根目录正在应用的则是新版，
 # 一，match_data文件夹-(获取基础比赛数据)-----------------
