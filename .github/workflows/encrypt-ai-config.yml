@@ -1,0 +1,57 @@
+name: 加密 AI 配置
+
+on:
+  workflow_dispatch:
+    inputs:
+      password:
+        description: '访问密码（留空则使用 Secret: AI_PASSWORD）'
+        required: false
+        type: string
+      deepseek_key:
+        description: 'DeepSeek API Key（留空则使用 Secret: DEEPSEEK_API_KEY）'
+        required: false
+        type: string
+      search_key:
+        description: 'Tavily 搜索 Key（可选，留空则使用 Secret: SEARCH_API_KEY）'
+        required: false
+        type: string
+
+jobs:
+  encrypt-ai-config:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+        fetch-depth: 0
+
+    - name: 运行加密脚本
+      working-directory: ./spf
+      env:
+        AI_CONFIG_PASSWORD: ${{ inputs.password || secrets.AI_PASSWORD }}
+        DEEPSEEK_API_KEY: ${{ inputs.deepseek_key || secrets.DEEPSEEK_API_KEY }}
+        SEARCH_API_KEY: ${{ inputs.search_key || secrets.SEARCH_API_KEY }}
+      run: node encrypt_ai_config.js
+
+    - name: 提交 ai_config.json 到仓库
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add spf/ai_config.json
+
+        git commit -m "更新加密 AI 配置" || {
+          echo "没有更改可提交，跳过push步骤"
+          exit 0
+        }
+
+        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}" || {
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        }

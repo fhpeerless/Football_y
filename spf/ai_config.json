@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "created": "2026-08-01T13:38:51.486Z",
+  "kdf": {
+    "algo": "PBKDF2-SHA256",
+    "iterations": 600000,
+    "salt": "jdNbmsyX2P0MHadXA5Dj0A=="
+  },
+  "password_check": {
+    "iv": "m3pn6bVmg+oqvxHK",
+    "tag": "qMMuvzf30h6g7TJyv8LFAw==",
+    "data": "ebo="
+  },
+  "deepseek_key": {
+    "iv": "wDPo5rI0FIFLec62",
+    "tag": "yzUpzzPQkV67gq2cIcfHQQ==",
+    "data": "uhWVUnVEoWkiXWqMbDOlfmMHhvGB9plH"
+  }
+}

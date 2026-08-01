@@ -423,6 +423,115 @@
             border: 1px solid rgba(244, 67, 54, 0.3);
         }
 
+        /* AI 分析按钮 */
+        .ai-analyze-btn {
+            padding: 5px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 188, 212, 0.4);
+            background: rgba(0, 188, 212, 0.12);
+            color: #00bcd4;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .ai-analyze-btn:hover {
+            background: rgba(0, 188, 212, 0.25);
+            box-shadow: 0 0 8px rgba(0, 188, 212, 0.3);
+        }
+        .ai-analyze-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* AI 分析结果区域 */
+        .ai-result {
+            margin-top: 12px;
+        }
+        .ai-loading {
+            padding: 14px;
+            border-radius: 8px;
+            background: rgba(0, 188, 212, 0.06);
+            border: 1px dashed rgba(0, 188, 212, 0.3);
+            color: #00bcd4;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .ai-error {
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(244, 67, 54, 0.08);
+            border: 1px solid rgba(244, 67, 54, 0.25);
+            color: #f44336;
+            font-size: 0.85em;
+        }
+        .ai-result-box {
+            padding: 14px;
+            border-radius: 8px;
+            background: rgba(156, 39, 176, 0.06);
+            border: 1px solid rgba(156, 39, 176, 0.25);
+        }
+        .ai-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: #ce93d8;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+        .ai-result-header .ai-weight-tag {
+            font-size: 0.75em;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+        .ai-result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .ai-result-item {
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            text-align: center;
+        }
+        .ai-result-item .ai-result-label {
+            font-size: 0.8em;
+            opacity: 0.6;
+            margin-bottom: 4px;
+        }
+        .ai-result-item .ai-result-pick {
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+        .ai-result-item .ai-result-conf {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        .ai-result-item .ai-reason {
+            font-size: 0.75em;
+            opacity: 0.7;
+            margin-top: 6px;
+            text-align: left;
+            line-height: 1.5;
+        }
+        .ai-summary {
+            font-size: 0.82em;
+            opacity: 0.85;
+            line-height: 1.6;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .ai-meta {
+            font-size: 0.7em;
+            opacity: 0.5;
+            margin-top: 8px;
+            text-align: right;
+        }
+
         /* SPF 预测按钮 - 点击选中效果 */
         .spf-predict-section {
             display: flex;
@@ -937,6 +1046,21 @@
         </div>
     </div>
 </div>  <!-- end .container -->
+
+<!-- ====== AI 分析密码弹窗 ====== -->
+<div id="aiPasswordModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; backdrop-filter: blur(3px);">
+    <div style="width: 350px; max-width: 92vw; background: linear-gradient(135deg, #1a237e, #311b92); border: 1px solid rgba(0,188,212,0.3); border-radius: 16px; padding: 28px 26px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+        <div style="font-size: 1.15rem; font-weight: 700; color: #00bcd4; margin-bottom: 6px; text-align: center;">🤖 AI 智能分析</div>
+        <div style="font-size: 0.8em; opacity: 0.7; text-align: center; margin-bottom: 20px;">请输入访问密码以解锁 DeepSeek 分析</div>
+        <input id="aiPasswordInput" type="password" placeholder="请输入密码"
+               style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(0,188,212,0.3); background:rgba(255,255,255,0.08); color:#fff; font-size:1rem; box-sizing:border-box;" />
+        <div id="aiPasswordError" style="display:none; color:#f44336; font-size:0.8em; margin-top:8px; text-align:center;"></div>
+        <div style="display:flex; gap:10px; margin-top:22px;">
+            <button onclick="closeAiModal()" style="flex:1; padding:11px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:#bbb; cursor:pointer; font-weight:600; font-size:0.95rem;">取消</button>
+            <button id="aiPasswordBtn" onclick="confirmAiPassword()" style="flex:1; padding:11px 0; border-radius:8px; border:none; background:linear-gradient(135deg,#00bcd4,#00838f); color:#fff; cursor:pointer; font-weight:700; font-size:0.95rem;">确认分析</button>
+        </div>
+    </div>
+</div>
 
     <script>
         // 全局变量
@@ -1997,10 +2121,13 @@
                             <div style="display: flex; align-items: center; gap: 15px;">
                                 <span style="font-size: 0.9em; opacity: 0.8;">${match.home_team || ''} vs ${match.away_team || ''}</span>
                                 <span class="opponent-tag ${tagClass}">${tagText}</span>
+                                <button class="ai-analyze-btn" onclick="openAiAnalyze(this, ${idx})">🤖 AI分析</button>
                             </div>
                         </div>
                         <!-- 赔率显示区域（可点击选中） -->
                         ${renderMatchOdds(match.home_team, match.away_team)}
+                        <!-- AI 分析结果区域 -->
+                        <div class="ai-result" id="ai-result-${idx}"></div>
                 `;
                 
                 if (count > 0 && match.common_opponents && match.common_opponents.length > 0) {
@@ -2201,6 +2328,7 @@
                 html += `</div>`;
             });
             
+            window._spfMatchesCache = matches;
             spfCommonBody.innerHTML = html;
         }
         
@@ -2682,6 +2810,305 @@
                 showBqcStatus('无法获取在售期数', 'error');
             }
         })();
+
+        // ========== AI 智能分析功能 ==========
+        // 方案B（密码派生密钥）：无硬编码主密钥，密钥由用户输入的密码经 PBKDF2 实时派生
+        const AI_CONFIG_PATH = './spf/ai_config.json';
+
+        let aiCfg = null;
+        let aiCryptoKey = null;
+
+        // 加载并缓存加密配置（密钥需在输入密码后派生，此处不派生）
+        async function loadAiConfig() {
+            if (aiCfg) return aiCfg;
+            const resp = await fetch(AI_CONFIG_PATH + '?t=' + Date.now());
+            if (!resp.ok) throw new Error('未找到 ai_config.json，请先运行 git/ai_setup.js 生成加密配置');
+            aiCfg = await resp.json();
+            return aiCfg;
+        }
+
+        // 用输入的密码派生 AES-256-GCM 密钥：PBKDF2-SHA256 × iterations
+        // （与 Node 端 encrypt_ai_config.js 的 crypto.pbkdf2Sync 完全一致）
+        async function deriveAiKey(password) {
+            const kdf = aiCfg.kdf;
+            const salt = Uint8Array.from(atob(kdf.salt), c => c.charCodeAt(0));
+            const baseKey = await crypto.subtle.importKey(
+                'raw',
+                new TextEncoder().encode(password),
+                'PBKDF2',
+                false,
+                ['deriveKey']
+            );
+            return crypto.subtle.deriveKey(
+                { name: 'PBKDF2', hash: 'SHA-256', salt, iterations: kdf.iterations },
+                baseKey,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['decrypt']
+            );
+        }
+
+        // 解密 {iv, tag, data} 三段式 AES-256-GCM 密文（与 ai_setup.js encrypt() 对称）
+        async function aesDecrypt(obj, key) {
+            const b64ToBytes = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+            const iv = b64ToBytes(obj.iv);
+            const tag = b64ToBytes(obj.tag);
+            const data = b64ToBytes(obj.data);
+            const ciphertext = new Uint8Array(data.length + tag.length);
+            ciphertext.set(data, 0);
+            ciphertext.set(tag, data.length);
+            const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext);
+            return new TextDecoder().decode(plain);
+        }
+
+        // 打开密码弹窗
+        function openAiAnalyze(btn, idx) {
+            window._aiTargetIdx = idx;
+            const modal = document.getElementById('aiPasswordModal');
+            const input = document.getElementById('aiPasswordInput');
+            input.value = '';
+            document.getElementById('aiPasswordError').style.display = 'none';
+            modal.style.display = 'flex';
+            setTimeout(() => input.focus(), 60);
+        }
+
+        function closeAiModal() {
+            document.getElementById('aiPasswordModal').style.display = 'none';
+        }
+
+        // 确认密码 -> 用密码派生密钥，解密 password_check 标记验证 -> 通过后触发分析
+        async function confirmAiPassword() {
+            const input = document.getElementById('aiPasswordInput').value;
+            const errEl = document.getElementById('aiPasswordError');
+            const btn = document.getElementById('aiPasswordBtn');
+            if (!input) { errEl.textContent = '请输入密码'; errEl.style.display = 'block'; return; }
+            btn.disabled = true;
+            btn.textContent = '验证中...';
+            try {
+                const cfg = await loadAiConfig();
+                aiCryptoKey = await deriveAiKey(input);
+                let marker;
+                try {
+                    marker = await aesDecrypt(cfg.password_check, aiCryptoKey);
+                } catch (e) {
+                    throw new Error('密码错误，请重试');
+                }
+                if (marker !== 'OK') throw new Error('密码错误，请重试');
+                closeAiModal();
+                await runAiAnalysis(window._aiTargetIdx);
+            } catch (e) {
+                aiCryptoKey = null;
+                errEl.textContent = e.message || '密码验证失败';
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '确认分析';
+            }
+        }
+
+        // 回车确认 / ESC 关闭
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('aiPasswordModal');
+            if (!modal || modal.style.display !== 'flex') return;
+            if (e.key === 'Enter') confirmAiPassword();
+            if (e.key === 'Escape') closeAiModal();
+        });
+
+        // 主分析流程
+        async function runAiAnalysis(idx) {
+            const resultEl = document.getElementById('ai-result-' + idx);
+            const match = (window._spfMatchesCache || [])[idx];
+            if (!resultEl || !match) return;
+
+            const home = match.home_team || '';
+            const away = match.away_team || '';
+            resultEl.innerHTML = '<div class="ai-loading">🤖 正在解密调用密钥并准备数据...</div>';
+            try {
+                const cfg = await loadAiConfig();
+                // 解密 DeepSeek Key（密钥只在内存中使用，不落盘、不打印）
+                const deepseekKey = await aesDecrypt(cfg.deepseek_key, aiCryptoKey);
+                resultEl.innerHTML = '<div class="ai-loading">🤖 正在分析 ' + home + ' vs ' + away + '（共同对手数据 60% + 联网信息 40%）...</div>';
+
+                // 1. 共同对手数据（权重 60%）
+                const commonText = collectCommonData(match);
+
+                // 2. 联网搜索信息（权重 40%，可选）
+                let searchText = '';
+                if (cfg.search_key) {
+                    try {
+                        const searchKey = await aesDecrypt(cfg.search_key, aiCryptoKey);
+                        searchText = await webSearch(searchKey, home, away);
+                    } catch (e) {
+                        searchText = '（联网搜索不可用: ' + (e.message || '未知错误') + '）';
+                    }
+                } else {
+                    searchText = '（未配置搜索 API Key，本次仅依据共同对手数据）';
+                }
+
+                // 3. 调用 DeepSeek（HTTPS 传输加密）
+                const aiContent = await callDeepSeek(deepseekKey, match, commonText, searchText);
+
+                // 4. 渲染结果
+                renderAiResult(resultEl, aiContent);
+            } catch (e) {
+                resultEl.innerHTML = '<div class="ai-error">AI 分析失败: ' + (e.message || '未知错误') + '</div>';
+            }
+        }
+
+        // 整理共同对手比赛数据为文本
+        function collectCommonData(match) {
+            const lines = [];
+            lines.push('对阵: ' + (match.home_team || '') + ' (主) vs ' + (match.away_team || '') + ' (客)');
+            lines.push('赛事: ' + (match.league || '') + ' | 时间: ' + (match.date || '') + ' ' + (match.match_time || ''));
+            lines.push('共同对手数量: ' + (match.common_opponent_count || 0));
+            if (match.common_opponents && match.common_opponents.length) {
+                match.common_opponents.forEach(co => {
+                    lines.push('');
+                    lines.push('【共同对手: ' + (co.team_name || '') + '】');
+                    if (co.home_vs_matches && co.home_vs_matches.length) {
+                        lines.push(match.home_team + ' 对其战绩:');
+                        co.home_vs_matches.forEach(m => {
+                            lines.push('  ' + formatAiMatchLine(m, match.home_team));
+                        });
+                    }
+                    if (co.away_vs_matches && co.away_vs_matches.length) {
+                        lines.push(match.away_team + ' 对其战绩:');
+                        co.away_vs_matches.forEach(m => {
+                            lines.push('  ' + formatAiMatchLine(m, match.away_team));
+                        });
+                    }
+                });
+            }
+            // 直接交锋
+            if (match.direct_match_info && match.direct_match_info.match_count > 0) {
+                lines.push('');
+                lines.push('【直接交锋 ' + match.direct_match_info.match_count + ' 场】');
+                (match.direct_match_info.matches || []).forEach(m => {
+                    lines.push('  ' + formatAiMatchLine(m, match.home_team));
+                });
+            }
+            return lines.join('\n');
+        }
+
+        // 格式化一场比赛记录（含主队视角结果）
+        function formatAiMatchLine(m, highlightTeam) {
+            const parts = (m.fullCourtGoal || '?:?').split(':');
+            const homeScore = parts[0] || '?';
+            const awayScore = parts[1] || '?';
+            const halfParts = (m.halfTimeGoal || '').split(':');
+            const halfScore = (halfParts.length === 2) ? halfParts[0] + '-' + halfParts[1] : '-';
+            const result = getResultForTeam(highlightTeam, m);
+            return (m.matchDate || '') + ' ' + (m.homeTeamShortName || '-') + ' ' + homeScore + '-' + awayScore +
+                   ' (半场 ' + halfScore + ') ' + (m.awayTeamShortName || '-') +
+                   ' [' + (m.tournamentShortName || '') + '] 结果:' + result;
+        }
+
+        // 联网搜索（Tavily API，权重 40%）
+        async function webSearch(searchKey, home, away) {
+            const resp = await fetch('https://api.tavily.com/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    api_key: searchKey,
+                    query: home + ' vs ' + away + ' 足球 状态 伤病 近况 预测',
+                    search_depth: 'basic',
+                    max_results: 5,
+                    include_answer: true
+                })
+            });
+            if (!resp.ok) throw new Error('搜索服务错误 HTTP ' + resp.status);
+            const data = await resp.json();
+            let txt = (data.answer || '') + '\n';
+            (data.results || []).forEach(r => {
+                txt += '[' + (r.title || '') + '] ' + (r.content || '').slice(0, 400) + '\n';
+            });
+            return txt || '（未获取到有效搜索结果）';
+        }
+
+        // 调用 DeepSeek 分析（半场 + 全场）
+        async function callDeepSeek(apiKey, match, commonText, searchText) {
+            const prompt = [
+                '请对以下足球比赛进行专业分析，预测主队和客队的【半场】和【全场】比赛结果（胜/平/负）。',
+                '',
+                '【比赛信息】',
+                '对阵: ' + (match.home_team || '') + ' (主) vs ' + (match.away_team || '') + ' (客)',
+                '赛事: ' + (match.league || '') + ' | 时间: ' + (match.date || '') + ' ' + (match.match_time || ''),
+                '',
+                '【共同对手数据（权重 60%）】',
+                commonText,
+                '',
+                '【联网搜索信息（权重 40%）】',
+                searchText,
+                '',
+                '【分析要求】',
+                '1. 综合以上数据，分别预测【全场】和【半场】的胜平负结果（主队视角）。',
+                '2. 共同对手的历史比赛数据对结论的权重影响为 60%，联网搜索信息权重为 40%，请按此比例权衡。',
+                '3. 必须输出严格 JSON（不要任何多余文字），格式如下：',
+                '{',
+                '  "fulltime": {"pick": "胜", "confidence": 65, "reason": "全场预测理由（50字内）"},',
+                '  "halftime": {"pick": "平", "confidence": 50, "reason": "半场预测理由（50字内）"},',
+                '  "summary": "综合分析总结（120字内）"',
+                '}',
+                '注意: pick 只能为 "胜"、"平"、"负" 之一；confidence 为 0-100 的整数。'
+            ].join('\n');
+
+            const resp = await fetch('https://api.deepseek.com/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + apiKey
+                },
+                body: JSON.stringify({
+                    model: 'deepseek-chat',
+                    temperature: 0.3,
+                    response_format: { type: 'json_object' },
+                    messages: [
+                        { role: 'system', content: '你是资深的足球赛事分析师，擅长通过共同对手战绩和实时信息预测比赛结果。' },
+                        { role: 'user', content: prompt }
+                    ]
+                })
+            });
+            if (!resp.ok) {
+                const errText = await resp.text();
+                throw new Error('DeepSeek 调用失败 HTTP ' + resp.status + ' ' + errText.slice(0, 200));
+            }
+            const data = await resp.json();
+            const content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+            if (!content) throw new Error('DeepSeek 返回内容为空');
+            try {
+                return JSON.parse(content);
+            } catch (e) {
+                // 兼容返回被包裹的情况
+                const m = content.match(/\{[\s\S]*\}/);
+                if (m) return JSON.parse(m[0]);
+                throw new Error('AI 返回格式异常');
+            }
+        }
+
+        // 渲染 AI 分析结果
+        function renderAiResult(resultEl, ai) {
+            const pickColor = (p) => p === '胜' ? '#4caf50' : p === '负' ? '#f44336' : '#ff9800';
+            const box = (title, item) => `
+                <div class="ai-result-item">
+                    <div class="ai-result-label">${title}</div>
+                    <div class="ai-result-pick" style="color:${pickColor(item.pick)}">${item.pick}</div>
+                    <div class="ai-result-conf">把握度 ${item.confidence}%</div>
+                    <div class="ai-reason">${item.reason || ''}</div>
+                </div>`;
+            resultEl.innerHTML = `
+                <div class="ai-result-box">
+                    <div class="ai-result-header">
+                        <span>🤖 AI 智能分析结果</span>
+                        <span class="ai-weight-tag">共同对手60% · 联网40%</span>
+                    </div>
+                    <div class="ai-result-grid">
+                        ${box('全场结果', ai.fulltime || { pick: '-', confidence: 0, reason: '' })}
+                        ${box('半场结果', ai.halftime || { pick: '-', confidence: 0, reason: '' })}
+                    </div>
+                    <div class="ai-summary">${ai.summary || ''}</div>
+                    <div class="ai-meta">数据来源: DeepSeek · ${new Date().toLocaleTimeString()}</div>
+                </div>`;
+        }
 
     </script>
 </body>
