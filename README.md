@@ -1,9 +1,23 @@
 # 环境变量
+
+进入仓库 Settings → Secrets and variables → Actions → New repository secret ，新建 3 个：
 AI_PASSWORD 你的明文访问密码 
 
 DEEPSEEK_API_KEY 你的 DeepSeek 密钥 
 
 SEARCH_API_KEY Tavily 密钥（可选）
+
+
+GitHub 仓库 Secrets（AI_PASSWORD / DEEPSEEK_API_KEY / SEARCH_API_KEY，明文）
+   │  手动触发 workflow
+   ▼
+encrypt_ai_config.js 读取环境变量 → AES-256-GCM 加密（主密钥 SHA-256 派生）
+   ▼
+写入 spf/ai_config.json（密文，自动 commit 回仓库）
+   ▼
+前端 fenxi.html fetch ./spf/ai_config.json
+   ▼
+前端用同一主密钥解密 → 比对密码 → 正确才调 DeepSeek 分析
 
 # Football_y
 backup是旧版，根目录正在应用的则是新版，
