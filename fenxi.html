@@ -3011,23 +3011,18 @@
             return headers;
         }
 
-        function b64ToUtf8(b64) {
-            const bin = atob(b64);
-            const bytes = new Uint8Array(bin.length);
-            for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-            return new TextDecoder().decode(bytes);
-        }
-
-        // 读取某场比赛的独立结果文件 {match_num}ai_results.json（公开仓库无需 token 也可读取，不存在返回空结构）
+        // 读取某场比赛的独立结果文件 {match_num}ai_results.json（公开仓库无需 token 也可读取，不存在返回空结构）。
+        // 用 raw.githubusercontent.com 直接读取文件原文，避免 api.github.com/contents 的匿名限额
+        // （60 次/小时/IP），否则页面加载时逐场读取结果文件会很快触发 HTTP 403。
+        // 注意：不携带 Authorization 头（raw 匿名即可读公开仓库，避免 CORS 预检问题）。
         async function readMatchResultFromRepo(match_num) {
             const cfg = getGhConfig();
             if (!cfg.owner || !cfg.repo || !match_num) return { updated_at: '', results: [] };
-            const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${matchResultPath(match_num)}`;
-            const resp = await fetch(url, { headers: ghHeaders(cfg) });
+            const url = `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/main/${matchResultPath(match_num)}`;
+            const resp = await fetch(url);
             if (resp.status === 404) return { updated_at: '', results: [] };
             if (!resp.ok) throw new Error('读取远程结果失败 HTTP ' + resp.status);
-            const meta = await resp.json();
-            const content = b64ToUtf8(meta.content);
+            const content = await resp.text();
             try {
                 const obj = JSON.parse(content);
                 if (Array.isArray(obj)) return { updated_at: '', results: obj };
