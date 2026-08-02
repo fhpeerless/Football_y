@@ -82,8 +82,22 @@ jobs:
           exit 0
         }
 
-        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}" || {
-          echo "第一次push失败，等待3秒后重试..."
-          sleep 3
-          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
-        }
+        # 远端 main 可能被本地 sync_to_github.py 强推改写、或与其他工作流并发，
+        # 直接 push 会因历史分叉被拒；失败时先 fetch + rebase 远端再重试
+        PUSH_URL="https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+        for attempt in 1 2 3; do
+          echo "第 ${attempt} 次尝试 push..."
+          if git push "$PUSH_URL" "HEAD:${{ github.ref_name }}"; then
+            echo "push 成功"
+            exit 0
+          fi
+          echo "push 失败，拉取远端最新代码并变基后重试..."
+          git fetch "$PUSH_URL" "${{ github.ref_name }}" || exit 1
+          if ! git rebase FETCH_HEAD; then
+            echo "与远端代码冲突，自动变基失败（远端未受影响，可稍后运行本地 sync_to_github.py 合并同步）"
+            git rebase --abort
+            exit 1
+          fi
+        done
+        echo "push 连续 3 次失败，工作流退出"
+        exit 1
