@@ -3045,11 +3045,11 @@
                 '2. 共同对手的历史比赛数据对结论的权重影响为 60%，联网搜索信息权重为 40%，请按此比例权衡。',
                 '3. 必须输出严格 JSON（不要任何多余文字），格式如下：',
                 '{',
-                '  "fulltime": {"pick": "胜", "confidence": 65, "reason": "全场预测理由（50字内）"},',
-                '  "halftime": {"pick": "平", "confidence": 50, "reason": "半场预测理由（50字内）"},',
+                '  "fulltime": [{"pick": "胜", "confidence": 65, "reason": "全场第一可能结果理由（50字内）"}, {"pick": "平", "confidence": 25, "reason": "全场第二可能结果理由（50字内）"}],',
+                '  "halftime": [{"pick": "平", "confidence": 50, "reason": "半场第一可能结果理由（50字内）"}, {"pick": "负", "confidence": 30, "reason": "半场第二可能结果理由（50字内）"}],',
                 '  "summary": "综合分析总结（120字内）"',
                 '}',
-                '注意: pick 只能为 "胜"、"平"、"负" 之一；confidence 为 0-100 的整数。'
+                '注意: pick 只能为 "胜"、"平"、"负" 之一；confidence 为 0-100 的整数；fulltime 和 halftime 各输出两个最可能的结果，按可能性从高到低排列。'
             ].join('\n');
 
             const resp = await fetch('https://api.deepseek.com/chat/completions', {
@@ -3059,7 +3059,7 @@
                     'Authorization': 'Bearer ' + apiKey
                 },
                 body: JSON.stringify({
-                    model: 'deepseek-chat',
+                    model: 'deepseek-v4-pro',
                     temperature: 0.3,
                     response_format: { type: 'json_object' },
                     messages: [
@@ -3088,13 +3088,19 @@
         // 渲染 AI 分析结果
         function renderAiResult(resultEl, ai) {
             const pickColor = (p) => p === '胜' ? '#4caf50' : p === '负' ? '#f44336' : '#ff9800';
-            const box = (title, item) => `
-                <div class="ai-result-item">
-                    <div class="ai-result-label">${title}</div>
-                    <div class="ai-result-pick" style="color:${pickColor(item.pick)}">${item.pick}</div>
-                    <div class="ai-result-conf">把握度 ${item.confidence}%</div>
-                    <div class="ai-reason">${item.reason || ''}</div>
-                </div>`;
+            // 兼容数组（两个结果）与旧对象（单个结果）两种格式
+            const box = (title, items, fallback) => {
+                const arr = Array.isArray(items) ? items : (items ? [items] : [fallback]);
+                const two = arr.length > 1;
+                return `
+                    <div class="ai-result-item">
+                        <div class="ai-result-label">${title}</div>
+                        ${arr.map((item, i) => `
+                            <div class="ai-result-pick" style="color:${pickColor(item.pick)}">${two ? (i === 0 ? '主推 ' : '次推 ') : ''}${item.pick}</div>
+                            <div class="ai-result-conf">把握度 ${item.confidence}%</div>
+                            <div class="ai-reason">${item.reason || ''}</div>`).join('')}
+                    </div>`;
+            };
             resultEl.innerHTML = `
                 <div class="ai-result-box">
                     <div class="ai-result-header">
@@ -3102,8 +3108,8 @@
                         <span class="ai-weight-tag">共同对手60% · 联网40%</span>
                     </div>
                     <div class="ai-result-grid">
-                        ${box('全场结果', ai.fulltime || { pick: '-', confidence: 0, reason: '' })}
-                        ${box('半场结果', ai.halftime || { pick: '-', confidence: 0, reason: '' })}
+                        ${box('全场结果', ai.fulltime, { pick: '-', confidence: 0, reason: '' })}
+                        ${box('半场结果', ai.halftime, { pick: '-', confidence: 0, reason: '' })}
                     </div>
                     <div class="ai-summary">${ai.summary || ''}</div>
                     <div class="ai-meta">数据来源: DeepSeek · ${new Date().toLocaleTimeString()}</div>
