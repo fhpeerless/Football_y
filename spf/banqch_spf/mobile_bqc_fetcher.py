@@ -55,6 +55,24 @@ API_URL = (
     "getMatchCalculatorV1.qry?channel=c&poolCode=hafu"
 )
 
+# 北京时间时区（竞彩开赛时间按北京时间，爬虫需以北京时间为准）
+BJ_TZ = timezone(timedelta(hours=8))
+
+
+def is_match_expired(match_date: str, match_time: str) -> bool:
+    """
+    判断场次是否已过期（开赛时间早于当前北京时间）
+
+    网页只展示尚未开赛的在售场次；防御性剔除已开赛/已过期的场次，
+    避免 API 在跨期滚动销售时仍返回已过期的期次数据。
+    """
+    try:
+        kickoff = datetime.strptime(f"{match_date} {match_time}", "%Y-%m-%d %H:%M:%S").replace(tzinfo=BJ_TZ)
+        return kickoff < datetime.now(BJ_TZ)
+    except ValueError:
+        # 日期格式异常时不拦截，保留该场次
+        return False
+
 # API编码(h/d/a) 到 前端编码(a/b/c) 的映射
 # API: h=主胜, d=平, a=客胜
 # 前端: a=胜(3), c=平(1), b=负(0)
@@ -145,6 +163,12 @@ def parse_matches(data: dict) -> list:
             match_date = m.get("matchDate", "")
             match_time = m.get("matchTime", "")
             match_status = m.get("matchStatus", "")
+
+            # 跳过已过期的场次（与网页在售列表同步）
+            if is_match_expired(match_date, match_time):
+                print(f"  [跳过已过期场次] {m.get('matchNumStr', '')}: "
+                      f"{m.get('homeTeamAbbName', '')} vs {m.get('awayTeamAbbName', '')} ({match_date} {match_time})")
+                continue
 
             # 基础信息
             base_info = {
@@ -244,8 +268,7 @@ def save_to_data_file(matches: list[dict], filename: str):
 
 def main():
     # 获取今天的文件名标记（如 7.19）
-    bj_tz = timezone(timedelta(hours=8))
-    today = datetime.now(bj_tz)
+    today = datetime.now(BJ_TZ)
     date_tag = f"{today.month}.{today.day}"
 
     print(f"日期标记: {date_tag}")
