@@ -53,7 +53,8 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        git add ai_results.json
+        # 每场比赛一个独立结果文件（{match_num}ai_results.json），通配符一次提交所有结果文件
+        git add "*ai_results.json"
 
         git commit -m "更新 AI 分析结果" || {
           echo "没有更改可提交，跳过push步骤"

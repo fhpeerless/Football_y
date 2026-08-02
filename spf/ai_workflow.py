@@ -7,7 +7,7 @@ spf/ai_workflow.py - 云端 AI 分析工作流脚本（由 GitHub Actions 的 sp
   2. 组装共同对手数据文本（复刻 fenxi.html 的 collectCommonData）
   3. 可选 Tavily 联网搜索（环境变量 TAVILY_API_KEY）
   4. 调用 DeepSeek 分析（环境变量 DEEPSEEK_API_KEY）
-  5. 结果合并写入仓库根目录 ai_results.json（与浏览器端保存格式一致）
+  5. 结果写入仓库根目录 {match_num}ai_results.json（每场比赛一个独立文件，避免错乱）
 
 用法（在 football_y1 目录下）:
   python spf/ai_workflow.py --match-num 1001
@@ -24,6 +24,11 @@ from datetime import datetime, timezone
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # football_y1/
 COMMON_MATCH_PATH = os.path.join(BASE_DIR, "spf", "data", "common_match.json")
 AI_RESULTS_PATH = os.path.join(BASE_DIR, "ai_results.json")
+
+
+def result_path(match_num):
+    """按比赛编号生成独立结果文件：{match_num}ai_results.json"""
+    return os.path.join(BASE_DIR, str(match_num) + "ai_results.json")
 
 DEEPSEEK_MODEL = "deepseek-v4-pro"
 
@@ -180,12 +185,13 @@ def entry_time(entry):
     return str(entry.get("updated_at_iso") or entry.get("updated_at") or entry.get("created_at") or "")
 
 
-def load_local_results():
-    """读取仓库根目录 ai_results.json（不存在返回空结构）。"""
-    if not os.path.isfile(AI_RESULTS_PATH):
+def load_local_results(path=None):
+    """读取结果文件（不存在返回空结构）。"""
+    path = path or AI_RESULTS_PATH
+    if not os.path.isfile(path):
         return {"updated_at": "", "results": []}
     try:
-        with open(AI_RESULTS_PATH, "r", encoding="utf-8") as f:
+        with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
         if isinstance(data, dict) and isinstance(data.get("results"), list):
             return data
@@ -194,9 +200,14 @@ def load_local_results():
     return {"updated_at": "", "results": []}
 
 
-def save_entry(entry):
-    """按 match_num/主客队去重合并后写入 ai_results.json（格式与浏览器端一致）。"""
-    data = load_local_results()
+def save_entry(entry, path=None):
+    """按 match_num/主客队去重合并后写入结果文件（格式与浏览器端一致）。
+
+    path 为 None 时写入默认的 ai_results.json；传入每场比赛的独立文件路径时
+    （{match_num}ai_results.json）只包含该场比赛的结果，天然隔离不同场次。
+    """
+    path = path or AI_RESULTS_PATH
+    data = load_local_results(path)
     results = data["results"]
     key = entry_key(entry)
     replaced = False
@@ -209,9 +220,9 @@ def save_entry(entry):
         results.append(entry)
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     payload = {"updated_at": now_str, "results": results}
-    with open(AI_RESULTS_PATH, "w", encoding="utf-8") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
-    print("结果已写入: {}".format(AI_RESULTS_PATH))
+    print("结果已写入: {}".format(path))
 
 
 def find_match(matches, args):
@@ -275,7 +286,7 @@ def main():
         print("错误: AI 返回结构不符合预期", file=sys.stderr)
         sys.exit(1)
 
-    # 5. 合并写入 ai_results.json
+    # 5. 按 match_num 命名独立结果文件：{match_num}ai_results.json（无 match_num 时回退 ai_results.json）
     now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     entry = {
@@ -289,7 +300,8 @@ def main():
         "updated_at": now_str,
         "updated_at_iso": now_iso,
     }
-    save_entry(entry)
+    target_path = result_path(entry["match_num"]) if entry.get("match_num") else AI_RESULTS_PATH
+    save_entry(entry, target_path)
     print("AI 分析完成: {} vs {} -> {}".format(home, away, json.dumps(ai, ensure_ascii=False)[:120]))
 
 

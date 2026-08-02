@@ -2947,7 +2947,7 @@
                 // 3. 从仓库读取工作流保存的分析结果并渲染
                 resultEl.innerHTML = '<div class="ai-loading">🤖 分析完成，正在读取结果...</div>';
                 const ai = await fetchAiResultFromRepo(idx, match);
-                if (!ai) throw new Error('未在 ai_results.json 中找到本次分析结果');
+                if (!ai) throw new Error('未找到本次比赛的分析结果文件 ' + matchResultPath(match.match_num));
                 renderAiResult(resultEl, ai);
             } catch (e) {
                 resultEl.innerHTML = '<div class="ai-error">AI 分析失败: ' + (e.message || '未知错误') + '</div>';
@@ -2987,14 +2987,14 @@
 
         // ========== GitHub 工作流触发与结果读取功能 ==========
         // 说明：AI 分析由云端 GitHub Actions 工作流执行（spf_ai.yml），调用 DeepSeek 分析后将结果
-        //       保存回仓库根目录的 ai_results.json；网页端仅负责触发工作流、轮询状态并读取结果展示。
-        const GH_RESULTS_PATH = 'ai_results.json';
+        //       保存回仓库根目录的 {match_num}ai_results.json（每场比赛对应一个独立结果文件，避免错乱）；
+        //       网页端仅负责触发工作流、轮询状态并读取对应比赛的结果展示。
+        // 每场比赛对应一个独立结果文件：{match_num}ai_results.json
+        function matchResultPath(match_num) { return String(match_num) + 'ai_results.json'; }
         const GH_WORKFLOW_FILE = 'spf_ai.yml';
         const GH_OWNER = 'fhpeerless';   // 仓库所有者（公开信息）
         const GH_REPO = 'Football_y';    // 仓库名称（公开信息）
         let _ghTokenCache = '';          // 密码验证通过后解密得到的 GitHub Token（仅内存缓存，不落盘）
-        let _ghResultsCache = null;      // 已加载/已合并的远程结果 {updated_at, results: [...]}
-        let _ghResultsCacheTime = 0;
 
         // 读取 GitHub 配置：owner/repo 固定为当前仓库，token 来自 ai_config.json 的 github_token 字段。
         // 该字段由 encrypt-ai-config 工作流用仓库 Secrets: GH_TOKEN 加密生成，网页端密码验证后自动解密获取，
@@ -3018,11 +3018,11 @@
             return new TextDecoder().decode(bytes);
         }
 
-        // 读取远程 ai_results.json（公开仓库无需 token 也可读取，不存在返回空结构）
-        async function readAiResultsFromRepo() {
+        // 读取某场比赛的独立结果文件 {match_num}ai_results.json（公开仓库无需 token 也可读取，不存在返回空结构）
+        async function readMatchResultFromRepo(match_num) {
             const cfg = getGhConfig();
-            if (!cfg.owner || !cfg.repo) return null;
-            const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${GH_RESULTS_PATH}`;
+            if (!cfg.owner || !cfg.repo || !match_num) return { updated_at: '', results: [] };
+            const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${matchResultPath(match_num)}`;
             const resp = await fetch(url, { headers: ghHeaders(cfg) });
             if (resp.status === 404) return { updated_at: '', results: [] };
             if (!resp.ok) throw new Error('读取远程结果失败 HTTP ' + resp.status);
@@ -3083,10 +3083,9 @@
             throw new Error('等待工作流超时（' + Math.round(maxWait / 1000) + ' 秒），请到 Actions 页面查看进度');
         }
 
-        // 工作流完成后，从仓库 ai_results.json 中按 match_num / 主客队名匹配并返回本次分析结果
+        // 工作流完成后，直接读取该场比赛的独立结果文件 {match_num}ai_results.json 并返回 ai 分析结果
         async function fetchAiResultFromRepo(idx, match) {
-            _ghResultsCache = null; // 失效缓存，强制重新读取
-            const remote = await readAiResultsFromRepo();
+            const remote = await readMatchResultFromRepo(match.match_num);
             const results = (remote && remote.results) || [];
             const target = results.find(r =>
                 (r.match_num && String(r.match_num) === String(match.match_num)) ||
@@ -3095,36 +3094,27 @@
             return target ? target.ai : null;
         }
 
-        // 渲染完成后回填已保存的 AI 结果（按 match_num / 主客队名匹配）
+        // 渲染完成后回填已保存的 AI 结果（每场比赛一个独立结果文件，逐场读取）
         // 公开仓库读取无需 token：页面加载时即可自动显示工作流已保存的分析结果
         async function backfillAiResults() {
             const cfg = getGhConfig();
             if (!cfg.owner || !cfg.repo) return;
-            try {
-                if (!_ghResultsCache || Date.now() - _ghResultsCacheTime > 60000) {
-                    _ghResultsCache = await readAiResultsFromRepo();
-                    _ghResultsCacheTime = Date.now();
-                }
-                const results = (_ghResultsCache && _ghResultsCache.results) || [];
-                if (results.length === 0) return;
-                const matches = window._spfMatchesCache || [];
-                results.forEach(r => {
-                    if (!r.ai) return;
-                    let idx = -1;
-                    if (r.match_num) {
-                        idx = matches.findIndex(m => String(m.match_num) === String(r.match_num));
-                    }
-                    if (idx < 0) {
-                        idx = matches.findIndex(m => m.home_team === r.home_team && m.away_team === r.away_team);
-                    }
-                    if (idx >= 0) {
+            const matches = window._spfMatchesCache || [];
+            if (matches.length === 0) return;
+            await Promise.all(matches.map(async (match, idx) => {
+                if (!match.match_num) return;
+                try {
+                    const remote = await readMatchResultFromRepo(match.match_num);
+                    const results = (remote && remote.results) || [];
+                    const r = results.find(x => x.ai && String(x.match_num) === String(match.match_num));
+                    if (r) {
                         const el = document.getElementById('ai-result-' + idx);
                         if (el) renderAiResult(el, r.ai);
                     }
-                });
-            } catch (e) {
-                console.warn('AI 结果回填失败（不影响页面）:', e.message);
-            }
+                } catch (e) {
+                    console.warn('读取 AI 结果失败（不影响页面）:', e.message);
+                }
+            }));
         }
 
     </script>
