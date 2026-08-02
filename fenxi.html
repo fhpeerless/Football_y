@@ -2093,6 +2093,12 @@
                 spfCommonBody.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">暂无共同对手数据</p>';
                 return;
             }
+            // 按比赛时间（日期+开赛时间）从早到晚排列
+            matches.sort((a, b) => {
+                const ta = (a.date || '') + ' ' + (a.match_time || '');
+                const tb = (b.date || '') + ' ' + (b.match_time || '');
+                return ta.localeCompare(tb);
+            });
             
             let html = `<p style="margin-bottom: 20px; opacity: 0.8;">生成时间: ${data.generate_time || '未知'} | 总比赛数: ${data.total_matches || matches.length}</p>`;
             
