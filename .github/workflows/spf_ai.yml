@@ -1,0 +1,67 @@
+name: SPF AI 分析
+
+on:
+  workflow_dispatch:
+    inputs:
+      match_num:
+        description: '比赛编号（match_num）'
+        required: false
+        default: ''
+        type: string
+      home:
+        description: '主队名称'
+        required: false
+        default: ''
+        type: string
+      away:
+        description: '客队名称'
+        required: false
+        default: ''
+        type: string
+
+jobs:
+  ai-analysis:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        persist-credentials: true
+        fetch-depth: 0
+
+    - name: 设置 Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 运行 AI 分析（DeepSeek）
+      run: |
+        python spf/ai_workflow.py \
+          --match-num "${{ inputs.match_num }}" \
+          --home "${{ inputs.home }}" \
+          --away "${{ inputs.away }}"
+
+    - name: 提交 AI 分析结果到仓库
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+        git add ai_results.json
+
+        git commit -m "更新 AI 分析结果" || {
+          echo "没有更改可提交，跳过push步骤"
+          exit 0
+        }
+
+        git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}" || {
+          echo "第一次push失败，等待3秒后重试..."
+          sleep 3
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:${{ github.ref_name }}"
+        }
