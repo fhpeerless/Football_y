@@ -1,19 +1,29 @@
 {
   "version": 2,
-  "created": "2026-08-01T13:38:51.486Z",
+  "created": "2026-08-02T07:17:14.234Z",
   "kdf": {
     "algo": "PBKDF2-SHA256",
     "iterations": 600000,
-    "salt": "jdNbmsyX2P0MHadXA5Dj0A=="
+    "salt": "of+kf4JQiM2bux7oBUjFug=="
   },
   "password_check": {
-    "iv": "m3pn6bVmg+oqvxHK",
-    "tag": "qMMuvzf30h6g7TJyv8LFAw==",
-    "data": "ebo="
+    "iv": "m+sz46KrEUrArO3p",
+    "tag": "X6P29m53bfjpK7RYRmAz8w==",
+    "data": "qdQ="
   },
   "deepseek_key": {
-    "iv": "wDPo5rI0FIFLec62",
-    "tag": "yzUpzzPQkV67gq2cIcfHQQ==",
-    "data": "uhWVUnVEoWkiXWqMbDOlfmMHhvGB9plH"
+    "iv": "Uk/PsMO57B93uKDm",
+    "tag": "4n9vTZmVNEyDaw7f5oUeww==",
+    "data": "DFfn8jm9ny46DjBPqCIRJyUXGJWRbtE0Qwanl2Osp4dWTOQ="
+  },
+  "search_key": {
+    "iv": "g79rQ9EEGQVRYOOh",
+    "tag": "pXa3CntfLJ3Jufh/ZifIrg==",
+    "data": "qPlpw4RoaAdrcgYe0Xavd1mNQtYL9fWgBNd7pbtPxB0QY+jAWmlZKRgccO1/NNWl9m6Ujqfr6y3F2g=="
+  },
+  "github_token": {
+    "iv": "Y34ujiH/8BNbSIDm",
+    "tag": "PQS/nVSmlJFqv1faio3nuQ==",
+    "data": "Vy76+/kMdx3+7YzIYBJBL8jULX7JS1v5HzaYEl4ALb30bqUe00+HFabyrcy/A3WoPmkiaGFi7rGbvytckhQzNhUTbw7IDO7Lph63hRNss3i8k1ak+ho3Etme3elH"
   }
 }
