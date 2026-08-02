@@ -15,6 +15,10 @@ on:
         description: 'Tavily 搜索 Key（可选，留空则使用 Secret: SEARCH_API_KEY）'
         required: false
         type: string
+      gh_token:
+        description: 'GitHub Token（可选，留空则使用 Secret: GH_TOKEN，用于网页触发 AI 分析工作流）'
+        required: false
+        type: string
 
 jobs:
   encrypt-ai-config:
@@ -36,6 +40,7 @@ jobs:
         AI_CONFIG_PASSWORD: ${{ inputs.password || secrets.AI_PASSWORD }}
         DEEPSEEK_API_KEY: ${{ inputs.deepseek_key || secrets.DEEPSEEK_API_KEY }}
         SEARCH_API_KEY: ${{ inputs.search_key || secrets.SEARCH_API_KEY }}
+        GH_TOKEN: ${{ inputs.gh_token || secrets.GH_TOKEN }}
       run: node encrypt_ai_config.js
 
     - name: 提交 ai_config.json 到仓库

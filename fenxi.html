@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -915,9 +915,6 @@
                         <button id="loadCommonMatchBtn">
                             <i class="fas fa-sync-alt"></i> 加载共同对手数据
                         </button>
-                        <button onclick="openGhModal()" class="secondary" style="flex: 0 0 auto;">
-                            <i class="fas fa-cloud-upload-alt"></i> 结果同步
-                        </button>
                     </div>
                     <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
                         加载 spf/data/common_match.json 中的共同对手分析数据
@@ -1054,36 +1051,13 @@
 <div id="aiPasswordModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; backdrop-filter: blur(3px);">
     <div style="width: 350px; max-width: 92vw; background: linear-gradient(135deg, #1a237e, #311b92); border: 1px solid rgba(0,188,212,0.3); border-radius: 16px; padding: 28px 26px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
         <div style="font-size: 1.15rem; font-weight: 700; color: #00bcd4; margin-bottom: 6px; text-align: center;">🤖 AI 智能分析</div>
-        <div style="font-size: 0.8em; opacity: 0.7; text-align: center; margin-bottom: 20px;">请输入访问密码以解锁 DeepSeek 分析</div>
+        <div style="font-size: 0.8em; opacity: 0.7; text-align: center; margin-bottom: 20px;">请输入访问密码，解锁后自动获取仓库 GitHub Token 并触发云端 AI 分析（无需手动设置 Token）</div>
         <input id="aiPasswordInput" type="password" placeholder="请输入密码"
                style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(0,188,212,0.3); background:rgba(255,255,255,0.08); color:#fff; font-size:1rem; box-sizing:border-box;" />
         <div id="aiPasswordError" style="display:none; color:#f44336; font-size:0.8em; margin-top:8px; text-align:center;"></div>
         <div style="display:flex; gap:10px; margin-top:22px;">
             <button onclick="closeAiModal()" style="flex:1; padding:11px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:#bbb; cursor:pointer; font-weight:600; font-size:0.95rem;">取消</button>
             <button id="aiPasswordBtn" onclick="confirmAiPassword()" style="flex:1; padding:11px 0; border-radius:8px; border:none; background:linear-gradient(135deg,#00bcd4,#00838f); color:#fff; cursor:pointer; font-weight:700; font-size:0.95rem;">确认分析</button>
-        </div>
-    </div>
-</div>
-
-<!-- ====== GitHub 工作流设置弹窗 ====== -->
-<div id="ghModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; backdrop-filter: blur(3px);">
-    <div style="width: 420px; max-width: 92vw; background: linear-gradient(135deg, #1a237e, #311b92); border: 1px solid rgba(0,188,212,0.3); border-radius: 16px; padding: 28px 26px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
-        <div style="font-size: 1.15rem; font-weight: 700; color: #00bcd4; margin-bottom: 6px; text-align: center;">☁️ GitHub 工作流设置</div>
-        <div style="font-size: 0.8em; opacity: 0.7; text-align: center; margin-bottom: 20px;">AI 分析由云端工作流执行（spf_ai.yml），结果保存到仓库根目录 ai_results.json</div>
-        <label style="display:block; margin-bottom: 6px; font-size: 0.85em; color: #bbdefb;">仓库所有者 (owner)</label>
-        <input id="ghOwnerInput" type="text" placeholder="例如: fhpeerless"
-               style="width:100%; padding:11px 14px; border-radius:8px; border:1px solid rgba(0,188,212,0.3); background:rgba(255,255,255,0.08); color:#fff; font-size:0.95rem; box-sizing:border-box; margin-bottom: 12px;" />
-        <label style="display:block; margin-bottom: 6px; font-size: 0.85em; color: #bbdefb;">仓库名称 (repo)</label>
-        <input id="ghRepoInput" type="text" placeholder="例如: Football_y"
-               style="width:100%; padding:11px 14px; border-radius:8px; border:1px solid rgba(0,188,212,0.3); background:rgba(255,255,255,0.08); color:#fff; font-size:0.95rem; box-sizing:border-box; margin-bottom: 12px;" />
-        <label style="display:block; margin-bottom: 6px; font-size: 0.85em; color: #bbdefb;">访问 Token（仅保存在本机浏览器 localStorage）</label>
-        <input id="ghTokenInput" type="password" placeholder="GitHub Personal Access Token"
-               style="width:100%; padding:11px 14px; border-radius:8px; border:1px solid rgba(0,188,212,0.3); background:rgba(255,255,255,0.08); color:#fff; font-size:0.95rem; box-sizing:border-box;" />
-        <div id="ghModalMsg" style="display:none; font-size:0.85em; margin-top:10px; text-align:center;"></div>
-        <div style="display:flex; gap:10px; margin-top:22px;">
-            <button onclick="closeGhModal()" style="flex:1; padding:11px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:#bbb; cursor:pointer; font-weight:600; font-size:0.95rem;">取消</button>
-            <button onclick="testGhConnection()" style="flex:1; padding:11px 0; border-radius:8px; border:1px solid rgba(0,188,212,0.4); background:rgba(0,188,212,0.12); color:#00bcd4; cursor:pointer; font-weight:600; font-size:0.95rem;">测试连接</button>
-            <button onclick="saveGhSettings()" style="flex:1; padding:11px 0; border-radius:8px; border:none; background:linear-gradient(135deg,#00bcd4,#00838f); color:#fff; cursor:pointer; font-weight:700; font-size:0.95rem;">保存设置</button>
         </div>
     </div>
 </div>
@@ -2850,7 +2824,7 @@
         async function loadAiConfig() {
             if (aiCfg) return aiCfg;
             const resp = await fetch(AI_CONFIG_PATH + '?t=' + Date.now());
-            if (!resp.ok) throw new Error('未找到 ai_config.json，请先运行 git/ai_setup.js 生成加密配置');
+            if (!resp.ok) throw new Error('未找到 ai_config.json，请先运行 encrypt-ai-config 工作流生成加密配置');
             aiCfg = await resp.json();
             return aiCfg;
         }
@@ -2876,7 +2850,7 @@
             );
         }
 
-        // 解密 {iv, tag, data} 三段式 AES-256-GCM 密文（与 ai_setup.js encrypt() 对称）
+        // 解密 {iv, tag, data} 三段式 AES-256-GCM 密文（与 encrypt_ai_config.js encrypt() 对称）
         async function aesDecrypt(obj, key) {
             const b64ToBytes = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
             const iv = b64ToBytes(obj.iv);
@@ -2922,6 +2896,13 @@
                     throw new Error('密码错误，请重试');
                 }
                 if (marker !== 'OK') throw new Error('密码错误，请重试');
+                // 密码验证通过后，自动解密 GitHub Token（由仓库 Secrets: GH_TOKEN 加密而来），
+                // 用于触发 AI 分析工作流 —— 无需在网页中手动填写/保存 Token
+                try {
+                    if (cfg.github_token) _ghTokenCache = await aesDecrypt(cfg.github_token, aiCryptoKey);
+                } catch (e) {
+                    _ghTokenCache = '';
+                }
                 closeAiModal();
                 await runAiAnalysis(window._aiTargetIdx);
             } catch (e) {
@@ -2936,11 +2917,6 @@
 
         // 回车确认 / ESC 关闭
         document.addEventListener('keydown', (e) => {
-            const ghModal = document.getElementById('ghModal');
-            if (ghModal && ghModal.style.display === 'flex') {
-                if (e.key === 'Escape') closeGhModal();
-                return;
-            }
             const modal = document.getElementById('aiPasswordModal');
             if (!modal || modal.style.display !== 'flex') return;
             if (e.key === 'Enter') confirmAiPassword();
@@ -3013,93 +2989,18 @@
         // 说明：AI 分析由云端 GitHub Actions 工作流执行（spf_ai.yml），调用 DeepSeek 分析后将结果
         //       保存回仓库根目录的 ai_results.json；网页端仅负责触发工作流、轮询状态并读取结果展示。
         const GH_RESULTS_PATH = 'ai_results.json';
-        const GH_STORAGE_KEY = 'gh_sync_config';
         const GH_WORKFLOW_FILE = 'spf_ai.yml';
+        const GH_OWNER = 'fhpeerless';   // 仓库所有者（公开信息）
+        const GH_REPO = 'Football_y';    // 仓库名称（公开信息）
+        let _ghTokenCache = '';          // 密码验证通过后解密得到的 GitHub Token（仅内存缓存，不落盘）
         let _ghResultsCache = null;      // 已加载/已合并的远程结果 {updated_at, results: [...]}
         let _ghResultsCacheTime = 0;
 
-        // 读取本地保存的 GitHub 配置
+        // 读取 GitHub 配置：owner/repo 固定为当前仓库，token 来自 ai_config.json 的 github_token 字段。
+        // 该字段由 encrypt-ai-config 工作流用仓库 Secrets: GH_TOKEN 加密生成，网页端密码验证后自动解密获取，
+        // 无需在网页中手动填写/保存 Token。
         function getGhConfig() {
-            try {
-                const raw = localStorage.getItem(GH_STORAGE_KEY);
-                if (raw) {
-                    const cfg = JSON.parse(raw);
-                    if (cfg.owner && cfg.repo) return cfg;
-                }
-            } catch (e) {}
-            return { owner: 'fhpeerless', repo: 'Football_y', token: '' };
-        }
-
-        // ---- 设置弹窗 ----
-        function openGhModal() {
-            const cfg = getGhConfig();
-            document.getElementById('ghOwnerInput').value = cfg.owner || '';
-            document.getElementById('ghRepoInput').value = cfg.repo || '';
-            document.getElementById('ghTokenInput').value = cfg.token || '';
-            const msg = document.getElementById('ghModalMsg');
-            msg.textContent = '';
-            msg.style.display = 'none';
-            document.getElementById('ghModal').style.display = 'flex';
-            setTimeout(() => document.getElementById('ghOwnerInput').focus(), 60);
-        }
-
-        function closeGhModal() {
-            document.getElementById('ghModal').style.display = 'none';
-        }
-
-        function ghModalMsg(text, color) {
-            const msg = document.getElementById('ghModalMsg');
-            msg.textContent = text;
-            msg.style.color = color || '#00bcd4';
-            msg.style.display = 'block';
-        }
-
-        function readGhForm() {
-            return {
-                owner: document.getElementById('ghOwnerInput').value.trim(),
-                repo: document.getElementById('ghRepoInput').value.trim(),
-                token: document.getElementById('ghTokenInput').value.trim()
-            };
-        }
-
-        // 测试 GitHub 连接
-        async function testGhConnection() {
-            const cfg = readGhForm();
-            if (!cfg.owner || !cfg.repo || !cfg.token) {
-                ghModalMsg('请填写完整的仓库信息和 Token', '#f44336');
-                return;
-            }
-            ghModalMsg('⏳ 正在连接...', '#ff9800');
-            try {
-                const resp = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}`, {
-                    headers: { 'Authorization': 'Bearer ' + cfg.token, 'Accept': 'application/vnd.github+json' }
-                });
-                if (resp.ok) {
-                    ghModalMsg('✅ 连接成功，仓库可访问', '#4caf50');
-                } else if (resp.status === 404) {
-                    ghModalMsg('连接失败: HTTP 404（仓库不存在或 Token 无权限）', '#f44336');
-                } else if (resp.status === 401) {
-                    ghModalMsg('连接失败: HTTP 401（Token 无效或已过期）', '#f44336');
-                } else {
-                    ghModalMsg('连接失败: HTTP ' + resp.status, '#f44336');
-                }
-            } catch (e) {
-                ghModalMsg('连接失败: ' + (e.message || '网络错误'), '#f44336');
-            }
-        }
-
-        // 保存 GitHub 配置到 localStorage
-        function saveGhSettings() {
-            const cfg = readGhForm();
-            if (!cfg.owner || !cfg.repo || !cfg.token) {
-                ghModalMsg('请填写完整的仓库信息和 Token', '#f44336');
-                return;
-            }
-            localStorage.setItem(GH_STORAGE_KEY, JSON.stringify(cfg));
-            // 配置变更后失效缓存，下次自动重新读取
-            _ghResultsCache = null;
-            ghModalMsg('✅ 已保存到本地', '#4caf50');
-            setTimeout(closeGhModal, 800);
+            return { owner: GH_OWNER, repo: GH_REPO, token: _ghTokenCache || '' };
         }
 
         // ---- 工作流触发与结果读取 ----
@@ -3137,7 +3038,7 @@
         async function triggerAiWorkflow(idx) {
             const cfg = getGhConfig();
             if (!cfg.owner || !cfg.repo || !cfg.token) {
-                throw new Error('未配置 GitHub Token，请点击「GitHub 设置」填写后重试');
+                throw new Error('未获取到 GitHub Token，请先在仓库 Secrets 配置 GH_TOKEN，并运行 encrypt-ai-config 工作流重新生成 ai_config.json');
             }
             const match = (window._spfMatchesCache || [])[idx];
             const inputs = {};

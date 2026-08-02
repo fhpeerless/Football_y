@@ -12,6 +12,8 @@
  *   AI_CONFIG_PASSWORD  访问密码（必填，前端输入同密码才能解密）
  *   DEEPSEEK_API_KEY    DeepSeek API Key（必填）
  *   SEARCH_API_KEY      Tavily 搜索 Key（可选，未配置则联网搜索跳过）
+ *   GH_TOKEN            GitHub Token（可选，建议配置在仓库 Secrets: GH_TOKEN；
+ *                       前端密码验证通过后解密使用，用于触发 AI 分析工作流）
  *
  * 本地用法 (PowerShell):
  *   $env:AI_CONFIG_PASSWORD="你的强密码"
@@ -85,6 +87,11 @@ function main() {
     const searchKey = process.env.SEARCH_API_KEY;
     if (searchKey) {
         config.search_key = encrypt(searchKey, key);
+    }
+
+    const ghToken = process.env.GH_TOKEN;
+    if (ghToken) {
+        config.github_token = encrypt(ghToken, key);
     }
 
     const outFile = path.join(__dirname, 'ai_config.json');
