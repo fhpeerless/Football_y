@@ -3004,8 +3004,11 @@
         }
 
         // ---- 工作流触发与结果读取 ----
+        // token 可选：读取公开仓库内容不需要认证；触发工作流时（密码已解锁）必带 token
         function ghHeaders(cfg) {
-            return { 'Authorization': 'Bearer ' + cfg.token, 'Accept': 'application/vnd.github+json' };
+            const headers = { 'Accept': 'application/vnd.github+json' };
+            if (cfg.token) headers['Authorization'] = 'Bearer ' + cfg.token;
+            return headers;
         }
 
         function b64ToUtf8(b64) {
@@ -3015,10 +3018,10 @@
             return new TextDecoder().decode(bytes);
         }
 
-        // 读取远程 ai_results.json（不存在返回空结构）
+        // 读取远程 ai_results.json（公开仓库无需 token 也可读取，不存在返回空结构）
         async function readAiResultsFromRepo() {
             const cfg = getGhConfig();
-            if (!cfg.owner || !cfg.repo || !cfg.token) return null;
+            if (!cfg.owner || !cfg.repo) return null;
             const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${GH_RESULTS_PATH}`;
             const resp = await fetch(url, { headers: ghHeaders(cfg) });
             if (resp.status === 404) return { updated_at: '', results: [] };
@@ -3093,9 +3096,10 @@
         }
 
         // 渲染完成后回填已保存的 AI 结果（按 match_num / 主客队名匹配）
+        // 公开仓库读取无需 token：页面加载时即可自动显示工作流已保存的分析结果
         async function backfillAiResults() {
             const cfg = getGhConfig();
-            if (!cfg.owner || !cfg.repo || !cfg.token) return;
+            if (!cfg.owner || !cfg.repo) return;
             try {
                 if (!_ghResultsCache || Date.now() - _ghResultsCacheTime > 60000) {
                     _ghResultsCache = await readAiResultsFromRepo();
