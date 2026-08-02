@@ -7,7 +7,7 @@ spf/ai_workflow.py - 云端 AI 分析工作流脚本（由 GitHub Actions 的 sp
   2. 组装共同对手数据文本（复刻 fenxi.html 的 collectCommonData）
   3. 可选 Tavily 联网搜索（环境变量 TAVILY_API_KEY）
   4. 调用 DeepSeek 分析（环境变量 DEEPSEEK_API_KEY）
-  5. 结果写入仓库根目录 {match_num}ai_results.json（每场比赛一个独立文件，避免错乱）
+  5. 结果写入 spf/data 目录的 {match_num}ai_results.json（每场比赛一个独立文件，避免错乱）
 
 用法（在 football_y1 目录下）:
   python spf/ai_workflow.py --match-num 1001
@@ -23,12 +23,12 @@ from datetime import datetime, timezone
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # football_y1/
 COMMON_MATCH_PATH = os.path.join(BASE_DIR, "spf", "data", "common_match.json")
-AI_RESULTS_PATH = os.path.join(BASE_DIR, "ai_results.json")
+AI_RESULTS_PATH = os.path.join(BASE_DIR, "spf", "data", "ai_results.json")
 
 
 def result_path(match_num):
-    """按比赛编号生成独立结果文件：{match_num}ai_results.json"""
-    return os.path.join(BASE_DIR, str(match_num) + "ai_results.json")
+    """按比赛编号生成独立结果文件：spf/data/{match_num}ai_results.json"""
+    return os.path.join(BASE_DIR, "spf", "data", str(match_num) + "ai_results.json")
 
 DEEPSEEK_MODEL = "deepseek-v4-pro"
 

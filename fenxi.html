@@ -2987,10 +2987,10 @@
 
         // ========== GitHub 工作流触发与结果读取功能 ==========
         // 说明：AI 分析由云端 GitHub Actions 工作流执行（spf_ai.yml），调用 DeepSeek 分析后将结果
-        //       保存回仓库根目录的 {match_num}ai_results.json（每场比赛对应一个独立结果文件，避免错乱）；
+        //       保存回仓库 spf/data 目录的 {match_num}ai_results.json（每场比赛对应一个独立结果文件，避免错乱）；
         //       网页端仅负责触发工作流、轮询状态并读取对应比赛的结果展示。
-        // 每场比赛对应一个独立结果文件：{match_num}ai_results.json
-        function matchResultPath(match_num) { return String(match_num) + 'ai_results.json'; }
+        // 每场比赛对应一个独立结果文件：spf/data/{match_num}ai_results.json
+        function matchResultPath(match_num) { return 'spf/data/' + String(match_num) + 'ai_results.json'; }
         const GH_WORKFLOW_FILE = 'spf_ai.yml';
         const GH_OWNER = 'fhpeerless';   // 仓库所有者（公开信息）
         const GH_REPO = 'Football_y';    // 仓库名称（公开信息）
