@@ -2984,7 +2984,7 @@
                 <div class="ai-result-box">
                     <div class="ai-result-header">
                         <span>🤖 AI 智能分析结果</span>
-                        <span class="ai-weight-tag">共同对手60% · 联网40%</span>
+                        <span class="ai-weight-tag">共同对手 · 联网 综合分析</span>
                     </div>
                     <div class="ai-result-grid">
                         ${box('全场结果', ai.fulltime, { pick: '-', confidence: 0, reason: '' })}
@@ -3142,7 +3142,7 @@
             if (!stepName) return '🔄 工作流运行中，请稍候...';
             if (stepName.indexOf('提交联网搜索') !== -1) return '📤 正在保存并提交联网搜索结果...';
             if (stepName.indexOf('联网搜索') !== -1) return '🔍 正在联网搜索（Tavily）：获取主客队战意、伤停、行程、经济等信息...';
-            if (stepName.indexOf('DeepSeek') !== -1) return '🧠 DeepSeek 正在综合分析（共同对手数据 60% + 联网信息 40%）...';
+            if (stepName.indexOf('DeepSeek') !== -1) return '🧠 DeepSeek 正在综合分析（共同对手战绩 + 联网搜索信息交叉印证）...';
             if (stepName.indexOf('提交 AI 分析') !== -1) return '📤 正在提交 AI 分析结果...';
             return '🔄 工作流运行中：' + stepName + '...';
         }
