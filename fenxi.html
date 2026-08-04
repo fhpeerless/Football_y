@@ -1950,8 +1950,7 @@
             const score = `${homeScore}-${awayScore}`;
             
             const halfParts = (m.halfTimeGoal || '').split(':');
-            // 半场比分仅当为 数字:数字 时有效（友谊赛/俱乐部赛 API 可能返回 "-:-" 表示无数据）
-            const halfScore = (/^\d+:\d+$/.test(m.halfTimeGoal || '') && halfParts.length === 2) ? `${halfParts[0]}-${halfParts[1]}` : '-';
+            const halfScore = (halfParts.length === 2) ? `${halfParts[0]}-${halfParts[1]}` : '-';
             
             const result = getResultForTeam(highlightTeam, m);
             const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
@@ -2238,8 +2237,7 @@
                         const awayScore = parts[1] || '?';
                         const score = `${homeScore}-${awayScore}`;
                         const halfParts = (m.halfTimeGoal || '').split(':');
-                        // 半场比分仅当为 数字:数字 时有效（友谊赛/俱乐部赛 API 可能返回 "-:-" 表示无数据）
-                        const halfScoreStr = (/^\d+:\d+$/.test(m.halfTimeGoal || '') && halfParts.length === 2) ? `${halfParts[0]}-${halfParts[1]}` : '-';
+                        const halfScoreStr = (halfParts.length === 2) ? `${halfParts[0]}-${halfParts[1]}` : '-';
                         
                         const homeResult = getResultForTeam(match.home_team, m);
                         const resultColor = homeResult === '胜' ? '#4caf50' : homeResult === '负' ? '#f44336' : '#ff9800';

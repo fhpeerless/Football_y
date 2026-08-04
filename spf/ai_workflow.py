@@ -59,13 +59,8 @@ def format_match_line(m, highlight_team):
     parts = (m.get("fullCourtGoal") or "?:?").split(":")
     home_score = parts[0] if len(parts) > 0 else "?"
     away_score = parts[1] if len(parts) > 1 else "?"
-    half_raw = m.get("halfTimeGoal") or ""
-    half_parts = half_raw.split(":")
-    # 半场比分仅当为 数字:数字 时有效（友谊赛/俱乐部赛 API 可能返回 "-:-" 表示无数据）
-    if len(half_parts) == 2 and half_parts[0].isdigit() and half_parts[1].isdigit():
-        half_score = half_parts[0] + "-" + half_parts[1]
-    else:
-        half_score = "-"
+    half_parts = (m.get("halfTimeGoal") or "").split(":")
+    half_score = half_parts[0] + "-" + half_parts[1] if len(half_parts) == 2 else "-"
     result = get_result_for_team(highlight_team, m)
     return "{} {} {}-{} (半场 {}) {} [{}] 结果:{}".format(
         m.get("matchDate", ""),
