@@ -260,9 +260,9 @@ def call_deepseek(api_key, match, common_text, search_text):
         "{",
         '  "fulltime": [{"pick": "胜", "confidence": 65, "reason": "全场第一可能结果理由（50字内）"}, {"pick": "平", "confidence": 25, "reason": "全场第二可能结果理由（50字内）"}],',
         '  "halftime": [{"pick": "平", "confidence": 50, "reason": "半场第一可能结果理由（50字内）"}, {"pick": "负", "confidence": 30, "reason": "半场第二可能结果理由（50字内）"}],',
-        '  "summary": "综合分析总结（120字内）"',
+        '  "summary": "综合分析总结（200字内）"',
         "}",
-        '注意: pick 只能为 "胜"、"平"、"负" 之一；confidence 为 0-100 的整数；fulltime 和 halftime 各输出两个最可能的结果，按可能性从高到低排列。',
+        '注意: pick 只能为 "胜"、"平"、"负" 之一；confidence 为 0-100 的整数；fulltime 和 halftime 各输出两个最可能的结果，按可能性从高到低排列；summary 必须结合【联网搜索信息】中的具体事实（如某队伤停缺阵、战意、客场行程消耗、打法特点、俱乐部动态等）解释预测依据，并简要说明这些信息如何影响结论，不得只写泛泛的总结。',
     ])
     body = json.dumps({
         "model": DEEPSEEK_MODEL,
