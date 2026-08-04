@@ -11,14 +11,14 @@
  * 环境变量:
  *   AI_CONFIG_PASSWORD  访问密码（必填，前端输入同密码才能解密）
  *   DEEPSEEK_API_KEY    DeepSeek API Key（必填）
- *   SEARCH_API_KEY      Tavily 搜索 Key（可选，未配置则联网搜索跳过）
+ *   TAVILY_API_KEY      Tavily 搜索 Key（可选，未配置则联网搜索跳过）
  *   GH_TOKEN            GitHub Token（可选，建议配置在仓库 Secrets: GH_TOKEN；
  *                       前端密码验证通过后解密使用，用于触发 AI 分析工作流）
  *
  * 本地用法 (PowerShell):
  *   $env:AI_CONFIG_PASSWORD="你的强密码"
  *   $env:DEEPSEEK_API_KEY="sk-xxx"
- *   $env:SEARCH_API_KEY="tvly-xxx"   # 可选
+ *   $env:TAVILY_API_KEY="tvly-xxx"   # 可选
  *   node spf/encrypt_ai_config.js
  *
  * GitHub Actions: 见 .github/workflows/encrypt-ai-config.yml
@@ -84,7 +84,7 @@ function main() {
         deepseek_key: encrypt(deepseekKey, key)
     };
 
-    const searchKey = process.env.SEARCH_API_KEY;
+    const searchKey = process.env.TAVILY_API_KEY;
     if (searchKey) {
         config.search_key = encrypt(searchKey, key);
     }
@@ -100,7 +100,7 @@ function main() {
     console.log('✓ 已生成加密配置: ' + outFile);
     console.log('  密钥派生: PBKDF2-SHA256 × ' + PBKDF2_ITERATIONS + '（无硬编码主密钥，密码不落盘）');
     if (!searchKey) {
-        console.log('提示: 未配置 SEARCH_API_KEY，联网搜索将跳过，AI 仅使用共同对手数据（60%）');
+        console.log('提示: 未配置 TAVILY_API_KEY，联网搜索将跳过，AI 仅使用共同对手数据（60%）');
     }
     console.log('警告: 安全强度 = 你的密码强度，请务必使用强密码！');
 }
