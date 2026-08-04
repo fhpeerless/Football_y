@@ -18,6 +18,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 import urllib.request
 from datetime import datetime, timezone
@@ -198,6 +199,39 @@ def save_internet_result(match_num, payload):
     print("联网搜索结果已保存: {}".format(path))
 
 
+def load_internet_search_text(match_num):
+    """读取联网搜索结果文本。
+
+    本地文件缺失或为空时，尝试从远端 origin/main 拉取（等待搜索结果保存到仓库后
+    再分析）。返回 search_text；找不到或为空返回空字符串。
+    """
+    net_path = internet_result_path(match_num)
+    text = ""
+    if os.path.isfile(net_path):
+        try:
+            with open(net_path, "r", encoding="utf-8") as f:
+                text = (json.load(f).get("search_text") or "").strip()
+        except Exception as e:
+            print("读取联网结果失败: {}".format(e), file=sys.stderr)
+            text = ""
+    if not text:
+        # 本地缺失/为空：等待工作流把搜索结果提交到仓库后，从 origin/main 恢复
+        rel_path = os.path.relpath(net_path, BASE_DIR).replace(os.sep, "/")
+        try:
+            subprocess.run(["git", "fetch", "origin", "main"], cwd=BASE_DIR,
+                           capture_output=True, timeout=60)
+            co = subprocess.run(["git", "checkout", "origin/main", "--", rel_path],
+                                cwd=BASE_DIR, capture_output=True, timeout=60)
+            if co.returncode == 0 and os.path.isfile(net_path):
+                with open(net_path, "r", encoding="utf-8") as f:
+                    text = (json.load(f).get("search_text") or "").strip()
+                if text:
+                    print("已从远端仓库恢复联网搜索结果: {}".format(net_path))
+        except Exception as e:
+            print("从远端仓库恢复联网搜索结果失败: {}".format(e), file=sys.stderr)
+    return text
+
+
 def call_deepseek(api_key, match, common_text, search_text):
     """复刻 fenxi.html callDeepSeek：调用 DeepSeek 返回结构化 JSON。"""
     home = match.get("home_team", "")
@@ -375,31 +409,28 @@ def main():
         else:
             print("警告: 缺少环境变量 TAVILY_API_KEY，跳过联网搜索", file=sys.stderr)
     else:
-        # analyze 阶段：读取 search 阶段已保存的联网结果
-        net_path = internet_result_path(match_num)
-        if os.path.isfile(net_path):
-            try:
-                with open(net_path, "r", encoding="utf-8") as f:
-                    search_text = (json.load(f).get("search_text") or "").strip()
-            except Exception as e:
-                print("读取联网结果失败: {}".format(e), file=sys.stderr)
-                search_text = ""
-        if not search_text:
-            search_text = "（无联网搜索结果，本次仅依据共同对手数据）"
+        # analyze 阶段：等待/读取 search 阶段已提交到仓库的联网结果
+        search_text = load_internet_search_text(match_num)
 
     # 仅搜索阶段：完成后直接退出（结果已保存，供 analyze 阶段读取）
     if args.stage == "search":
         print("联网搜索阶段完成: {} vs {}".format(home, away))
         return
 
-    # 4. 调用 DeepSeek 分析
+    # 4. 校验联网搜索结果文件：不存在（仅有共同对手数据）时不调用 DeepSeek 分析
+    if not search_text.strip():
+        net_path = internet_result_path(match_num)
+        print("联网搜索结果文件不存在或内容为空: {}，本次仅有共同对手数据，不调用 DeepSeek 分析".format(net_path), file=sys.stderr)
+        return
+
+    # 5. 调用 DeepSeek 分析
     print("正在调用 DeepSeek 分析...")
     ai = call_deepseek(deepseek_key, match, common_text, search_text)
     if not isinstance(ai, dict) or "fulltime" not in ai or "halftime" not in ai:
         print("错误: AI 返回结构不符合预期", file=sys.stderr)
         sys.exit(1)
 
-    # 5. 按 match_num 命名独立结果文件：{match_num}ai_results.json（无 match_num 时回退 ai_results.json）
+    # 6. 按 match_num 命名独立结果文件：{match_num}ai_results.json（无 match_num 时回退 ai_results.json）
     now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     entry = {
