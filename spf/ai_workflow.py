@@ -199,22 +199,22 @@ def save_internet_result(match_num, payload):
     print("联网搜索结果已保存: {}".format(path))
 
 
-def load_internet_search_text(match_num):
-    """读取联网搜索结果文本。
+def load_internet_payload(match_num):
+    """读取联网搜索结果的完整 JSON（含 topics 结构化明细与 search_text 文本）。
 
     本地文件缺失或为空时，尝试从远端 origin/main 拉取（等待搜索结果保存到仓库后
-    再分析）。返回 search_text；找不到或为空返回空字符串。
+    再分析）。返回 dict；找不到或为空返回 None。
     """
     net_path = internet_result_path(match_num)
-    text = ""
+    payload = None
     if os.path.isfile(net_path):
         try:
             with open(net_path, "r", encoding="utf-8") as f:
-                text = (json.load(f).get("search_text") or "").strip()
+                payload = json.load(f)
         except Exception as e:
             print("读取联网结果失败: {}".format(e), file=sys.stderr)
-            text = ""
-    if not text:
+            payload = None
+    if not payload or not (payload.get("search_text") or "").strip():
         # 本地缺失/为空：等待工作流把搜索结果提交到仓库后，从 origin/main 恢复
         rel_path = os.path.relpath(net_path, BASE_DIR).replace(os.sep, "/")
         try:
@@ -224,12 +224,42 @@ def load_internet_search_text(match_num):
                                 cwd=BASE_DIR, capture_output=True, timeout=60)
             if co.returncode == 0 and os.path.isfile(net_path):
                 with open(net_path, "r", encoding="utf-8") as f:
-                    text = (json.load(f).get("search_text") or "").strip()
-                if text:
+                    payload = json.load(f)
+                if payload and (payload.get("search_text") or "").strip():
                     print("已从远端仓库恢复联网搜索结果: {}".format(net_path))
         except Exception as e:
             print("从远端仓库恢复联网搜索结果失败: {}".format(e), file=sys.stderr)
-    return text
+    return payload
+
+
+def build_search_info_text(payload):
+    """把联网搜索的完整结构化数据（topics 各主题的回答与各来源全文）拼成研判文本。
+
+    联网搜索返回的是与比赛直接相关的具体数据（伤停名单、阵容配置、战术打法、
+    赛前行程消耗、俱乐部动态、实时新闻等），此处保留全文不再截断，供 DeepSeek
+    逐条提取可用事实，与共同对手数据做综合研判。
+    """
+    if not payload:
+        return ""
+    lines = []
+    for t in (payload.get("topics") or []):
+        lines.append("【{}】".format(t.get("topic", "")))
+        if t.get("query"):
+            lines.append("检索: " + t["query"])
+        if t.get("answer"):
+            lines.append("要点: " + t["answer"])
+        for res in (t.get("results") or []):
+            content = (res.get("content") or "").strip()
+            title = res.get("title", "")
+            url = res.get("url", "")
+            if content:
+                lines.append("来源[{}]: {}".format(title, content))
+            elif url:
+                lines.append("来源: {}".format(url))
+        if not t.get("answer") and not (t.get("results") or []):
+            lines.append("（无有效结果）")
+        lines.append("")
+    return "\n".join(lines).strip()
 
 
 def call_deepseek(api_key, match, common_text, search_text):
@@ -248,6 +278,7 @@ def call_deepseek(api_key, match, common_text, search_text):
         common_text,
         "",
         "【联网搜索信息】",
+        "以下为与本次比赛直接相关的具体数据（战意、伤停名单、阵容打法、行程旅途消耗、俱乐部动态、实时新闻等），请逐条提取可用事实，与共同对手数据做综合研判，不要当作泛泛背景忽略：",
         search_text,
         "",
         "【分析要求】",
@@ -387,11 +418,11 @@ def main():
     away = match.get("away_team", "")
     print("比赛: {} vs {}（{}）".format(home, away, match.get("league", "")))
 
-    # 2. 共同对手数据（权重 60%）
+    # 2. 共同对手数据
     common_text = collect_common_data(match)
     match_num = str(match.get("match_num", ""))
 
-    # 3. 联网搜索阶段（权重 40%）：按主题搜索主客队信息并保存 JSON 到 tavily_result/{match_num}_internet.json
+    # 3. 联网搜索阶段：按主题搜索主客队具体数据并保存 JSON 到 tavily_result/{match_num}_internet.json
     search_text = ""
     if args.stage in ("search", "all"):
         search_key = os.environ.get("TAVILY_API_KEY", "")
@@ -409,8 +440,9 @@ def main():
         else:
             print("警告: 缺少环境变量 TAVILY_API_KEY，跳过联网搜索", file=sys.stderr)
     else:
-        # analyze 阶段：等待/读取 search 阶段已提交到仓库的联网结果
-        search_text = load_internet_search_text(match_num)
+        # analyze 阶段：等待/读取 search 阶段已提交到仓库的联网结果（完整具体数据，含
+        # topics 各主题的 answer 与每个来源的全文，供 DeepSeek 与共同对手数据综合研判）
+        search_text = build_search_info_text(load_internet_payload(match_num))
 
     # 仅搜索阶段：完成后直接退出（结果已保存，供 analyze 阶段读取）
     if args.stage == "search":
