@@ -5,6 +5,7 @@
 """
 import json
 import os
+import re
 from html import escape
 from collections import defaultdict
 
@@ -145,7 +146,9 @@ def _match_rows(matches: list, team_field: str, team_name: str) -> str:
     items = []
     for mt in matches:
         fc = mt.get("fullCourtGoal", "?")
-        ht = mt.get("halfTimeGoal", "?")
+        ht_raw = mt.get("halfTimeGoal", "")
+        # 半场比分仅当为 数字:数字 时有效（友谊赛/俱乐部赛 API 可能返回 "-:-" 表示无数据）
+        ht = ht_raw if re.fullmatch(r"\d+:\d+", ht_raw or "") else "?"
         wt = mt.get("winningTeam", "")
         # 主客队名称
         home_name = escape(mt.get("homeTeamShortName", "?"))
@@ -395,7 +398,9 @@ def _match_history_rows(match_list: list) -> str:
     items = []
     for mt in match_list:
         fc = escape(mt.get("fullCourtGoal", "?-?"))
-        ht = escape(mt.get("halfTimeGoal", "?-?"))
+        ht_raw = mt.get("halfTimeGoal", "")
+        # 半场比分仅当为 数字:数字 时有效（友谊赛/俱乐部赛 API 可能返回 "-:-" 表示无数据）
+        ht = escape(ht_raw if re.fullmatch(r"\d+:\d+", ht_raw or "") else "?")
         date = escape(mt.get("matchDate", ""))
         tourn = escape(mt.get("tournamentShortName", ""))
         home_name = escape(mt.get("homeTeamShortName", ""))
