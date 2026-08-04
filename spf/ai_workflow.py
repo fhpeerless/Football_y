@@ -325,16 +325,19 @@ def main():
     parser.add_argument("--away", default="", help="客队名称")
     parser.add_argument("--league", default="", help="赛事")
     parser.add_argument("--date", default="", help="比赛日期")
+    parser.add_argument("--stage", default="all", choices=["search", "analyze", "all"],
+                        help="执行阶段: search=仅联网搜索; analyze=仅 DeepSeek 分析; all=完整流程(默认)")
     args = parser.parse_args()
 
     if not args.match_num and not (args.home and args.away):
         print("错误: 必须提供 --match-num 或 --home/--away", file=sys.stderr)
         sys.exit(1)
 
-    deepseek_key = os.environ.get("DEEPSEEK_API_KEY", "")
-    if not deepseek_key:
-        print("错误: 缺少环境变量 DEEPSEEK_API_KEY（请在仓库 Settings -> Secrets 中配置）", file=sys.stderr)
-        sys.exit(1)
+    if args.stage in ("all", "analyze"):
+        deepseek_key = os.environ.get("DEEPSEEK_API_KEY", "")
+        if not deepseek_key:
+            print("错误: 缺少环境变量 DEEPSEEK_API_KEY（请在仓库 Settings -> Secrets 中配置）", file=sys.stderr)
+            sys.exit(1)
 
     # 1. 加载并查找比赛
     with open(COMMON_MATCH_PATH, "r", encoding="utf-8") as f:
@@ -349,23 +352,44 @@ def main():
 
     # 2. 共同对手数据（权重 60%）
     common_text = collect_common_data(match)
-
-    # 3. 联网搜索（权重 40%，可选）：按主题搜索主客队信息并保存 JSON 到 tavily_result/{match_num}_internet.json
     match_num = str(match.get("match_num", ""))
-    search_key = os.environ.get("TAVILY_API_KEY", "")
-    search_text = "（未配置搜索 API Key，本次仅依据共同对手数据）"
-    if search_key:
-        try:
-            search_payload = web_search(search_key, home, away)
-            search_text = search_payload.get("search_text") or search_text
-            if match_num:
-                save_internet_result(match_num, search_payload)
-            else:
-                print("未提供 match_num，跳过保存联网搜索结果文件")
-        except Exception as e:
-            search_text = "（联网搜索不可用: {}）".format(e)
 
-    # 4. 调用 DeepSeek
+    # 3. 联网搜索阶段（权重 40%）：按主题搜索主客队信息并保存 JSON 到 tavily_result/{match_num}_internet.json
+    search_text = ""
+    if args.stage in ("search", "all"):
+        search_key = os.environ.get("TAVILY_API_KEY", "")
+        if search_key:
+            try:
+                search_payload = web_search(search_key, home, away)
+                search_text = search_payload.get("search_text") or ""
+                if match_num:
+                    save_internet_result(match_num, search_payload)
+                else:
+                    print("未提供 match_num，跳过保存联网搜索结果文件")
+            except Exception as e:
+                print("联网搜索失败: {}".format(e), file=sys.stderr)
+                search_text = ""
+        else:
+            print("警告: 缺少环境变量 TAVILY_API_KEY，跳过联网搜索", file=sys.stderr)
+    else:
+        # analyze 阶段：读取 search 阶段已保存的联网结果
+        net_path = internet_result_path(match_num)
+        if os.path.isfile(net_path):
+            try:
+                with open(net_path, "r", encoding="utf-8") as f:
+                    search_text = (json.load(f).get("search_text") or "").strip()
+            except Exception as e:
+                print("读取联网结果失败: {}".format(e), file=sys.stderr)
+                search_text = ""
+        if not search_text:
+            search_text = "（无联网搜索结果，本次仅依据共同对手数据）"
+
+    # 仅搜索阶段：完成后直接退出（结果已保存，供 analyze 阶段读取）
+    if args.stage == "search":
+        print("联网搜索阶段完成: {} vs {}".format(home, away))
+        return
+
+    # 4. 调用 DeepSeek 分析
     print("正在调用 DeepSeek 分析...")
     ai = call_deepseek(deepseek_key, match, common_text, search_text)
     if not isinstance(ai, dict) or "fulltime" not in ai or "halftime" not in ai:

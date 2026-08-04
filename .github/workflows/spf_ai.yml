@@ -27,6 +27,7 @@ jobs:
     env:
       DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+      PUSH_URL: "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
 
     steps:
     - name: 检出代码
@@ -41,43 +42,27 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: 运行 AI 分析（DeepSeek）
+    # 阶段 1：联网搜索（Tavily），结果保存到 spf/data/tavily_result/{match_num}_internet.json
+    - name: 联网搜索（Tavily）
       run: |
         python spf/ai_workflow.py \
           --match-num "${{ inputs.match_num }}" \
           --home "${{ inputs.home }}" \
-          --away "${{ inputs.away }}"
+          --away "${{ inputs.away }}" \
+          --stage search
+
+    # 搜索完成后立即提交，即使后续 DeepSeek 分析失败，联网结果也已保留
+    - name: 提交联网搜索结果
+      run: bash spf/commit_results.sh "更新联网搜索结果" "spf/data/tavily_result/*_internet.json"
+
+    # 阶段 2：DeepSeek 综合共同对手数据 + 联网搜索结果分析，写入 spf/data/deepseek_result/{match_num}ai_results.json
+    - name: DeepSeek 综合分析
+      run: |
+        python spf/ai_workflow.py \
+          --match-num "${{ inputs.match_num }}" \
+          --home "${{ inputs.home }}" \
+          --away "${{ inputs.away }}" \
+          --stage analyze
 
     - name: 提交 AI 分析结果到仓库
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-        # 每场比赛一个独立结果文件（spf/data/deepseek_result/{match_num}ai_results.json），
-        # 联网搜索结果存于 spf/data/tavily_result/{match_num}_internet.json，通配符一次提交
-        git add "spf/data/deepseek_result/*ai_results.json" "spf/data/tavily_result/*_internet.json"
-
-        git commit -m "更新 AI 分析结果" || {
-          echo "没有更改可提交，跳过push步骤"
-          exit 0
-        }
-
-        # 远端 main 可能被本地 sync_to_github.py 强推改写、或与其他工作流并发，
-        # 直接 push 会因历史分叉被拒；失败时先 fetch + rebase 远端再重试
-        PUSH_URL="https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-        for attempt in 1 2 3; do
-          echo "第 ${attempt} 次尝试 push..."
-          if git push "$PUSH_URL" "HEAD:${{ github.ref_name }}"; then
-            echo "push 成功"
-            exit 0
-          fi
-          echo "push 失败，拉取远端最新代码并变基后重试..."
-          git fetch "$PUSH_URL" "${{ github.ref_name }}" || exit 1
-          if ! git rebase FETCH_HEAD; then
-            echo "与远端代码冲突，自动变基失败（远端未受影响，可稍后运行本地 sync_to_github.py 合并同步）"
-            git rebase --abort
-            exit 1
-          fi
-        done
-        echo "push 连续 3 次失败，工作流退出"
-        exit 1
+      run: bash spf/commit_results.sh "更新 AI 分析结果" "spf/data/deepseek_result/*ai_results.json"

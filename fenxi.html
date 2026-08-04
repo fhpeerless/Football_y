@@ -3093,7 +3093,9 @@
                             if (run.status === 'queued') {
                                 text = '⏳ 工作流已排队，等待 GitHub Runner 分配...';
                             } else if (run.status === 'in_progress') {
-                                text = '🔄 工作流运行中：联网搜索 → DeepSeek 分析 → 保存结果，请稍候...';
+                                // 轮询 jobs API 获取当前正在执行的 step，区分"搜索阶段"与"DeepSeek 分析阶段"
+                                const stepName = await getActiveStepName(cfg, run.id);
+                                text = aiStageText(stepName);
                             } else if (run.status === 'completed') {
                                 text = run.conclusion === 'success'
                                     ? '✅ 工作流执行成功，正在读取结果...'
@@ -3130,6 +3132,35 @@
                     });
                 });
                 return failed.join('；');
+            } catch (e) {
+                return '';
+            }
+        }
+
+        // 将当前正在执行的 step 名称映射为可读的"阶段"提示（搜索阶段 / DeepSeek 分析阶段 / 提交阶段）
+        function aiStageText(stepName) {
+            if (!stepName) return '🔄 工作流运行中，请稍候...';
+            if (stepName.indexOf('提交联网搜索') !== -1) return '📤 正在保存并提交联网搜索结果...';
+            if (stepName.indexOf('联网搜索') !== -1) return '🔍 正在联网搜索（Tavily）：获取主客队战意、伤停、行程、经济等信息...';
+            if (stepName.indexOf('DeepSeek') !== -1) return '🧠 DeepSeek 正在综合分析（共同对手数据 60% + 联网信息 40%）...';
+            if (stepName.indexOf('提交 AI 分析') !== -1) return '📤 正在提交 AI 分析结果...';
+            return '🔄 工作流运行中：' + stepName + '...';
+        }
+
+        // 查询工作流当前正在执行的 step 名称（同一 job 内 step 按顺序执行，取最后一个 in_progress 的 step）
+        async function getActiveStepName(cfg, runId) {
+            try {
+                const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/runs/${runId}/jobs`;
+                const resp = await fetch(url, { headers: ghHeaders(cfg) });
+                if (!resp.ok) return '';
+                const data = await resp.json();
+                for (const job of (data.jobs || [])) {
+                    if (job.status === 'in_progress') {
+                        const activeSteps = (job.steps || []).filter(s => s.status === 'in_progress');
+                        if (activeSteps.length > 0) return activeSteps[activeSteps.length - 1].name;
+                    }
+                }
+                return '';
             } catch (e) {
                 return '';
             }
