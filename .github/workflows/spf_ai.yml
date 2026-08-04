@@ -53,8 +53,9 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # 每场比赛一个独立结果文件（spf/data/{match_num}ai_results.json），通配符一次提交所有结果文件
-        git add "spf/data/*ai_results.json"
+        # 每场比赛一个独立结果文件（spf/data/deepseek_result/{match_num}ai_results.json），
+        # 联网搜索结果存于 spf/data/tavily_result/{match_num}_internet.json，通配符一次提交
+        git add "spf/data/deepseek_result/*ai_results.json" "spf/data/tavily_result/*_internet.json"
 
         git commit -m "更新 AI 分析结果" || {
           echo "没有更改可提交，跳过push步骤"

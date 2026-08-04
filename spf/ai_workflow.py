@@ -5,9 +5,10 @@ spf/ai_workflow.py - 云端 AI 分析工作流脚本（由 GitHub Actions 的 sp
 流程:
   1. 读取 spf/data/common_match.json 找到目标比赛
   2. 组装共同对手数据文本（复刻 fenxi.html 的 collectCommonData）
-  3. 可选 Tavily 联网搜索（环境变量 TAVILY_API_KEY）
-  4. 调用 DeepSeek 分析（环境变量 DEEPSEEK_API_KEY）
-  5. 结果写入 spf/data 目录的 {match_num}ai_results.json（每场比赛一个独立文件，避免错乱）
+  3. 使用 TAVILY_API_KEY 按主题联网搜索主客队信息（战意/打法/突发事件/行程/旅途消耗/长途移动/俱乐部经济/人员伤停），
+     结果保存为 spf/data/tavily_result/{match_num}_internet.json
+  4. 调用 DeepSeek 结合共同对手数据 + 联网搜索信息分析（环境变量 DEEPSEEK_API_KEY）
+  5. 结果写入 spf/data/deepseek_result 目录的 {match_num}ai_results.json（每场比赛一个独立文件，避免错乱）
 
 用法（在 football_y1 目录下）:
   python spf/ai_workflow.py --match-num 1001
@@ -23,12 +24,18 @@ from datetime import datetime, timezone
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # football_y1/
 COMMON_MATCH_PATH = os.path.join(BASE_DIR, "spf", "data", "common_match.json")
-AI_RESULTS_PATH = os.path.join(BASE_DIR, "spf", "data", "ai_results.json")
+AI_RESULTS_PATH = os.path.join(BASE_DIR, "spf", "data", "deepseek_result", "ai_results.json")
+TAVILY_RESULT_DIR = os.path.join(BASE_DIR, "spf", "data", "tavily_result")
 
 
 def result_path(match_num):
-    """按比赛编号生成独立结果文件：spf/data/{match_num}ai_results.json"""
-    return os.path.join(BASE_DIR, "spf", "data", str(match_num) + "ai_results.json")
+    """按比赛编号生成独立结果文件：spf/data/deepseek_result/{match_num}ai_results.json"""
+    return os.path.join(BASE_DIR, "spf", "data", "deepseek_result", str(match_num) + "ai_results.json")
+
+
+def internet_result_path(match_num):
+    """联网搜索结果文件路径：spf/data/tavily_result/{match_num}_internet.json"""
+    return os.path.join(TAVILY_RESULT_DIR, str(match_num) + "_internet.json")
 
 DEEPSEEK_MODEL = "deepseek-v4-pro"
 
@@ -96,13 +103,27 @@ def collect_common_data(match):
     return "\n".join(lines)
 
 
-def web_search(search_key, home, away):
-    """复刻 fenxi.html webSearch：Tavily 联网搜索。"""
+# 联网搜索主题（覆盖: 战意、打法、突发事件、行程/旅途消耗/长途移动、俱乐部经济、人员实力和伤停）
+SEARCH_TOPICS = [
+    ("整体战意", "{home} vs {away} 足球比赛 前瞻 预测 战意 近期状态"),
+    ("主队人员伤停", "{home} 足球队 伤病 停赛 阵容 人员实力"),
+    ("主队打法", "{home} 足球队 战术 打法 风格"),
+    ("主队行程旅途", "{home} 足球队 客场比赛 行程 旅途 长途 消耗"),
+    ("主队俱乐部动态", "{home} 足球俱乐部 经济 财政 突发事件 新闻"),
+    ("客队人员伤停", "{away} 足球队 伤病 停赛 阵容 人员实力"),
+    ("客队打法", "{away} 足球队 战术 打法 风格"),
+    ("客队行程旅途", "{away} 足球队 客场比赛 行程 旅途 长途 消耗"),
+    ("客队俱乐部动态", "{away} 足球俱乐部 经济 财政 突发事件 新闻"),
+]
+
+
+def tavily_search_one(search_key, query, max_results=3):
+    """调用一次 Tavily 搜索，返回 {answer, results} 结构化结果。"""
     body = json.dumps({
         "api_key": search_key,
-        "query": "{} vs {} 足球 状态 伤病 近况 预测".format(home, away),
+        "query": query,
         "search_depth": "basic",
-        "max_results": 5,
+        "max_results": max_results,
         "include_answer": True,
     }).encode("utf-8")
     req = urllib.request.Request(
@@ -112,10 +133,69 @@ def web_search(search_key, home, away):
     )
     with urllib.request.urlopen(req, timeout=30) as r:
         data = json.loads(r.read().decode("utf-8"))
-    txt = (data.get("answer") or "") + "\n"
-    for res in (data.get("results") or []):
-        txt += "[{}] {}\n".format(res.get("title", ""), (res.get("content") or "")[:400])
-    return txt or "（未获取到有效搜索结果）"
+    return {
+        "answer": data.get("answer") or "",
+        "results": [
+            {
+                "title": res.get("title", ""),
+                "url": res.get("url", ""),
+                "content": res.get("content") or "",
+            }
+            for res in (data.get("results") or [])
+        ],
+    }
+
+
+def web_search(search_key, home, away):
+    """按主题逐项联网搜索主客队信息（战意/打法/突发事件/行程/旅途/经济/伤停等）。
+
+    返回结构化结果 dict（含 topics 明细与拼装好的 search_text，供保存 JSON 和 DeepSeek 使用）。
+    """
+    topics = []
+    for topic, query in SEARCH_TOPICS:
+        query = query.format(home=home, away=away)
+        try:
+            data = tavily_search_one(search_key, query)
+            data["topic"] = topic
+            data["query"] = query
+            topics.append(data)
+        except Exception as e:
+            topics.append({
+                "topic": topic,
+                "query": query,
+                "answer": "",
+                "results": [],
+                "error": str(e),
+            })
+    lines = []
+    for t in topics:
+        lines.append("【{}】".format(t["topic"]))
+        if t.get("answer"):
+            lines.append(t["answer"])
+        for res in (t.get("results") or []):
+            lines.append("[{}] {}".format(res.get("title", ""), (res.get("content") or "")[:300]))
+        if not t.get("answer") and not (t.get("results") or []):
+            lines.append("（无有效结果）")
+        lines.append("")
+    search_text = "\n".join(lines).strip() or "（未获取到有效搜索结果）"
+    return {
+        "match_num": "",
+        "home_team": home,
+        "away_team": away,
+        "search_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "topics": topics,
+        "search_text": search_text,
+    }
+
+
+def save_internet_result(match_num, payload):
+    """把联网搜索结果保存为 JSON 文件：spf/data/tavily_result/{match_num}_internet.json。"""
+    os.makedirs(TAVILY_RESULT_DIR, exist_ok=True)
+    payload["match_num"] = str(match_num)
+    path = internet_result_path(match_num)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    print("联网搜索结果已保存: {}".format(path))
 
 
 def call_deepseek(api_key, match, common_text, search_text):
@@ -220,6 +300,7 @@ def save_entry(entry, path=None):
         results.append(entry)
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     payload = {"updated_at": now_str, "results": results}
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
     print("结果已写入: {}".format(path))
@@ -269,15 +350,20 @@ def main():
     # 2. 共同对手数据（权重 60%）
     common_text = collect_common_data(match)
 
-    # 3. 联网搜索（权重 40%，可选）
+    # 3. 联网搜索（权重 40%，可选）：按主题搜索主客队信息并保存 JSON 到 tavily_result/{match_num}_internet.json
+    match_num = str(match.get("match_num", ""))
     search_key = os.environ.get("TAVILY_API_KEY", "")
+    search_text = "（未配置搜索 API Key，本次仅依据共同对手数据）"
     if search_key:
         try:
-            search_text = web_search(search_key, home, away)
+            search_payload = web_search(search_key, home, away)
+            search_text = search_payload.get("search_text") or search_text
+            if match_num:
+                save_internet_result(match_num, search_payload)
+            else:
+                print("未提供 match_num，跳过保存联网搜索结果文件")
         except Exception as e:
             search_text = "（联网搜索不可用: {}）".format(e)
-    else:
-        search_text = "（未配置搜索 API Key，本次仅依据共同对手数据）"
 
     # 4. 调用 DeepSeek
     print("正在调用 DeepSeek 分析...")
@@ -291,7 +377,7 @@ def main():
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     entry = {
         "idx": 0,
-        "match_num": str(match.get("match_num", "")),
+        "match_num": match_num,
         "home_team": home,
         "away_team": away,
         "league": match.get("league", ""),
