@@ -285,38 +285,112 @@ def build_search_info_text(payload):
     return "\n".join(lines).strip()
 
 
-def call_deepseek(api_key, match, common_text, search_text):
-    """复刻 fenxi.html callDeepSeek：调用 DeepSeek 返回结构化 JSON。"""
+def build_structured_search_text(payload):
+    """将联网搜索 payload 按主题逐项编号、结构化排版，方便 DeepSeek 逐条引用。
+
+    返回 (structured_text, topic_list)：
+    - structured_text: 带编号的主题文本块，供 prompt 使用
+    - topic_list: [(编号, 主题名), ...]，供 prompt 中引用
+    """
+    if not payload:
+        return "", []
+    lines = []
+    topic_list = []
+    for idx, t in enumerate(payload.get("topics") or [], start=1):
+        topic_name = t.get("topic", "")
+        topic_list.append((idx, topic_name))
+        lines.append("【{}. {}】".format(idx, topic_name))
+        if t.get("query"):
+            lines.append("   检索词: " + t["query"])
+        if t.get("answer"):
+            lines.append("   AI摘要: " + t["answer"])
+        for res in (t.get("results") or []):
+            content = clean_content(res.get("content") or "")
+            title = res.get("title", "")
+            url = res.get("url", "")
+            if content:
+                lines.append("   来源[{}]: {}".format(title, content))
+            elif url:
+                lines.append("   来源链接: {} ({})".format(title, url))
+        if not t.get("answer") and not (t.get("results") or []):
+            lines.append("   （该主题无有效搜索结果）")
+        lines.append("")
+    return "\n".join(lines).strip(), topic_list
+
+
+def call_deepseek(api_key, match, common_text, search_payload):
+    """调用 DeepSeek 返回结构化 JSON（含逐主题搜索分析）。
+
+    相比旧版，新增 search_analysis 输出字段，强制 AI 逐项分析每个搜索主题
+    对主客队的影响，避免遗漏关键信息导致分析偏差。
+    """
     home = match.get("home_team", "")
     away = match.get("away_team", "")
+
+    structured_search_text, topic_list = build_structured_search_text(search_payload)
+
+    # 生成搜索主题编号清单，供 prompt 引用
+    topic_checklist = "\n".join([
+        "   {}. {}（有利方: 待分析）".format(num, name)
+        for num, name in topic_list
+    ]) if topic_list else "   （无联网搜索数据）"
+
     prompt = "\n".join([
-        "请对以下足球比赛进行专业分析，预测主队和客队的【半场】和【全场】比赛结果（胜/平/负）。",
+        "你是资深的足球赛事分析师。请对以下比赛进行专业分析，预测主队视角的【全场】和【半场】胜平负结果。",
         "",
-        "【比赛信息】",
+        "━━━ 比赛信息 ━━━",
         "对阵: {} (主) vs {} (客)".format(home, away),
         "赛事: {} | 时间: {} {}".format(
             match.get("league", ""), match.get("date", ""), match.get("match_time", "")),
         "",
-        "【共同对手数据】",
+        "━━━ 共同对手历史数据 ━━━",
         common_text,
         "",
-        "【联网搜索信息】",
-        "以下为与本次比赛直接相关的具体数据（战意、伤停名单、阵容打法、行程旅途消耗、俱乐部动态、实时新闻等），请逐条提取可用事实，与共同对手数据做综合研判，不要当作泛泛背景忽略：",
-        search_text,
+        "━━━ 联网搜索信息（共{}个主题）━━━".format(len(topic_list)),
+        "以下是按主题编号的搜索结果。你必须逐项阅读并提取关键事实，不可跳过任何一个主题：",
         "",
-        "【分析要求】",
-        "1. 综合以上数据，分别预测【全场】和【半场】的胜平负结果（主队视角）。",
-        "2. 请对共同对手历史战绩和联网搜索信息进行综合分析，交叉印证：",
-        "   - 共同对手历史比赛用于判断双方相对实力和交锋倾向；",
-        "   - 联网搜索信息（战意、伤停、战术打法、行程消耗、俱乐部动态等）用于判断当前状态和临场因素；",
-        "   - 两者如有矛盾，需说明取舍理由，不要机械地按固定比例加权。",
-        "3. 必须输出严格 JSON（不要任何多余文字），格式如下：",
-        "{",
-        '  "fulltime": [{"pick": "胜", "confidence": 65, "reason": "全场第一可能结果理由（50字内）"}, {"pick": "平", "confidence": 25, "reason": "全场第二可能结果理由（50字内）"}],',
-        '  "halftime": [{"pick": "平", "confidence": 50, "reason": "半场第一可能结果理由（50字内）"}, {"pick": "负", "confidence": 30, "reason": "半场第二可能结果理由（50字内）"}],',
-        '  "summary": "综合分析总结（200字内）"',
-        "}",
-        '注意: pick 只能为 "胜"、"平"、"负" 之一；confidence 为 0-100 的整数；fulltime 和 halftime 各输出两个最可能的结果，按可能性从高到低排列；summary 必须结合【联网搜索信息】中的具体事实（如某队伤停缺阵、战意、客场行程消耗、打法特点、俱乐部动态等）解释预测依据，并简要说明这些信息如何影响结论，不得只写泛泛的总结。',
+        structured_search_text,
+        "",
+        "━━━ 分析要求（非常重要）━━━",
+        "你必须按以下步骤完成分析：",
+        "",
+        "第1步：逐主题分析（填入 search_analysis 字段）",
+        "  对上面 {} 个搜索主题，逐个提取对主客队的关键事实，判断有利方：".format(len(topic_list)),
+        topic_checklist,
+        "  每个主题必须给出：",
+        "  - finding: 该主题下找到的关键事实（30字内）",
+        "  - advantage: 该事实对"主队有利"/"客队有利"/"中性"/"无有效信息"",
+        "",
+        "第2步：综合研判（填入 fulltime / halftime 字段）",
+        "  将共同对手数据与搜索主题的结论交叉印证：",
+        "  - 共同对手数据反映双方历史实力对比和交锋倾向；",
+        "  - 搜索主题（战意、伤停、打法、行程、俱乐部动态）反映当前状态和临场因素；",
+        "  - 如两者矛盾，必须在 reason 中说明取舍理由。",
+        "",
+        "第3步：输出 JSON（严格格式，不要任何多余文字）",
+        "{{",
+        '  "search_analysis": [',
+        '    {{"topic": "整体战意", "finding": "关键事实", "advantage": "主队有利/客队有利/中性/无有效信息"}},',
+        '    {{"topic": "主队人员伤停", "finding": "...", "advantage": "..."}},',
+        '    ...（必须覆盖全部{}个主题，不可省略）'.format(len(topic_list)),
+        '  ],',
+        '  "fulltime": [',
+        '    {{"pick": "胜", "confidence": 65, "reason": "引用共同对手数据+至少1个搜索主题的关键事实（80字内）"}},',
+        '    {{"pick": "平", "confidence": 25, "reason": "同上要求"}}',
+        '  ],',
+        '  "halftime": [',
+        '    {{"pick": "平", "confidence": 50, "reason": "同上要求"}},',
+        '    {{"pick": "负", "confidence": 30, "reason": "同上要求"}}',
+        '  ],',
+        '  "summary": "总结：简述(1)共同对手数据指向什么结论 (2)搜索主题中最重要的2-3个有利/不利因素分别是什么 (3)最终预测依据（200字内）"',
+        "}}",
+        "",
+        "关键约束：",
+        '- pick 只能为 "胜"/"平"/"负"；confidence 为 0-100 整数',
+        "- fulltime 和 halftime 各输出两个最可能结果，按可能性从高到低排列",
+        "- 每个 reason 必须引用至少1个搜索主题的具体发现（标注主题名），不得只写泛泛评语",
+        "- search_analysis 必须覆盖全部主题，不能跳过任何一个",
+        "- summary 必须明确列出最关键的搜索发现及其对结论的影响",
     ])
     body = json.dumps({
         "model": DEEPSEEK_MODEL,
@@ -447,6 +521,7 @@ def main():
 
     # 3. 联网搜索阶段：按主题搜索主客队具体数据并保存 JSON 到 tavily_result/{match_num}_internet.json
     search_text = ""
+    search_payload = None
     if args.stage in ("search", "all"):
         search_key = os.environ.get("TAVILY_API_KEY", "")
         if search_key:
@@ -465,7 +540,8 @@ def main():
     else:
         # analyze 阶段：等待/读取 search 阶段已提交到仓库的联网结果（完整具体数据，含
         # topics 各主题的 answer 与每个来源的全文，供 DeepSeek 与共同对手数据综合研判）
-        search_text = build_search_info_text(load_internet_payload(match_num))
+        search_payload = load_internet_payload(match_num)
+        search_text = build_search_info_text(search_payload)
 
     # 仅搜索阶段：完成后直接退出（结果已保存，供 analyze 阶段读取）
     if args.stage == "search":
@@ -480,7 +556,7 @@ def main():
 
     # 5. 调用 DeepSeek 分析
     print("正在调用 DeepSeek 分析...")
-    ai = call_deepseek(deepseek_key, match, common_text, search_text)
+    ai = call_deepseek(deepseek_key, match, common_text, search_payload)
     if not isinstance(ai, dict) or "fulltime" not in ai or "halftime" not in ai:
         print("错误: AI 返回结构不符合预期", file=sys.stderr)
         sys.exit(1)
@@ -488,6 +564,30 @@ def main():
     # 6. 按 match_num 命名独立结果文件：{match_num}ai_results.json（无 match_num 时回退 ai_results.json）
     now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # 构建搜索信息摘要，随 AI 结果一起保存
+    search_info = None
+    if search_payload:
+        search_info = {
+            "search_time": search_payload.get("search_time", ""),
+            "topics": [
+                {
+                    "topic": t.get("topic", ""),
+                    "query": t.get("query", ""),
+                    "answer": t.get("answer", ""),
+                    "results": [
+                        {
+                            "title": r.get("title", ""),
+                            "url": r.get("url", ""),
+                            "content": (r.get("content") or "")[:300],
+                        }
+                        for r in (t.get("results") or [])
+                    ],
+                }
+                for t in (search_payload.get("topics") or [])
+            ],
+        }
+
     entry = {
         "idx": 0,
         "match_num": match_num,
@@ -496,6 +596,7 @@ def main():
         "league": match.get("league", ""),
         "date": match.get("date", ""),
         "ai": ai,
+        "search_info": search_info,
         "updated_at": now_str,
         "updated_at_iso": now_iso,
     }
