@@ -8,7 +8,7 @@ import json
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PAIMING_DIR = os.path.join(BASE_DIR, '..', 'paiming')
+PAIMING_DIR = os.path.join(BASE_DIR, '..', 'z_paiming')
 
 PERIOD_PATH = os.path.join(BASE_DIR, 'period.json')
 RANKING_PATH = os.path.join(PAIMING_DIR, 'paiming_rankings.json')

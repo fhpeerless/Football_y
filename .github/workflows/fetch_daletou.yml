@@ -35,14 +35,14 @@ jobs:
         pip install requests
 
     - name: 抓取超级大乐透历史开奖数据（通过 SCF 代理）
-      working-directory: ./daletou/requests
+      working-directory: ./z_daletou/requests
       run: |
         echo "=== 抓取超级大乐透历史开奖数据（代理模式） ==="
         python fetch_daletou_data.py
         echo "=== 抓取完成 ==="
 
     - name: 执行5种方法预测号码
-      working-directory: ./daletou/requests
+      working-directory: ./z_daletou/requests
       run: |
         echo "=== 使用5种方法预测下一期号码 ==="
         python predict_daletou.py
@@ -53,7 +53,7 @@ jobs:
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        git add daletou/kaijiangdata/daletou_history.json daletou/kaijiangdata/daletou_prediction.json
+        git add z_daletou/kaijiangdata/daletou_history.json z_daletou/kaijiangdata/daletou_prediction.json
 
         git commit -m "更新超级大乐透历史开奖数据及5种方法预测" || {
           echo "数据无变化，跳过push步骤"
