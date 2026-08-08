@@ -1054,6 +1054,15 @@
         <div style="font-size: 0.8em; opacity: 0.7; text-align: center; margin-bottom: 20px;">请输入访问密码，解锁后自动获取仓库 GitHub Token 并触发云端 AI 分析（无需手动设置 Token）</div>
         <input id="aiPasswordInput" type="password" placeholder="请输入密码"
                style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(0,188,212,0.3); background:rgba(255,255,255,0.08); color:#fff; font-size:1rem; box-sizing:border-box;" />
+        <div style="margin-top:16px;">
+            <div style="font-size:0.85em; color:#bbdefb; margin-bottom:8px;">选择分析类型</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="spf" checked> 胜平负</label>
+                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="bqc"> 半全场</label>
+                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="bf"> 比分</label>
+                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="jqs"> 总进球数</label>
+            </div>
+        </div>
         <div id="aiPasswordError" style="display:none; color:#f44336; font-size:0.8em; margin-top:8px; text-align:center;"></div>
         <div style="display:flex; gap:10px; margin-top:22px;">
             <button onclick="closeAiModal()" style="flex:1; padding:11px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:#bbb; cursor:pointer; font-weight:600; font-size:0.95rem;">取消</button>
@@ -2895,12 +2904,21 @@
             return new TextDecoder().decode(plain);
         }
 
+        // 读取当前选中的分析类型（spf=胜平负 / bqc=半全场 / bf=比分 / jqs=总进球数）
+        function getSelectedAiAnalyzeType() {
+            const checked = document.querySelector('input[name="aiAnalyzeType"]:checked');
+            return checked ? checked.value : 'spf';
+        }
+
         // 打开密码弹窗
         function openAiAnalyze(btn, idx) {
             window._aiTargetIdx = idx;
             const modal = document.getElementById('aiPasswordModal');
             const input = document.getElementById('aiPasswordInput');
             input.value = '';
+            // 每次打开弹窗默认选中"胜平负"
+            const def = document.querySelector('input[name="aiAnalyzeType"][value="spf"]');
+            if (def) def.checked = true;
             document.getElementById('aiPasswordError').style.display = 'none';
             modal.style.display = 'flex';
             setTimeout(() => input.focus(), 60);
@@ -2935,6 +2953,7 @@
                 } catch (e) {
                     _ghTokenCache = '';
                 }
+                window._aiAnalyzeType = getSelectedAiAnalyzeType();
                 closeAiModal();
                 await runAiAnalysis(window._aiTargetIdx);
             } catch (e) {
@@ -2963,11 +2982,12 @@
 
             const home = match.home_team || '';
             const away = match.away_team || '';
-            resultEl.innerHTML = '<div class="ai-loading">🤖 正在提交云端分析任务...</div>';
+            const typeLabel = { spf: '胜平负', bqc: '半全场', bf: '比分', jqs: '总进球数' }[window._aiAnalyzeType] || '胜平负';
+            resultEl.innerHTML = '<div class="ai-loading">🤖 正在提交云端分析任务（' + typeLabel + '）...</div>';
             try {
                 // 1. 触发 GitHub Actions 工作流（云端调用 DeepSeek 分析）
                 await triggerAiWorkflow(idx);
-                resultEl.innerHTML = '<div class="ai-loading">🤖 工作流已启动，正在云端调用 DeepSeek 分析 ' + home + ' vs ' + away + '（约需 1~3 分钟，请耐心等待）...</div>';
+                resultEl.innerHTML = '<div class="ai-loading">🤖 工作流已启动，正在云端调用 DeepSeek 分析 ' + home + ' vs ' + away + '（' + typeLabel + '，约需 1~3 分钟，请耐心等待）...</div>';
 
                 // 2. 轮询等待本次触发的工作流完成（按触发时间过滤，避免命中历史运行），
                 //    实时通过回调显示工作流输出状态（排队中/运行中/成功/失败）
@@ -2990,7 +3010,7 @@
             }
         }
 
-        // 渲染 AI 分析结果
+        // 渲染 AI 分析结果（按分析类型动态渲染：bqc=半全场 / bf=比分 / jqs=总进球数 / 默认=胜平负全场+半场）
         function renderAiResult(resultEl, ai) {
             const pickColor = (p) => p === '胜' ? '#4caf50' : p === '负' ? '#f44336' : '#ff9800';
             // 兼容数组（两个结果）与旧对象（单个结果）两种格式
@@ -3006,6 +3026,19 @@
                             <div class="ai-reason">${item.reason || ''}</div>`).join('')}
                     </div>`;
             };
+            // 依据 AI 返回的具体字段动态选择展示类型：
+            // 半全场 / 比分 / 总进球数 分别使用 bqc / bf / jqs 字段；缺省（或同时有 fulltime+halftime）按胜平负展示
+            let typeGrid = '';
+            if (ai && (ai.bqc !== undefined)) {
+                typeGrid = box('半全场预测', ai.bqc, { pick: '-', confidence: 0, reason: '' });
+            } else if (ai && (ai.bf !== undefined)) {
+                typeGrid = box('比分预测', ai.bf, { pick: '-', confidence: 0, reason: '' });
+            } else if (ai && (ai.jqs !== undefined)) {
+                typeGrid = box('总进球数', ai.jqs, { pick: '-', confidence: 0, reason: '' });
+            } else {
+                typeGrid = box('全场结果', ai && ai.fulltime, { pick: '-', confidence: 0, reason: '' }) +
+                           box('半场结果', ai && ai.halftime, { pick: '-', confidence: 0, reason: '' });
+            }
             resultEl.innerHTML = `
                 <div class="ai-result-box">
                     <div class="ai-result-header">
@@ -3013,10 +3046,9 @@
                         <span class="ai-weight-tag">共同对手 · 联网 综合分析</span>
                     </div>
                     <div class="ai-result-grid">
-                        ${box('全场结果', ai.fulltime, { pick: '-', confidence: 0, reason: '' })}
-                        ${box('半场结果', ai.halftime, { pick: '-', confidence: 0, reason: '' })}
+                        ${typeGrid}
                     </div>
-                    <div class="ai-summary">${ai.summary || ''}</div>
+                    <div class="ai-summary">${(ai && ai.summary) || ''}</div>
                     <div class="ai-meta">数据来源: DeepSeek · ${new Date().toLocaleTimeString()}</div>
                 </div>`;
         }
@@ -3086,6 +3118,8 @@
             if (match.match_num) inputs.match_num = String(match.match_num);
             if (match.home_team) inputs.home = match.home_team;
             if (match.away_team) inputs.away = match.away_team;
+            // 分析类型：spf=胜平负 / bqc=半全场 / bf=比分 / jqs=总进球数（默认 spf）
+            inputs.analyze_type = window._aiAnalyzeType || 'spf';
 
             const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/workflows/${GH_WORKFLOW_FILE}/dispatches`;
             const resp = await fetch(url, {
@@ -3165,10 +3199,11 @@
 
         // 将当前正在执行的 step 名称映射为可读的"阶段"提示（搜索阶段 / DeepSeek 分析阶段 / 提交阶段）
         function aiStageText(stepName) {
+            const typeLabel = { spf: '胜平负', bqc: '半全场', bf: '比分', jqs: '总进球数' }[window._aiAnalyzeType] || '胜平负';
             if (!stepName) return '🔄 工作流运行中，请稍候...';
             if (stepName.indexOf('提交联网搜索') !== -1) return '📤 正在保存并提交联网搜索结果...';
             if (stepName.indexOf('联网搜索') !== -1) return '🔍 正在联网搜索（Tavily）：获取主客队战意、伤停、行程、经济等信息...';
-            if (stepName.indexOf('DeepSeek') !== -1) return '🧠 DeepSeek 正在综合分析（共同对手战绩 + 联网搜索信息交叉印证）...';
+            if (stepName.indexOf('DeepSeek') !== -1) return '🧠 DeepSeek 正在综合分析（' + typeLabel + '，共同对手战绩 + 联网搜索信息交叉印证）...';
             if (stepName.indexOf('提交 AI 分析') !== -1) return '📤 正在提交 AI 分析结果...';
             return '🔄 工作流运行中：' + stepName + '...';
         }

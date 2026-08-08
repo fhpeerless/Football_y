@@ -18,6 +18,16 @@ on:
         required: false
         default: ''
         type: string
+      analyze_type:
+        description: '分析类型'
+        required: false
+        default: 'spf'
+        type: choice
+        options:
+          - spf
+          - bqc
+          - bf
+          - jqs
 
 jobs:
   ai-analysis:
@@ -49,6 +59,7 @@ jobs:
           --match-num "${{ inputs.match_num }}" \
           --home "${{ inputs.home }}" \
           --away "${{ inputs.away }}" \
+          --analyze-type "${{ inputs.analyze_type }}" \
           --stage search
 
     # 搜索完成后立即提交，即使后续 DeepSeek 分析失败，联网结果也已保留
@@ -62,6 +73,7 @@ jobs:
           --match-num "${{ inputs.match_num }}" \
           --home "${{ inputs.home }}" \
           --away "${{ inputs.away }}" \
+          --analyze-type "${{ inputs.analyze_type }}" \
           --stage analyze
 
     - name: 提交 AI 分析结果到仓库

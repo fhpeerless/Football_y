@@ -335,19 +335,76 @@ def build_structured_search_text(payload):
     return "\n".join(lines).strip(), topic_list
 
 
-def call_deepseek(api_key, match, common_text, search_payload):
+def call_deepseek(api_key, match, common_text, search_payload, analyze_type="spf"):
     """调用 DeepSeek 返回结构化 JSON（综合覆盖全部搜索主题的分析）。
 
     要求 AI 通读所有搜索主题的信息后做综合研判，而非逐条罗列；
     输出不限字数，reason 与 summary 应充分详细。
+
+    analyze_type 决定输出字段：
+      spf - 全场/半场胜平负（fulltime + halftime）
+      bqc - 半全场结果（bqc，如 "胜/胜"）
+      bf  - 正确比分（bf，如 "2-1"）
+      jqs - 总进球数（jqs，如 "2-3球"）
     """
     home = match.get("home_team", "")
     away = match.get("away_team", "")
 
     structured_search_text, topic_list = build_structured_search_text(search_payload)
 
+    # ---- 按分析类型生成输出字段、规则与 JSON 示例 ----
+    if analyze_type == "bqc":
+        intro = "预测主队视角的【半全场】结果（半场胜平负与全场胜平负的组合）。"
+        output_field = "bqc"
+        pick_rule = 'pick 格式为「半场/全场」，如 "胜/胜"、"平/胜"、"负/平"，每部分只允许 胜/平/负；confidence 为 0-100 整数'
+        candidate_desc = "bqc 输出两个最可能结果，按可能性从高到低排列"
+        json_example = "\n".join([
+            '  "bqc": [',
+            '    {"pick": "胜/胜", "confidence": 55, "reason": "综合引用共同对手数据与多个搜索主题的关键事实"},',
+            '    {"pick": "平/胜", "confidence": 25, "reason": "说明理由"}',
+            '  ],',
+        ])
+    elif analyze_type == "bf":
+        intro = "预测主队视角的【正确比分】（主队进球-客队进球）。"
+        output_field = "bf"
+        pick_rule = 'pick 格式为「主队进球-客队进球」（如 "2-1"、"1-1"），使用阿拉伯数字；confidence 为 0-100 整数'
+        candidate_desc = "bf 输出两到三个最可能的比分，按可能性从高到低排列"
+        json_example = "\n".join([
+            '  "bf": [',
+            '    {"pick": "2-1", "confidence": 30, "reason": "综合引用共同对手数据与多个搜索主题的关键事实"},',
+            '    {"pick": "1-1", "confidence": 25, "reason": "说明理由"},',
+            '    {"pick": "1-0", "confidence": 15, "reason": "说明理由"}',
+            '  ],',
+        ])
+    elif analyze_type == "jqs":
+        intro = "预测本场比赛的【总进球数】。"
+        output_field = "jqs"
+        pick_rule = 'pick 为进球数范围（如 "2-3球"、"0-1球"）或单值（如 "1球"、"4球"）；confidence 为 0-100 整数'
+        candidate_desc = "jqs 输出两个最可能的总进球数，按可能性从高到低排列"
+        json_example = "\n".join([
+            '  "jqs": [',
+            '    {"pick": "2-3球", "confidence": 55, "reason": "综合引用共同对手数据与多个搜索主题的关键事实"},',
+            '    {"pick": "0-1球", "confidence": 25, "reason": "说明理由"}',
+            '  ],',
+        ])
+    else:  # spf（默认）
+        intro = "预测主队视角的【全场】和【半场】胜平负结果。"
+        output_field = "fulltime / halftime"
+        pick_rule = 'pick 只能为 "胜"/"平"/"负"；confidence 为 0-100 整数'
+        candidate_desc = "fulltime 和 halftime 各输出两个最可能结果，按可能性从高到低排列"
+        json_example = "\n".join([
+            '  "fulltime": [',
+            '    {"pick": "胜", "confidence": 65, "reason": "综合引用共同对手数据与多个搜索主题的关键事实"},',
+            '    {"pick": "平", "confidence": 25, "reason": "说明理由"}',
+            '  ],',
+            '  "halftime": [',
+            '    {"pick": "平", "confidence": 50, "reason": "说明理由"},',
+            '    {"pick": "胜", "confidence": 30, "reason": "说明理由"}',
+            '  ],',
+        ])
+
     prompt = "\n".join([
-        "你是资深的足球赛事分析师。请对以下比赛进行专业分析，预测主队视角的【全场】和【半场】胜平负结果。",
+        "你是资深的足球赛事分析师。请对以下比赛进行专业分析，" + intro,
         "",
         "━━━ 比赛信息 ━━━",
         "对阵: {} (主) vs {} (客)".format(home, away),
@@ -358,7 +415,7 @@ def call_deepseek(api_key, match, common_text, search_payload):
         common_text,
         "",
         "━━━ 联网搜索信息（共{}个主题）━━━".format(len(topic_list)),
-        "以下是按主题编号的搜索结果，你必须通读全部主题的内容（阵容实力、战术体系、临场调整、体能疲劳、更衣室教练、伤病停赛、主场与后勤、外部条件等），不可遗漏任何一个主题：",
+        "以下是按主题编号的搜索结果，你必须通读全部主题的内容（战意保级、阵容实力、战术体系、临场调整、体能疲劳、更衣室教练、伤病停赛、主场与后勤、外部条件等），不可遗漏任何一个主题：",
         "",
         structured_search_text,
         "",
@@ -375,28 +432,21 @@ def call_deepseek(api_key, match, common_text, search_payload):
         "  - 逐个主题提取对主客队有影响的关键事实，不可遗漏、不可跳过任何一个主题；",
         "  - 每个主题的信息都必须融入后续研判，并在 reason / summary 中体现。",
         "",
-        "第3步：综合研判（填入 fulltime / halftime 字段）",
+        "第3步：综合研判（填入 {} 字段）".format(output_field),
         "  将【最近3场共同对手数据的结论】与【全部联网搜索主题的信息】交叉印证、综合权衡后得出整体倾向：",
-        "  - 最近 3 场共同对手数据反映双方近期实力对比和交锋倾向；",
+        "  - 最近 3 场共同对手数据反映双方近期实力对比、进球能力和交锋倾向；",
         "  - 各搜索主题（战意保级、阵容实力、战术体系、临场调整、体能疲劳、更衣室教练、伤病停赛、主场与后勤、外部条件）反映当前状态和临场因素；",
         "  - 综合研判而非逐条罗列；如存在矛盾，必须在 reason 中说明取舍理由。",
         "",
         "第4步：输出 JSON（严格格式，不要任何多余文字）",
         "{",
-        '  "fulltime": [',
-        '    {"pick": "胜", "confidence": 65, "reason": "综合引用共同对手数据与多个搜索主题的关键事实"},',
-        '    {"pick": "平", "confidence": 25, "reason": "说明理由"}',
-        '  ],',
-        '  "halftime": [',
-        '    {"pick": "平", "confidence": 50, "reason": "说明理由"},',
-        '    {"pick": "负", "confidence": 30, "reason": "说明理由"}',
-        '  ],',
-        '  "summary": "总结：简述(1)共同对手数据指向什么结论 (2)所有搜索主题中最关键的有利/不利因素分别是什么，尽量覆盖所有主题 (3)最终预测依据"',
+        json_example,
+        '  "summary": "总结：简述(1)共同对手最近3场数据指向什么结论 (2)所有搜索主题中最关键的有利/不利因素分别是什么，尽量覆盖所有主题 (3)最终预测依据"',
         "}",
         "",
         "关键约束：",
-        '- pick 只能为 "胜"/"平"/"负"；confidence 为 0-100 整数',
-        "- fulltime 和 halftime 各输出两个最可能结果，按可能性从高到低排列",
+        "- " + pick_rule,
+        "- " + candidate_desc,
         "- 共同对手数据以【最近 3 场】为主要依据，reason 中必须引用最近 3 场的具体数据（比分/结果）；",
         "- 分析必须覆盖全部 {} 个搜索主题的信息，但不必逐条单独输出，而是将各主题信息融合进综合研判的 reason 与 summary 中".format(len(topic_list)),
         "- 每个 reason 必须引用搜索主题的具体发现（标注主题名），不得只写泛泛评语；确保全部搜索主题的信息都参与分析，无一遗漏",
@@ -503,6 +553,8 @@ def main():
     parser.add_argument("--date", default="", help="比赛日期")
     parser.add_argument("--stage", default="all", choices=["search", "analyze", "all"],
                         help="执行阶段: search=仅联网搜索; analyze=仅 DeepSeek 分析; all=完整流程(默认)")
+    parser.add_argument("--analyze-type", default="spf", choices=["spf", "bqc", "bf", "jqs"],
+                        help="分析类型: spf=胜平负(默认); bqc=半全场; bf=比分; jqs=总进球数")
     args = parser.parse_args()
 
     if not args.match_num and not (args.home and args.away):
@@ -567,9 +619,12 @@ def main():
 
     # 5. 调用 DeepSeek 分析
     print("正在调用 DeepSeek 分析...")
-    ai = call_deepseek(deepseek_key, match, common_text, search_payload)
-    if not isinstance(ai, dict) or "fulltime" not in ai or "halftime" not in ai:
-        print("错误: AI 返回结构不符合预期", file=sys.stderr)
+    ai = call_deepseek(deepseek_key, match, common_text, search_payload, args.analyze_type)
+    # 按分析类型校验对应输出字段：spf=fulltime+halftime；bqc=半全场；bf=比分；jqs=总进球数
+    expected_fields = {"bqc": ["bqc"], "bf": ["bf"], "jqs": ["jqs"], "spf": ["fulltime", "halftime"]}
+    need_fields = expected_fields.get(args.analyze_type, expected_fields["spf"])
+    if not isinstance(ai, dict) or any(f not in ai for f in need_fields):
+        print("错误: AI 返回结构不符合预期（缺少字段: {}）".format(", ".join(need_fields)), file=sys.stderr)
         sys.exit(1)
 
     # 6. 按 match_num 命名独立结果文件：{match_num}ai_results.json（无 match_num 时回退 ai_results.json）
