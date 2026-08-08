@@ -2086,11 +2086,33 @@
             return gridHtml;
         }
 
+        // 判断比赛是否已开赛：date 为 YYYY-MM-DD、match_time 为 HH:MM（均按北京时间）
+        function isMatchStarted(match) {
+            const date = match.date || '';
+            const time = match.match_time || '';
+            if (!date) return false;
+            const start = new Date(date + 'T' + (time || '00:00') + ':00+08:00');
+            if (isNaN(start.getTime())) return false;
+            return start.getTime() <= Date.now();
+        }
+
+        // 获取北京时间今天的日期字符串（YYYY-MM-DD）
+        function beijingTodayStr() {
+            const parts = new Intl.DateTimeFormat('zh-CN', {
+                timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit'
+            }).formatToParts(new Date());
+            const get = (type) => (parts.find(p => p.type === type) || {}).value || '';
+            return `${get('year')}-${get('month')}-${get('day')}`;
+        }
+
         // 渲染共同对手数据
         function renderCommonMatchData(data) {
-            const matches = data.matches || [];
+            const allMatches = data.matches || [];
+            // 过滤掉已经开赛的比赛
+            const matches = allMatches.filter(m => !isMatchStarted(m));
+            const filteredCount = allMatches.length - matches.length;
             if (!matches || matches.length === 0) {
-                spfCommonBody.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">暂无共同对手数据</p>';
+                spfCommonBody.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">暂无未开赛的共同对手数据</p>';
                 return;
             }
             // 按比赛时间（日期+开赛时间）从早到晚排列
@@ -2100,7 +2122,7 @@
                 return ta.localeCompare(tb);
             });
             
-            let html = `<p style="margin-bottom: 20px; opacity: 0.8;">生成时间: ${data.generate_time || '未知'} | 总比赛数: ${data.total_matches || matches.length}</p>`;
+            let html = `<p style="margin-bottom: 20px; opacity: 0.8;">生成时间: ${data.generate_time || '未知'} | 在售比赛数: ${matches.length} 场${filteredCount > 0 ? `（已过滤 ${filteredCount} 场已开赛比赛）` : ''}</p>`;
             
             matches.forEach((match, idx) => {
                 const count = match.common_opponent_count || 0;
@@ -2475,14 +2497,18 @@
         // 渲染半全场数据
         function renderBqcCommonData() {
             if (!bqcAllData) return;
-            const matches = bqcAllData.matches || [];
+            const allMatches = bqcAllData.matches || [];
+            // 半全场数据无开赛时间，仅按日期过滤掉早于今天（北京时间）的已过场次
+            const todayStr = beijingTodayStr();
+            const matches = allMatches.filter(m => (m.date || '') >= todayStr);
+            const filteredCount = allMatches.length - matches.length;
             if (!matches || matches.length === 0) {
-                bqcCommonBody.innerHTML = `<p style="text-align: center; opacity: 0.7; padding: 20px;">期数 ${bqcCurrentPeriod}：暂无半全场数据</p>`;
+                bqcCommonBody.innerHTML = `<p style="text-align: center; opacity: 0.7; padding: 20px;">期数 ${bqcCurrentPeriod}：暂无未开赛半全场数据</p>`;
                 return;
             }
             
             let html = `<p style="margin-bottom: 20px; opacity: 0.8;">
-                生成时间: ${bqcAllData.generate_time || '未知'} | 期数: ${bqcCurrentPeriod}期 | 总比赛数: ${matches.length} 场
+                生成时间: ${bqcAllData.generate_time || '未知'} | 期数: ${bqcCurrentPeriod}期 | 在售比赛数: ${matches.length} 场${filteredCount > 0 ? `（已过滤 ${filteredCount} 场已过场次）` : ''}
                 ${bqcAllData.lottery_sale_endtime ? ` | 投注截止: <span style="color:#ff9800;font-weight:600;">${bqcAllData.lottery_sale_endtime}</span>` : ''}
             </p>`;
             
