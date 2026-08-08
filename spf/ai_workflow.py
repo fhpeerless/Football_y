@@ -5,7 +5,7 @@ spf/ai_workflow.py - 云端 AI 分析工作流脚本（由 GitHub Actions 的 sp
 流程:
   1. 读取 spf/data/common_match.json 找到目标比赛
   2. 组装共同对手数据文本（复刻 fenxi.html 的 collectCommonData）
-  3. 使用 TAVILY_API_KEY 按主题联网搜索主客队信息（战意/打法/突发事件/行程/旅途消耗/长途移动/俱乐部经济/人员伤停），
+  3. 使用 TAVILY_API_KEY 按主题联网搜索主客队信息（阵容实力/战术体系/临场调整/体能疲劳/更衣室教练/伤病停赛/主场与后勤/外部条件等），
      结果保存为 spf/data/tavily_result/{match_num}_internet.json
   4. 调用 DeepSeek 结合共同对手数据 + 联网搜索信息分析（环境变量 DEEPSEEK_API_KEY）
   5. 结果写入 spf/data/deepseek_result 目录的 {match_num}ai_results.json（每场比赛一个独立文件，避免错乱）
@@ -76,46 +76,61 @@ def format_match_line(m, highlight_team):
 
 
 def collect_common_data(match):
-    """复刻 fenxi.html collectCommonData：把共同对手数据整理为文本。"""
+    """复刻 fenxi.html collectCommonData：把共同对手数据整理为文本。
+
+    只保留按时间最近的 3 场共同对手比赛（其余历史场次不提交给 AI，避免
+    输入过长导致 AI 舍弃字符）；直接交锋也仅保留最近 3 场。
+    """
     home = match.get("home_team", "")
     away = match.get("away_team", "")
     lines = []
     lines.append("对阵: {} (主) vs {} (客)".format(home, away))
     lines.append("赛事: {} | 时间: {} {}".format(
         match.get("league", ""), match.get("date", ""), match.get("match_time", "")))
-    lines.append("共同对手数量: {}".format(match.get("common_opponent_count", 0)))
+    lines.append("共同对手数量: {}（仅列出最近 3 场共同对手比赛）".format(match.get("common_opponent_count", 0)))
+    # 收集所有共同对手比赛，标注"主队/客队 对 共同对手"
+    all_matches = []  # (matchDate, 文本行)
     for co in (match.get("common_opponents") or []):
-        lines.append("")
-        lines.append("【共同对手: {}】".format(co.get("team_name", "")))
-        if co.get("home_vs_matches"):
-            lines.append("{} 对其战绩:".format(home))
-            for m in co["home_vs_matches"]:
-                lines.append("  " + format_match_line(m, home))
-        if co.get("away_vs_matches"):
-            lines.append("{} 对其战绩:".format(away))
-            for m in co["away_vs_matches"]:
-                lines.append("  " + format_match_line(m, away))
+        opp_name = co.get("team_name", "")
+        for m in (co.get("home_vs_matches") or []):
+            all_matches.append((m.get("matchDate", ""), "{} 对 {}: {}".format(
+                home, opp_name, format_match_line(m, home))))
+        for m in (co.get("away_vs_matches") or []):
+            all_matches.append((m.get("matchDate", ""), "{} 对 {}: {}".format(
+                away, opp_name, format_match_line(m, away))))
+    # 按开赛日期倒序，只保留最近 3 场
+    all_matches.sort(key=lambda x: x[0], reverse=True)
+    for _, text in all_matches[:3]:
+        lines.append("  " + text)
+    if not all_matches:
+        lines.append("  （无共同对手比赛数据）")
     dmi = match.get("direct_match_info") or {}
     if dmi.get("match_count", 0) > 0:
         lines.append("")
-        lines.append("【直接交锋 {} 场】".format(dmi["match_count"]))
-        for m in (dmi.get("matches") or []):
+        lines.append("【直接交锋 {} 场，仅列最近 3 场】".format(dmi["match_count"]))
+        direct = sorted((dmi.get("matches") or []),
+                        key=lambda m: m.get("matchDate", ""), reverse=True)[:3]
+        for m in direct:
             lines.append("  " + format_match_line(m, home))
     return "\n".join(lines)
 
 
-# 联网搜索主题（覆盖: 战意、打法、突发事件、行程/旅途消耗/长途移动、俱乐部经济、人员实力和伤停；
-# 主队主题只检索主队、客队主题只检索客队，保证主客信息互补、不重复）
+# 联网搜索主题（由用户提供的 15 个子维度综合而成，另附加战意/保级形势：
+# 场内 = 阵容实力/板凳深度、战术体系/阵型匹配、体能状态/跑动能力、临场调整、关键球员对位、定位球攻防；
+# 场外 = 更衣室氛围/团队凝聚力、教练权威/管理能力、赛程密度/疲劳积累、伤病停赛、主场优势、
+#       俱乐部财力/后勤保障、外部压力/舆论环境、裁判/VAR、天气/场地条件；
+# 伤病停赛按主客队分查，其余主题主客队共用一条检索，保证信息互补、不重复）
 SEARCH_TOPICS = [
-    ("整体战意", "{home} vs {away} 足球比赛 前瞻 预测 战意 近期状态"),
-    ("主队人员伤停", "{home} 足球队 伤病 停赛 阵容 人员实力"),
-    ("主队打法", "{home} 足球队 战术 打法 风格"),
-    ("主队行程旅途", "{home} 足球队 客场比赛 行程 旅途 长途 消耗"),
-    ("主队俱乐部动态", "{home} 足球俱乐部 经济 财政 突发事件 新闻"),
-    ("客队人员伤停", "{away} 足球队 伤病 停赛 阵容 人员实力"),
-    ("客队打法", "{away} 足球队 战术 打法 风格"),
-    ("客队行程旅途", "{away} 足球队 客场比赛 行程 旅途 长途 消耗"),
-    ("客队俱乐部动态", "{away} 足球俱乐部 经济 财政 突发事件 新闻"),
+    ("整体战意与保级形势", "{home} vs {away} 足球比赛 战意 保级大战 降级区 争冠 争欧战资格 积分榜形势"),
+    ("整体实力与阵容深度", "{home} vs {away} 足球比赛 阵容绝对实力 板凳深度 关键球员 状态 对位 对比"),
+    ("战术体系与阵型匹配", "{home} vs {away} 足球比赛 战术体系 阵型 打法风格 定位球攻防"),
+    ("临场战术调整", "{home} vs {away} 足球比赛 临场战术调整 换人 变阵 针对性部署"),
+    ("体能状态与疲劳积累", "{home} {away} 足球 体能状态 跑动能力 赛程密度 疲劳积累 恢复"),
+    ("更衣室氛围与教练管理", "{home} {away} 足球俱乐部 更衣室氛围 团队凝聚力 教练权威 管理能力"),
+    ("主队伤病停赛", "{home} 足球队 伤病 停赛 阵容 主力 缺阵"),
+    ("客队伤病停赛", "{away} 足球队 伤病 停赛 阵容 主力 缺阵"),
+    ("主场优势与后勤保障", "{home} vs {away} 足球比赛 主场优势 客场作战 俱乐部财力 后勤保障"),
+    ("外部压力与比赛条件", "{home} vs {away} 足球比赛 舆论压力 裁判 VAR 天气 场地条件"),
 ]
 
 
@@ -171,7 +186,7 @@ def tavily_search_one(search_key, query, max_results=1):
 
 
 def web_search(search_key, home, away):
-    """按主题逐项联网搜索主客队信息（战意/打法/突发事件/行程/旅途/经济/伤停等）。
+    """按主题逐项联网搜索主客队信息（阵容实力/战术体系/临场调整/体能疲劳/更衣室教练/伤病停赛/主场与后勤/外部条件等）。
 
     返回结构化结果 dict（含 topics 明细与拼装好的 search_text，供保存 JSON 和 DeepSeek 使用）。
     """
@@ -259,7 +274,7 @@ def build_search_info_text(payload):
     """把联网搜索的完整结构化数据（topics 各主题的回答与各来源全文）拼成研判文本。
 
     联网搜索返回的是与比赛直接相关的具体数据（伤停名单、阵容配置、战术打法、
-    赛前行程消耗、俱乐部动态、实时新闻等），此处保留全文不再截断，供 DeepSeek
+    体能疲劳、更衣室氛围、主场与后勤、外部条件等），此处保留全文不再截断，供 DeepSeek
     逐条提取可用事实，与共同对手数据做综合研判。
     """
     if not payload:
@@ -309,6 +324,8 @@ def build_structured_search_text(payload):
             title = res.get("title", "")
             url = res.get("url", "")
             if content:
+                # 每个来源只取前 300 字，避免整体输入过长导致 AI 舍弃字符
+                content = content[:300]
                 lines.append("   来源[{}]: {}".format(title, content))
             elif url:
                 lines.append("   来源链接: {} ({})".format(title, url))
@@ -341,24 +358,30 @@ def call_deepseek(api_key, match, common_text, search_payload):
         common_text,
         "",
         "━━━ 联网搜索信息（共{}个主题）━━━".format(len(topic_list)),
-        "以下是按主题编号的搜索结果，你必须通读全部主题的内容（战意、伤停、打法、行程旅途、俱乐部动态等），不可遗漏任何一个主题：",
+        "以下是按主题编号的搜索结果，你必须通读全部主题的内容（阵容实力、战术体系、临场调整、体能疲劳、更衣室教练、伤病停赛、主场与后勤、外部条件等），不可遗漏任何一个主题：",
         "",
         structured_search_text,
         "",
         "━━━ 分析要求（非常重要）━━━",
         "你必须按以下步骤完成分析：",
         "",
-        "第1步：通读全部信息",
-        "  仔细阅读上面 {} 个搜索主题的完整内容以及共同对手历史数据，提取所有对主客队有影响的关键事实，".format(len(topic_list)),
-        "  覆盖全部主题，不跳过任何一项信息。",
+        "第1步：聚焦共同对手最近3场",
+        "  共同对手历史数据中，时间越近参考价值越高：",
+        "  - 主要分析依据：共同对手数据中【最近 3 场】（按 matchDate 最新）的比赛，研判主客队近期实力对比；",
+        "  - 更早的历史场次仅作辅助参考，不作为主要判断依据。",
         "",
-        "第2步：综合研判（填入 fulltime / halftime 字段）",
-        "  将所有搜索主题的信息与共同对手数据交叉印证、综合权衡后得出整体倾向：",
-        "  - 共同对手数据反映双方历史实力对比和交锋倾向；",
-        "  - 各搜索主题（战意、伤停、打法、行程、俱乐部动态）反映当前状态和临场因素；",
-        "  - 综合全部主题信息综合研判而非逐条罗列；如存在矛盾，必须在 reason 中说明取舍理由。",
+        "第2步：通读联网搜索全部主题",
+        "  仔细阅读上面 {} 个搜索主题的完整内容，【所有主题都必须参与分析】：".format(len(topic_list)),
+        "  - 逐个主题提取对主客队有影响的关键事实，不可遗漏、不可跳过任何一个主题；",
+        "  - 每个主题的信息都必须融入后续研判，并在 reason / summary 中体现。",
         "",
-        "第3步：输出 JSON（严格格式，不要任何多余文字）",
+        "第3步：综合研判（填入 fulltime / halftime 字段）",
+        "  将【最近3场共同对手数据的结论】与【全部联网搜索主题的信息】交叉印证、综合权衡后得出整体倾向：",
+        "  - 最近 3 场共同对手数据反映双方近期实力对比和交锋倾向；",
+        "  - 各搜索主题（战意保级、阵容实力、战术体系、临场调整、体能疲劳、更衣室教练、伤病停赛、主场与后勤、外部条件）反映当前状态和临场因素；",
+        "  - 综合研判而非逐条罗列；如存在矛盾，必须在 reason 中说明取舍理由。",
+        "",
+        "第4步：输出 JSON（严格格式，不要任何多余文字）",
         "{",
         '  "fulltime": [',
         '    {"pick": "胜", "confidence": 65, "reason": "综合引用共同对手数据与多个搜索主题的关键事实"},',
@@ -374,8 +397,9 @@ def call_deepseek(api_key, match, common_text, search_payload):
         "关键约束：",
         '- pick 只能为 "胜"/"平"/"负"；confidence 为 0-100 整数',
         "- fulltime 和 halftime 各输出两个最可能结果，按可能性从高到低排列",
+        "- 共同对手数据以【最近 3 场】为主要依据，reason 中必须引用最近 3 场的具体数据（比分/结果）；",
         "- 分析必须覆盖全部 {} 个搜索主题的信息，但不必逐条单独输出，而是将各主题信息融合进综合研判的 reason 与 summary 中".format(len(topic_list)),
-        "- 每个 reason 必须引用搜索主题的具体发现（标注主题名），不得只写泛泛评语",
+        "- 每个 reason 必须引用搜索主题的具体发现（标注主题名），不得只写泛泛评语；确保全部搜索主题的信息都参与分析，无一遗漏",
         "- summary 必须综合全部主题信息，明确列出最关键的搜索发现及其对结论的影响",
         "- 输出内容不限字数，reason 与 summary 应充分详细、写透所有关键信息",
     ])
