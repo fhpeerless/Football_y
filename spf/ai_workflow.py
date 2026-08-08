@@ -38,7 +38,7 @@ def internet_result_path(match_num):
     """联网搜索结果文件路径：spf/data/tavily_result/{match_num}_internet.json"""
     return os.path.join(TAVILY_RESULT_DIR, str(match_num) + "_internet.json")
 
-DEEPSEEK_MODEL = "deepseek-v4-pro"
+DEEPSEEK_MODEL = "deepseek-v4-flash"
 
 
 def get_result_for_team(team_name, m):
@@ -319,21 +319,15 @@ def build_structured_search_text(payload):
 
 
 def call_deepseek(api_key, match, common_text, search_payload):
-    """调用 DeepSeek 返回结构化 JSON（含逐主题搜索分析）。
+    """调用 DeepSeek 返回结构化 JSON（综合覆盖全部搜索主题的分析）。
 
-    相比旧版，新增 search_analysis 输出字段，强制 AI 逐项分析每个搜索主题
-    对主客队的影响，避免遗漏关键信息导致分析偏差。
+    要求 AI 通读所有搜索主题的信息后做综合研判，而非逐条罗列；
+    输出不限字数，reason 与 summary 应充分详细。
     """
     home = match.get("home_team", "")
     away = match.get("away_team", "")
 
     structured_search_text, topic_list = build_structured_search_text(search_payload)
-
-    # 生成搜索主题编号清单，供 prompt 引用
-    topic_checklist = "\n".join([
-        "   {}. {}（有利方: 待分析）".format(num, name)
-        for num, name in topic_list
-    ]) if topic_list else "   （无联网搜索数据）"
 
     prompt = "\n".join([
         "你是资深的足球赛事分析师。请对以下比赛进行专业分析，预测主队视角的【全场】和【半场】胜平负结果。",
@@ -347,50 +341,43 @@ def call_deepseek(api_key, match, common_text, search_payload):
         common_text,
         "",
         "━━━ 联网搜索信息（共{}个主题）━━━".format(len(topic_list)),
-        "以下是按主题编号的搜索结果。你必须逐项阅读并提取关键事实，不可跳过任何一个主题：",
+        "以下是按主题编号的搜索结果，你必须通读全部主题的内容（战意、伤停、打法、行程旅途、俱乐部动态等），不可遗漏任何一个主题：",
         "",
         structured_search_text,
         "",
         "━━━ 分析要求（非常重要）━━━",
         "你必须按以下步骤完成分析：",
         "",
-        "第1步：逐主题分析（填入 search_analysis 字段）",
-        "  对上面 {} 个搜索主题，逐个提取对主客队的关键事实，判断有利方：".format(len(topic_list)),
-        topic_checklist,
-        "  每个主题必须给出：",
-        "  - finding: 该主题下找到的关键事实（30字内）",
-        "  - advantage: 该事实对『主队有利』/『客队有利』/『中性』/『无有效信息』",
+        "第1步：通读全部信息",
+        "  仔细阅读上面 {} 个搜索主题的完整内容以及共同对手历史数据，提取所有对主客队有影响的关键事实，".format(len(topic_list)),
+        "  覆盖全部主题，不跳过任何一项信息。",
         "",
         "第2步：综合研判（填入 fulltime / halftime 字段）",
-        "  将共同对手数据与搜索主题的结论交叉印证：",
+        "  将所有搜索主题的信息与共同对手数据交叉印证、综合权衡后得出整体倾向：",
         "  - 共同对手数据反映双方历史实力对比和交锋倾向；",
-        "  - 搜索主题（战意、伤停、打法、行程、俱乐部动态）反映当前状态和临场因素；",
-        "  - 如两者矛盾，必须在 reason 中说明取舍理由。",
+        "  - 各搜索主题（战意、伤停、打法、行程、俱乐部动态）反映当前状态和临场因素；",
+        "  - 综合全部主题信息综合研判而非逐条罗列；如存在矛盾，必须在 reason 中说明取舍理由。",
         "",
         "第3步：输出 JSON（严格格式，不要任何多余文字）",
         "{",
-        '  "search_analysis": [',
-        '    {"topic": "整体战意", "finding": "关键事实", "advantage": "主队有利/客队有利/中性/无有效信息"},',
-        '    {"topic": "主队人员伤停", "finding": "...", "advantage": "..."},',
-        '    ...（必须覆盖全部{}个主题，不可省略）'.format(len(topic_list)),
-        '  ],',
         '  "fulltime": [',
-        '    {"pick": "胜", "confidence": 65, "reason": "引用共同对手数据+至少1个搜索主题的关键事实（80字内）"},',
-        '    {"pick": "平", "confidence": 25, "reason": "同上要求"}',
+        '    {"pick": "胜", "confidence": 65, "reason": "综合引用共同对手数据与多个搜索主题的关键事实"},',
+        '    {"pick": "平", "confidence": 25, "reason": "说明理由"}',
         '  ],',
         '  "halftime": [',
-        '    {"pick": "平", "confidence": 50, "reason": "同上要求"},',
-        '    {"pick": "负", "confidence": 30, "reason": "同上要求"}',
+        '    {"pick": "平", "confidence": 50, "reason": "说明理由"},',
+        '    {"pick": "负", "confidence": 30, "reason": "说明理由"}',
         '  ],',
-        '  "summary": "总结：简述(1)共同对手数据指向什么结论 (2)搜索主题中最重要的2-3个有利/不利因素分别是什么 (3)最终预测依据（200字内）"',
+        '  "summary": "总结：简述(1)共同对手数据指向什么结论 (2)所有搜索主题中最关键的有利/不利因素分别是什么，尽量覆盖所有主题 (3)最终预测依据"',
         "}",
         "",
         "关键约束：",
         '- pick 只能为 "胜"/"平"/"负"；confidence 为 0-100 整数',
         "- fulltime 和 halftime 各输出两个最可能结果，按可能性从高到低排列",
-        "- 每个 reason 必须引用至少1个搜索主题的具体发现（标注主题名），不得只写泛泛评语",
-        "- search_analysis 必须覆盖全部主题，不能跳过任何一个",
-        "- summary 必须明确列出最关键的搜索发现及其对结论的影响",
+        "- 分析必须覆盖全部 {} 个搜索主题的信息，但不必逐条单独输出，而是将各主题信息融合进综合研判的 reason 与 summary 中".format(len(topic_list)),
+        "- 每个 reason 必须引用搜索主题的具体发现（标注主题名），不得只写泛泛评语",
+        "- summary 必须综合全部主题信息，明确列出最关键的搜索发现及其对结论的影响",
+        "- 输出内容不限字数，reason 与 summary 应充分详细、写透所有关键信息",
     ])
     body = json.dumps({
         "model": DEEPSEEK_MODEL,
