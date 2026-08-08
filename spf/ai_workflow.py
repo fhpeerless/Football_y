@@ -105,18 +105,37 @@ def collect_common_data(match):
 
 
 # 联网搜索主题（覆盖: 战意、打法、突发事件、行程/旅途消耗/长途移动、俱乐部经济、人员实力和伤停；
-# 9 个主题均检索主客两队的相关信息）
+# 主队主题只检索主队、客队主题只检索客队，保证主客信息互补、不重复）
 SEARCH_TOPICS = [
     ("整体战意", "{home} vs {away} 足球比赛 前瞻 预测 战意 近期状态"),
-    ("主队人员伤停", "{home} 和 {away} 足球队 伤病 停赛 阵容 人员实力"),
-    ("主队打法", "{home} 和 {away} 足球队 战术 打法 风格"),
-    ("主队行程旅途", "{home} 和 {away} 足球队 客场比赛 行程 旅途 长途 消耗"),
-    ("主队俱乐部动态", "{home} 和 {away} 足球俱乐部 经济 财政 突发事件 新闻"),
-    ("客队人员伤停", "{home} 和 {away} 足球队 伤病 停赛 阵容 人员实力"),
-    ("客队打法", "{home} 和 {away} 足球队 战术 打法 风格"),
-    ("客队行程旅途", "{home} 和 {away} 足球队 客场比赛 行程 旅途 长途 消耗"),
-    ("客队俱乐部动态", "{home} 和 {away} 足球俱乐部 经济 财政 突发事件 新闻"),
+    ("主队人员伤停", "{home} 足球队 伤病 停赛 阵容 人员实力"),
+    ("主队打法", "{home} 足球队 战术 打法 风格"),
+    ("主队行程旅途", "{home} 足球队 客场比赛 行程 旅途 长途 消耗"),
+    ("主队俱乐部动态", "{home} 足球俱乐部 经济 财政 突发事件 新闻"),
+    ("客队人员伤停", "{away} 足球队 伤病 停赛 阵容 人员实力"),
+    ("客队打法", "{away} 足球队 战术 打法 风格"),
+    ("客队行程旅途", "{away} 足球队 客场比赛 行程 旅途 长途 消耗"),
+    ("客队俱乐部动态", "{away} 足球俱乐部 经济 财政 突发事件 新闻"),
 ]
+
+
+_TABLE_NOISE_RE = re.compile(r"^[|\-=_\s]+$")
+
+
+def clean_content(content):
+    """清洗联网来源正文：剔除表格分隔线与纯空单元格行等垃圾片段（如 7M 体育的空表格）。
+
+    保留含有效文字的表格表头与正文；清洗后空内容返回 ""，便于上层回退到仅引用 URL。
+    """
+    if not content:
+        return ""
+    cleaned = []
+    for ln in content.splitlines():
+        s = ln.strip()
+        if not s or _TABLE_NOISE_RE.match(s):
+            continue
+        cleaned.append(s)
+    return "\n".join(cleaned).strip()
 
 
 def tavily_search_one(search_key, query, max_results=1):
@@ -178,7 +197,7 @@ def web_search(search_key, home, away):
         if t.get("answer"):
             lines.append(t["answer"])
         for res in (t.get("results") or []):
-            lines.append("[{}] {}".format(res.get("title", ""), (res.get("content") or "")[:300]))
+            lines.append("[{}] {}".format(res.get("title", ""), clean_content(res.get("content") or "")[:300]))
         if not t.get("answer") and not (t.get("results") or []):
             lines.append("（无有效结果）")
         lines.append("")
@@ -253,7 +272,7 @@ def build_search_info_text(payload):
         if t.get("answer"):
             lines.append("要点: " + t["answer"])
         for res in (t.get("results") or []):
-            content = (res.get("content") or "").strip()
+            content = clean_content(res.get("content") or "")
             title = res.get("title", "")
             url = res.get("url", "")
             if content:
