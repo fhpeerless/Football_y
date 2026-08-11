@@ -1,88 +1,246 @@
 {
-  "generate_time": "2026-08-09 21:07:10",
+  "generate_time": "2026-08-11 23:06:25",
   "period": "26150",
   "lottery_sale_endtime": "2026-08-13 22:00:00",
   "total_matches": 6,
   "matches": [
     {
-      "match_id": "0",
+      "match_id": "2040822",
       "matchnum": 1,
       "period": "26150",
       "league": "欧罗巴",
       "home_team": "帕福斯",
       "away_team": "萨尔茨堡",
       "date": "2026-08-14",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 1,
+      "common_opponent_data": {
+        "直接对战(帕福斯 vs 萨尔茨堡)": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "萨尔茨堡",
+              "awaysxname": "帕福斯",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-07",
+              "tournamentShortName": "欧罗巴",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨尔茨堡"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "萨尔茨堡",
+              "awaysxname": "帕福斯",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-07",
+              "tournamentShortName": "欧罗巴",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "帕福斯"
+            }
+          ],
+          "_is_direct_match": true
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "萨尔茨堡",
+          "awaysxname": "帕福斯",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2026-08-07",
+          "tournamentShortName": "欧罗巴",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040821",
       "matchnum": 2,
       "period": "26150",
       "league": "欧罗巴",
       "home_team": "克拉约瓦大学",
       "away_team": "库奥皮奥",
       "date": "2026-08-14",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 2,
+      "common_opponent_data": {
+        "萨巴赫": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克拉约瓦",
+              "awaysxname": "萨巴赫",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-25",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "萨巴赫"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "库奥皮奥",
+              "awaysxname": "萨巴赫",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-28",
+              "tournamentShortName": "欧冠",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "萨巴赫"
+            },
+            {
+              "homesxname": "萨巴赫",
+              "awaysxname": "库奥皮奥",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-22",
+              "tournamentShortName": "欧冠",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨巴赫"
+            }
+          ]
+        },
+        "直接对战(克拉约瓦大学 vs 库奥皮奥)": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "库奥皮奥",
+              "awaysxname": "克拉约瓦",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-08-06",
+              "tournamentShortName": "欧罗巴",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "库奥皮奥"
+            }
+          ],
+          "away_vs_opponent": [],
+          "_is_direct_match": true
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "库奥皮奥",
+          "awaysxname": "克拉约瓦",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2026-08-06",
+          "tournamentShortName": "欧罗巴",
+          "result1": "平",
+          "result2": "平"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040833",
       "matchnum": 3,
       "period": "26150",
       "league": "欧罗巴",
       "home_team": "雷克雅未克维京人",
       "away_team": "图恩",
       "date": "2026-08-14",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 1,
+      "common_opponent_data": {
+        "直接对战(雷克雅未克维京人 vs 图恩)": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "图恩",
+              "awaysxname": "雷克维京",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-07",
+              "tournamentShortName": "欧罗巴",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "图恩"
+            }
+          ],
+          "away_vs_opponent": [],
+          "_is_direct_match": true
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "图恩",
+          "awaysxname": "雷克维京",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2026-08-07",
+          "tournamentShortName": "欧罗巴",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040825",
       "matchnum": 4,
       "period": "26150",
       "league": "欧罗巴",
       "home_team": "安德莱赫特",
       "away_team": "塞萨洛尼基",
       "date": "2026-08-14",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
+      "home_matches_count": 20,
+      "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
       "bqc_odds": null,
@@ -90,22 +248,59 @@
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "塞萨洛",
+          "awaysxname": "安德莱",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2026-08-07",
+          "tournamentShortName": "欧罗巴",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "安德莱",
+          "awaysxname": "塞萨洛",
+          "homescore": 1,
+          "awayscore": 3,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-07-24",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "塞萨洛",
+          "awaysxname": "安德莱",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2018-06-30",
+          "tournamentShortName": "俱乐部赛",
+          "result1": "平",
+          "result2": "平"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040824",
       "matchnum": 5,
       "period": "26150",
       "league": "欧罗巴",
       "home_team": "格拉斯哥流浪者",
       "away_team": "比亚韦斯托克",
       "date": "2026-08-14",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
+      "home_matches_count": 20,
+      "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
       "bqc_odds": null,
@@ -113,30 +308,90 @@
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "比亚韦",
+          "awaysxname": "流浪者",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2026-08-07",
+          "tournamentShortName": "欧罗巴",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2040826",
       "matchnum": 6,
       "period": "26150",
       "league": "欧罗巴",
       "home_team": "哈茨",
       "away_team": "本菲卡",
       "date": "2026-08-14",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 1,
+      "common_opponent_data": {
+        "直接对战(哈茨 vs 本菲卡)": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "本菲卡",
+              "awaysxname": "哈茨",
+              "homescore": 6,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-07",
+              "tournamentShortName": "欧罗巴",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "本菲卡"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "本菲卡",
+              "awaysxname": "哈茨",
+              "homescore": 6,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-07",
+              "tournamentShortName": "欧罗巴",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "哈茨"
+            }
+          ],
+          "_is_direct_match": true
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "本菲卡",
+          "awaysxname": "哈茨",
+          "homescore": 6,
+          "awayscore": 1,
+          "homehalfscore": 3,
+          "awayhalfscore": 0,
+          "matchdate": "2026-08-07",
+          "tournamentShortName": "欧罗巴",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
