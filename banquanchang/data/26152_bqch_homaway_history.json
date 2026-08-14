@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-08-13 23:05:57",
+  "generate_time": "2026-08-14 23:00:12",
   "period": "26152",
   "lottery_sale_endtime": "2026-08-15 21:30:00",
   "total_matches": 6,
@@ -52,7 +52,7 @@
               "halfTimeGoal": "3:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 16,
+              "homeTeamId": 0,
               "homeTeamShortName": "诺维奇",
               "matchDate": "2026-08-08",
               "matchId": 2542698,
@@ -1666,8 +1666,94 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 605346,
+              "personName": "M. Topić",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 660375,
+              "personName": "M.克维斯特加登",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "30"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 677530,
+              "personName": "J. Makama",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "24"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 683655,
+              "personName": "K. Fisher",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "35"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 689857,
+              "personName": "艾哈迈德",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "21"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 695035,
+              "personName": "G. Forsyth",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "41"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 425829,
+              "personName": "O.迪亚基特",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "17"
+            }
+          ]
         }
       }
     },
@@ -3103,20 +3189,31 @@
       "league": "西甲",
       "home_team": "阿拉维斯",
       "away_team": "赫塔费",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.10",
+        "ac": "18.00",
+        "ab": "40.00",
+        "ca": "4.90",
+        "cc": "3.50",
+        "cb": "7.00",
+        "ba": "35.00",
+        "bc": "18.00",
+        "bb": "6.15",
+        "updatetime": "2026-08-14 09:47:40"
+      },
       "history": {
         "home": {
           "team": "阿拉维斯",
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 171,
+              "awayTeamId": 0,
               "awayTeamShortName": "阿拉维斯",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 676,
+              "homeTeamId": 0,
               "homeTeamShortName": "桑坦德",
               "matchDate": "2026-08-08",
               "matchId": 2613172,
@@ -3136,7 +3233,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 171,
+              "awayTeamId": 0,
               "awayTeamShortName": "阿拉维斯",
               "fullCourtGoal": "0:3",
               "halfTimeGoal": "",
@@ -3162,7 +3259,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 171,
+              "awayTeamId": 0,
               "awayTeamShortName": "阿拉维斯",
               "fullCourtGoal": "0:1",
               "halfTimeGoal": "",
@@ -3194,7 +3291,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 171,
+              "homeTeamId": 0,
               "homeTeamShortName": "阿拉维斯",
               "matchDate": "2026-07-19",
               "matchId": 2526795,
@@ -3651,7 +3748,7 @@
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 511,
+              "awayTeamId": 0,
               "awayTeamShortName": "赫塔费",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "0:0",
@@ -3677,7 +3774,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 511,
+              "awayTeamId": 0,
               "awayTeamShortName": "赫塔费",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "",
@@ -3703,7 +3800,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 511,
+              "awayTeamId": 0,
               "awayTeamShortName": "赫塔费",
               "fullCourtGoal": "4:1",
               "halfTimeGoal": "",
@@ -3729,7 +3826,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 511,
+              "awayTeamId": 0,
               "awayTeamShortName": "赫塔费",
               "fullCourtGoal": "0:0",
               "halfTimeGoal": "",
@@ -3755,7 +3852,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 511,
+              "awayTeamId": 0,
               "awayTeamShortName": "赫塔费",
               "fullCourtGoal": "1:2",
               "halfTimeGoal": "",
@@ -3787,7 +3884,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 511,
+              "homeTeamId": 0,
               "homeTeamShortName": "赫塔费",
               "matchDate": "2026-07-18",
               "matchId": 2571217,
@@ -4676,7 +4773,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 0,
+              "personId": 482836,
+              "personName": "F. Garcés",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "2"
+            }
+          ],
           "away": []
         }
       }
@@ -4689,14 +4799,25 @@
       "league": "西甲",
       "home_team": "塞维利亚",
       "away_team": "巴列卡诺",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.90",
+        "ac": "17.00",
+        "ab": "35.00",
+        "ca": "5.15",
+        "cc": "4.20",
+        "cb": "7.00",
+        "ba": "30.00",
+        "bc": "17.00",
+        "bb": "5.20",
+        "updatetime": "2026-08-14 09:47:40"
+      },
       "history": {
         "home": {
           "team": "塞维利亚",
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 677,
+              "awayTeamId": 0,
               "awayTeamShortName": "塞维利亚",
               "fullCourtGoal": "2:1",
               "halfTimeGoal": "",
@@ -4722,13 +4843,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 677,
+              "awayTeamId": 0,
               "awayTeamShortName": "塞维利亚",
               "fullCourtGoal": "0:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 255,
+              "homeTeamId": 0,
               "homeTeamShortName": "乌德勒支",
               "matchDate": "2026-08-02",
               "matchId": 2537306,
@@ -4748,13 +4869,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 677,
+              "awayTeamId": 0,
               "awayTeamShortName": "塞维利亚",
               "fullCourtGoal": "1:2",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 249,
+              "homeTeamId": 0,
               "homeTeamShortName": "奈梅亨",
               "matchDate": "2026-08-01",
               "matchId": 2535240,
@@ -4780,7 +4901,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 677,
+              "homeTeamId": 0,
               "homeTeamShortName": "塞维利亚",
               "matchDate": "2026-07-27",
               "matchId": 2537307,
@@ -4800,7 +4921,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 677,
+              "awayTeamId": 0,
               "awayTeamShortName": "塞维利亚",
               "fullCourtGoal": "0:0",
               "halfTimeGoal": "",
@@ -4826,7 +4947,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 677,
+              "awayTeamId": 0,
               "awayTeamShortName": "塞维利亚",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "",
@@ -4858,7 +4979,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 677,
+              "homeTeamId": 0,
               "homeTeamShortName": "塞维利亚",
               "matchDate": "2026-07-12",
               "matchId": 2537305,
@@ -5237,7 +5358,7 @@
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 849,
+              "awayTeamId": 0,
               "awayTeamShortName": "巴列卡诺",
               "fullCourtGoal": "3:0",
               "halfTimeGoal": "",
@@ -5263,7 +5384,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 849,
+              "awayTeamId": 0,
               "awayTeamShortName": "巴列卡诺",
               "fullCourtGoal": "2:3",
               "halfTimeGoal": "",
@@ -5289,13 +5410,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 849,
+              "awayTeamId": 0,
               "awayTeamShortName": "巴列卡诺",
               "fullCourtGoal": "2:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 215,
+              "homeTeamId": 0,
               "homeTeamShortName": "哈茨",
               "matchDate": "2026-07-18",
               "matchId": 2536023,
@@ -5711,7 +5832,7 @@
               "halfTimeGoal": "0:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 849,
+              "homeTeamId": 0,
               "homeTeamShortName": "巴列卡诺",
               "matchDate": "2026-03-20",
               "matchId": 2505443,
