@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-08-19 08:39:07",
+  "generate_time": "2026-08-19 10:12:45",
   "total_matches": 6,
   "matches": [
     {
@@ -2179,7 +2179,35 @@
       "common_opponents": [],
       "direct_match_info": null,
       "match_time": "03:00",
-      "injury_suspension": {}
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1128,
+          "teamId": 176,
+          "teamShortName": "LASK林茨",
+          "uniformTeamId": 42
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 684005,
+              "personName": "J. Kenny",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "24"
+            }
+          ],
+          "sportteryTeamId": 211,
+          "teamId": 1898,
+          "teamShortName": "凯尔特人",
+          "uniformTeamId": 55
+        }
+      }
     },
     {
       "match_num": "3007",
