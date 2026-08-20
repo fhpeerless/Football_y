@@ -20,7 +20,8 @@ API到前端编码映射:
   ah -> ba (客胜/主胜 -> 负胜)   ad -> bc (客胜/平 -> 负平)   aa -> bb (客胜/客胜 -> 负负)
 
 输出:
-  huice/onsale_bqc_YYYYMMDD_HHMMSS.json  当前在售主客队半全场赔率快照（文件名带北京时间时间戳）
+  按开赛日期分组保存: huice/onsale_bqc_YYYYMMDD.json
+    每次爬取更新当日 matches；与上次保存对比有变化时，将变更记录追加到该文件的 change_log
 """
 
 import sys
@@ -248,15 +249,135 @@ def display_matches(matches: list[dict], title: str):
     print(f"共 {len(matches)} 场比赛")
 
 
-def save_snapshot(matches: list[dict], prefix: str = "onsale_bqc") -> str:
-    """保存当前在售赔率快照到 huice/ 目录，文件名带当前时间戳（北京时间）"""
+def _flatten(obj, prefix: str = "", sep: str = ".") -> dict:
+    """将嵌套 dict 展平为 dotted-key 映射（如 bqc_odds.aa），便于字段级对比"""
+    items = {}
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            key = f"{prefix}{sep}{k}" if prefix else k
+            items.update(_flatten(v, key, sep))
+    else:
+        items[prefix] = obj
+    return items
+
+
+def _diff_matches(prev: dict, cur: dict) -> tuple:
+    """
+    按 match_id 对比两批比赛，返回 (changed, added, removed)
+      changed: 两批都存在但字段有变化的比赛，含字段级 old/new 差异
+      added:   本次新增的比赛
+      removed: 上次有、本次已消失的比赛
+    """
+    prev_ids = set(prev.keys())
+    cur_ids = set(cur.keys())
+
+    added = [cur[mid] for mid in sorted(cur_ids - prev_ids)]
+    removed = [prev[mid] for mid in sorted(prev_ids - cur_ids)]
+
+    changed = []
+    for mid in sorted(cur_ids & prev_ids):
+        old_flat = _flatten(prev[mid])
+        new_flat = _flatten(cur[mid])
+        diff = {}
+        for key in sorted(set(old_flat) | set(new_flat)):
+            old_v = old_flat.get(key)
+            new_v = new_flat.get(key)
+            if old_v != new_v:
+                diff[key] = {"old": old_v, "new": new_v}
+        if diff:
+            changed.append({
+                "match_id": mid,
+                "match_num_str": cur[mid].get("match_num_str", ""),
+                "league": cur[mid].get("league", ""),
+                "home_team": cur[mid].get("home_team", ""),
+                "away_team": cur[mid].get("away_team", ""),
+                "diff": diff,
+            })
+
+    return changed, added, removed
+
+
+def save_by_match_date(matches: list[dict], prefix: str = "onsale_bqc") -> list:
+    """
+    按开赛日期(date)分组保存到 huice/ 目录，每个开赛日期一个文件:
+      huice/onsale_bqc_YYYYMMDD.json
+
+    文件结构:
+    {
+      "match_date": "2026-08-20",
+      "updated_at": "2026-08-20 09:06:53",   # 本次更新时间(北京时间)
+      "match_count": 3,
+      "matches": [ ... 当日最新在售比赛 ... ],
+      "change_log": [
+        {
+          "fetch_time": "2026-08-20 09:06:53",
+          "added": [ ... 新增比赛 ... ],
+          "removed": [ ... 消失比赛 ... ],
+          "changed": [ ... 字段有变化的比赛(含 old/new diff) ... ]
+        }
+      ]
+    }
+
+    每次爬取都会用最新数据覆盖当日 matches；仅当与上次保存有差异时，
+    才把差异记录追加到 change_log。
+    """
     os.makedirs(SCRIPT_DIR, exist_ok=True)
-    timestamp = datetime.now(BJ_TZ).strftime("%Y%m%d_%H%M%S")
-    filepath = os.path.join(SCRIPT_DIR, f"{prefix}_{timestamp}.json")
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(matches, f, ensure_ascii=False, indent=2)
-    print(f"数据已保存到: {filepath}")
-    return filepath
+    now_str = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+
+    # 按开赛日期分组
+    grouped = {}
+    for m in matches:
+        match_date = m.get("date", "")
+        if match_date:
+            grouped.setdefault(match_date, []).append(m)
+
+    saved_files = []
+    for match_date in sorted(grouped.keys()):
+        new_list = grouped[match_date]
+        file_key = match_date.replace("-", "")
+        filepath = os.path.join(SCRIPT_DIR, f"{prefix}_{file_key}.json")
+
+        data = {
+            "match_date": match_date,
+            "updated_at": now_str,
+            "match_count": len(new_list),
+            "matches": new_list,
+            "change_log": [],
+        }
+
+        # 读取该日期已保存的文件，对比差异
+        if os.path.exists(filepath):
+            try:
+                with open(filepath, "r", encoding="utf-8") as f:
+                    old_data = json.load(f)
+                if isinstance(old_data, dict) and isinstance(old_data.get("matches"), list):
+                    data["change_log"] = old_data.get("change_log", [])
+                    prev = {str(m.get("match_id")): m for m in old_data["matches"] if m.get("match_id")}
+                    cur = {str(m.get("match_id")): m for m in new_list if m.get("match_id")}
+                    changed, added, removed = _diff_matches(prev, cur)
+                    if changed or added or removed:
+                        data["change_log"].append({
+                            "fetch_time": now_str,
+                            "changed": changed,
+                            "added": added,
+                            "removed": removed,
+                        })
+            except (json.JSONDecodeError, OSError):
+                # 文件损坏时按新文件处理
+                data = {
+                    "match_date": match_date,
+                    "updated_at": now_str,
+                    "match_count": len(new_list),
+                    "matches": new_list,
+                    "change_log": [],
+                }
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        print(f"数据已保存到: {filepath} (共 {len(new_list)} 场比赛, 累计变更 {len(data['change_log'])} 条)")
+        saved_files.append(filepath)
+
+    return saved_files
 
 
 def main():
@@ -276,8 +397,8 @@ def main():
     # 显示半全场赔率
     display_matches(parsed, "半全场 (BQC/HAFU) 主客队在售赔率 - 最新数据")
 
-    # 保存带时间戳的快照
-    save_snapshot(parsed, "onsale_bqc")
+    # 按开赛日期分组保存
+    save_by_match_date(parsed, "onsale_bqc")
     print(f"\n共 {len(parsed)} 场比赛 (含多个比赛日)")
 
 
