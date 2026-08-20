@@ -1,7 +1,7 @@
 {
   "match_date": "2026-08-21",
-  "updated_at": "2026-08-21 00:59:33",
-  "match_count": 9,
+  "updated_at": "2026-08-21 01:54:12",
+  "match_count": 7,
   "matches": [
     {
       "match_id": "2040934",
@@ -116,82 +116,6 @@
         "aa": "8.50"
       },
       "bqc_update_time": "2026-08-20 21:39:15"
-    },
-    {
-      "match_id": "2040953",
-      "date": "2026-08-21",
-      "match_time": "01:00:00",
-      "dayofweek": "周四",
-      "match_num": "4006",
-      "match_num_str": "周四006",
-      "league": "欧罗巴",
-      "league_id": "70",
-      "home_team": "特拉布宗",
-      "away_team": "费伦茨",
-      "home_team_id": "340",
-      "away_team_id": "295",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "2.30",
-        "ac": "17.00",
-        "ab": "45.00",
-        "ca": "4.50",
-        "cc": "6.00",
-        "cb": "11.50",
-        "ba": "24.00",
-        "bc": "17.00",
-        "bb": "9.00"
-      },
-      "bqc_odds_api": {
-        "hh": "2.30",
-        "hd": "17.00",
-        "ha": "45.00",
-        "dh": "4.50",
-        "dd": "6.00",
-        "da": "11.50",
-        "ah": "24.00",
-        "ad": "17.00",
-        "aa": "9.00"
-      },
-      "bqc_update_time": "2026-08-20 21:38:53"
-    },
-    {
-      "match_id": "2040948",
-      "date": "2026-08-21",
-      "match_time": "01:00:00",
-      "dayofweek": "周四",
-      "match_num": "4007",
-      "match_num_str": "周四007",
-      "league": "欧罗巴",
-      "league_id": "70",
-      "home_team": "波兹南",
-      "away_team": "图恩",
-      "home_team_id": "1163",
-      "away_team_id": "692",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "1.95",
-        "ac": "18.00",
-        "ab": "45.00",
-        "ca": "4.35",
-        "cc": "7.75",
-        "cb": "15.00",
-        "ba": "22.00",
-        "bc": "18.00",
-        "bb": "11.50"
-      },
-      "bqc_odds_api": {
-        "hh": "1.95",
-        "hd": "18.00",
-        "ha": "45.00",
-        "dh": "4.35",
-        "dd": "7.75",
-        "da": "15.00",
-        "ah": "22.00",
-        "ad": "18.00",
-        "aa": "11.50"
-      },
-      "bqc_update_time": "2026-08-20 20:05:40"
     },
     {
       "match_id": "2040949",
@@ -1427,6 +1351,89 @@
             "aa": "2.65"
           },
           "bqc_update_time": "2026-08-20 21:46:11"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-08-21 01:54:12",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2040948",
+          "date": "2026-08-21",
+          "match_time": "01:00:00",
+          "dayofweek": "周四",
+          "match_num": "4007",
+          "match_num_str": "周四007",
+          "league": "欧罗巴",
+          "league_id": "70",
+          "home_team": "波兹南",
+          "away_team": "图恩",
+          "home_team_id": "1163",
+          "away_team_id": "692",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "1.95",
+            "ac": "18.00",
+            "ab": "45.00",
+            "ca": "4.35",
+            "cc": "7.75",
+            "cb": "15.00",
+            "ba": "22.00",
+            "bc": "18.00",
+            "bb": "11.50"
+          },
+          "bqc_odds_api": {
+            "hh": "1.95",
+            "hd": "18.00",
+            "ha": "45.00",
+            "dh": "4.35",
+            "dd": "7.75",
+            "da": "15.00",
+            "ah": "22.00",
+            "ad": "18.00",
+            "aa": "11.50"
+          },
+          "bqc_update_time": "2026-08-20 20:05:40"
+        },
+        {
+          "match_id": "2040953",
+          "date": "2026-08-21",
+          "match_time": "01:00:00",
+          "dayofweek": "周四",
+          "match_num": "4006",
+          "match_num_str": "周四006",
+          "league": "欧罗巴",
+          "league_id": "70",
+          "home_team": "特拉布宗",
+          "away_team": "费伦茨",
+          "home_team_id": "340",
+          "away_team_id": "295",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.30",
+            "ac": "17.00",
+            "ab": "45.00",
+            "ca": "4.50",
+            "cc": "6.00",
+            "cb": "11.50",
+            "ba": "24.00",
+            "bc": "17.00",
+            "bb": "9.00"
+          },
+          "bqc_odds_api": {
+            "hh": "2.30",
+            "hd": "17.00",
+            "ha": "45.00",
+            "dh": "4.50",
+            "dd": "6.00",
+            "da": "11.50",
+            "ah": "24.00",
+            "ad": "17.00",
+            "aa": "9.00"
+          },
+          "bqc_update_time": "2026-08-20 21:38:53"
         }
       ]
     }
