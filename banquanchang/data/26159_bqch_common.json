@@ -1,142 +1,3076 @@
 {
-  "generate_time": "2026-08-19 21:03:57",
+  "generate_time": "2026-08-20 22:45:32",
   "period": "26159",
   "lottery_sale_endtime": "2026-08-23 20:30:00",
   "total_matches": 6,
   "matches": [
     {
-      "match_id": "0",
+      "match_id": "2041009",
       "matchnum": 1,
       "period": "26159",
       "league": "英超",
       "home_team": "曼彻斯特城",
       "away_team": "伯恩茅斯",
       "date": "2026-08-23",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 10,
+      "common_opponent_data": {
+        "维拉": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "曼城",
+              "awaysxname": "维拉",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-24",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "维拉"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "伯恩茅斯",
+              "awaysxname": "维拉",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-02-07",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "维拉"
+            }
+          ]
+        },
+        "伯恩利": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "伯恩利",
+              "awaysxname": "曼城",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-23",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "伯恩利"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "伯恩利",
+              "awaysxname": "伯恩茅斯",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-14",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "伯恩利"
+            }
+          ]
+        },
+        "阿森纳": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "阿森纳",
+              "awaysxname": "曼城",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-16",
+              "tournamentShortName": "英社区盾",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "阿森纳"
+            },
+            {
+              "homesxname": "曼城",
+              "awaysxname": "阿森纳",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "阿森纳"
+            },
+            {
+              "homesxname": "阿森纳",
+              "awaysxname": "曼城",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-23",
+              "tournamentShortName": "英联赛杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "阿森纳"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "阿森纳",
+              "awaysxname": "伯恩茅斯",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-11",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "阿森纳"
+            }
+          ]
+        },
+        "埃弗顿": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "埃弗顿",
+              "awaysxname": "曼城",
+              "homescore": 3,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-05",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "埃弗顿"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "埃弗顿",
+              "awaysxname": "伯恩茅斯",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-11",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "埃弗顿"
+            }
+          ]
+        },
+        "利物浦": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "曼城",
+              "awaysxname": "利物浦",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-04",
+              "tournamentShortName": "英足总杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "利物浦"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "伯恩茅斯",
+              "awaysxname": "利物浦",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-01-25",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "利物浦"
+            }
+          ]
+        },
+        "水晶宫": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "曼城",
+              "awaysxname": "水晶宫",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-14",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "水晶宫"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "伯恩茅斯",
+              "awaysxname": "水晶宫",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "水晶宫"
+            }
+          ]
+        },
+        "纽卡斯尔": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "纽卡斯尔",
+              "awaysxname": "曼城",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "英足总杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "纽卡斯尔"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "纽卡斯尔",
+              "awaysxname": "伯恩茅斯",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-18",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "纽卡斯尔"
+            }
+          ]
+        },
+        "西汉姆联": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "西汉姆联",
+              "awaysxname": "曼城",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-15",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "西汉姆联"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "西汉姆联",
+              "awaysxname": "伯恩茅斯",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-22",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "西汉姆联"
+            }
+          ]
+        },
+        "布伦特": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "曼城",
+              "awaysxname": "布伦特",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "布伦特"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "伯恩茅斯",
+              "awaysxname": "布伦特",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-04",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "布伦特"
+            }
+          ]
+        },
+        "直接对战(曼彻斯特城 vs 伯恩茅斯)": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "伯恩茅斯",
+              "awaysxname": "曼城",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-20",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "伯恩茅斯"
+            }
+          ],
+          "away_vs_opponent": [],
+          "_is_direct_match": true
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2026-05-20",
+          "tournamentShortName": "英超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2025-11-03",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2025-05-21",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2025-03-30",
+          "tournamentShortName": "英足总杯",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2024-11-02",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2024-02-25",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 6,
+          "awayscore": 1,
+          "homehalfscore": 3,
+          "awayhalfscore": 0,
+          "matchdate": "2023-11-04",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 1,
+          "awayscore": 4,
+          "homehalfscore": 0,
+          "awayhalfscore": 3,
+          "matchdate": "2023-02-26",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 3,
+          "awayhalfscore": 0,
+          "matchdate": "2022-08-13",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2020-09-25",
+          "tournamentShortName": "英联赛杯",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2020-07-16",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 1,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 2,
+          "matchdate": "2019-08-25",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-03-02",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2018-12-01",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2017-12-23",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2017-08-26",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2017-02-14",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2016-09-17",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "伯恩茅斯",
+          "awaysxname": "曼城",
+          "homescore": 0,
+          "awayscore": 4,
+          "homehalfscore": 0,
+          "awayhalfscore": 3,
+          "matchdate": "2016-04-02",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "曼城",
+          "awaysxname": "伯恩茅斯",
+          "homescore": 5,
+          "awayscore": 1,
+          "homehalfscore": 4,
+          "awayhalfscore": 1,
+          "matchdate": "2015-10-17",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2041017",
       "matchnum": 2,
       "period": "26159",
       "league": "英超",
       "home_team": "纽卡斯尔联",
       "away_team": "利物浦",
       "date": "2026-08-23",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 8,
+      "common_opponent_data": {
+        "富勒姆": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "富勒姆",
+              "awaysxname": "纽卡斯尔",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-24",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "富勒姆"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "利物浦",
+              "awaysxname": "富勒姆",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "富勒姆"
+            }
+          ]
+        },
+        "曼联": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "纽卡斯尔",
+              "awaysxname": "曼联",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-05",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "曼联"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "曼联",
+              "awaysxname": "利物浦",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "曼联"
+            }
+          ]
+        },
+        "埃弗顿": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "纽卡斯尔",
+              "awaysxname": "埃弗顿",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-13",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "埃弗顿"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "埃弗顿",
+              "awaysxname": "利物浦",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "埃弗顿"
+            }
+          ]
+        },
+        "水晶宫": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "水晶宫",
+              "awaysxname": "纽卡斯尔",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "水晶宫"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "利物浦",
+              "awaysxname": "水晶宫",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-25",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "水晶宫"
+            }
+          ]
+        },
+        "桑德兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "纽卡斯尔",
+              "awaysxname": "桑德兰",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-22",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "桑德兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "利物浦",
+              "awaysxname": "桑德兰",
+              "homescore": 4,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-07-26",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "桑德兰"
+            }
+          ]
+        },
+        "切尔西": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "切尔西",
+              "awaysxname": "纽卡斯尔",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-15",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "切尔西"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "利物浦",
+              "awaysxname": "切尔西",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-09",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "切尔西"
+            }
+          ]
+        },
+        "布赖顿": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "纽卡斯尔",
+              "awaysxname": "布赖顿",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-02",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "布赖顿"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "布赖顿",
+              "awaysxname": "利物浦",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-21",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "布赖顿"
+            }
+          ]
+        },
+        "曼城": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "纽卡斯尔",
+              "awaysxname": "曼城",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "英足总杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "曼城"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "曼城",
+              "awaysxname": "利物浦",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-04",
+              "tournamentShortName": "英足总杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "曼城"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 4,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2026-02-01",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 2,
+          "awayscore": 3,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2025-08-26",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2025-03-17",
+          "tournamentShortName": "英联赛杯",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2025-02-27",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 3,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2024-12-05",
+          "tournamentShortName": "英超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 4,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2024-01-02",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2023-08-27",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 2,
+          "matchdate": "2023-02-19",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2022-09-01",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2022-04-30",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2021-12-17",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2021-04-24",
+          "tournamentShortName": "英超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-12-31",
+          "tournamentShortName": "英超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 1,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2020-07-26",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2019-09-14",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 2,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 2,
+          "matchdate": "2019-05-05",
+          "tournamentShortName": "英超",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2018-12-26",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2018-03-04",
+          "tournamentShortName": "英超",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "纽卡斯尔",
+          "awaysxname": "利物浦",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2017-10-01",
+          "tournamentShortName": "英超",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "利物浦",
+          "awaysxname": "纽卡斯尔",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2016-04-23",
+          "tournamentShortName": "英超",
+          "result1": "平",
+          "result2": "平"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2041018",
       "matchnum": 3,
       "period": "26159",
       "league": "意甲",
       "home_team": "弗洛西诺内",
       "away_team": "尤文图斯",
       "date": "2026-08-24",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 1,
+      "common_opponent_data": {
+        "巴勒莫": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "弗洛西诺",
+              "awaysxname": "巴勒莫",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-11",
+              "tournamentShortName": "意乙",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴勒莫"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "尤文图斯",
+              "awaysxname": "巴勒莫",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-11",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴勒莫"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "尤文图斯",
+          "awaysxname": "弗洛西诺",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 2,
+          "awayhalfscore": 2,
+          "matchdate": "2024-02-25",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "尤文图斯",
+          "awaysxname": "弗洛西诺",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2024-01-12",
+          "tournamentShortName": "意大利杯",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "弗洛西诺",
+          "awaysxname": "尤文图斯",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2023-12-23",
+          "tournamentShortName": "意甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "尤文图斯",
+          "awaysxname": "弗洛西诺",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2019-02-16",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "弗洛西诺",
+          "awaysxname": "尤文图斯",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2018-09-24",
+          "tournamentShortName": "意甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "弗洛西诺",
+          "awaysxname": "尤文图斯",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2016-02-07",
+          "tournamentShortName": "意甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "尤文图斯",
+          "awaysxname": "弗洛西诺",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2015-09-24",
+          "tournamentShortName": "意甲",
+          "result1": "平",
+          "result2": "平"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2041022",
       "matchnum": 4,
       "period": "26159",
       "league": "意甲",
       "home_team": "都灵",
       "away_team": "米兰",
       "date": "2026-08-24",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 14,
+      "common_opponent_data": {
+        "热那亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "热那亚",
+              "awaysxname": "都灵",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-22",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "热那亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "热那亚",
+              "awaysxname": "AC米兰",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-17",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "热那亚"
+            }
+          ]
+        },
+        "卡利亚里": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "卡利亚里",
+              "awaysxname": "都灵",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-18",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "卡利亚里"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "卡利亚里",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "卡利亚里"
+            }
+          ]
+        },
+        "萨索洛": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "萨索洛",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-09",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨索洛"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "萨索洛",
+              "awaysxname": "AC米兰",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "萨索洛"
+            }
+          ]
+        },
+        "乌迪内斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "乌迪内斯",
+              "awaysxname": "都灵",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-02",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "乌迪内斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "乌迪内斯",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "乌迪内斯"
+            }
+          ]
+        },
+        "帕尔马": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "帕尔马",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-14",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "帕尔马"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "帕尔马",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-23",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "帕尔马"
+            }
+          ]
+        },
+        "比萨": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "比萨",
+              "awaysxname": "都灵",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-06",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "比萨"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "比萨",
+              "awaysxname": "AC米兰",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-02-14",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "比萨"
+            }
+          ]
+        },
+        "那不勒斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "那不勒斯",
+              "awaysxname": "都灵",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-07",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "那不勒斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "那不勒斯",
+              "awaysxname": "AC米兰",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-07",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "那不勒斯"
+            }
+          ]
+        },
+        "拉齐奥": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "拉齐奥",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-02",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "拉齐奥"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "拉齐奥",
+              "awaysxname": "AC米兰",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-16",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "拉齐奥"
+            }
+          ]
+        },
+        "克雷莫纳": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克雷莫纳",
+              "awaysxname": "都灵",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "克雷莫纳"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "克雷莫纳",
+              "awaysxname": "AC米兰",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-01",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "克雷莫纳"
+            }
+          ]
+        },
+        "国际米兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "国际米兰",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-27",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "国际米兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "国际米兰",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-05",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "国际米兰"
+            },
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "国际米兰",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-09",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "国际米兰"
+            }
+          ]
+        },
+        "尤文图斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "尤文图斯",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "尤文图斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "尤文图斯",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-27",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "尤文图斯"
+            }
+          ]
+        },
+        "维罗纳": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "维罗纳",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-11",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维罗纳"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "维罗纳",
+              "awaysxname": "AC米兰",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "维罗纳"
+            }
+          ]
+        },
+        "博洛尼亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "博洛尼亚",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-16",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博洛尼亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "博洛尼亚",
+              "awaysxname": "AC米兰",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-02-04",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "博洛尼亚"
+            }
+          ]
+        },
+        "直接对战(都灵 vs 米兰)": {
+          "home_vs_opponent": [],
+          "away_vs_opponent": [
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "都灵",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-22",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "都灵"
+            }
+          ],
+          "_is_direct_match": true
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2026-03-22",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 2,
+          "awayscore": 3,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2025-12-09",
+          "tournamentShortName": "意甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2025-02-23",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2024-08-18",
+          "tournamentShortName": "意甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2024-05-19",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 4,
+          "awayscore": 1,
+          "homehalfscore": 3,
+          "awayhalfscore": 1,
+          "matchdate": "2023-08-27",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2023-02-11",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2023-01-12",
+          "tournamentShortName": "意大利杯",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2022-10-31",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2022-04-11",
+          "tournamentShortName": "意甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2021-10-27",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 0,
+          "awayscore": 7,
+          "homehalfscore": 0,
+          "awayhalfscore": 2,
+          "matchdate": "2021-05-13",
+          "tournamentShortName": "意甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-01-13",
+          "tournamentShortName": "意大利杯",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2021-01-10",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2020-02-18",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2020-01-29",
+          "tournamentShortName": "意大利杯",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2019-09-27",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-04-29",
+          "tournamentShortName": "意甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "AC米兰",
+          "awaysxname": "都灵",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2018-12-10",
+          "tournamentShortName": "意甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "都灵",
+          "awaysxname": "AC米兰",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2018-04-19",
+          "tournamentShortName": "意甲",
+          "result1": "平",
+          "result2": "平"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2041015",
       "matchnum": 5,
       "period": "26159",
       "league": "西甲",
       "home_team": "马德里竞技",
       "away_team": "比利亚雷亚尔",
       "date": "2026-08-23",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 8,
+      "common_opponent_data": {
+        "塞维利亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "塞维利亚",
+              "awaysxname": "马竞",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "塞维利亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "塞维利亚",
+              "homescore": 2,
+              "awayscore": 3,
+              "homehalfscore": 2,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-14",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "塞维利亚"
+            }
+          ]
+        },
+        "皇家社会": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "马竞",
+              "awaysxname": "皇家社会",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "西国王杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "皇家社会"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "皇家社会",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-21",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "皇家社会"
+            }
+          ]
+        },
+        "塞尔塔": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "马竞",
+              "awaysxname": "塞尔塔",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "塞尔塔"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "塞尔塔",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-27",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "塞尔塔"
+            }
+          ]
+        },
+        "巴萨": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "马竞",
+              "awaysxname": "巴萨",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-15",
+              "tournamentShortName": "欧冠",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴萨"
+            },
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "马竞",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-09",
+              "tournamentShortName": "欧冠",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴萨"
+            },
+            {
+              "homesxname": "马竞",
+              "awaysxname": "巴萨",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-05",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴萨"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "比利亚雷",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-28",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴萨"
+            }
+          ]
+        },
+        "赫罗纳": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "马竞",
+              "awaysxname": "赫罗纳",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-18",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "赫罗纳"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "赫罗纳",
+              "awaysxname": "比利亚雷",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-07",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "赫罗纳"
+            }
+          ]
+        },
+        "巴伦西亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "巴伦西亚",
+              "awaysxname": "马竞",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-02",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴伦西亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "巴伦西亚",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-02-23",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴伦西亚"
+            }
+          ]
+        },
+        "埃尔切": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "埃尔切",
+              "awaysxname": "马竞",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-23",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "埃尔切"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "埃尔切",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "埃尔切"
+            }
+          ]
+        },
+        "毕尔巴鄂": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "马竞",
+              "awaysxname": "毕尔巴鄂",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-26",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "毕尔巴鄂"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "毕尔巴鄂",
+              "awaysxname": "比利亚雷",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-13",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "毕尔巴鄂"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 5,
+          "awayscore": 1,
+          "homehalfscore": 4,
+          "awayhalfscore": 1,
+          "matchdate": "2026-05-25",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2025-09-14",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2025-01-25",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 2,
+          "awayhalfscore": 2,
+          "matchdate": "2024-08-20",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2024-04-02",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2023-11-13",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2023-06-05",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2022-08-22",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2022-01-10",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-08-30",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2021-03-01",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2020-10-03",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 1,
+          "matchdate": "2020-02-24",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-12-07",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2019-02-24",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2018-10-21",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2018-03-19",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2017-10-29",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "马竞",
+          "awaysxname": "比利亚雷",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2017-04-26",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "比利亚雷",
+          "awaysxname": "马竞",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2016-12-13",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2041024",
       "matchnum": 6,
       "period": "26159",
       "league": "西甲",
       "home_team": "埃尔切",
       "away_team": "巴塞罗那",
       "date": "2026-08-24",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 10,
+      "common_opponent_data": {
+        "马竞": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "埃尔切",
+              "awaysxname": "马竞",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-23",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "马竞"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "马竞",
+              "awaysxname": "巴萨",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-04-15",
+              "tournamentShortName": "欧冠",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "马竞"
+            },
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "马竞",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-09",
+              "tournamentShortName": "欧冠",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "马竞"
+            },
+            {
+              "homesxname": "马竞",
+              "awaysxname": "巴萨",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-05",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "马竞"
+            },
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "马竞",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-04",
+              "tournamentShortName": "西国王杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "马竞"
+            }
+          ]
+        },
+        "西班牙人": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "埃尔切",
+              "awaysxname": "西班牙人",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-01",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "西班牙人"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "西班牙人",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "西班牙人"
+            }
+          ]
+        },
+        "比利亚雷": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "埃尔切",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-08",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "比利亚雷"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "比利亚雷",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-02-28",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "比利亚雷"
+            }
+          ]
+        },
+        "巴列卡诺": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "巴列卡诺",
+              "awaysxname": "埃尔切",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-04",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴列卡诺"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "巴列卡诺",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-22",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴列卡诺"
+            }
+          ]
+        },
+        "贝蒂斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "贝蒂斯",
+              "awaysxname": "埃尔切",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-13",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "贝蒂斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "贝蒂斯",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-18",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "贝蒂斯"
+            }
+          ]
+        },
+        "赫塔费": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "埃尔切",
+              "awaysxname": "赫塔费",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-18",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "赫塔费"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "赫塔费",
+              "awaysxname": "巴萨",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-25",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "赫塔费"
+            }
+          ]
+        },
+        "阿拉维斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "埃尔切",
+              "awaysxname": "阿拉维斯",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-09",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "阿拉维斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "阿拉维斯",
+              "awaysxname": "巴萨",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-14",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "阿拉维斯"
+            }
+          ]
+        },
+        "塞尔塔": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "塞尔塔",
+              "awaysxname": "埃尔切",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "塞尔塔"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "塞尔塔",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-23",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "塞尔塔"
+            }
+          ]
+        },
+        "皇马": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "皇马",
+              "awaysxname": "埃尔切",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-15",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "皇马"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "皇马",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-11",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "皇马"
+            }
+          ]
+        },
+        "巴伦西亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "埃尔切",
+              "awaysxname": "巴伦西亚",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-11",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴伦西亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴伦西亚",
+              "awaysxname": "巴萨",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-24",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴伦西亚"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "埃尔切",
+          "awaysxname": "巴萨",
+          "homescore": 1,
+          "awayscore": 3,
+          "homehalfscore": 1,
+          "awayhalfscore": 2,
+          "matchdate": "2026-02-01",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "巴萨",
+          "awaysxname": "埃尔切",
+          "homescore": 3,
+          "awayscore": 1,
+          "homehalfscore": 2,
+          "awayhalfscore": 1,
+          "matchdate": "2025-11-03",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "埃尔切",
+          "awaysxname": "巴萨",
+          "homescore": 0,
+          "awayscore": 4,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2023-04-02",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "巴萨",
+          "awaysxname": "埃尔切",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2022-09-17",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "埃尔切",
+          "awaysxname": "巴萨",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2022-03-06",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "巴萨",
+          "awaysxname": "埃尔切",
+          "homescore": 3,
+          "awayscore": 2,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2021-12-19",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "巴萨",
+          "awaysxname": "埃尔切",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-02-25",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "埃尔切",
+          "awaysxname": "巴萨",
+          "homescore": 0,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2021-01-24",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "埃尔切",
+          "awaysxname": "巴萨",
+          "homescore": 0,
+          "awayscore": 6,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2015-01-25",
+          "tournamentShortName": "西甲",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "埃尔切",
+          "awaysxname": "巴萨",
+          "homescore": 0,
+          "awayscore": 4,
+          "homehalfscore": 0,
+          "awayhalfscore": 3,
+          "matchdate": "2015-01-16",
+          "tournamentShortName": "西国王杯",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "巴萨",
+          "awaysxname": "埃尔切",
+          "homescore": 5,
+          "awayscore": 0,
+          "homehalfscore": 3,
+          "awayhalfscore": 0,
+          "matchdate": "2015-01-09",
+          "tournamentShortName": "西国王杯",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "巴萨",
+          "awaysxname": "埃尔切",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2014-08-25",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "埃尔切",
+          "awaysxname": "巴萨",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2014-05-12",
+          "tournamentShortName": "西甲",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "巴萨",
+          "awaysxname": "埃尔切",
+          "homescore": 4,
+          "awayscore": 0,
+          "homehalfscore": 2,
+          "awayhalfscore": 0,
+          "matchdate": "2014-01-05",
+          "tournamentShortName": "西甲",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
