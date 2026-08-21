@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-08-20 22:44:21",
+  "generate_time": "2026-08-21 22:42:57",
   "period": "26158",
   "lottery_sale_endtime": "2026-08-22 21:30:00",
   "total_matches": 6,
@@ -12,20 +12,31 @@
       "league": "英超",
       "home_team": "埃弗顿",
       "away_team": "水晶宫",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.50",
+        "ac": "16.00",
+        "ab": "28.00",
+        "ca": "5.10",
+        "cc": "4.90",
+        "cb": "7.50",
+        "ba": "24.00",
+        "bc": "16.00",
+        "bb": "5.50",
+        "updatetime": "2026-08-21 09:55:28"
+      },
       "history": {
         "home": {
           "team": "埃弗顿",
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 180,
+              "awayTeamId": 0,
               "awayTeamShortName": "里尔",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 9,
+              "homeTeamId": 0,
               "homeTeamShortName": "埃弗顿",
               "matchDate": "2026-08-15",
               "matchId": 2544117,
@@ -45,13 +56,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 9,
+              "awayTeamId": 0,
               "awayTeamShortName": "埃弗顿",
               "fullCourtGoal": "1:3",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 15,
+              "homeTeamId": 0,
               "homeTeamShortName": "纽卡斯尔",
               "matchDate": "2026-08-13",
               "matchId": 2524292,
@@ -592,7 +603,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 0,
+              "homeTeamId": 8,
               "homeTeamShortName": "水晶宫",
               "matchDate": "2026-08-01",
               "matchId": 2605578,
@@ -644,7 +655,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "5",
-              "homeTeamId": 0,
+              "homeTeamId": 8,
               "homeTeamShortName": "水晶宫",
               "matchDate": "2026-07-18",
               "matchId": 2547044,
@@ -1639,8 +1650,58 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 155064,
+              "personName": "内尔高",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "23"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 623090,
+              "personName": "T. Iroegbunam",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "42"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 317323,
+              "personName": "亨德森",
+              "playerPositionCode": "Goalkeeper",
+              "playerPositionDesc": "守门员",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "1"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 461807,
+              "personName": "J. Larsen",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            }
+          ]
         }
       }
     },
@@ -1652,20 +1713,31 @@
       "league": "英超",
       "home_team": "伊普斯维奇",
       "away_team": "桑德兰",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.00",
+        "ac": "16.00",
+        "ab": "30.00",
+        "ca": "5.60",
+        "cc": "4.75",
+        "cb": "6.50",
+        "ba": "25.00",
+        "bc": "16.00",
+        "bb": "4.70",
+        "updatetime": "2026-08-21 09:55:28"
+      },
       "history": {
         "home": {
           "team": "伊普斯维奇",
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "4",
-              "awayTeamId": 48,
+              "awayTeamId": 0,
               "awayTeamShortName": "伊普斯",
               "fullCourtGoal": "2:4",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 1270,
+              "homeTeamId": 0,
               "homeTeamShortName": "柏林联合",
               "matchDate": "2026-08-15",
               "matchId": 2542560,
@@ -2252,13 +2324,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 88,
+              "awayTeamId": 0,
               "awayTeamShortName": "雷克斯",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 60,
+              "homeTeamId": 0,
               "homeTeamShortName": "桑德兰",
               "matchDate": "2026-08-03",
               "matchId": 2507724,
@@ -2304,13 +2376,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 60,
+              "awayTeamId": 0,
               "awayTeamShortName": "桑德兰",
               "fullCourtGoal": "4:2",
               "halfTimeGoal": "1:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 11,
+              "homeTeamId": 0,
               "homeTeamShortName": "利物浦",
               "matchDate": "2026-07-26",
               "matchId": 2507184,
@@ -3009,8 +3081,82 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 381099,
+              "personName": "A. Matusiwa",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "5"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 458113,
+              "personName": "泰勒",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "14"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 674347,
+              "personName": "伊萨哈库",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 94078,
+              "personName": "默尼耶",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "12"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 290235,
+              "personName": "阿尔德雷特",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "15"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 368803,
+              "personName": "N. Mukiele",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "20"
+            }
+          ]
         }
       }
     },
@@ -3022,7 +3168,18 @@
       "league": "英超",
       "home_team": "诺丁汉森林",
       "away_team": "利兹联",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.50",
+        "ac": "15.00",
+        "ab": "30.00",
+        "ca": "5.25",
+        "cc": "5.00",
+        "cb": "7.25",
+        "ba": "26.00",
+        "bc": "15.00",
+        "bb": "5.40",
+        "updatetime": "2026-08-21 09:55:28"
+      },
       "history": {
         "home": {
           "team": "诺丁汉森林",
@@ -3576,7 +3733,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 49,
+              "homeTeamId": 0,
               "homeTeamShortName": "利兹联",
               "matchDate": "2026-08-15",
               "matchId": 2545394,
@@ -4649,8 +4806,70 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 646344,
+              "personName": "N. Savona",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "37"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 394320,
+              "personName": "卢卡斯·佩里",
+              "playerPositionCode": "Goalkeeper",
+              "playerPositionDesc": "守门员",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": ""
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 437218,
+              "personName": "G. Gudmundsson",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "3"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 463673,
+              "personName": "I. Gruev",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "44"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 695413,
+              "personName": "Mateo Fernández",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": ""
+            }
+          ]
         }
       }
     },
@@ -4662,7 +4881,18 @@
       "league": "英超",
       "home_team": "布伦特福德",
       "away_team": "托特纳姆热刺",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.60",
+        "ac": "15.00",
+        "ab": "30.00",
+        "ca": "5.70",
+        "cc": "5.80",
+        "cb": "6.50",
+        "ba": "25.00",
+        "bc": "15.00",
+        "bb": "4.60",
+        "updatetime": "2026-08-21 09:55:28"
+      },
       "history": {
         "home": {
           "team": "布伦特福德",
@@ -5216,7 +5446,7 @@
               "halfTimeGoal": "2:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 19,
+              "homeTeamId": 0,
               "homeTeamShortName": "热刺",
               "matchDate": "2026-08-16",
               "matchId": 2546347,
@@ -5242,7 +5472,7 @@
               "halfTimeGoal": "1:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 19,
+              "homeTeamId": 0,
               "homeTeamShortName": "热刺",
               "matchDate": "2026-08-15",
               "matchId": 2546346,
@@ -5262,13 +5492,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 511,
+              "awayTeamId": 0,
               "awayTeamShortName": "赫塔费",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "0:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 19,
+              "homeTeamId": 0,
               "homeTeamShortName": "热刺",
               "matchDate": "2026-08-08",
               "matchId": 2566695,
@@ -5288,7 +5518,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 19,
+              "awayTeamId": 0,
               "awayTeamShortName": "热刺",
               "fullCourtGoal": "0:2",
               "halfTimeGoal": "0:1",
@@ -5320,7 +5550,7 @@
               "halfTimeGoal": "1:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 19,
+              "homeTeamId": 0,
               "homeTeamShortName": "热刺",
               "matchDate": "2026-07-23",
               "matchId": 2530642,
@@ -6059,7 +6289,18 @@
       "league": "德超杯",
       "home_team": "多特蒙德",
       "away_team": "拜仁慕尼黑",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "7.00",
+        "ac": "15.00",
+        "ab": "18.00",
+        "ca": "10.50",
+        "cc": "8.50",
+        "cb": "5.10",
+        "ba": "27.00",
+        "bc": "15.00",
+        "bb": "2.35",
+        "updatetime": "2026-08-21 09:55:28"
+      },
       "history": {
         "home": {
           "team": "多特蒙德",
@@ -6092,13 +6333,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 140,
+              "awayTeamId": 0,
               "awayTeamShortName": "多特蒙德",
               "fullCourtGoal": "2:3",
               "halfTimeGoal": "0:2",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 1,
+              "homeTeamId": 0,
               "homeTeamShortName": "阿森纳",
               "matchDate": "2026-08-09",
               "matchId": 2545376,
@@ -6118,13 +6359,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 140,
+              "awayTeamId": 0,
               "awayTeamShortName": "多特蒙德",
               "fullCourtGoal": "0:1",
               "halfTimeGoal": "0:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 548,
+              "homeTeamId": 0,
               "homeTeamShortName": "东京FC",
               "matchDate": "2026-08-01",
               "matchId": 2522739,
@@ -6144,7 +6385,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 140,
+              "awayTeamId": 0,
               "awayTeamShortName": "多特蒙德",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "1:0",
@@ -6170,7 +6411,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 140,
+              "awayTeamId": 0,
               "awayTeamShortName": "多特蒙德",
               "fullCourtGoal": "2:1",
               "halfTimeGoal": "0:1",
@@ -6196,7 +6437,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 140,
+              "awayTeamId": 0,
               "awayTeamShortName": "多特蒙德",
               "fullCourtGoal": "1:3",
               "halfTimeGoal": "1:1",
@@ -6566,7 +6807,7 @@
               "halfTimeGoal": "2:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 140,
+              "homeTeamId": 0,
               "homeTeamShortName": "多特蒙德",
               "matchDate": "2026-02-18",
               "matchId": 2492800,
@@ -6607,7 +6848,7 @@
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "4",
-              "awayTeamId": 0,
+              "awayTeamId": 137,
               "awayTeamShortName": "拜仁",
               "fullCourtGoal": "2:4",
               "halfTimeGoal": "2:1",
@@ -6691,7 +6932,7 @@
               "halfTimeGoal": "1:2",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 1087,
               "homeTeamShortName": "济州SK",
               "matchDate": "2026-08-04",
               "matchId": 2517413,
@@ -7699,7 +7940,18 @@
       "league": "西甲",
       "home_team": "西班牙人",
       "away_team": "皇家马德里",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "12.50",
+        "ac": "20.00",
+        "ab": "24.00",
+        "ca": "16.00",
+        "cc": "7.10",
+        "cb": "4.10",
+        "ba": "45.00",
+        "bc": "20.00",
+        "bb": "1.95",
+        "updatetime": "2026-08-21 09:55:28"
+      },
       "history": {
         "home": {
           "team": "西班牙人",
@@ -7758,7 +8010,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 510,
+              "awayTeamId": 0,
               "awayTeamShortName": "西班牙人",
               "fullCourtGoal": "3:3",
               "halfTimeGoal": "",
@@ -7816,7 +8068,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 510,
+              "homeTeamId": 0,
               "homeTeamShortName": "西班牙人",
               "matchDate": "2026-07-25",
               "matchId": 2551035,
@@ -8247,7 +8499,7 @@
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 664,
+              "awayTeamId": 0,
               "awayTeamShortName": "皇马",
               "fullCourtGoal": "0:3",
               "halfTimeGoal": "0:2",
@@ -8273,13 +8525,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 664,
+              "awayTeamId": 0,
               "awayTeamShortName": "皇马",
               "fullCourtGoal": "0:1",
               "halfTimeGoal": "0:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 509,
+              "homeTeamId": 0,
               "homeTeamShortName": "拉科",
               "matchDate": "2026-08-13",
               "matchId": 2572480,
@@ -8299,13 +8551,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 664,
+              "awayTeamId": 0,
               "awayTeamShortName": "皇马",
               "fullCourtGoal": "1:2",
               "halfTimeGoal": "0:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 295,
+              "homeTeamId": 0,
               "homeTeamShortName": "费伦茨",
               "matchDate": "2026-08-09",
               "matchId": 2597970,
@@ -8325,13 +8577,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 122,
+              "awayTeamId": 0,
               "awayTeamShortName": "佛罗伦萨",
               "fullCourtGoal": "2:2",
               "halfTimeGoal": "2:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 664,
+              "homeTeamId": 0,
               "homeTeamShortName": "皇马",
               "matchDate": "2026-08-02",
               "matchId": 2576227,
@@ -9326,7 +9578,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 0,
+              "personId": 74027,
+              "personName": "L. Cabrera",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "6"
+            }
+          ],
           "away": []
         }
       }
