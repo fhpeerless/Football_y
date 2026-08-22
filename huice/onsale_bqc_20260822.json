@@ -1,84 +1,8 @@
 {
   "match_date": "2026-08-22",
-  "updated_at": "2026-08-22 18:47:18",
-  "match_count": 11,
+  "updated_at": "2026-08-22 19:42:58",
+  "match_count": 9,
   "matches": [
-    {
-      "match_id": "2041039",
-      "date": "2026-08-22",
-      "match_time": "19:30:00",
-      "dayofweek": "周六",
-      "match_num": "6007",
-      "match_num_str": "周六007",
-      "league": "英超",
-      "league_id": "25",
-      "home_team": "赫尔城",
-      "away_team": "曼联",
-      "home_team_id": "76",
-      "away_team_id": "13",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "18.00",
-        "ac": "22.00",
-        "ab": "25.00",
-        "ca": "22.00",
-        "cc": "8.80",
-        "cb": "3.90",
-        "ba": "70.00",
-        "bc": "22.00",
-        "bb": "1.70"
-      },
-      "bqc_odds_api": {
-        "hh": "18.00",
-        "hd": "22.00",
-        "ha": "25.00",
-        "dh": "22.00",
-        "dd": "8.80",
-        "da": "3.90",
-        "ah": "70.00",
-        "ad": "22.00",
-        "aa": "1.70"
-      },
-      "bqc_update_time": "2026-08-21 09:55:28"
-    },
-    {
-      "match_id": "2040980",
-      "date": "2026-08-22",
-      "match_time": "19:30:00",
-      "dayofweek": "周六",
-      "match_num": "6008",
-      "match_num_str": "周六008",
-      "league": "英冠",
-      "league_id": "20",
-      "home_team": "米尔沃尔",
-      "away_team": "诺维奇",
-      "home_team_id": "51",
-      "away_team_id": "16",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "3.90",
-        "ac": "15.00",
-        "ab": "28.00",
-        "ca": "5.80",
-        "cc": "5.15",
-        "cb": "6.50",
-        "ba": "26.00",
-        "bc": "15.00",
-        "bb": "4.55"
-      },
-      "bqc_odds_api": {
-        "hh": "3.90",
-        "hd": "15.00",
-        "ha": "28.00",
-        "dh": "5.80",
-        "dd": "5.15",
-        "da": "6.50",
-        "ah": "26.00",
-        "ad": "15.00",
-        "aa": "4.55"
-      },
-      "bqc_update_time": "2026-08-22 09:44:31"
-    },
     {
       "match_id": "2040981",
       "date": "2026-08-22",
@@ -3452,6 +3376,89 @@
             "aa": "2.85"
           },
           "bqc_update_time": "2026-08-22 17:21:51"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-08-22 19:42:58",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2040980",
+          "date": "2026-08-22",
+          "match_time": "19:30:00",
+          "dayofweek": "周六",
+          "match_num": "6008",
+          "match_num_str": "周六008",
+          "league": "英冠",
+          "league_id": "20",
+          "home_team": "米尔沃尔",
+          "away_team": "诺维奇",
+          "home_team_id": "51",
+          "away_team_id": "16",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.90",
+            "ac": "15.00",
+            "ab": "28.00",
+            "ca": "5.80",
+            "cc": "5.15",
+            "cb": "6.50",
+            "ba": "26.00",
+            "bc": "15.00",
+            "bb": "4.55"
+          },
+          "bqc_odds_api": {
+            "hh": "3.90",
+            "hd": "15.00",
+            "ha": "28.00",
+            "dh": "5.80",
+            "dd": "5.15",
+            "da": "6.50",
+            "ah": "26.00",
+            "ad": "15.00",
+            "aa": "4.55"
+          },
+          "bqc_update_time": "2026-08-22 09:44:31"
+        },
+        {
+          "match_id": "2041039",
+          "date": "2026-08-22",
+          "match_time": "19:30:00",
+          "dayofweek": "周六",
+          "match_num": "6007",
+          "match_num_str": "周六007",
+          "league": "英超",
+          "league_id": "25",
+          "home_team": "赫尔城",
+          "away_team": "曼联",
+          "home_team_id": "76",
+          "away_team_id": "13",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "18.00",
+            "ac": "22.00",
+            "ab": "25.00",
+            "ca": "22.00",
+            "cc": "8.80",
+            "cb": "3.90",
+            "ba": "70.00",
+            "bc": "22.00",
+            "bb": "1.70"
+          },
+          "bqc_odds_api": {
+            "hh": "18.00",
+            "hd": "22.00",
+            "ha": "25.00",
+            "dh": "22.00",
+            "dd": "8.80",
+            "da": "3.90",
+            "ah": "70.00",
+            "ad": "22.00",
+            "aa": "1.70"
+          },
+          "bqc_update_time": "2026-08-21 09:55:28"
         }
       ]
     }
