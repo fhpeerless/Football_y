@@ -1,46 +1,8 @@
 {
   "match_date": "2026-08-23",
-  "updated_at": "2026-08-23 21:09:03",
-  "match_count": 7,
+  "updated_at": "2026-08-23 21:52:28",
+  "match_count": 6,
   "matches": [
-    {
-      "match_id": "2041011",
-      "date": "2026-08-23",
-      "match_time": "21:30:00",
-      "dayofweek": "周日",
-      "match_num": "7011",
-      "match_num_str": "周日011",
-      "league": "德国杯",
-      "league_id": "36",
-      "home_team": "不伦瑞克",
-      "away_team": "柏林联合",
-      "home_team_id": "163",
-      "away_team_id": "1270",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "5.55",
-        "ac": "15.50",
-        "ab": "22.00",
-        "ca": "8.40",
-        "cc": "5.75",
-        "cb": "5.00",
-        "ba": "34.00",
-        "bc": "15.50",
-        "bb": "3.05"
-      },
-      "bqc_odds_api": {
-        "hh": "5.55",
-        "hd": "15.50",
-        "ha": "22.00",
-        "dh": "8.40",
-        "dd": "5.75",
-        "da": "5.00",
-        "ah": "34.00",
-        "ad": "15.50",
-        "aa": "3.05"
-      },
-      "bqc_update_time": "2026-08-23 20:39:26"
-    },
     {
       "match_id": "2041012",
       "date": "2026-08-23",
@@ -246,28 +208,28 @@
       "away_team_id": "11",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "5.80",
+        "aa": "6.00",
         "ac": "15.00",
         "ab": "18.00",
-        "ca": "8.75",
+        "ca": "9.30",
         "cc": "7.50",
         "cb": "5.20",
         "ba": "26.00",
         "bc": "15.00",
-        "bb": "2.75"
+        "bb": "2.65"
       },
       "bqc_odds_api": {
-        "hh": "5.80",
+        "hh": "6.00",
         "hd": "15.00",
         "ha": "18.00",
-        "dh": "8.75",
+        "dh": "9.30",
         "dd": "7.50",
         "da": "5.20",
         "ah": "26.00",
         "ad": "15.00",
-        "aa": "2.75"
+        "aa": "2.65"
       },
-      "bqc_update_time": "2026-08-21 09:55:28"
+      "bqc_update_time": "2026-08-23 21:12:59"
     }
   ],
   "change_log": [
@@ -3352,6 +3314,89 @@
             "aa": "2.55"
           },
           "bqc_update_time": "2026-08-21 09:55:28"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-08-23 21:52:28",
+      "changed": [
+        {
+          "match_id": "2041017",
+          "match_num_str": "周日017",
+          "league": "英超",
+          "home_team": "纽卡斯尔",
+          "away_team": "利物浦",
+          "diff": {
+            "bqc_odds.aa": {
+              "old": "5.80",
+              "new": "6.00"
+            },
+            "bqc_odds.bb": {
+              "old": "2.75",
+              "new": "2.65"
+            },
+            "bqc_odds.ca": {
+              "old": "8.75",
+              "new": "9.30"
+            },
+            "bqc_odds_api.aa": {
+              "old": "2.75",
+              "new": "2.65"
+            },
+            "bqc_odds_api.dh": {
+              "old": "8.75",
+              "new": "9.30"
+            },
+            "bqc_odds_api.hh": {
+              "old": "5.80",
+              "new": "6.00"
+            },
+            "bqc_update_time": {
+              "old": "2026-08-21 09:55:28",
+              "new": "2026-08-23 21:12:59"
+            }
+          }
+        }
+      ],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2041011",
+          "date": "2026-08-23",
+          "match_time": "21:30:00",
+          "dayofweek": "周日",
+          "match_num": "7011",
+          "match_num_str": "周日011",
+          "league": "德国杯",
+          "league_id": "36",
+          "home_team": "不伦瑞克",
+          "away_team": "柏林联合",
+          "home_team_id": "163",
+          "away_team_id": "1270",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "5.55",
+            "ac": "15.50",
+            "ab": "22.00",
+            "ca": "8.40",
+            "cc": "5.75",
+            "cb": "5.00",
+            "ba": "34.00",
+            "bc": "15.50",
+            "bb": "3.05"
+          },
+          "bqc_odds_api": {
+            "hh": "5.55",
+            "hd": "15.50",
+            "ha": "22.00",
+            "dh": "8.40",
+            "dd": "5.75",
+            "da": "5.00",
+            "ah": "34.00",
+            "ad": "15.50",
+            "aa": "3.05"
+          },
+          "bqc_update_time": "2026-08-23 20:39:26"
         }
       ]
     }
