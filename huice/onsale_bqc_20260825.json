@@ -1,7 +1,7 @@
 {
   "match_date": "2026-08-25",
-  "updated_at": "2026-08-23 12:59:26",
-  "match_count": 9,
+  "updated_at": "2026-08-23 13:52:48",
+  "match_count": 11,
   "matches": [
     {
       "match_id": "2041028",
@@ -40,6 +40,44 @@
         "aa": "5.40"
       },
       "bqc_update_time": "2026-08-22 09:44:31"
+    },
+    {
+      "match_id": "2041029",
+      "date": "2026-08-25",
+      "match_time": "00:40:00",
+      "dayofweek": "周一",
+      "match_num": "1002",
+      "match_num_str": "周一002",
+      "league": "沙职",
+      "league_id": "2068446",
+      "home_team": "新未来SC",
+      "away_team": "胡巴卡德",
+      "home_team_id": "2065842",
+      "away_team_id": "2065838",
+      "match_status": "Selling",
+      "bqc_odds": {
+        "aa": "9.10",
+        "ac": "18.00",
+        "ab": "19.00",
+        "ca": "13.50",
+        "cc": "8.65",
+        "cb": "4.65",
+        "ba": "38.00",
+        "bc": "18.00",
+        "bb": "2.00"
+      },
+      "bqc_odds_api": {
+        "hh": "9.10",
+        "hd": "18.00",
+        "ha": "19.00",
+        "dh": "13.50",
+        "dd": "8.65",
+        "da": "4.65",
+        "ah": "38.00",
+        "ad": "18.00",
+        "aa": "2.00"
+      },
+      "bqc_update_time": "2026-08-23 13:09:36"
     },
     {
       "match_id": "2041030",
@@ -116,6 +154,44 @@
         "aa": "8.25"
       },
       "bqc_update_time": "2026-08-22 09:44:31"
+    },
+    {
+      "match_id": "2041032",
+      "date": "2026-08-25",
+      "match_time": "02:00:00",
+      "dayofweek": "周一",
+      "match_num": "1005",
+      "match_num_str": "周一005",
+      "league": "沙职",
+      "league_id": "2068446",
+      "home_team": "吉达联合",
+      "away_team": "拉斯决心",
+      "home_team_id": "751",
+      "away_team_id": "2068549",
+      "match_status": "Selling",
+      "bqc_odds": {
+        "aa": "2.02",
+        "ac": "19.00",
+        "ab": "50.00",
+        "ca": "4.10",
+        "cc": "7.50",
+        "cb": "14.50",
+        "ba": "24.00",
+        "bc": "19.00",
+        "bb": "10.50"
+      },
+      "bqc_odds_api": {
+        "hh": "2.02",
+        "hd": "19.00",
+        "ha": "50.00",
+        "dh": "4.10",
+        "dd": "7.50",
+        "da": "14.50",
+        "ah": "24.00",
+        "ad": "19.00",
+        "aa": "10.50"
+      },
+      "bqc_update_time": "2026-08-23 13:09:36"
     },
     {
       "match_id": "2041033",
@@ -346,5 +422,89 @@
       "bqc_update_time": "2026-08-22 09:44:31"
     }
   ],
-  "change_log": []
+  "change_log": [
+    {
+      "fetch_time": "2026-08-23 13:52:48",
+      "changed": [],
+      "added": [
+        {
+          "match_id": "2041029",
+          "date": "2026-08-25",
+          "match_time": "00:40:00",
+          "dayofweek": "周一",
+          "match_num": "1002",
+          "match_num_str": "周一002",
+          "league": "沙职",
+          "league_id": "2068446",
+          "home_team": "新未来SC",
+          "away_team": "胡巴卡德",
+          "home_team_id": "2065842",
+          "away_team_id": "2065838",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "9.10",
+            "ac": "18.00",
+            "ab": "19.00",
+            "ca": "13.50",
+            "cc": "8.65",
+            "cb": "4.65",
+            "ba": "38.00",
+            "bc": "18.00",
+            "bb": "2.00"
+          },
+          "bqc_odds_api": {
+            "hh": "9.10",
+            "hd": "18.00",
+            "ha": "19.00",
+            "dh": "13.50",
+            "dd": "8.65",
+            "da": "4.65",
+            "ah": "38.00",
+            "ad": "18.00",
+            "aa": "2.00"
+          },
+          "bqc_update_time": "2026-08-23 13:09:36"
+        },
+        {
+          "match_id": "2041032",
+          "date": "2026-08-25",
+          "match_time": "02:00:00",
+          "dayofweek": "周一",
+          "match_num": "1005",
+          "match_num_str": "周一005",
+          "league": "沙职",
+          "league_id": "2068446",
+          "home_team": "吉达联合",
+          "away_team": "拉斯决心",
+          "home_team_id": "751",
+          "away_team_id": "2068549",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.02",
+            "ac": "19.00",
+            "ab": "50.00",
+            "ca": "4.10",
+            "cc": "7.50",
+            "cb": "14.50",
+            "ba": "24.00",
+            "bc": "19.00",
+            "bb": "10.50"
+          },
+          "bqc_odds_api": {
+            "hh": "2.02",
+            "hd": "19.00",
+            "ha": "50.00",
+            "dh": "4.10",
+            "dd": "7.50",
+            "da": "14.50",
+            "ah": "24.00",
+            "ad": "19.00",
+            "aa": "10.50"
+          },
+          "bqc_update_time": "2026-08-23 13:09:36"
+        }
+      ],
+      "removed": []
+    }
+  ]
 }
