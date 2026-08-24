@@ -1,46 +1,8 @@
 {
   "match_date": "2026-08-25",
-  "updated_at": "2026-08-25 01:04:06",
-  "match_count": 8,
+  "updated_at": "2026-08-25 01:55:57",
+  "match_count": 7,
   "matches": [
-    {
-      "match_id": "2041031",
-      "date": "2026-08-25",
-      "match_time": "01:30:00",
-      "dayofweek": "周一",
-      "match_num": "1004",
-      "match_num_str": "周一004",
-      "league": "西甲",
-      "league_id": "62",
-      "home_team": "奥萨苏纳",
-      "away_team": "莱万特",
-      "home_team_id": "534",
-      "away_team_id": "33",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "2.65",
-        "ac": "16.50",
-        "ab": "42.00",
-        "ca": "4.00",
-        "cc": "5.40",
-        "cb": "11.00",
-        "ba": "25.00",
-        "bc": "16.50",
-        "bb": "8.60"
-      },
-      "bqc_odds_api": {
-        "hh": "2.65",
-        "hd": "16.50",
-        "ha": "42.00",
-        "dh": "4.00",
-        "dd": "5.40",
-        "da": "11.00",
-        "ah": "25.00",
-        "ad": "16.50",
-        "aa": "8.60"
-      },
-      "bqc_update_time": "2026-08-24 15:33:12"
-    },
     {
       "match_id": "2041032",
       "date": "2026-08-25",
@@ -1711,6 +1673,51 @@
             "aa": "3.70"
           },
           "bqc_update_time": "2026-08-24 14:15:50"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-08-25 01:55:57",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2041031",
+          "date": "2026-08-25",
+          "match_time": "01:30:00",
+          "dayofweek": "周一",
+          "match_num": "1004",
+          "match_num_str": "周一004",
+          "league": "西甲",
+          "league_id": "62",
+          "home_team": "奥萨苏纳",
+          "away_team": "莱万特",
+          "home_team_id": "534",
+          "away_team_id": "33",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.65",
+            "ac": "16.50",
+            "ab": "42.00",
+            "ca": "4.00",
+            "cc": "5.40",
+            "cb": "11.00",
+            "ba": "25.00",
+            "bc": "16.50",
+            "bb": "8.60"
+          },
+          "bqc_odds_api": {
+            "hh": "2.65",
+            "hd": "16.50",
+            "ha": "42.00",
+            "dh": "4.00",
+            "dd": "5.40",
+            "da": "11.00",
+            "ah": "25.00",
+            "ad": "16.50",
+            "aa": "8.60"
+          },
+          "bqc_update_time": "2026-08-24 15:33:12"
         }
       ]
     }
