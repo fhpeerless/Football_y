@@ -1,84 +1,8 @@
 {
   "match_date": "2026-08-25",
-  "updated_at": "2026-08-25 03:08:43",
-  "match_count": 3,
+  "updated_at": "2026-08-25 03:52:05",
+  "match_count": 1,
   "matches": [
-    {
-      "match_id": "2041036",
-      "date": "2026-08-25",
-      "match_time": "03:15:00",
-      "dayofweek": "周一",
-      "match_num": "1009",
-      "match_num_str": "周一009",
-      "league": "葡超",
-      "league_id": "55",
-      "home_team": "吉维森特",
-      "away_team": "卡萨皮亚",
-      "home_team_id": "393",
-      "away_team_id": "2702",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "2.60",
-        "ac": "19.00",
-        "ab": "50.00",
-        "ca": "3.90",
-        "cc": "4.40",
-        "cb": "12.00",
-        "ba": "31.00",
-        "bc": "19.00",
-        "bb": "10.50"
-      },
-      "bqc_odds_api": {
-        "hh": "2.60",
-        "hd": "19.00",
-        "ha": "50.00",
-        "dh": "3.90",
-        "dd": "4.40",
-        "da": "12.00",
-        "ah": "31.00",
-        "ad": "19.00",
-        "aa": "10.50"
-      },
-      "bqc_update_time": "2026-08-24 19:40:43"
-    },
-    {
-      "match_id": "2041037",
-      "date": "2026-08-25",
-      "match_time": "03:30:00",
-      "dayofweek": "周一",
-      "match_num": "1010",
-      "match_num_str": "周一010",
-      "league": "西甲",
-      "league_id": "62",
-      "home_team": "马拉加",
-      "away_team": "拉科",
-      "home_team_id": "512",
-      "away_team_id": "509",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "4.00",
-        "ac": "15.50",
-        "ab": "35.00",
-        "ca": "5.00",
-        "cc": "3.90",
-        "cb": "7.50",
-        "ba": "30.00",
-        "bc": "15.50",
-        "bb": "5.75"
-      },
-      "bqc_odds_api": {
-        "hh": "4.00",
-        "hd": "15.50",
-        "ha": "35.00",
-        "dh": "5.00",
-        "dd": "3.90",
-        "da": "7.50",
-        "ah": "30.00",
-        "ad": "15.50",
-        "aa": "5.75"
-      },
-      "bqc_update_time": "2026-08-24 18:05:38"
-    },
     {
       "match_id": "2041038",
       "date": "2026-08-25",
@@ -1725,6 +1649,89 @@
             "aa": "2.80"
           },
           "bqc_update_time": "2026-08-24 19:17:11"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-08-25 03:52:05",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2041036",
+          "date": "2026-08-25",
+          "match_time": "03:15:00",
+          "dayofweek": "周一",
+          "match_num": "1009",
+          "match_num_str": "周一009",
+          "league": "葡超",
+          "league_id": "55",
+          "home_team": "吉维森特",
+          "away_team": "卡萨皮亚",
+          "home_team_id": "393",
+          "away_team_id": "2702",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.60",
+            "ac": "19.00",
+            "ab": "50.00",
+            "ca": "3.90",
+            "cc": "4.40",
+            "cb": "12.00",
+            "ba": "31.00",
+            "bc": "19.00",
+            "bb": "10.50"
+          },
+          "bqc_odds_api": {
+            "hh": "2.60",
+            "hd": "19.00",
+            "ha": "50.00",
+            "dh": "3.90",
+            "dd": "4.40",
+            "da": "12.00",
+            "ah": "31.00",
+            "ad": "19.00",
+            "aa": "10.50"
+          },
+          "bqc_update_time": "2026-08-24 19:40:43"
+        },
+        {
+          "match_id": "2041037",
+          "date": "2026-08-25",
+          "match_time": "03:30:00",
+          "dayofweek": "周一",
+          "match_num": "1010",
+          "match_num_str": "周一010",
+          "league": "西甲",
+          "league_id": "62",
+          "home_team": "马拉加",
+          "away_team": "拉科",
+          "home_team_id": "512",
+          "away_team_id": "509",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "4.00",
+            "ac": "15.50",
+            "ab": "35.00",
+            "ca": "5.00",
+            "cc": "3.90",
+            "cb": "7.50",
+            "ba": "30.00",
+            "bc": "15.50",
+            "bb": "5.75"
+          },
+          "bqc_odds_api": {
+            "hh": "4.00",
+            "hd": "15.50",
+            "ha": "35.00",
+            "dh": "5.00",
+            "dd": "3.90",
+            "da": "7.50",
+            "ah": "30.00",
+            "ad": "15.50",
+            "aa": "5.75"
+          },
+          "bqc_update_time": "2026-08-24 18:05:38"
         }
       ]
     }
