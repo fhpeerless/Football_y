@@ -1,6 +1,6 @@
 {
-  "generate_time": "2026-08-24 12:37:34",
-  "total_matches": 11,
+  "generate_time": "2026-08-24 14:38:50",
+  "total_matches": 13,
   "matches": [
     {
       "match_num": "1001",
@@ -10551,6 +10551,132 @@
           "teamId": 323,
           "teamShortName": "博塔弗戈",
           "uniformTeamId": 49
+        }
+      }
+    },
+    {
+      "match_num": "2005",
+      "league": "欧冠",
+      "home_team": "LASK林茨",
+      "away_team": "凯尔特人",
+      "date": "2026-08-26",
+      "home_opponents_count": 15,
+      "away_opponents_count": 15,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 1,
+        "home_wins": 1,
+        "away_wins": 0,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 176,
+            "awayTeamShortName": "LASK林茨",
+            "fullCourtGoal": "3:0",
+            "gmLeagueId": 69,
+            "halfTimeGoal": "2:0",
+            "homeMatchResult": "away",
+            "homeTeamFullCourtGoalCnt": "3",
+            "homeTeamId": 1898,
+            "homeTeamShortName": "凯尔特人",
+            "matchDate": "2026-08-20",
+            "matchId": 2609138,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 1128,
+            "sportteryHomeTeamId": 211,
+            "sportteryMatchId": 2040945,
+            "sportteryTournamentId": 69,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 3,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 42,
+            "uniformHomeTeamId": 55,
+            "uniformLeagueId": 30,
+            "winningTeam": "home"
+          }
+        ]
+      },
+      "match_time": "03:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 211,
+          "teamId": 1898,
+          "teamShortName": "凯尔特人",
+          "uniformTeamId": 55
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1128,
+          "teamId": 176,
+          "teamShortName": "LASK林茨",
+          "uniformTeamId": 42
+        }
+      }
+    },
+    {
+      "match_num": "2006",
+      "league": "欧冠",
+      "home_team": "博德闪耀",
+      "away_team": "奈梅亨",
+      "date": "2026-08-26",
+      "home_opponents_count": 13,
+      "away_opponents_count": 18,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 1,
+        "home_wins": 0,
+        "away_wins": 1,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "3",
+            "awayTeamId": 1595,
+            "awayTeamShortName": "博德闪耀",
+            "fullCourtGoal": "1:3",
+            "gmLeagueId": 69,
+            "halfTimeGoal": "0:2",
+            "homeMatchResult": "home",
+            "homeTeamFullCourtGoalCnt": "1",
+            "homeTeamId": 1528,
+            "homeTeamShortName": "奈梅亨",
+            "matchDate": "2026-08-20",
+            "matchId": 2619055,
+            "seasonId": 15574,
+            "sportteryAwayTeamId": 618,
+            "sportteryHomeTeamId": 249,
+            "sportteryMatchId": 2040946,
+            "sportteryTournamentId": 69,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 4,
+            "tournamentId": 1096,
+            "tournamentShortName": "欧冠",
+            "uniformAwayTeamId": 335,
+            "uniformHomeTeamId": 289,
+            "uniformLeagueId": 30,
+            "winningTeam": "away"
+          }
+        ]
+      },
+      "match_time": "03:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 249,
+          "teamId": 1528,
+          "teamShortName": "奈梅亨",
+          "uniformTeamId": 289
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 618,
+          "teamId": 1595,
+          "teamShortName": "博德闪耀",
+          "uniformTeamId": 335
         }
       }
     }
