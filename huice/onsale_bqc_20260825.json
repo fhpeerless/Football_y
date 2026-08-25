@@ -1,45 +1,83 @@
 {
   "match_date": "2026-08-25",
-  "updated_at": "2026-08-25 06:51:12",
-  "match_count": 1,
+  "updated_at": "2026-08-25 11:24:48",
+  "match_count": 2,
   "matches": [
     {
-      "match_id": "2041038",
+      "match_id": "2041049",
       "date": "2026-08-25",
-      "match_time": "07:00:00",
-      "dayofweek": "周一",
-      "match_num": "1011",
-      "match_num_str": "周一011",
-      "league": "巴甲",
-      "league_id": "6",
-      "home_team": "博塔弗戈",
-      "away_team": "巴竞技",
-      "home_team_id": "566",
-      "away_team_id": "564",
+      "match_time": "18:30:00",
+      "dayofweek": "周二",
+      "match_num": "2001",
+      "match_num_str": "周二001",
+      "league": "韩职",
+      "league_id": "48",
+      "home_team": "金泉尚武",
+      "away_team": "全北现代",
+      "home_team_id": "1084",
+      "away_team_id": "860",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "3.75",
-        "ac": "16.00",
-        "ab": "33.00",
-        "ca": "5.35",
-        "cc": "4.40",
-        "cb": "7.00",
+        "aa": "4.90",
+        "ac": "15.00",
+        "ab": "27.00",
+        "ca": "6.50",
+        "cc": "5.20",
+        "cb": "5.50",
         "ba": "29.00",
-        "bc": "16.00",
-        "bb": "5.25"
+        "bc": "15.00",
+        "bb": "3.75"
       },
       "bqc_odds_api": {
-        "hh": "3.75",
-        "hd": "16.00",
-        "ha": "33.00",
-        "dh": "5.35",
-        "dd": "4.40",
-        "da": "7.00",
+        "hh": "4.90",
+        "hd": "15.00",
+        "ha": "27.00",
+        "dh": "6.50",
+        "dd": "5.20",
+        "da": "5.50",
         "ah": "29.00",
-        "ad": "16.00",
-        "aa": "5.25"
+        "ad": "15.00",
+        "aa": "3.75"
       },
-      "bqc_update_time": "2026-08-24 19:22:08"
+      "bqc_update_time": "2026-08-25 09:34:29"
+    },
+    {
+      "match_id": "2041050",
+      "date": "2026-08-25",
+      "match_time": "18:30:00",
+      "dayofweek": "周二",
+      "match_num": "2002",
+      "match_num_str": "周二002",
+      "league": "韩职",
+      "league_id": "48",
+      "home_team": "济州SK",
+      "away_team": "浦项制铁",
+      "home_team_id": "1087",
+      "away_team_id": "1088",
+      "match_status": "Selling",
+      "bqc_odds": {
+        "aa": "3.90",
+        "ac": "16.00",
+        "ab": "30.00",
+        "ca": "5.50",
+        "cc": "4.50",
+        "cb": "6.50",
+        "ba": "28.00",
+        "bc": "16.00",
+        "bb": "5.10"
+      },
+      "bqc_odds_api": {
+        "hh": "3.90",
+        "hd": "16.00",
+        "ha": "30.00",
+        "dh": "5.50",
+        "dd": "4.50",
+        "da": "6.50",
+        "ah": "28.00",
+        "ad": "16.00",
+        "aa": "5.10"
+      },
+      "bqc_update_time": "2026-08-25 09:34:29"
     }
   ],
   "change_log": [
@@ -1732,6 +1770,128 @@
             "aa": "5.75"
           },
           "bqc_update_time": "2026-08-24 18:05:38"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-08-25 11:24:48",
+      "changed": [],
+      "added": [
+        {
+          "match_id": "2041049",
+          "date": "2026-08-25",
+          "match_time": "18:30:00",
+          "dayofweek": "周二",
+          "match_num": "2001",
+          "match_num_str": "周二001",
+          "league": "韩职",
+          "league_id": "48",
+          "home_team": "金泉尚武",
+          "away_team": "全北现代",
+          "home_team_id": "1084",
+          "away_team_id": "860",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "4.90",
+            "ac": "15.00",
+            "ab": "27.00",
+            "ca": "6.50",
+            "cc": "5.20",
+            "cb": "5.50",
+            "ba": "29.00",
+            "bc": "15.00",
+            "bb": "3.75"
+          },
+          "bqc_odds_api": {
+            "hh": "4.90",
+            "hd": "15.00",
+            "ha": "27.00",
+            "dh": "6.50",
+            "dd": "5.20",
+            "da": "5.50",
+            "ah": "29.00",
+            "ad": "15.00",
+            "aa": "3.75"
+          },
+          "bqc_update_time": "2026-08-25 09:34:29"
+        },
+        {
+          "match_id": "2041050",
+          "date": "2026-08-25",
+          "match_time": "18:30:00",
+          "dayofweek": "周二",
+          "match_num": "2002",
+          "match_num_str": "周二002",
+          "league": "韩职",
+          "league_id": "48",
+          "home_team": "济州SK",
+          "away_team": "浦项制铁",
+          "home_team_id": "1087",
+          "away_team_id": "1088",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.90",
+            "ac": "16.00",
+            "ab": "30.00",
+            "ca": "5.50",
+            "cc": "4.50",
+            "cb": "6.50",
+            "ba": "28.00",
+            "bc": "16.00",
+            "bb": "5.10"
+          },
+          "bqc_odds_api": {
+            "hh": "3.90",
+            "hd": "16.00",
+            "ha": "30.00",
+            "dh": "5.50",
+            "dd": "4.50",
+            "da": "6.50",
+            "ah": "28.00",
+            "ad": "16.00",
+            "aa": "5.10"
+          },
+          "bqc_update_time": "2026-08-25 09:34:29"
+        }
+      ],
+      "removed": [
+        {
+          "match_id": "2041038",
+          "date": "2026-08-25",
+          "match_time": "07:00:00",
+          "dayofweek": "周一",
+          "match_num": "1011",
+          "match_num_str": "周一011",
+          "league": "巴甲",
+          "league_id": "6",
+          "home_team": "博塔弗戈",
+          "away_team": "巴竞技",
+          "home_team_id": "566",
+          "away_team_id": "564",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.75",
+            "ac": "16.00",
+            "ab": "33.00",
+            "ca": "5.35",
+            "cc": "4.40",
+            "cb": "7.00",
+            "ba": "29.00",
+            "bc": "16.00",
+            "bb": "5.25"
+          },
+          "bqc_odds_api": {
+            "hh": "3.75",
+            "hd": "16.00",
+            "ha": "33.00",
+            "dh": "5.35",
+            "dd": "4.40",
+            "da": "7.00",
+            "ah": "29.00",
+            "ad": "16.00",
+            "aa": "5.25"
+          },
+          "bqc_update_time": "2026-08-24 19:22:08"
         }
       ]
     }
