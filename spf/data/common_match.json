@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-08-26 11:46:52",
+  "generate_time": "2026-08-26 12:32:31",
   "total_matches": 15,
   "matches": [
     {
@@ -8830,7 +8830,20 @@
       "match_time": "03:00",
       "injury_suspension": {
         "away": {
-          "injuriesAndSuspensionsList": [],
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 0,
+              "personId": 75843,
+              "personName": "Yuri",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "17"
+            }
+          ],
           "sportteryTeamId": 506,
           "teamId": 2019,
           "teamShortName": "毕尔巴鄂",
