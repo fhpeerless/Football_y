@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-08-26 21:07:35",
+  "generate_time": "2026-08-28 06:11:07",
   "period": "26163",
   "lottery_sale_endtime": "2026-08-28 22:00:00",
   "total_matches": 6,
@@ -12,7 +12,18 @@
       "league": "英超",
       "home_team": "水晶宫",
       "away_team": "曼彻斯特城",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "8.70",
+        "ac": "17.00",
+        "ab": "22.00",
+        "ca": "11.50",
+        "cc": "7.00",
+        "cb": "4.70",
+        "ba": "36.00",
+        "bc": "17.00",
+        "bb": "2.20",
+        "updatetime": "2026-08-27 13:40:48"
+      },
       "history": {
         "home": {
           "team": "水晶宫",
@@ -45,13 +56,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 8,
+              "awayTeamId": 0,
               "awayTeamShortName": "水晶宫",
               "fullCourtGoal": "1:2",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 10,
+              "homeTeamId": 0,
               "homeTeamShortName": "富勒姆",
               "matchDate": "2026-08-08",
               "matchId": 2601280,
@@ -612,13 +623,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 172,
+              "awayTeamId": 0,
               "awayTeamShortName": "马竞",
               "fullCourtGoal": "3:1",
               "halfTimeGoal": "0:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 12,
+              "homeTeamId": 0,
               "homeTeamShortName": "曼城",
               "matchDate": "2026-08-09",
               "matchId": 2537244,
@@ -638,7 +649,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 12,
+              "awayTeamId": 0,
               "awayTeamShortName": "曼城",
               "fullCourtGoal": "1:3",
               "halfTimeGoal": "1:3",
@@ -664,13 +675,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 123,
+              "awayTeamId": 0,
               "awayTeamShortName": "国际米兰",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "1:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 12,
+              "homeTeamId": 0,
               "homeTeamShortName": "曼城",
               "matchDate": "2026-08-01",
               "matchId": 2519396,
@@ -1639,8 +1650,70 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 453991,
+              "personName": "萨尔",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            },
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 461807,
+              "personName": "J. Larsen",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            },
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 668223,
+              "personName": "查迪 里亚德",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "4"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 414655,
+              "personName": "E. Anderson",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "5"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 548687,
+              "personName": "多库",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "11"
+            }
+          ]
         }
       }
     },
@@ -1652,7 +1725,18 @@
       "league": "德甲",
       "home_team": "拜仁慕尼黑",
       "away_team": "斯图加特",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.57",
+        "ac": "21.00",
+        "ab": "46.00",
+        "ca": "4.85",
+        "cc": "13.00",
+        "cb": "22.00",
+        "ba": "18.00",
+        "bc": "21.00",
+        "bb": "15.00",
+        "updatetime": "2026-08-27 13:40:48"
+      },
       "history": {
         "home": {
           "team": "拜仁慕尼黑",
@@ -1685,7 +1769,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "4",
-              "awayTeamId": 137,
+              "awayTeamId": 0,
               "awayTeamShortName": "拜仁",
               "fullCourtGoal": "2:4",
               "halfTimeGoal": "2:1",
@@ -1769,7 +1853,7 @@
               "halfTimeGoal": "1:2",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 1087,
+              "homeTeamId": 0,
               "homeTeamShortName": "济州SK",
               "matchDate": "2026-08-04",
               "matchId": 2517413,
@@ -2226,13 +2310,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 152,
+              "awayTeamId": 0,
               "awayTeamShortName": "斯图加特",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 10,
+              "homeTeamId": 0,
               "homeTeamShortName": "富勒姆",
               "matchDate": "2026-08-15",
               "matchId": 2577892,
@@ -2278,7 +2362,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 0,
+              "awayTeamId": 482,
               "awayTeamShortName": "巴黎FC",
               "fullCourtGoal": "2:2",
               "halfTimeGoal": "",
@@ -3279,8 +3363,106 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 442556,
+              "personName": "迪亚斯",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "14"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 885654,
+              "personName": "卡尔",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "42"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 419549,
+              "personName": "D. Zagadou",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "23"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 508909,
+              "personName": "R. Hendriks",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "3"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 641817,
+              "personName": "J. Diehl",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "31"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 731150,
+              "personName": "D. Seimen",
+              "playerPositionCode": "Goalkeeper",
+              "playerPositionDesc": "守门员",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "41"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 759527,
+              "personName": "L. Jaquez",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "14"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 766835,
+              "personName": "Jeremy Arévalo",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "25"
+            }
+          ]
         }
       }
     },
@@ -3292,7 +3474,18 @@
       "league": "意甲",
       "home_team": "米兰",
       "away_team": "威尼斯",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.95",
+        "ac": "20.00",
+        "ab": "60.00",
+        "ca": "3.95",
+        "cc": "7.00",
+        "cb": "16.00",
+        "ba": "27.00",
+        "bc": "20.00",
+        "bb": "13.00",
+        "updatetime": "2026-08-27 13:40:48"
+      },
       "history": {
         "home": {
           "team": "米兰",
@@ -3924,7 +4117,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 0,
+              "homeTeamId": 190,
               "homeTeamShortName": "圣埃蒂安",
               "matchDate": "2026-08-01",
               "matchId": 2545410,
@@ -4487,8 +4680,58 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 494293,
+              "personName": "希门尼斯",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 392421,
+              "personName": "M. Sverko",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "33"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 509017,
+              "personName": "A. Adorante",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "9"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 794685,
+              "personName": "M. Moreno",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "2"
+            }
+          ]
         }
       }
     },
@@ -4500,7 +4743,18 @@
       "league": "西甲",
       "home_team": "桑坦德竞技",
       "away_team": "埃尔切",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.35",
+        "ac": "15.00",
+        "ab": "30.00",
+        "ca": "5.10",
+        "cc": "5.40",
+        "cb": "7.50",
+        "ba": "25.00",
+        "bc": "15.00",
+        "bb": "5.45",
+        "updatetime": "2026-08-27 13:40:48"
+      },
       "history": {
         "home": {
           "team": "桑坦德竞技",
@@ -4617,7 +4871,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 0,
+              "homeTeamId": 64,
               "homeTeamShortName": "伍尔弗",
               "matchDate": "2026-08-02",
               "matchId": 2558581,
@@ -5749,8 +6003,58 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 579723,
+              "personName": "Pablo Ramón",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 2,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "5"
+            },
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 786972,
+              "personName": "Pedro Felipe",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 632259,
+              "personName": "Yago Alonso",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "7"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 815684,
+              "personName": "A. Boayar",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "32"
+            }
+          ]
         }
       }
     },
@@ -5762,7 +6066,18 @@
       "league": "西甲",
       "home_team": "阿拉维斯",
       "away_team": "比利亚雷亚尔",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "5.00",
+        "ac": "15.00",
+        "ab": "24.00",
+        "ca": "7.00",
+        "cc": "5.25",
+        "cb": "5.40",
+        "ba": "27.00",
+        "bc": "15.00",
+        "bb": "3.65",
+        "updatetime": "2026-08-27 13:40:48"
+      },
       "history": {
         "home": {
           "team": "阿拉维斯",
@@ -7335,7 +7650,32 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 0,
+              "personId": 482836,
+              "personName": "F. Garcés",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "2"
+            },
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 206423,
+              "personName": "M. Díaz",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "9"
+            }
+          ],
           "away": []
         }
       }
@@ -7348,7 +7688,18 @@
       "league": "法甲",
       "home_team": "里尔",
       "away_team": "巴黎圣日尔曼",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "7.50",
+        "ac": "17.00",
+        "ab": "22.00",
+        "ca": "11.00",
+        "cc": "7.00",
+        "cb": "4.80",
+        "ba": "36.00",
+        "bc": "17.00",
+        "bb": "2.30",
+        "updatetime": "2026-08-27 13:40:48"
+      },
       "history": {
         "home": {
           "team": "里尔",
@@ -8975,8 +9326,58 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 190850,
+              "personName": "卡亚尔",
+              "playerPositionCode": "Goalkeeper",
+              "playerPositionDesc": "守门员",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "30"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 571815,
+              "personName": "N. Kouassi",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "23"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 701673,
+              "personName": "I. Hamza",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "29"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 0,
+              "personId": 575061,
+              "personName": "门德斯",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "25"
+            }
+          ]
         }
       }
     }
