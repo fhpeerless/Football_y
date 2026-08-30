@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-08-30 10:30:02",
+  "generate_time": "2026-08-30 16:46:39",
   "total_matches": 38,
   "matches": [
     {
@@ -14182,7 +14182,20 @@
             "uniformTeamId": 1193
           },
           "home": {
-            "injuriesAndSuspensionsList": [],
+            "injuriesAndSuspensionsList": [
+              {
+                "appearanceCnt": 1,
+                "injuryFlag": 0,
+                "personId": 648710,
+                "personName": "戈麦斯",
+                "playerPositionCode": "Midfielder",
+                "playerPositionDesc": "中场",
+                "startedMatchCnt": 1,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 1,
+                "uniformNo": "35"
+              }
+            ],
             "sportteryTeamId": 2,
             "teamId": 665,
             "teamShortName": "维拉",
@@ -34986,13 +34999,13 @@
             "matchList": [
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 1165,
                 "awayTeamShortName": "温布尔登",
                 "fullCourtGoal": "3:0",
                 "halfTimeGoal": "2:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "3",
-                "homeTeamId": 10,
+                "homeTeamId": 0,
                 "homeTeamShortName": "富勒姆",
                 "matchDate": "2026-08-28",
                 "matchId": 2616463,
@@ -63542,7 +63555,7 @@
               "netGoal": 2,
               "phaseName": "Regular Season",
               "points": "20",
-              "ranking": "1",
+              "ranking": "2",
               "teamShortName": "达拉斯",
               "totalLegCnt": 12,
               "uniformTeamId": 14,
