@@ -1,46 +1,8 @@
 {
   "match_date": "2026-09-03",
-  "updated_at": "2026-09-03 06:44:18",
-  "match_count": 2,
+  "updated_at": "2026-09-03 09:15:55",
+  "match_count": 1,
   "matches": [
-    {
-      "match_id": "2041233",
-      "date": "2026-09-03",
-      "match_time": "08:30:00",
-      "dayofweek": "周三",
-      "match_num": "3013",
-      "match_num_str": "周三013",
-      "league": "巴西杯",
-      "league_id": "7",
-      "home_team": "桑托斯",
-      "away_team": "帕梅拉斯",
-      "home_team_id": "581",
-      "away_team_id": "577",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "4.45",
-        "ac": "15.00",
-        "ab": "30.00",
-        "ca": "6.50",
-        "cc": "4.55",
-        "cb": "5.70",
-        "ba": "33.00",
-        "bc": "15.00",
-        "bb": "4.30"
-      },
-      "bqc_odds_api": {
-        "hh": "4.45",
-        "hd": "15.00",
-        "ha": "30.00",
-        "dh": "6.50",
-        "dd": "4.55",
-        "da": "5.70",
-        "ah": "33.00",
-        "ad": "15.00",
-        "aa": "4.30"
-      },
-      "bqc_update_time": "2026-09-02 20:39:58"
-    },
     {
       "match_id": "2041234",
       "date": "2026-09-03",
@@ -1602,6 +1564,51 @@
             "aa": "32.00"
           },
           "bqc_update_time": "2026-09-02 17:48:52"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-09-03 09:15:55",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2041233",
+          "date": "2026-09-03",
+          "match_time": "08:30:00",
+          "dayofweek": "周三",
+          "match_num": "3013",
+          "match_num_str": "周三013",
+          "league": "巴西杯",
+          "league_id": "7",
+          "home_team": "桑托斯",
+          "away_team": "帕梅拉斯",
+          "home_team_id": "581",
+          "away_team_id": "577",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "4.45",
+            "ac": "15.00",
+            "ab": "30.00",
+            "ca": "6.50",
+            "cc": "4.55",
+            "cb": "5.70",
+            "ba": "33.00",
+            "bc": "15.00",
+            "bb": "4.30"
+          },
+          "bqc_odds_api": {
+            "hh": "4.45",
+            "hd": "15.00",
+            "ha": "30.00",
+            "dh": "6.50",
+            "dd": "4.55",
+            "da": "5.70",
+            "ah": "33.00",
+            "ad": "15.00",
+            "aa": "4.30"
+          },
+          "bqc_update_time": "2026-09-02 20:39:58"
         }
       ]
     }
