@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-06 09:58:05",
+  "generate_time": "2026-09-06 15:30:27",
   "total_matches": 32,
   "matches": [
     {
@@ -9081,7 +9081,20 @@
       "match_time": "07:00",
       "injury_suspension": {
         "away": {
-          "injuriesAndSuspensionsList": [],
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 10,
+              "injuryFlag": 0,
+              "personId": 428038,
+              "personName": "Marlon Xavier",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 10,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "23"
+            }
+          ],
           "sportteryTeamId": 791,
           "teamId": 313,
           "teamShortName": "格雷米奥",
