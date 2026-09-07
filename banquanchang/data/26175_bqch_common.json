@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-06 23:24:05",
+  "generate_time": "2026-09-08 02:42:14",
   "period": "26175",
   "lottery_sale_endtime": "2026-09-10 22:00:00",
   "total_matches": 6,
@@ -131,6 +131,51 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
+        "卡萨皮亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "阿马多拉",
+              "awaysxname": "卡萨皮亚",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-18",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "卡萨皮亚"
+            },
+            {
+              "homesxname": "阿马多拉",
+              "awaysxname": "卡萨皮亚",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 3,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-21",
+              "tournamentShortName": "葡超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "卡萨皮亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "卡萨皮亚",
+              "awaysxname": "布拉加",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-24",
+              "tournamentShortName": "葡超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "卡萨皮亚"
+            }
+          ]
+        },
         "摩雷伦斯": {
           "home_vs_opponent": [
             {
@@ -192,51 +237,6 @@
               "result1": "平",
               "result2": "平",
               "_opponent": "阿尔维卡"
-            }
-          ]
-        },
-        "卡萨皮亚": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "阿马多拉",
-              "awaysxname": "卡萨皮亚",
-              "homescore": 1,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-07-18",
-              "tournamentShortName": "俱乐部赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "卡萨皮亚"
-            },
-            {
-              "homesxname": "阿马多拉",
-              "awaysxname": "卡萨皮亚",
-              "homescore": 4,
-              "awayscore": 0,
-              "homehalfscore": 3,
-              "awayhalfscore": 0,
-              "matchdate": "2026-03-21",
-              "tournamentShortName": "葡超",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "卡萨皮亚"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "卡萨皮亚",
-              "awaysxname": "布拉加",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-04-24",
-              "tournamentShortName": "葡超",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "卡萨皮亚"
             }
           ]
         },

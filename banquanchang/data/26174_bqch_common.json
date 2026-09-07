@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-06 23:24:05",
+  "generate_time": "2026-09-08 02:42:14",
   "period": "26174",
   "lottery_sale_endtime": "2026-09-09 22:00:00",
   "total_matches": 6,
@@ -62,38 +62,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 2,
       "common_opponent_data": {
-        "曼城": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "曼城",
-              "awaysxname": "利物浦",
-              "homescore": 4,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-04-04",
-              "tournamentShortName": "英足总杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "曼城"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "曼城",
-              "awaysxname": "马竞",
-              "homescore": 3,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-08-09",
-              "tournamentShortName": "俱乐部赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "曼城"
-            }
-          ]
-        },
         "曼联": {
           "home_vs_opponent": [
             {
@@ -123,6 +91,38 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "曼联"
+            }
+          ]
+        },
+        "曼城": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "曼城",
+              "awaysxname": "利物浦",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-04",
+              "tournamentShortName": "英足总杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "曼城"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "曼城",
+              "awaysxname": "马竞",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-08-09",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "曼城"
             }
           ]
         }
