@@ -1,45 +1,45 @@
 {
   "match_date": "2026-09-08",
-  "updated_at": "2026-09-08 05:38:12",
+  "updated_at": "2026-09-08 14:08:23",
   "match_count": 1,
   "matches": [
     {
-      "match_id": "2041328",
+      "match_id": "2041345",
       "date": "2026-09-08",
-      "match_time": "07:00:00",
-      "dayofweek": "周一",
-      "match_num": "1009",
-      "match_num_str": "周一009",
-      "league": "巴甲",
-      "league_id": "6",
-      "home_team": "维多利亚",
-      "away_team": "格雷米奥",
-      "home_team_id": "1097",
-      "away_team_id": "791",
+      "match_time": "18:30:00",
+      "dayofweek": "周二",
+      "match_num": "2001",
+      "match_num_str": "周二001",
+      "league": "韩职",
+      "league_id": "48",
+      "home_team": "蔚山现代",
+      "away_team": "首尔FC",
+      "home_team_id": "1090",
+      "away_team_id": "929",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "3.25",
-        "ac": "15.00",
-        "ab": "42.00",
-        "ca": "4.85",
-        "cc": "4.80",
-        "cb": "8.00",
-        "ba": "30.00",
-        "bc": "15.00",
-        "bb": "6.00"
+        "aa": "5.70",
+        "ac": "14.00",
+        "ab": "21.00",
+        "ca": "8.25",
+        "cc": "6.00",
+        "cb": "5.05",
+        "ba": "29.00",
+        "bc": "14.00",
+        "bb": "3.15"
       },
       "bqc_odds_api": {
-        "hh": "3.25",
-        "hd": "15.00",
-        "ha": "42.00",
-        "dh": "4.85",
-        "dd": "4.80",
-        "da": "8.00",
-        "ah": "30.00",
-        "ad": "15.00",
-        "aa": "6.00"
+        "hh": "5.70",
+        "hd": "14.00",
+        "ha": "21.00",
+        "dh": "8.25",
+        "dd": "6.00",
+        "da": "5.05",
+        "ah": "29.00",
+        "ad": "14.00",
+        "aa": "3.15"
       },
-      "bqc_update_time": "2026-09-07 16:48:25"
+      "bqc_update_time": "2026-09-08 13:46:08"
     }
   ],
   "change_log": [
@@ -1273,6 +1273,90 @@
             "aa": "3.40"
           },
           "bqc_update_time": "2026-09-07 20:32:21"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-09-08 14:08:23",
+      "changed": [],
+      "added": [
+        {
+          "match_id": "2041345",
+          "date": "2026-09-08",
+          "match_time": "18:30:00",
+          "dayofweek": "周二",
+          "match_num": "2001",
+          "match_num_str": "周二001",
+          "league": "韩职",
+          "league_id": "48",
+          "home_team": "蔚山现代",
+          "away_team": "首尔FC",
+          "home_team_id": "1090",
+          "away_team_id": "929",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "5.70",
+            "ac": "14.00",
+            "ab": "21.00",
+            "ca": "8.25",
+            "cc": "6.00",
+            "cb": "5.05",
+            "ba": "29.00",
+            "bc": "14.00",
+            "bb": "3.15"
+          },
+          "bqc_odds_api": {
+            "hh": "5.70",
+            "hd": "14.00",
+            "ha": "21.00",
+            "dh": "8.25",
+            "dd": "6.00",
+            "da": "5.05",
+            "ah": "29.00",
+            "ad": "14.00",
+            "aa": "3.15"
+          },
+          "bqc_update_time": "2026-09-08 13:46:08"
+        }
+      ],
+      "removed": [
+        {
+          "match_id": "2041328",
+          "date": "2026-09-08",
+          "match_time": "07:00:00",
+          "dayofweek": "周一",
+          "match_num": "1009",
+          "match_num_str": "周一009",
+          "league": "巴甲",
+          "league_id": "6",
+          "home_team": "维多利亚",
+          "away_team": "格雷米奥",
+          "home_team_id": "1097",
+          "away_team_id": "791",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.25",
+            "ac": "15.00",
+            "ab": "42.00",
+            "ca": "4.85",
+            "cc": "4.80",
+            "cb": "8.00",
+            "ba": "30.00",
+            "bc": "15.00",
+            "bb": "6.00"
+          },
+          "bqc_odds_api": {
+            "hh": "3.25",
+            "hd": "15.00",
+            "ha": "42.00",
+            "dh": "4.85",
+            "dd": "4.80",
+            "da": "8.00",
+            "ah": "30.00",
+            "ad": "15.00",
+            "aa": "6.00"
+          },
+          "bqc_update_time": "2026-09-07 16:48:25"
         }
       ]
     }
