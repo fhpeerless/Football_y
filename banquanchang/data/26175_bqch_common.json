@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-09 00:31:29",
+  "generate_time": "2026-09-10 00:29:35",
   "period": "26175",
   "lottery_sale_endtime": "2026-09-10 22:00:00",
   "total_matches": 6,
@@ -16,9 +16,45 @@
       "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "5.25",
+        "ac": "15.00",
+        "ab": "25.00",
+        "ca": "7.50",
+        "cc": "5.50",
+        "cb": "5.25",
+        "ba": "28.00",
+        "bc": "15.00",
+        "bb": "3.35",
+        "updatetime": "2026-09-09 09:42:20"
+      },
       "injury": {
-        "home": [],
+        "home": [
+          {
+            "appearanceCnt": 5,
+            "injuryFlag": 1,
+            "personId": 320586,
+            "personName": "阿森西奥",
+            "playerPositionCode": "Midfielder",
+            "playerPositionDesc": "中场",
+            "startedMatchCnt": 3,
+            "substituteMatchCnt": 2,
+            "suspensionFlag": 0,
+            "uniformNo": "10"
+          },
+          {
+            "appearanceCnt": 3,
+            "injuryFlag": 1,
+            "personId": 627694,
+            "personName": "J.奥斯特沃尔德",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 3,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "24"
+          }
+        ],
         "away": []
       },
       "h2h": [],
@@ -39,7 +75,18 @@
       "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.25",
+        "ac": "40.00",
+        "ab": "90.00",
+        "ca": "4.95",
+        "cc": "22.00",
+        "cb": "50.00",
+        "ba": "21.00",
+        "bc": "40.00",
+        "bb": "38.00",
+        "updatetime": "2026-09-09 09:42:20"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -62,7 +109,18 @@
       "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.70",
+        "ac": "15.00",
+        "ab": "30.00",
+        "ca": "4.85",
+        "cc": "6.45",
+        "cb": "9.50",
+        "ba": "22.00",
+        "bc": "15.00",
+        "bb": "6.45",
+        "updatetime": "2026-09-09 09:42:20"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -85,7 +143,18 @@
       "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.28",
+        "ac": "40.00",
+        "ab": "120.00",
+        "ca": "4.50",
+        "cc": "18.00",
+        "cb": "50.00",
+        "ba": "25.00",
+        "bc": "40.00",
+        "bb": "40.00",
+        "updatetime": "2026-09-09 09:42:20"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -108,7 +177,18 @@
       "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.20",
+        "ac": "15.00",
+        "ab": "26.00",
+        "ca": "6.20",
+        "cc": "5.40",
+        "cb": "6.00",
+        "ba": "27.00",
+        "bc": "15.00",
+        "bb": "4.10",
+        "updatetime": "2026-09-09 11:22:57"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -131,6 +211,38 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
+        "摩雷伦斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "摩雷伦斯",
+              "awaysxname": "阿马多拉",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-02",
+              "tournamentShortName": "葡超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "摩雷伦斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "摩雷伦斯",
+              "awaysxname": "布拉加",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-08-10",
+              "tournamentShortName": "葡超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "摩雷伦斯"
+            }
+          ]
+        },
         "阿尔维卡": {
           "home_vs_opponent": [
             {
@@ -208,38 +320,6 @@
             }
           ]
         },
-        "摩雷伦斯": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "摩雷伦斯",
-              "awaysxname": "阿马多拉",
-              "homescore": 3,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 2,
-              "matchdate": "2026-05-02",
-              "tournamentShortName": "葡超",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "摩雷伦斯"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "摩雷伦斯",
-              "awaysxname": "布拉加",
-              "homescore": 2,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-08-10",
-              "tournamentShortName": "葡超",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "摩雷伦斯"
-            }
-          ]
-        },
         "直接对战(阿马多拉 vs 布拉加)": {
           "home_vs_opponent": [
             {
@@ -274,7 +354,18 @@
           "_is_direct_match": true
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "10.00",
+        "ac": "19.00",
+        "ab": "25.00",
+        "ca": "12.50",
+        "cc": "6.00",
+        "cb": "4.20",
+        "ba": "50.00",
+        "bc": "19.00",
+        "bb": "2.20",
+        "updatetime": "2026-09-09 09:42:20"
+      },
       "injury": {
         "home": [],
         "away": []
