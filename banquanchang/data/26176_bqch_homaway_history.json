@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-10 00:28:14",
+  "generate_time": "2026-09-11 00:17:12",
   "period": "26176",
   "lottery_sale_endtime": "2026-09-11 22:00:00",
   "total_matches": 6,
@@ -12,7 +12,18 @@
       "league": "英冠",
       "home_team": "西汉姆联",
       "away_team": "雷克斯汉姆",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.25",
+        "ac": "17.00",
+        "ab": "38.00",
+        "ca": "4.50",
+        "cc": "6.80",
+        "cb": "11.50",
+        "ba": "23.00",
+        "bc": "17.00",
+        "bb": "8.60",
+        "updatetime": "2026-09-10 13:50:01"
+      },
       "history": {
         "home": {
           "team": "西汉姆联",
@@ -103,7 +114,7 @@
               "halfTimeGoal": "1:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 61,
+              "homeTeamId": 0,
               "homeTeamShortName": "沃特福德",
               "matchDate": "2026-08-29",
               "matchId": 2541557,
@@ -846,7 +857,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 0,
+              "awayTeamId": 88,
               "awayTeamShortName": "雷克斯",
               "fullCourtGoal": "0:0",
               "halfTimeGoal": "",
@@ -1111,7 +1122,18 @@
       "league": "德甲",
       "home_team": "柏林联合",
       "away_team": "沙尔克04",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.45",
+        "ac": "14.00",
+        "ab": "27.00",
+        "ca": "5.75",
+        "cc": "6.25",
+        "cb": "7.00",
+        "ba": "21.00",
+        "bc": "14.00",
+        "bb": "4.75",
+        "updatetime": "2026-09-10 13:50:01"
+      },
       "history": {
         "home": {
           "team": "柏林联合",
@@ -2361,7 +2383,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 0,
+              "personId": 472019,
+              "personName": "R. Schallenberg",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "6"
+            }
+          ]
         }
       }
     },
@@ -2373,7 +2408,18 @@
       "league": "意甲",
       "home_team": "威尼斯",
       "away_team": "佛罗伦萨",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.40",
+        "ac": "15.00",
+        "ab": "25.00",
+        "ca": "6.50",
+        "cc": "5.70",
+        "cb": "5.60",
+        "ba": "28.00",
+        "bc": "15.00",
+        "bb": "3.85",
+        "updatetime": "2026-09-10 13:50:01"
+      },
       "history": {
         "home": {
           "team": "威尼斯",
@@ -3608,7 +3654,18 @@
       "league": "西甲",
       "home_team": "塞维利亚",
       "away_team": "巴伦西亚",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.05",
+        "ac": "18.00",
+        "ab": "35.00",
+        "ca": "4.75",
+        "cc": "4.50",
+        "cb": "8.50",
+        "ba": "27.00",
+        "bc": "18.00",
+        "bb": "6.75",
+        "updatetime": "2026-09-10 13:50:01"
+      },
       "history": {
         "home": {
           "team": "塞维利亚",
@@ -5235,7 +5292,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 0,
+              "personId": 565317,
+              "personName": "A. Sangante",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "12"
+            }
+          ],
           "away": []
         }
       }
@@ -5248,7 +5318,18 @@
       "league": "法甲",
       "home_team": "雷恩",
       "away_team": "马赛",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.80",
+        "ac": "15.00",
+        "ab": "30.00",
+        "ca": "5.50",
+        "cc": "6.75",
+        "cb": "8.50",
+        "ba": "20.00",
+        "bc": "15.00",
+        "bb": "5.50",
+        "updatetime": "2026-09-10 13:50:01"
+      },
       "history": {
         "home": {
           "team": "雷恩",
@@ -5281,7 +5362,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 0,
+              "awayTeamId": 195,
               "awayTeamShortName": "勒芒",
               "fullCourtGoal": "3:2",
               "halfTimeGoal": "2:1",
@@ -6888,7 +6969,18 @@
       "league": "荷甲",
       "home_team": "阿尔克马尔",
       "away_team": "威廉二世",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.35",
+        "ac": "33.00",
+        "ab": "140.00",
+        "ca": "4.40",
+        "cc": "14.50",
+        "cb": "38.00",
+        "ba": "24.00",
+        "bc": "33.00",
+        "bb": "33.00",
+        "updatetime": "2026-09-10 13:50:01"
+      },
       "history": {
         "home": {
           "team": "阿尔克马尔",
