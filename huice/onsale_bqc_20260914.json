@@ -1,7 +1,7 @@
 {
   "match_date": "2026-09-14",
-  "updated_at": "2026-09-12 09:18:43",
-  "match_count": 8,
+  "updated_at": "2026-09-12 14:02:52",
+  "match_count": 11,
   "matches": [
     {
       "match_id": "2041448",
@@ -306,7 +306,243 @@
         "aa": "2.10"
       },
       "bqc_update_time": "2026-09-11 09:48:27"
+    },
+    {
+      "match_id": "2041456",
+      "date": "2026-09-14",
+      "match_time": "04:30:00",
+      "dayofweek": "周日",
+      "match_num": "7023",
+      "match_num_str": "周日023",
+      "league": "巴甲",
+      "league_id": "6",
+      "home_team": "弗拉门戈",
+      "away_team": "科林蒂安",
+      "home_team_id": "571",
+      "away_team_id": "567",
+      "match_status": "Selling",
+      "bqc_odds": {
+        "aa": "1.75",
+        "ac": "22.00",
+        "ab": "80.00",
+        "ca": "3.85",
+        "cc": "7.90",
+        "cb": "21.00",
+        "ba": "25.00",
+        "bc": "22.00",
+        "bb": "18.00"
+      },
+      "bqc_odds_api": {
+        "hh": "1.75",
+        "hd": "22.00",
+        "ha": "80.00",
+        "dh": "3.85",
+        "dd": "7.90",
+        "da": "21.00",
+        "ah": "25.00",
+        "ad": "22.00",
+        "aa": "18.00"
+      },
+      "bqc_update_time": "2026-09-12 09:37:49"
+    },
+    {
+      "match_id": "2041457",
+      "date": "2026-09-14",
+      "match_time": "05:30:00",
+      "dayofweek": "周日",
+      "match_num": "7024",
+      "match_num_str": "周日024",
+      "league": "美职",
+      "league_id": "50",
+      "home_team": "芝加哥",
+      "away_team": "新英格兰",
+      "home_team_id": "902",
+      "away_team_id": "910",
+      "match_status": "Selling",
+      "bqc_odds": {
+        "aa": "2.80",
+        "ac": "14.00",
+        "ab": "26.00",
+        "ca": "5.30",
+        "cc": "7.25",
+        "cb": "9.00",
+        "ba": "18.00",
+        "bc": "14.00",
+        "bb": "5.80"
+      },
+      "bqc_odds_api": {
+        "hh": "2.80",
+        "hd": "14.00",
+        "ha": "26.00",
+        "dh": "5.30",
+        "dd": "7.25",
+        "da": "9.00",
+        "ah": "18.00",
+        "ad": "14.00",
+        "aa": "5.80"
+      },
+      "bqc_update_time": "2026-09-12 09:37:49"
+    },
+    {
+      "match_id": "2041459",
+      "date": "2026-09-14",
+      "match_time": "23:00:00",
+      "dayofweek": "周一",
+      "match_num": "1002",
+      "match_num_str": "周一002",
+      "league": "芬超",
+      "league_id": "2064839",
+      "home_team": "国际图尔",
+      "away_team": "瓦萨",
+      "home_team_id": "588",
+      "away_team_id": "1957",
+      "match_status": "Selling",
+      "bqc_odds": {
+        "aa": "2.37",
+        "ac": "17.00",
+        "ab": "40.00",
+        "ca": "4.30",
+        "cc": "6.10",
+        "cb": "11.50",
+        "ba": "24.00",
+        "bc": "17.00",
+        "bb": "8.70"
+      },
+      "bqc_odds_api": {
+        "hh": "2.37",
+        "hd": "17.00",
+        "ha": "40.00",
+        "dh": "4.30",
+        "dd": "6.10",
+        "da": "11.50",
+        "ah": "24.00",
+        "ad": "17.00",
+        "aa": "8.70"
+      },
+      "bqc_update_time": "2026-09-12 09:37:49"
     }
   ],
-  "change_log": []
+  "change_log": [
+    {
+      "fetch_time": "2026-09-12 14:02:52",
+      "changed": [],
+      "added": [
+        {
+          "match_id": "2041456",
+          "date": "2026-09-14",
+          "match_time": "04:30:00",
+          "dayofweek": "周日",
+          "match_num": "7023",
+          "match_num_str": "周日023",
+          "league": "巴甲",
+          "league_id": "6",
+          "home_team": "弗拉门戈",
+          "away_team": "科林蒂安",
+          "home_team_id": "571",
+          "away_team_id": "567",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "1.75",
+            "ac": "22.00",
+            "ab": "80.00",
+            "ca": "3.85",
+            "cc": "7.90",
+            "cb": "21.00",
+            "ba": "25.00",
+            "bc": "22.00",
+            "bb": "18.00"
+          },
+          "bqc_odds_api": {
+            "hh": "1.75",
+            "hd": "22.00",
+            "ha": "80.00",
+            "dh": "3.85",
+            "dd": "7.90",
+            "da": "21.00",
+            "ah": "25.00",
+            "ad": "22.00",
+            "aa": "18.00"
+          },
+          "bqc_update_time": "2026-09-12 09:37:49"
+        },
+        {
+          "match_id": "2041457",
+          "date": "2026-09-14",
+          "match_time": "05:30:00",
+          "dayofweek": "周日",
+          "match_num": "7024",
+          "match_num_str": "周日024",
+          "league": "美职",
+          "league_id": "50",
+          "home_team": "芝加哥",
+          "away_team": "新英格兰",
+          "home_team_id": "902",
+          "away_team_id": "910",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.80",
+            "ac": "14.00",
+            "ab": "26.00",
+            "ca": "5.30",
+            "cc": "7.25",
+            "cb": "9.00",
+            "ba": "18.00",
+            "bc": "14.00",
+            "bb": "5.80"
+          },
+          "bqc_odds_api": {
+            "hh": "2.80",
+            "hd": "14.00",
+            "ha": "26.00",
+            "dh": "5.30",
+            "dd": "7.25",
+            "da": "9.00",
+            "ah": "18.00",
+            "ad": "14.00",
+            "aa": "5.80"
+          },
+          "bqc_update_time": "2026-09-12 09:37:49"
+        },
+        {
+          "match_id": "2041459",
+          "date": "2026-09-14",
+          "match_time": "23:00:00",
+          "dayofweek": "周一",
+          "match_num": "1002",
+          "match_num_str": "周一002",
+          "league": "芬超",
+          "league_id": "2064839",
+          "home_team": "国际图尔",
+          "away_team": "瓦萨",
+          "home_team_id": "588",
+          "away_team_id": "1957",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.37",
+            "ac": "17.00",
+            "ab": "40.00",
+            "ca": "4.30",
+            "cc": "6.10",
+            "cb": "11.50",
+            "ba": "24.00",
+            "bc": "17.00",
+            "bb": "8.70"
+          },
+          "bqc_odds_api": {
+            "hh": "2.37",
+            "hd": "17.00",
+            "ha": "40.00",
+            "dh": "4.30",
+            "dd": "6.10",
+            "da": "11.50",
+            "ah": "24.00",
+            "ad": "17.00",
+            "aa": "8.70"
+          },
+          "bqc_update_time": "2026-09-12 09:37:49"
+        }
+      ],
+      "removed": []
+    }
+  ]
 }
