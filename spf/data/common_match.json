@@ -1,6 +1,6 @@
 {
-  "generate_time": "2026-09-14 10:21:32",
-  "total_matches": 10,
+  "generate_time": "2026-09-14 16:18:59",
+  "total_matches": 12,
   "matches": [
     {
       "match_num": "1002",
@@ -53,7 +53,7 @@
               "halfTimeGoal": "1:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 1957,
               "homeTeamShortName": "瓦萨",
               "matchDate": "2026-09-08",
               "matchId": 2635285,
@@ -5287,6 +5287,96 @@
       }
     },
     {
+      "match_num": "1007",
+      "league": "亚冠精英",
+      "home_team": "吉达国民",
+      "away_team": "棉农",
+      "date": "2026-09-15",
+      "home_opponents_count": 20,
+      "away_opponents_count": 13,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 2,
+        "home_wins": 2,
+        "away_wins": 0,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "1",
+            "awayTeamId": 3852,
+            "awayTeamShortName": "棉农",
+            "fullCourtGoal": "2:1",
+            "gmLeagueId": 1,
+            "halfTimeGoal": "0:0",
+            "homeMatchResult": "home",
+            "homeTeamFullCourtGoalCnt": "2",
+            "homeTeamId": 3509,
+            "homeTeamShortName": "吉达国民",
+            "matchDate": "2019-05-21",
+            "matchId": 951682,
+            "seasonId": 5477,
+            "sportteryAwayTeamId": 1227,
+            "sportteryHomeTeamId": 1666,
+            "sportteryMatchId": 119128,
+            "sportteryTournamentId": 1,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 3,
+            "tournamentId": 75,
+            "tournamentShortName": "亚冠精英",
+            "uniformAwayTeamId": 1186,
+            "uniformHomeTeamId": 738,
+            "uniformLeagueId": 41,
+            "winningTeam": "home"
+          },
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 3509,
+            "awayTeamShortName": "吉达国民",
+            "fullCourtGoal": "1:0",
+            "gmLeagueId": 1,
+            "halfTimeGoal": "0:0",
+            "homeMatchResult": "away",
+            "homeTeamFullCourtGoalCnt": "1",
+            "homeTeamId": 3852,
+            "homeTeamShortName": "棉农",
+            "matchDate": "2019-03-12",
+            "matchId": 951678,
+            "seasonId": 5477,
+            "sportteryAwayTeamId": 1666,
+            "sportteryHomeTeamId": 1227,
+            "sportteryMatchId": 117164,
+            "sportteryTournamentId": 1,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 1,
+            "tournamentId": 75,
+            "tournamentShortName": "亚冠精英",
+            "uniformAwayTeamId": 738,
+            "uniformHomeTeamId": 1186,
+            "uniformLeagueId": 41,
+            "winningTeam": "home"
+          }
+        ]
+      },
+      "match_time": "02:15",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1227,
+          "teamId": 3852,
+          "teamShortName": "棉农",
+          "uniformTeamId": 1186
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1666,
+          "teamId": 3509,
+          "teamShortName": "吉达国民",
+          "uniformTeamId": 738
+        }
+      }
+    },
+    {
       "match_num": "1008",
       "league": "意甲",
       "home_team": "国际米兰",
@@ -5451,13 +5541,13 @@
           "home_vs_matches": [
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 0,
+              "awayTeamId": 123,
               "awayTeamShortName": "国际米兰",
               "fullCourtGoal": "1:2",
               "halfTimeGoal": "0:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 124,
               "homeTeamShortName": "尤文图斯",
               "matchDate": "2026-08-08",
               "matchId": 2517888,
@@ -9492,6 +9582,96 @@
           "teamId": 1682,
           "teamShortName": "布拉加",
           "uniformTeamId": 513
+        }
+      }
+    },
+    {
+      "match_num": "1014",
+      "league": "亚运女足",
+      "home_team": "中国女",
+      "away_team": "中国港女",
+      "date": "2026-09-14",
+      "home_opponents_count": 15,
+      "away_opponents_count": 15,
+      "common_opponent_count": 0,
+      "common_opponents": [],
+      "direct_match_info": {
+        "match_count": 2,
+        "home_wins": 1,
+        "away_wins": 1,
+        "draws": 0,
+        "matches": [
+          {
+            "awayTeamFullCourtGoalCnt": "6",
+            "awayTeamId": 5971,
+            "awayTeamShortName": "中国女",
+            "fullCourtGoal": "0:6",
+            "gmLeagueId": 0,
+            "halfTimeGoal": "-:-",
+            "homeMatchResult": "home",
+            "homeTeamFullCourtGoalCnt": "0",
+            "homeTeamId": 7616,
+            "homeTeamShortName": "中国港女",
+            "matchDate": "2018-12-03",
+            "matchId": 914520,
+            "seasonId": 5262,
+            "sportteryAwayTeamId": 1001,
+            "sportteryHomeTeamId": 2086,
+            "sportteryMatchId": 0,
+            "sportteryTournamentId": 0,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 6,
+            "tournamentId": 856,
+            "tournamentShortName": "女东亚锦",
+            "uniformAwayTeamId": 1165,
+            "uniformHomeTeamId": 2006,
+            "uniformLeagueId": 9,
+            "winningTeam": "away"
+          },
+          {
+            "awayTeamFullCourtGoalCnt": "0",
+            "awayTeamId": 7616,
+            "awayTeamShortName": "中国港女",
+            "fullCourtGoal": "7:0",
+            "gmLeagueId": 0,
+            "halfTimeGoal": "4:0",
+            "homeMatchResult": "home",
+            "homeTeamFullCourtGoalCnt": "7",
+            "homeTeamId": 5971,
+            "homeTeamShortName": "中国女",
+            "matchDate": "2018-08-17",
+            "matchId": 838365,
+            "seasonId": 5088,
+            "sportteryAwayTeamId": 2086,
+            "sportteryHomeTeamId": 1001,
+            "sportteryMatchId": 0,
+            "sportteryTournamentId": 0,
+            "teamMatchResult": "",
+            "totalTeamFullCourtGoalCnt": 7,
+            "tournamentId": 848,
+            "tournamentShortName": "亚运女足",
+            "uniformAwayTeamId": 2006,
+            "uniformHomeTeamId": 1165,
+            "uniformLeagueId": 60,
+            "winningTeam": "home"
+          }
+        ]
+      },
+      "match_time": "18:00",
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 2086,
+          "teamId": 7616,
+          "teamShortName": "中国港女",
+          "uniformTeamId": 2006
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [],
+          "sportteryTeamId": 1001,
+          "teamId": 5971,
+          "teamShortName": "中国女",
+          "uniformTeamId": 1165
         }
       }
     }
