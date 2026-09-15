@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-14 20:32:27",
+  "generate_time": "2026-09-16 00:48:58",
   "period": "26182",
   "lottery_sale_endtime": "2026-09-17 19:45:00",
   "total_matches": 6,
@@ -245,38 +245,6 @@
             }
           ]
         },
-        "巴萨": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "巴萨",
-              "awaysxname": "贝蒂斯",
-              "homescore": 3,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-05-18",
-              "tournamentShortName": "西甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "巴萨"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "赫塔费",
-              "awaysxname": "巴萨",
-              "homescore": 0,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-04-25",
-              "tournamentShortName": "西甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "巴萨"
-            }
-          ]
-        },
         "埃尔切": {
           "home_vs_opponent": [
             {
@@ -306,6 +274,38 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "埃尔切"
+            }
+          ]
+        },
+        "巴萨": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "巴萨",
+              "awaysxname": "贝蒂斯",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-18",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "巴萨"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "赫塔费",
+              "awaysxname": "巴萨",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-25",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴萨"
             }
           ]
         }
@@ -574,6 +574,51 @@
       "away_matches_count": 20,
       "common_opponent_count": 5,
       "common_opponent_data": {
+        "莱万特": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "马拉加",
+              "awaysxname": "莱万特",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-07",
+              "tournamentShortName": "西甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "莱万特"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "莱万特",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-05",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莱万特"
+            },
+            {
+              "homesxname": "比利亚雷",
+              "awaysxname": "莱万特",
+              "homescore": 5,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-02",
+              "tournamentShortName": "西甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莱万特"
+            }
+          ]
+        },
         "拉科": {
           "home_vs_opponent": [
             {
@@ -606,35 +651,35 @@
             }
           ]
         },
-        "塞尔塔": {
+        "桑坦德": {
           "home_vs_opponent": [
             {
-              "homesxname": "塞尔塔",
-              "awaysxname": "马拉加",
+              "homesxname": "马拉加",
+              "awaysxname": "桑坦德",
               "homescore": 1,
               "awayscore": 1,
               "homehalfscore": 1,
               "awayhalfscore": 0,
-              "matchdate": "2026-09-13",
-              "tournamentShortName": "西甲",
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "西乙",
               "result1": "平",
               "result2": "平",
-              "_opponent": "塞尔塔"
+              "_opponent": "桑坦德"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "比利亚雷",
-              "awaysxname": "塞尔塔",
+              "homesxname": "桑坦德",
+              "awaysxname": "比利亚雷",
               "homescore": 2,
-              "awayscore": 1,
+              "awayscore": 2,
               "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-04-27",
+              "awayhalfscore": 2,
+              "matchdate": "2026-08-16",
               "tournamentShortName": "西甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "塞尔塔"
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "桑坦德"
             }
           ]
         },
@@ -683,80 +728,35 @@
             }
           ]
         },
-        "莱万特": {
+        "塞尔塔": {
           "home_vs_opponent": [
             {
-              "homesxname": "马拉加",
-              "awaysxname": "莱万特",
-              "homescore": 0,
-              "awayscore": 0,
-              "homehalfscore": 0,
+              "homesxname": "塞尔塔",
+              "awaysxname": "马拉加",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
               "awayhalfscore": 0,
-              "matchdate": "2026-09-07",
+              "matchdate": "2026-09-13",
               "tournamentShortName": "西甲",
               "result1": "平",
               "result2": "平",
-              "_opponent": "莱万特"
+              "_opponent": "塞尔塔"
             }
           ],
           "away_vs_opponent": [
             {
               "homesxname": "比利亚雷",
-              "awaysxname": "莱万特",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-08-05",
-              "tournamentShortName": "俱乐部赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "莱万特"
-            },
-            {
-              "homesxname": "比利亚雷",
-              "awaysxname": "莱万特",
-              "homescore": 5,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-05-02",
-              "tournamentShortName": "西甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "莱万特"
-            }
-          ]
-        },
-        "桑坦德": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "马拉加",
-              "awaysxname": "桑坦德",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-05-25",
-              "tournamentShortName": "西乙",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "桑坦德"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "桑坦德",
-              "awaysxname": "比利亚雷",
+              "awaysxname": "塞尔塔",
               "homescore": 2,
-              "awayscore": 2,
+              "awayscore": 1,
               "homehalfscore": 2,
-              "awayhalfscore": 2,
-              "matchdate": "2026-08-16",
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-27",
               "tournamentShortName": "西甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "桑坦德"
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "塞尔塔"
             }
           ]
         }
