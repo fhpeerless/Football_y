@@ -1,84 +1,8 @@
 {
   "match_date": "2026-09-18",
-  "updated_at": "2026-09-17 21:39:09",
-  "match_count": 10,
+  "updated_at": "2026-09-18 02:24:02",
+  "match_count": 8,
   "matches": [
-    {
-      "match_id": "2041518",
-      "date": "2026-09-18",
-      "match_time": "00:45:00",
-      "dayofweek": "周四",
-      "match_num": "4003",
-      "match_num_str": "周四003",
-      "league": "欧罗巴",
-      "league_id": "70",
-      "home_team": "克里特",
-      "away_team": "霍芬海姆",
-      "home_team_id": "2077234",
-      "away_team_id": "158",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "16.00",
-        "ac": "19.00",
-        "ab": "23.00",
-        "ca": "20.00",
-        "cc": "9.80",
-        "cb": "4.50",
-        "ba": "60.00",
-        "bc": "19.00",
-        "bb": "1.66"
-      },
-      "bqc_odds_api": {
-        "hh": "16.00",
-        "hd": "19.00",
-        "ha": "23.00",
-        "dh": "20.00",
-        "dd": "9.80",
-        "da": "4.50",
-        "ah": "60.00",
-        "ad": "19.00",
-        "aa": "1.66"
-      },
-      "bqc_update_time": "2026-09-17 20:04:28"
-    },
-    {
-      "match_id": "2041510",
-      "date": "2026-09-18",
-      "match_time": "01:00:00",
-      "dayofweek": "周四",
-      "match_num": "4004",
-      "match_num_str": "周四004",
-      "league": "西甲",
-      "league_id": "62",
-      "home_team": "贝蒂斯",
-      "away_team": "赫塔费",
-      "home_team_id": "505",
-      "away_team_id": "511",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "2.35",
-        "ac": "19.00",
-        "ab": "55.00",
-        "ca": "3.80",
-        "cc": "4.90",
-        "cb": "14.00",
-        "ba": "30.00",
-        "bc": "19.00",
-        "bb": "12.00"
-      },
-      "bqc_odds_api": {
-        "hh": "2.35",
-        "hd": "19.00",
-        "ha": "55.00",
-        "dh": "3.80",
-        "dd": "4.90",
-        "da": "14.00",
-        "ah": "30.00",
-        "ad": "19.00",
-        "aa": "12.00"
-      },
-      "bqc_update_time": "2026-09-17 21:25:47"
-    },
     {
       "match_id": "2041519",
       "date": "2026-09-18",
@@ -1487,6 +1411,89 @@
       ],
       "added": [],
       "removed": []
+    },
+    {
+      "fetch_time": "2026-09-18 02:24:02",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2041510",
+          "date": "2026-09-18",
+          "match_time": "01:00:00",
+          "dayofweek": "周四",
+          "match_num": "4004",
+          "match_num_str": "周四004",
+          "league": "西甲",
+          "league_id": "62",
+          "home_team": "贝蒂斯",
+          "away_team": "赫塔费",
+          "home_team_id": "505",
+          "away_team_id": "511",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.35",
+            "ac": "19.00",
+            "ab": "55.00",
+            "ca": "3.80",
+            "cc": "4.90",
+            "cb": "14.00",
+            "ba": "30.00",
+            "bc": "19.00",
+            "bb": "12.00"
+          },
+          "bqc_odds_api": {
+            "hh": "2.35",
+            "hd": "19.00",
+            "ha": "55.00",
+            "dh": "3.80",
+            "dd": "4.90",
+            "da": "14.00",
+            "ah": "30.00",
+            "ad": "19.00",
+            "aa": "12.00"
+          },
+          "bqc_update_time": "2026-09-17 21:25:47"
+        },
+        {
+          "match_id": "2041518",
+          "date": "2026-09-18",
+          "match_time": "00:45:00",
+          "dayofweek": "周四",
+          "match_num": "4003",
+          "match_num_str": "周四003",
+          "league": "欧罗巴",
+          "league_id": "70",
+          "home_team": "克里特",
+          "away_team": "霍芬海姆",
+          "home_team_id": "2077234",
+          "away_team_id": "158",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "16.00",
+            "ac": "19.00",
+            "ab": "23.00",
+            "ca": "20.00",
+            "cc": "9.80",
+            "cb": "4.50",
+            "ba": "60.00",
+            "bc": "19.00",
+            "bb": "1.66"
+          },
+          "bqc_odds_api": {
+            "hh": "16.00",
+            "hd": "19.00",
+            "ha": "23.00",
+            "dh": "20.00",
+            "dd": "9.80",
+            "da": "4.50",
+            "ah": "60.00",
+            "ad": "19.00",
+            "aa": "1.66"
+          },
+          "bqc_update_time": "2026-09-17 20:04:28"
+        }
+      ]
     }
   ]
 }
