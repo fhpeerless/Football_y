@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-18 00:48:55",
+  "generate_time": "2026-09-19 00:17:06",
   "period": "26184",
   "lottery_sale_endtime": "2026-09-19 21:00:00",
   "total_matches": 6,
@@ -12,20 +12,31 @@
       "league": "英超",
       "home_team": "埃弗顿",
       "away_team": "伊普斯维奇",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.80",
+        "ac": "15.00",
+        "ab": "31.00",
+        "ca": "4.60",
+        "cc": "6.00",
+        "cb": "9.25",
+        "ba": "22.00",
+        "bc": "15.00",
+        "bb": "7.00",
+        "updatetime": "2026-09-18 09:45:58"
+      },
       "history": {
         "home": {
           "team": "埃弗顿",
           "matches": [
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 64,
+              "awayTeamId": 0,
               "awayTeamShortName": "伍尔弗",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "0:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 9,
+              "homeTeamId": 0,
               "homeTeamShortName": "埃弗顿",
               "matchDate": "2026-09-17",
               "matchId": 2632803,
@@ -1228,7 +1239,18 @@
       "league": "英超",
       "home_team": "纽卡斯尔联",
       "away_team": "赫尔城",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.08",
+        "ac": "19.00",
+        "ab": "45.00",
+        "ca": "4.20",
+        "cc": "7.00",
+        "cb": "13.50",
+        "ba": "22.00",
+        "bc": "19.00",
+        "bb": "10.50",
+        "updatetime": "2026-09-18 09:45:58"
+      },
       "history": {
         "home": {
           "team": "纽卡斯尔联",
@@ -2699,7 +2721,18 @@
       "league": "英超",
       "home_team": "诺丁汉森林",
       "away_team": "考文垂",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.55",
+        "ac": "17.00",
+        "ab": "35.00",
+        "ca": "4.30",
+        "cc": "5.75",
+        "cb": "10.50",
+        "ba": "23.00",
+        "bc": "17.00",
+        "bb": "8.30",
+        "updatetime": "2026-09-18 09:45:58"
+      },
       "history": {
         "home": {
           "team": "诺丁汉森林",
@@ -3351,7 +3384,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "4",
-              "awayTeamId": 44,
+              "awayTeamId": 0,
               "awayTeamShortName": "考文垂",
               "fullCourtGoal": "2:4",
               "halfTimeGoal": "1:2",
@@ -4084,7 +4117,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 0,
+              "personId": 319132,
+              "personName": "T. Awoniyi",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 1,
+              "uniformNo": "14"
+            }
+          ]
         }
       }
     },
@@ -4096,7 +4142,18 @@
       "league": "德甲",
       "home_team": "法兰克福",
       "away_team": "弗赖堡",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.85",
+        "ac": "14.00",
+        "ab": "23.00",
+        "ca": "6.25",
+        "cc": "6.85",
+        "cb": "6.50",
+        "ba": "21.00",
+        "bc": "14.00",
+        "bb": "4.00",
+        "updatetime": "2026-09-18 09:45:58"
+      },
       "history": {
         "home": {
           "team": "法兰克福",
@@ -5786,7 +5843,18 @@
       "league": "德甲",
       "home_team": "云达不来梅",
       "away_team": "奥格斯堡",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.40",
+        "ac": "14.00",
+        "ab": "23.00",
+        "ca": "6.00",
+        "cc": "7.05",
+        "cb": "7.00",
+        "ba": "20.00",
+        "bc": "14.00",
+        "bb": "4.50",
+        "updatetime": "2026-09-18 09:45:58"
+      },
       "history": {
         "home": {
           "team": "云达不来梅",
@@ -7548,7 +7616,18 @@
       "league": "德甲",
       "home_team": "斯图加特",
       "away_team": "多特蒙德",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.40",
+        "ac": "13.00",
+        "ab": "22.00",
+        "ca": "6.25",
+        "cc": "8.00",
+        "cb": "7.25",
+        "ba": "19.00",
+        "bc": "13.00",
+        "bb": "4.25",
+        "updatetime": "2026-09-18 09:45:58"
+      },
       "history": {
         "home": {
           "team": "斯图加特",
@@ -8304,7 +8383,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 0,
+              "awayTeamId": 140,
               "awayTeamShortName": "多特蒙德",
               "fullCourtGoal": "0:1",
               "halfTimeGoal": "0:0",
