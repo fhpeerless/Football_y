@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-19 00:18:18",
+  "generate_time": "2026-09-19 23:48:11",
   "period": "26186",
   "lottery_sale_endtime": "2026-09-21 14:30:00",
   "total_matches": 6,
@@ -108,35 +108,35 @@
       "away_matches_count": 20,
       "common_opponent_count": 7,
       "common_opponent_data": {
-        "韩国女": {
+        "日本女": {
           "home_vs_opponent": [
             {
-              "homesxname": "韩国女",
+              "homesxname": "日本女",
               "awaysxname": "中国女",
-              "homescore": 2,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2025-07-09",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2025-07-16",
               "tournamentShortName": "女东亚锦",
               "result1": "平",
               "result2": "平",
-              "_opponent": "韩国女"
+              "_opponent": "日本女"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "菲律宾女",
-              "awaysxname": "韩国女",
-              "homescore": 0,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2026-03-05",
+              "homesxname": "日本女",
+              "awaysxname": "菲律宾女",
+              "homescore": 7,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-03-15",
               "tournamentShortName": "女亚洲杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "韩国女"
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "日本女"
             }
           ]
         },
@@ -224,35 +224,48 @@
             }
           ]
         },
-        "泰国女": {
+        "澳大利女": {
           "home_vs_opponent": [
             {
               "homesxname": "中国女",
-              "awaysxname": "泰国女",
-              "homescore": 5,
-              "awayscore": 1,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2025-04-08",
-              "tournamentShortName": "国际赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "泰国女"
+              "awaysxname": "澳大利女",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-03-17",
+              "tournamentShortName": "女亚洲杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "澳大利女"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "泰国女",
+              "homesxname": "澳大利女",
               "awaysxname": "菲律宾女",
               "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 0,
+              "awayscore": 0,
+              "homehalfscore": 1,
               "awayhalfscore": 0,
-              "matchdate": "2025-12-14",
-              "tournamentShortName": "东南亚运女足",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "泰国女"
+              "matchdate": "2026-03-01",
+              "tournamentShortName": "女亚洲杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "澳大利女"
+            },
+            {
+              "homesxname": "澳大利女",
+              "awaysxname": "菲律宾女",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2025-08-10",
+              "tournamentShortName": "女足东南亚杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "澳大利女"
             }
           ]
         },
@@ -298,51 +311,6 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "中国港女"
-            }
-          ]
-        },
-        "澳大利女": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "中国女",
-              "awaysxname": "澳大利女",
-              "homescore": 1,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-03-17",
-              "tournamentShortName": "女亚洲杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "澳大利女"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "澳大利女",
-              "awaysxname": "菲律宾女",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-03-01",
-              "tournamentShortName": "女亚洲杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "澳大利女"
-            },
-            {
-              "homesxname": "澳大利女",
-              "awaysxname": "菲律宾女",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2025-08-10",
-              "tournamentShortName": "女足东南亚杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "澳大利女"
             }
           ]
         },
@@ -404,35 +372,67 @@
             }
           ]
         },
-        "日本女": {
+        "泰国女": {
           "home_vs_opponent": [
             {
-              "homesxname": "日本女",
-              "awaysxname": "中国女",
-              "homescore": 0,
-              "awayscore": 0,
-              "homehalfscore": 0,
+              "homesxname": "中国女",
+              "awaysxname": "泰国女",
+              "homescore": 5,
+              "awayscore": 1,
+              "homehalfscore": 2,
               "awayhalfscore": 0,
-              "matchdate": "2025-07-16",
-              "tournamentShortName": "女东亚锦",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "日本女"
+              "matchdate": "2025-04-08",
+              "tournamentShortName": "国际赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "泰国女"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "日本女",
+              "homesxname": "泰国女",
               "awaysxname": "菲律宾女",
-              "homescore": 7,
-              "awayscore": 0,
-              "homehalfscore": 2,
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
               "awayhalfscore": 0,
-              "matchdate": "2026-03-15",
+              "matchdate": "2025-12-14",
+              "tournamentShortName": "东南亚运女足",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "泰国女"
+            }
+          ]
+        },
+        "韩国女": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "韩国女",
+              "awaysxname": "中国女",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2025-07-09",
+              "tournamentShortName": "女东亚锦",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "韩国女"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "菲律宾女",
+              "awaysxname": "韩国女",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-03-05",
               "tournamentShortName": "女亚洲杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "日本女"
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "韩国女"
             }
           ]
         }
