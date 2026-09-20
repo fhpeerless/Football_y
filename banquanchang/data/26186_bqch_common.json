@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-19 23:48:11",
+  "generate_time": "2026-09-20 23:56:30",
   "period": "26186",
   "lottery_sale_endtime": "2026-09-21 14:30:00",
   "total_matches": 6,
@@ -51,14 +51,14 @@
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2041645",
       "matchnum": 3,
       "period": "26186",
       "league": "亚运男足",
       "home_team": "中国亚运男足",
       "away_team": "阿联酋亚运男足",
       "date": "2026-09-23",
-      "home_matches_count": 0,
+      "home_matches_count": 20,
       "away_matches_count": 0,
       "common_opponent_count": 0,
       "common_opponent_data": {},
@@ -372,38 +372,6 @@
             }
           ]
         },
-        "泰国女": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "中国女",
-              "awaysxname": "泰国女",
-              "homescore": 5,
-              "awayscore": 1,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2025-04-08",
-              "tournamentShortName": "国际赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "泰国女"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "泰国女",
-              "awaysxname": "菲律宾女",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2025-12-14",
-              "tournamentShortName": "东南亚运女足",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "泰国女"
-            }
-          ]
-        },
         "韩国女": {
           "home_vs_opponent": [
             {
@@ -435,9 +403,52 @@
               "_opponent": "韩国女"
             }
           ]
+        },
+        "泰国女": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "中国女",
+              "awaysxname": "泰国女",
+              "homescore": 5,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2025-04-08",
+              "tournamentShortName": "国际赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "泰国女"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "泰国女",
+              "awaysxname": "菲律宾女",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2025-12-14",
+              "tournamentShortName": "东南亚运女足",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "泰国女"
+            }
+          ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.28",
+        "ac": "50.00",
+        "ab": "130.00",
+        "ca": "4.20",
+        "cc": "15.50",
+        "cb": "58.00",
+        "ba": "28.00",
+        "bc": "50.00",
+        "bb": "50.00",
+        "updatetime": "2026-09-20 10:05:21"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -462,23 +473,599 @@
       "away_team_fifa_points": null
     },
     {
-      "match_id": "0",
+      "match_id": "2041647",
       "matchnum": 6,
       "period": "26186",
       "league": "美职",
       "home_team": "西雅图海湾人",
       "away_team": "皇家盐湖城",
       "date": "2026-09-24",
-      "home_matches_count": 0,
-      "away_matches_count": 0,
-      "common_opponent_count": 0,
-      "common_opponent_data": {},
+      "home_matches_count": 20,
+      "away_matches_count": 20,
+      "common_opponent_count": 8,
+      "common_opponent_data": {
+        "达拉斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "西雅图",
+              "awaysxname": "达拉斯",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-26",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "达拉斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "盐湖城",
+              "awaysxname": "达拉斯",
+              "homescore": 3,
+              "awayscore": 4,
+              "homehalfscore": 1,
+              "awayhalfscore": 3,
+              "matchdate": "2026-08-20",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "达拉斯"
+            },
+            {
+              "homesxname": "达拉斯",
+              "awaysxname": "盐湖城",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "达拉斯"
+            }
+          ]
+        },
+        "温哥华": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "西雅图",
+              "awaysxname": "温哥华",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-17",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "温哥华"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "盐湖城",
+              "awaysxname": "温哥华",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-09-20",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "温哥华"
+            }
+          ]
+        },
+        "圣路易城": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "西雅图",
+              "awaysxname": "圣路易城",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "圣路易城"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "圣路易城",
+              "awaysxname": "盐湖城",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-02",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "圣路易城"
+            }
+          ]
+        },
+        "波特兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "波特兰",
+              "awaysxname": "西雅图",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-08-02",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "波特兰"
+            },
+            {
+              "homesxname": "西雅图",
+              "awaysxname": "波特兰",
+              "homescore": 1,
+              "awayscore": 5,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-07-17",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "波特兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "波特兰",
+              "awaysxname": "盐湖城",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-07-26",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "波特兰"
+            },
+            {
+              "homesxname": "盐湖城",
+              "awaysxname": "波特兰",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-03",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "波特兰"
+            }
+          ]
+        },
+        "洛城银河": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "洛城银河",
+              "awaysxname": "西雅图",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-13",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "洛城银河"
+            },
+            {
+              "homesxname": "西雅图",
+              "awaysxname": "洛城银河",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-17",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "洛城银河"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "洛城银河",
+              "awaysxname": "盐湖城",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-27",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "洛城银河"
+            }
+          ]
+        },
+        "洛杉矶FC": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "洛杉矶FC",
+              "awaysxname": "西雅图",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "洛杉矶FC"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "盐湖城",
+              "awaysxname": "洛杉矶FC",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-09-06",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "洛杉矶FC"
+            },
+            {
+              "homesxname": "洛杉矶FC",
+              "awaysxname": "盐湖城",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-23",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "洛杉矶FC"
+            }
+          ]
+        },
+        "圣迭戈FC": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "西雅图",
+              "awaysxname": "圣迭戈FC",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-10",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "圣迭戈FC"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "盐湖城",
+              "awaysxname": "圣迭戈FC",
+              "homescore": 4,
+              "awayscore": 2,
+              "homehalfscore": 4,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-19",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "圣迭戈FC"
+            }
+          ]
+        },
+        "科罗拉多": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "科罗拉多",
+              "awaysxname": "西雅图",
+              "homescore": 3,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-20",
+              "tournamentShortName": "美职",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "科罗拉多"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "科罗拉多",
+              "awaysxname": "盐湖城",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-30",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "科罗拉多"
+            },
+            {
+              "homesxname": "盐湖城",
+              "awaysxname": "科罗拉多",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-17",
+              "tournamentShortName": "美职",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "科罗拉多"
+            }
+          ]
+        }
+      },
       "bqc_odds": null,
       "injury": {
         "home": [],
         "away": []
       },
-      "h2h": [],
+      "h2h": [
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2026-03-01",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2025-10-12",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2025-03-02",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 1,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2024-05-30",
+          "tournamentShortName": "美职",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2024-05-16",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2023-04-30",
+          "tournamentShortName": "美职",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2023-03-05",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 1,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2022-08-15",
+          "tournamentShortName": "美职",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2022-03-06",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 0,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-11-24",
+          "tournamentShortName": "美职",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-09-19",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2021-06-24",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 2,
+          "awayscore": 1,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2020-10-08",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 2,
+          "awayscore": 2,
+          "homehalfscore": 0,
+          "awayhalfscore": 1,
+          "matchdate": "2020-09-03",
+          "tournamentShortName": "美职",
+          "result1": "平",
+          "result2": "平"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2019-10-24",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 3,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2019-08-15",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 1,
+          "awayscore": 0,
+          "homehalfscore": 1,
+          "awayhalfscore": 0,
+          "matchdate": "2019-04-07",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2018-06-03",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        },
+        {
+          "homesxname": "西雅图",
+          "awaysxname": "盐湖城",
+          "homescore": 0,
+          "awayscore": 1,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2018-05-27",
+          "tournamentShortName": "美职",
+          "result1": "负",
+          "result2": "胜"
+        },
+        {
+          "homesxname": "盐湖城",
+          "awaysxname": "西雅图",
+          "homescore": 2,
+          "awayscore": 0,
+          "homehalfscore": 0,
+          "awayhalfscore": 0,
+          "matchdate": "2017-09-24",
+          "tournamentShortName": "美职",
+          "result1": "胜",
+          "result2": "负"
+        }
+      ],
       "home_team_ranking": null,
       "home_team_fifa_points": null,
       "away_team_ranking": null,
