@@ -1,122 +1,8 @@
 {
   "match_date": "2026-09-21",
-  "updated_at": "2026-09-20 20:31:51",
-  "match_count": 10,
+  "updated_at": "2026-09-21 00:54:26",
+  "match_count": 7,
   "matches": [
-    {
-      "match_id": "2041607",
-      "date": "2026-09-21",
-      "match_time": "00:00:00",
-      "dayofweek": "周日",
-      "match_num": "7022",
-      "match_num_str": "周日022",
-      "league": "意甲",
-      "league_id": "40",
-      "home_team": "尤文图斯",
-      "away_team": "亚特兰大",
-      "home_team_id": "124",
-      "away_team_id": "117",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "2.45",
-        "ac": "16.00",
-        "ab": "38.00",
-        "ca": "4.30",
-        "cc": "5.70",
-        "cb": "12.00",
-        "ba": "24.00",
-        "bc": "16.00",
-        "bb": "9.00"
-      },
-      "bqc_odds_api": {
-        "hh": "2.45",
-        "hd": "16.00",
-        "ha": "38.00",
-        "dh": "4.30",
-        "dd": "5.70",
-        "da": "12.00",
-        "ah": "24.00",
-        "ad": "16.00",
-        "aa": "9.00"
-      },
-      "bqc_update_time": "2026-09-20 20:17:55"
-    },
-    {
-      "match_id": "2041608",
-      "date": "2026-09-21",
-      "match_time": "00:30:00",
-      "dayofweek": "周日",
-      "match_num": "7023",
-      "match_num_str": "周日023",
-      "league": "西甲",
-      "league_id": "62",
-      "home_team": "比利亚雷",
-      "away_team": "莱万特",
-      "home_team_id": "679",
-      "away_team_id": "33",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "2.05",
-        "ac": "17.50",
-        "ab": "42.00",
-        "ca": "4.50",
-        "cc": "7.75",
-        "cb": "14.00",
-        "ba": "20.00",
-        "bc": "17.50",
-        "bb": "9.50"
-      },
-      "bqc_odds_api": {
-        "hh": "2.05",
-        "hd": "17.50",
-        "ha": "42.00",
-        "dh": "4.50",
-        "dd": "7.75",
-        "da": "14.00",
-        "ah": "20.00",
-        "ad": "17.50",
-        "aa": "9.50"
-      },
-      "bqc_update_time": "2026-09-20 19:32:15"
-    },
-    {
-      "match_id": "2041609",
-      "date": "2026-09-21",
-      "match_time": "00:30:00",
-      "dayofweek": "周日",
-      "match_num": "7024",
-      "match_num_str": "周日024",
-      "league": "西甲",
-      "league_id": "62",
-      "home_team": "拉科",
-      "away_team": "贝蒂斯",
-      "home_team_id": "509",
-      "away_team_id": "505",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "6.25",
-        "ac": "15.00",
-        "ab": "26.00",
-        "ca": "9.00",
-        "cc": "6.20",
-        "cb": "4.10",
-        "ba": "35.00",
-        "bc": "15.00",
-        "bb": "3.05"
-      },
-      "bqc_odds_api": {
-        "hh": "6.25",
-        "hd": "15.00",
-        "ha": "26.00",
-        "dh": "9.00",
-        "dd": "6.20",
-        "da": "4.10",
-        "ah": "35.00",
-        "ad": "15.00",
-        "aa": "3.05"
-      },
-      "bqc_update_time": "2026-09-20 17:35:35"
-    },
     {
       "match_id": "2041610",
       "date": "2026-09-21",
@@ -250,24 +136,24 @@
         "ac": "15.00",
         "ab": "30.00",
         "ca": "6.25",
-        "cc": "4.80",
-        "cb": "5.60",
+        "cc": "4.75",
+        "cb": "5.50",
         "ba": "31.00",
         "bc": "15.00",
-        "bb": "4.15"
+        "bb": "4.25"
       },
       "bqc_odds_api": {
         "hh": "4.60",
         "hd": "15.00",
         "ha": "30.00",
         "dh": "6.25",
-        "dd": "4.80",
-        "da": "5.60",
+        "dd": "4.75",
+        "da": "5.50",
         "ah": "31.00",
         "ad": "15.00",
-        "aa": "4.15"
+        "aa": "4.25"
       },
-      "bqc_update_time": "2026-09-20 18:55:40"
+      "bqc_update_time": "2026-09-20 20:55:59"
     },
     {
       "match_id": "2041614",
@@ -1296,6 +1182,165 @@
       ],
       "added": [],
       "removed": []
+    },
+    {
+      "fetch_time": "2026-09-21 00:54:26",
+      "changed": [
+        {
+          "match_id": "2041613",
+          "match_num_str": "周日028",
+          "league": "西甲",
+          "home_team": "巴伦西亚",
+          "away_team": "皇家社会",
+          "diff": {
+            "bqc_odds.bb": {
+              "old": "4.15",
+              "new": "4.25"
+            },
+            "bqc_odds.cb": {
+              "old": "5.60",
+              "new": "5.50"
+            },
+            "bqc_odds.cc": {
+              "old": "4.80",
+              "new": "4.75"
+            },
+            "bqc_odds_api.aa": {
+              "old": "4.15",
+              "new": "4.25"
+            },
+            "bqc_odds_api.da": {
+              "old": "5.60",
+              "new": "5.50"
+            },
+            "bqc_odds_api.dd": {
+              "old": "4.80",
+              "new": "4.75"
+            },
+            "bqc_update_time": {
+              "old": "2026-09-20 18:55:40",
+              "new": "2026-09-20 20:55:59"
+            }
+          }
+        }
+      ],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2041607",
+          "date": "2026-09-21",
+          "match_time": "00:00:00",
+          "dayofweek": "周日",
+          "match_num": "7022",
+          "match_num_str": "周日022",
+          "league": "意甲",
+          "league_id": "40",
+          "home_team": "尤文图斯",
+          "away_team": "亚特兰大",
+          "home_team_id": "124",
+          "away_team_id": "117",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.45",
+            "ac": "16.00",
+            "ab": "38.00",
+            "ca": "4.30",
+            "cc": "5.70",
+            "cb": "12.00",
+            "ba": "24.00",
+            "bc": "16.00",
+            "bb": "9.00"
+          },
+          "bqc_odds_api": {
+            "hh": "2.45",
+            "hd": "16.00",
+            "ha": "38.00",
+            "dh": "4.30",
+            "dd": "5.70",
+            "da": "12.00",
+            "ah": "24.00",
+            "ad": "16.00",
+            "aa": "9.00"
+          },
+          "bqc_update_time": "2026-09-20 20:17:55"
+        },
+        {
+          "match_id": "2041608",
+          "date": "2026-09-21",
+          "match_time": "00:30:00",
+          "dayofweek": "周日",
+          "match_num": "7023",
+          "match_num_str": "周日023",
+          "league": "西甲",
+          "league_id": "62",
+          "home_team": "比利亚雷",
+          "away_team": "莱万特",
+          "home_team_id": "679",
+          "away_team_id": "33",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.05",
+            "ac": "17.50",
+            "ab": "42.00",
+            "ca": "4.50",
+            "cc": "7.75",
+            "cb": "14.00",
+            "ba": "20.00",
+            "bc": "17.50",
+            "bb": "9.50"
+          },
+          "bqc_odds_api": {
+            "hh": "2.05",
+            "hd": "17.50",
+            "ha": "42.00",
+            "dh": "4.50",
+            "dd": "7.75",
+            "da": "14.00",
+            "ah": "20.00",
+            "ad": "17.50",
+            "aa": "9.50"
+          },
+          "bqc_update_time": "2026-09-20 19:32:15"
+        },
+        {
+          "match_id": "2041609",
+          "date": "2026-09-21",
+          "match_time": "00:30:00",
+          "dayofweek": "周日",
+          "match_num": "7024",
+          "match_num_str": "周日024",
+          "league": "西甲",
+          "league_id": "62",
+          "home_team": "拉科",
+          "away_team": "贝蒂斯",
+          "home_team_id": "509",
+          "away_team_id": "505",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "6.25",
+            "ac": "15.00",
+            "ab": "26.00",
+            "ca": "9.00",
+            "cc": "6.20",
+            "cb": "4.10",
+            "ba": "35.00",
+            "bc": "15.00",
+            "bb": "3.05"
+          },
+          "bqc_odds_api": {
+            "hh": "6.25",
+            "hd": "15.00",
+            "ha": "26.00",
+            "dh": "9.00",
+            "dd": "6.20",
+            "da": "4.10",
+            "ah": "35.00",
+            "ad": "15.00",
+            "aa": "3.05"
+          },
+          "bqc_update_time": "2026-09-20 17:35:35"
+        }
+      ]
     }
   ]
 }
