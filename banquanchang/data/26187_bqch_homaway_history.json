@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-21 20:37:26",
+  "generate_time": "2026-09-24 00:43:24",
   "period": "26187",
   "lottery_sale_endtime": "2026-09-24 19:05:00",
   "total_matches": 6,
@@ -1220,7 +1220,18 @@
       "league": "欧国联",
       "home_team": "荷兰",
       "away_team": "德国",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.70",
+        "ac": "14.00",
+        "ab": "23.00",
+        "ca": "6.00",
+        "cc": "6.70",
+        "cb": "6.90",
+        "ba": "21.00",
+        "bc": "14.00",
+        "bb": "4.20",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "history": {
         "home": {
           "team": "荷兰",
@@ -2563,7 +2574,18 @@
       "league": "欧国联",
       "home_team": "挪威",
       "away_team": "丹麦",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.60",
+        "ac": "15.00",
+        "ab": "35.00",
+        "ca": "4.70",
+        "cc": "6.50",
+        "cb": "9.75",
+        "ba": "21.00",
+        "bc": "15.00",
+        "bb": "7.10",
+        "updatetime": "2026-09-23 19:43:31"
+      },
       "history": {
         "home": {
           "team": "挪威",
@@ -3117,7 +3139,7 @@
               "halfTimeGoal": "2:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 0,
+              "homeTeamId": 369,
               "homeTeamShortName": "丹麦",
               "matchDate": "2026-06-08",
               "matchId": 2520753,
@@ -3677,7 +3699,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 461807,
+              "personName": "J. Larsen",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": ""
+            }
+          ],
           "away": []
         }
       }
@@ -3690,7 +3725,18 @@
       "league": "欧国联",
       "home_team": "葡萄牙",
       "away_team": "威尔士",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.52",
+        "ac": "27.00",
+        "ab": "90.00",
+        "ca": "3.95",
+        "cc": "10.50",
+        "cb": "29.00",
+        "ba": "27.00",
+        "bc": "27.00",
+        "bb": "24.00",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "history": {
         "home": {
           "team": "葡萄牙",
@@ -4290,7 +4336,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 0,
+              "awayTeamId": 390,
               "awayTeamShortName": "北爱尔兰",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "0:1",
@@ -4804,7 +4850,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 660445,
+              "personName": "伊纳西奥",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": ""
+            }
+          ],
           "away": []
         }
       }
@@ -4817,7 +4876,18 @@
       "league": "欧国联",
       "home_team": "塞尔维亚",
       "away_team": "希腊",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.10",
+        "ac": "15.00",
+        "ab": "28.00",
+        "ca": "5.85",
+        "cc": "4.95",
+        "cb": "6.50",
+        "ba": "27.00",
+        "bc": "15.00",
+        "bb": "4.40",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "history": {
         "home": {
           "team": "塞尔维亚",
@@ -4850,7 +4920,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 399,
+              "awayTeamId": 0,
               "awayTeamShortName": "塞尔维亚",
               "fullCourtGoal": "3:0",
               "halfTimeGoal": "1:0",
@@ -4882,7 +4952,7 @@
               "halfTimeGoal": "0:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 434,
+              "homeTeamId": 399,
               "homeTeamShortName": "塞尔维亚",
               "matchDate": "2026-04-01",
               "matchId": 2489318,
@@ -5916,7 +5986,18 @@
       "league": "欧国联",
       "home_team": "科索沃",
       "away_team": "爱尔兰",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.15",
+        "ac": "15.00",
+        "ab": "32.00",
+        "ca": "5.80",
+        "cc": "4.50",
+        "cb": "6.50",
+        "ba": "28.00",
+        "bc": "15.00",
+        "bb": "4.65",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "history": {
         "home": {
           "team": "科索沃",

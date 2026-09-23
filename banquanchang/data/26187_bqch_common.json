@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-21 20:37:26",
+  "generate_time": "2026-09-24 00:45:14",
   "period": "26187",
   "lottery_sale_endtime": "2026-09-24 19:05:00",
   "total_matches": 6,
@@ -134,35 +134,35 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
-        "厄瓜多尔": {
+        "匈牙利": {
           "home_vs_opponent": [
             {
               "homesxname": "荷兰",
-              "awaysxname": "厄瓜多尔",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-04-01",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "厄瓜多尔"
+              "awaysxname": "匈牙利",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2024-11-17",
+              "tournamentShortName": "欧国联",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "匈牙利"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "厄瓜多尔",
+              "homesxname": "匈牙利",
               "awaysxname": "德国",
-              "homescore": 2,
+              "homescore": 1,
               "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-06-26",
-              "tournamentShortName": "世界杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "厄瓜多尔"
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2024-11-20",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "匈牙利"
             }
           ]
         },
@@ -243,40 +243,51 @@
             }
           ]
         },
-        "匈牙利": {
+        "厄瓜多尔": {
           "home_vs_opponent": [
             {
               "homesxname": "荷兰",
-              "awaysxname": "匈牙利",
-              "homescore": 4,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2024-11-17",
-              "tournamentShortName": "欧国联",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "匈牙利"
+              "awaysxname": "厄瓜多尔",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-01",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "厄瓜多尔"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "匈牙利",
+              "homesxname": "厄瓜多尔",
               "awaysxname": "德国",
-              "homescore": 1,
+              "homescore": 2,
               "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2024-11-20",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "匈牙利"
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-06-26",
+              "tournamentShortName": "世界杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "厄瓜多尔"
             }
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.70",
+        "ac": "14.00",
+        "ab": "23.00",
+        "ca": "6.00",
+        "cc": "6.70",
+        "cb": "6.90",
+        "ba": "21.00",
+        "bc": "14.00",
+        "bb": "4.20",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -454,9 +465,33 @@
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.60",
+        "ac": "15.00",
+        "ab": "35.00",
+        "ca": "4.70",
+        "cc": "6.50",
+        "cb": "9.75",
+        "ba": "21.00",
+        "bc": "15.00",
+        "bb": "7.10",
+        "updatetime": "2026-09-23 19:43:31"
+      },
       "injury": {
-        "home": [],
+        "home": [
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 461807,
+            "personName": "J. Larsen",
+            "playerPositionCode": "Attacker",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": ""
+          }
+        ],
         "away": []
       },
       "h2h": [
@@ -490,9 +525,33 @@
       "away_matches_count": 20,
       "common_opponent_count": 0,
       "common_opponent_data": {},
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.52",
+        "ac": "27.00",
+        "ab": "90.00",
+        "ca": "3.95",
+        "cc": "10.50",
+        "cb": "29.00",
+        "ba": "27.00",
+        "bc": "27.00",
+        "bb": "24.00",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "injury": {
-        "home": [],
+        "home": [
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 660445,
+            "personName": "伊纳西奥",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": ""
+          }
+        ],
         "away": []
       },
       "h2h": [
@@ -526,64 +585,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 2,
       "common_opponent_data": {
-        "英格兰": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "英格兰",
-              "awaysxname": "塞尔维亚",
-              "homescore": 2,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2025-11-14",
-              "tournamentShortName": "世预赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "英格兰"
-            },
-            {
-              "homesxname": "塞尔维亚",
-              "awaysxname": "英格兰",
-              "homescore": 0,
-              "awayscore": 5,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2025-09-10",
-              "tournamentShortName": "世预赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "英格兰"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "希腊",
-              "awaysxname": "英格兰",
-              "homescore": 0,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2024-11-15",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "英格兰"
-            },
-            {
-              "homesxname": "英格兰",
-              "awaysxname": "希腊",
-              "homescore": 1,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2024-10-11",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "英格兰"
-            }
-          ]
-        },
         "丹麦": {
           "home_vs_opponent": [
             {
@@ -641,9 +642,78 @@
               "_opponent": "丹麦"
             }
           ]
+        },
+        "英格兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "英格兰",
+              "awaysxname": "塞尔维亚",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2025-11-14",
+              "tournamentShortName": "世预赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "英格兰"
+            },
+            {
+              "homesxname": "塞尔维亚",
+              "awaysxname": "英格兰",
+              "homescore": 0,
+              "awayscore": 5,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2025-09-10",
+              "tournamentShortName": "世预赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "英格兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "希腊",
+              "awaysxname": "英格兰",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2024-11-15",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "英格兰"
+            },
+            {
+              "homesxname": "英格兰",
+              "awaysxname": "希腊",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2024-10-11",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "英格兰"
+            }
+          ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.10",
+        "ac": "15.00",
+        "ab": "28.00",
+        "ca": "5.85",
+        "cc": "4.95",
+        "cb": "6.50",
+        "ba": "27.00",
+        "bc": "15.00",
+        "bb": "4.40",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -666,38 +736,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 2,
       "common_opponent_data": {
-        "捷克": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "捷克",
-              "awaysxname": "科索沃",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-05-31",
-              "tournamentShortName": "国际赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "捷克"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "捷克",
-              "awaysxname": "爱尔兰",
-              "homescore": 2,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 2,
-              "matchdate": "2026-03-27",
-              "tournamentShortName": "世预赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "捷克"
-            }
-          ]
-        },
         "亚美尼亚": {
           "home_vs_opponent": [
             {
@@ -742,9 +780,52 @@
               "_opponent": "亚美尼亚"
             }
           ]
+        },
+        "捷克": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "捷克",
+              "awaysxname": "科索沃",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-31",
+              "tournamentShortName": "国际赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "捷克"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "捷克",
+              "awaysxname": "爱尔兰",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-03-27",
+              "tournamentShortName": "世预赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "捷克"
+            }
+          ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.15",
+        "ac": "15.00",
+        "ab": "32.00",
+        "ca": "5.80",
+        "cc": "4.50",
+        "cb": "6.50",
+        "ba": "28.00",
+        "bc": "15.00",
+        "bb": "4.65",
+        "updatetime": "2026-09-23 09:17:35"
+      },
       "injury": {
         "home": [],
         "away": []
