@@ -1,6 +1,6 @@
 {
   "match_date": "2026-09-24",
-  "updated_at": "2026-09-23 14:12:40",
+  "updated_at": "2026-09-23 19:54:21",
   "match_count": 3,
   "matches": [
     {
@@ -18,28 +18,28 @@
       "away_team_id": "911",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "2.95",
+        "aa": "2.75",
         "ac": "13.50",
         "ab": "33.00",
-        "ca": "4.90",
-        "cc": "6.10",
-        "cb": "9.00",
+        "ca": "4.60",
+        "cc": "6.50",
+        "cb": "10.00",
         "ba": "21.00",
         "bc": "13.50",
-        "bb": "6.25"
+        "bb": "7.00"
       },
       "bqc_odds_api": {
-        "hh": "2.95",
+        "hh": "2.75",
         "hd": "13.50",
         "ha": "33.00",
-        "dh": "4.90",
-        "dd": "6.10",
-        "da": "9.00",
+        "dh": "4.60",
+        "dd": "6.50",
+        "da": "10.00",
         "ah": "21.00",
         "ad": "13.50",
-        "aa": "6.25"
+        "aa": "7.00"
       },
-      "bqc_update_time": "2026-09-23 12:46:40"
+      "bqc_update_time": "2026-09-23 18:51:38"
     },
     {
       "match_id": "2041648",
@@ -118,5 +118,66 @@
       "bqc_update_time": "2026-09-23 09:17:35"
     }
   ],
-  "change_log": []
+  "change_log": [
+    {
+      "fetch_time": "2026-09-23 19:54:21",
+      "changed": [
+        {
+          "match_id": "2041647",
+          "match_num_str": "周三003",
+          "league": "美职",
+          "home_team": "西雅图",
+          "away_team": "盐湖城",
+          "diff": {
+            "bqc_odds.aa": {
+              "old": "2.95",
+              "new": "2.75"
+            },
+            "bqc_odds.bb": {
+              "old": "6.25",
+              "new": "7.00"
+            },
+            "bqc_odds.ca": {
+              "old": "4.90",
+              "new": "4.60"
+            },
+            "bqc_odds.cb": {
+              "old": "9.00",
+              "new": "10.00"
+            },
+            "bqc_odds.cc": {
+              "old": "6.10",
+              "new": "6.50"
+            },
+            "bqc_odds_api.aa": {
+              "old": "6.25",
+              "new": "7.00"
+            },
+            "bqc_odds_api.da": {
+              "old": "9.00",
+              "new": "10.00"
+            },
+            "bqc_odds_api.dd": {
+              "old": "6.10",
+              "new": "6.50"
+            },
+            "bqc_odds_api.dh": {
+              "old": "4.90",
+              "new": "4.60"
+            },
+            "bqc_odds_api.hh": {
+              "old": "2.95",
+              "new": "2.75"
+            },
+            "bqc_update_time": {
+              "old": "2026-09-23 12:46:40",
+              "new": "2026-09-23 18:51:38"
+            }
+          }
+        }
+      ],
+      "added": [],
+      "removed": []
+    }
+  ]
 }
