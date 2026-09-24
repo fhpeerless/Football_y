@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-24 00:45:14",
+  "generate_time": "2026-09-24 19:34:59",
   "period": "26188",
   "lottery_sale_endtime": "2026-09-25 22:00:00",
   "total_matches": 6,
@@ -75,7 +75,18 @@
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.90",
+        "ac": "15.50",
+        "ab": "31.00",
+        "ca": "4.70",
+        "cc": "5.35",
+        "cb": "9.00",
+        "ba": "23.00",
+        "bc": "15.50",
+        "bb": "7.00",
+        "updatetime": "2026-09-24 14:13:31"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -131,7 +142,18 @@
           "_is_direct_match": true
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.30",
+        "ac": "14.00",
+        "ab": "26.00",
+        "ca": "5.30",
+        "cc": "6.00",
+        "cb": "7.70",
+        "ba": "22.00",
+        "bc": "14.00",
+        "bb": "5.30",
+        "updatetime": "2026-09-24 14:13:31"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -318,7 +340,18 @@
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.20",
+        "ac": "18.00",
+        "ab": "45.00",
+        "ca": "4.30",
+        "cc": "6.25",
+        "cb": "12.00",
+        "ba": "25.00",
+        "bc": "18.00",
+        "bb": "10.00",
+        "updatetime": "2026-09-24 14:13:31"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -366,6 +399,38 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
+        "荷兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "荷兰",
+              "awaysxname": "瑞典",
+              "homescore": 5,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-21",
+              "tournamentShortName": "世界杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "荷兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗马尼亚",
+              "awaysxname": "荷兰",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2024-07-03",
+              "tournamentShortName": "欧洲杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "荷兰"
+            }
+          ]
+        },
         "科索沃": {
           "home_vs_opponent": [
             {
@@ -411,38 +476,6 @@
             }
           ]
         },
-        "荷兰": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "荷兰",
-              "awaysxname": "瑞典",
-              "homescore": 5,
-              "awayscore": 1,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-06-21",
-              "tournamentShortName": "世界杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "荷兰"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "罗马尼亚",
-              "awaysxname": "荷兰",
-              "homescore": 0,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2024-07-03",
-              "tournamentShortName": "欧洲杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "荷兰"
-            }
-          ]
-        },
         "斯洛伐克": {
           "home_vs_opponent": [
             {
@@ -476,7 +509,18 @@
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.00",
+        "ac": "19.00",
+        "ab": "50.00",
+        "ca": "4.30",
+        "cc": "7.45",
+        "cb": "14.00",
+        "ba": "22.00",
+        "bc": "19.00",
+        "bb": "10.50",
+        "updatetime": "2026-09-24 14:13:31"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -536,6 +580,38 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
+        "巴拉圭": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "土耳其",
+              "awaysxname": "巴拉圭",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-06-20",
+              "tournamentShortName": "世界杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴拉圭"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "巴拉圭",
+              "awaysxname": "法国",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-05",
+              "tournamentShortName": "世界杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴拉圭"
+            }
+          ]
+        },
         "西班牙": {
           "home_vs_opponent": [
             {
@@ -594,38 +670,6 @@
             }
           ]
         },
-        "巴拉圭": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "土耳其",
-              "awaysxname": "巴拉圭",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-06-20",
-              "tournamentShortName": "世界杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "巴拉圭"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "巴拉圭",
-              "awaysxname": "法国",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-07-05",
-              "tournamentShortName": "世界杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "巴拉圭"
-            }
-          ]
-        },
         "冰岛": {
           "home_vs_opponent": [
             {
@@ -672,7 +716,18 @@
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "10.00",
+        "ac": "19.00",
+        "ab": "21.00",
+        "ca": "14.00",
+        "cc": "8.10",
+        "cb": "4.60",
+        "ba": "38.00",
+        "bc": "19.00",
+        "bb": "1.95",
+        "updatetime": "2026-09-24 14:13:31"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -720,6 +775,38 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
+        "保加利亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "保加利亚",
+              "awaysxname": "黑山",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-02",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "保加利亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "保加利亚",
+              "awaysxname": "塞浦路斯",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2025-06-07",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "保加利亚"
+            }
+          ]
+        },
         "斯洛文尼": {
           "home_vs_opponent": [
             {
@@ -783,41 +870,20 @@
               "_opponent": "列支敦"
             }
           ]
-        },
-        "保加利亚": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "保加利亚",
-              "awaysxname": "黑山",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-06-02",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "保加利亚"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "保加利亚",
-              "awaysxname": "塞浦路斯",
-              "homescore": 2,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2025-06-07",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "保加利亚"
-            }
-          ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.52",
+        "ac": "17.00",
+        "ab": "35.00",
+        "ca": "4.35",
+        "cc": "5.90",
+        "cb": "10.50",
+        "ba": "22.00",
+        "bc": "17.00",
+        "bb": "8.25",
+        "updatetime": "2026-09-24 14:13:31"
+      },
       "injury": {
         "home": [],
         "away": []
