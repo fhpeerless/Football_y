@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-27 19:52:48",
+  "generate_time": "2026-09-28 00:51:22",
   "period": "26191",
   "lottery_sale_endtime": "2026-09-28 22:00:00",
   "total_matches": 6,
@@ -2567,7 +2567,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 390,
+              "awayTeamId": 0,
               "awayTeamShortName": "北爱尔兰",
               "fullCourtGoal": "1:1",
               "halfTimeGoal": "0:1",
@@ -3650,7 +3650,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 453084,
+              "personName": "D.巴拉德",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            }
+          ],
           "away": []
         }
       }
@@ -4858,8 +4871,34 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 430000,
+              "personName": "O. Moruţan",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": ""
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 212062,
+              "personName": "科拉西纳奇",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            }
+          ]
         }
       }
     },

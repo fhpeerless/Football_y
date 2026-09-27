@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-27 19:52:48",
+  "generate_time": "2026-09-28 00:51:50",
   "period": "26191",
   "lottery_sale_endtime": "2026-09-28 22:00:00",
   "total_matches": 6,
@@ -180,6 +180,38 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
+        "塞内加尔": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "比利时",
+              "awaysxname": "塞内加尔",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-07-02",
+              "tournamentShortName": "世界杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "塞内加尔"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "法国",
+              "awaysxname": "塞内加尔",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-17",
+              "tournamentShortName": "世界杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "塞内加尔"
+            }
+          ]
+        },
         "乌克兰": {
           "home_vs_opponent": [
             {
@@ -222,38 +254,6 @@
               "result1": "平",
               "result2": "平",
               "_opponent": "乌克兰"
-            }
-          ]
-        },
-        "塞内加尔": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "比利时",
-              "awaysxname": "塞内加尔",
-              "homescore": 2,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-07-02",
-              "tournamentShortName": "世界杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "塞内加尔"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "法国",
-              "awaysxname": "塞内加尔",
-              "homescore": 3,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-06-17",
-              "tournamentShortName": "世界杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "塞内加尔"
             }
           ]
         },
@@ -466,7 +466,20 @@
       },
       "bqc_odds": null,
       "injury": {
-        "home": [],
+        "home": [
+          {
+            "appearanceCnt": 1,
+            "injuryFlag": 1,
+            "personId": 453084,
+            "personName": "D.巴拉德",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 1,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "0"
+          }
+        ],
         "away": []
       },
       "h2h": [
@@ -524,6 +537,38 @@
       "away_matches_count": 20,
       "common_opponent_count": 6,
       "common_opponent_data": {
+        "加拿大": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "罗马尼亚",
+              "awaysxname": "加拿大",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2025-09-06",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "加拿大"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "加拿大",
+              "awaysxname": "波黑",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-06-13",
+              "tournamentShortName": "世界杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "加拿大"
+            }
+          ]
+        },
         "塞浦路斯": {
           "home_vs_opponent": [
             {
@@ -605,6 +650,64 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "塞浦路斯"
+            }
+          ]
+        },
+        "圣马力诺": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "罗马尼亚",
+              "awaysxname": "圣马力诺",
+              "homescore": 7,
+              "awayscore": 1,
+              "homehalfscore": 3,
+              "awayhalfscore": 1,
+              "matchdate": "2025-11-19",
+              "tournamentShortName": "世预赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "圣马力诺"
+            },
+            {
+              "homesxname": "圣马力诺",
+              "awaysxname": "罗马尼亚",
+              "homescore": 1,
+              "awayscore": 5,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2025-03-25",
+              "tournamentShortName": "世预赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "圣马力诺"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "圣马力诺",
+              "awaysxname": "波黑",
+              "homescore": 0,
+              "awayscore": 6,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2025-09-07",
+              "tournamentShortName": "世预赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "圣马力诺"
+            },
+            {
+              "homesxname": "波黑",
+              "awaysxname": "圣马力诺",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2025-06-07",
+              "tournamentShortName": "世预赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "圣马力诺"
             }
           ]
         },
@@ -698,96 +801,6 @@
             }
           ]
         },
-        "加拿大": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "罗马尼亚",
-              "awaysxname": "加拿大",
-              "homescore": 0,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2025-09-06",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "加拿大"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "加拿大",
-              "awaysxname": "波黑",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-06-13",
-              "tournamentShortName": "世界杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "加拿大"
-            }
-          ]
-        },
-        "圣马力诺": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "罗马尼亚",
-              "awaysxname": "圣马力诺",
-              "homescore": 7,
-              "awayscore": 1,
-              "homehalfscore": 3,
-              "awayhalfscore": 1,
-              "matchdate": "2025-11-19",
-              "tournamentShortName": "世预赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "圣马力诺"
-            },
-            {
-              "homesxname": "圣马力诺",
-              "awaysxname": "罗马尼亚",
-              "homescore": 1,
-              "awayscore": 5,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2025-03-25",
-              "tournamentShortName": "世预赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "圣马力诺"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "圣马力诺",
-              "awaysxname": "波黑",
-              "homescore": 0,
-              "awayscore": 6,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2025-09-07",
-              "tournamentShortName": "世预赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "圣马力诺"
-            },
-            {
-              "homesxname": "波黑",
-              "awaysxname": "圣马力诺",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2025-06-07",
-              "tournamentShortName": "世预赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "圣马力诺"
-            }
-          ]
-        },
         "直接对战(罗马尼亚 vs 波黑)": {
           "home_vs_opponent": [
             {
@@ -850,8 +863,34 @@
       },
       "bqc_odds": null,
       "injury": {
-        "home": [],
-        "away": []
+        "home": [
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 430000,
+            "personName": "O. Moruţan",
+            "playerPositionCode": "Attacker",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": ""
+          }
+        ],
+        "away": [
+          {
+            "appearanceCnt": 1,
+            "injuryFlag": 1,
+            "personId": 212062,
+            "personName": "科拉西纳奇",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 1,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "0"
+          }
+        ]
       },
       "h2h": [
         {
