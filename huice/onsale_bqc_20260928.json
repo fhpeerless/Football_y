@@ -1,84 +1,8 @@
 {
   "match_date": "2026-09-28",
-  "updated_at": "2026-09-28 02:33:36",
-  "match_count": 3,
+  "updated_at": "2026-09-28 06:24:30",
+  "match_count": 1,
   "matches": [
-    {
-      "match_id": "2041737",
-      "date": "2026-09-28",
-      "match_time": "02:45:00",
-      "dayofweek": "周日",
-      "match_num": "7007",
-      "match_num_str": "周日007",
-      "league": "欧国联",
-      "league_id": "127",
-      "home_team": "德国",
-      "away_team": "希腊",
-      "home_team_id": "377",
-      "away_team_id": "378",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "1.86",
-        "ac": "20.00",
-        "ab": "45.00",
-        "ca": "4.30",
-        "cc": "9.00",
-        "cb": "15.00",
-        "ba": "23.00",
-        "bc": "20.00",
-        "bb": "11.00"
-      },
-      "bqc_odds_api": {
-        "hh": "1.86",
-        "hd": "20.00",
-        "ha": "45.00",
-        "dh": "4.30",
-        "dd": "9.00",
-        "da": "15.00",
-        "ah": "23.00",
-        "ad": "20.00",
-        "aa": "11.00"
-      },
-      "bqc_update_time": "2026-09-27 21:56:21"
-    },
-    {
-      "match_id": "2041738",
-      "date": "2026-09-28",
-      "match_time": "02:45:00",
-      "dayofweek": "周日",
-      "match_num": "7008",
-      "match_num_str": "周日008",
-      "league": "欧国联",
-      "league_id": "127",
-      "home_team": "挪威",
-      "away_team": "葡萄牙",
-      "home_team_id": "391",
-      "away_team_id": "1044",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "3.50",
-        "ac": "14.00",
-        "ab": "24.00",
-        "ca": "5.75",
-        "cc": "6.50",
-        "cb": "6.85",
-        "ba": "23.00",
-        "bc": "14.00",
-        "bb": "4.60"
-      },
-      "bqc_odds_api": {
-        "hh": "3.50",
-        "hd": "14.00",
-        "ha": "24.00",
-        "dh": "5.75",
-        "dd": "6.50",
-        "da": "6.85",
-        "ah": "23.00",
-        "ad": "14.00",
-        "aa": "4.60"
-      },
-      "bqc_update_time": "2026-09-27 22:01:44"
-    },
     {
       "match_id": "2041739",
       "date": "2026-09-28",
@@ -813,6 +737,89 @@
             "aa": "10.50"
           },
           "bqc_update_time": "2026-09-27 19:25:31"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-09-28 06:24:30",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2041737",
+          "date": "2026-09-28",
+          "match_time": "02:45:00",
+          "dayofweek": "周日",
+          "match_num": "7007",
+          "match_num_str": "周日007",
+          "league": "欧国联",
+          "league_id": "127",
+          "home_team": "德国",
+          "away_team": "希腊",
+          "home_team_id": "377",
+          "away_team_id": "378",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "1.86",
+            "ac": "20.00",
+            "ab": "45.00",
+            "ca": "4.30",
+            "cc": "9.00",
+            "cb": "15.00",
+            "ba": "23.00",
+            "bc": "20.00",
+            "bb": "11.00"
+          },
+          "bqc_odds_api": {
+            "hh": "1.86",
+            "hd": "20.00",
+            "ha": "45.00",
+            "dh": "4.30",
+            "dd": "9.00",
+            "da": "15.00",
+            "ah": "23.00",
+            "ad": "20.00",
+            "aa": "11.00"
+          },
+          "bqc_update_time": "2026-09-27 21:56:21"
+        },
+        {
+          "match_id": "2041738",
+          "date": "2026-09-28",
+          "match_time": "02:45:00",
+          "dayofweek": "周日",
+          "match_num": "7008",
+          "match_num_str": "周日008",
+          "league": "欧国联",
+          "league_id": "127",
+          "home_team": "挪威",
+          "away_team": "葡萄牙",
+          "home_team_id": "391",
+          "away_team_id": "1044",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.50",
+            "ac": "14.00",
+            "ab": "24.00",
+            "ca": "5.75",
+            "cc": "6.50",
+            "cb": "6.85",
+            "ba": "23.00",
+            "bc": "14.00",
+            "bb": "4.60"
+          },
+          "bqc_odds_api": {
+            "hh": "3.50",
+            "hd": "14.00",
+            "ha": "24.00",
+            "dh": "5.75",
+            "dd": "6.50",
+            "da": "6.85",
+            "ah": "23.00",
+            "ad": "14.00",
+            "aa": "4.60"
+          },
+          "bqc_update_time": "2026-09-27 22:01:44"
         }
       ]
     }
