@@ -1,45 +1,83 @@
 {
   "match_date": "2026-09-28",
-  "updated_at": "2026-09-28 06:24:30",
-  "match_count": 1,
+  "updated_at": "2026-09-28 15:10:48",
+  "match_count": 2,
   "matches": [
     {
-      "match_id": "2041739",
+      "match_id": "2041740",
       "date": "2026-09-28",
-      "match_time": "07:00:00",
-      "dayofweek": "周日",
-      "match_num": "7009",
-      "match_num_str": "周日009",
-      "league": "美职",
-      "league_id": "50",
-      "home_team": "哥伦布",
-      "away_team": "迈国际",
-      "home_team_id": "904",
-      "away_team_id": "2705",
+      "match_time": "18:25:00",
+      "dayofweek": "周一",
+      "match_num": "1001",
+      "match_num_str": "周一001",
+      "league": "国际赛",
+      "league_id": "39",
+      "home_team": "日本",
+      "away_team": "委内瑞拉",
+      "home_team_id": "438",
+      "away_team_id": "412",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "4.60",
-        "ac": "14.00",
-        "ab": "18.00",
-        "ca": "8.00",
-        "cc": "8.00",
-        "cb": "5.40",
-        "ba": "22.00",
-        "bc": "14.00",
-        "bb": "3.25"
+        "aa": "1.60",
+        "ac": "26.00",
+        "ab": "90.00",
+        "ca": "3.90",
+        "cc": "8.40",
+        "cb": "27.00",
+        "ba": "28.00",
+        "bc": "26.00",
+        "bb": "23.00"
       },
       "bqc_odds_api": {
-        "hh": "4.60",
-        "hd": "14.00",
-        "ha": "18.00",
-        "dh": "8.00",
-        "dd": "8.00",
-        "da": "5.40",
-        "ah": "22.00",
-        "ad": "14.00",
-        "aa": "3.25"
+        "hh": "1.60",
+        "hd": "26.00",
+        "ha": "90.00",
+        "dh": "3.90",
+        "dd": "8.40",
+        "da": "27.00",
+        "ah": "28.00",
+        "ad": "26.00",
+        "aa": "23.00"
       },
-      "bqc_update_time": "2026-09-27 21:51:20"
+      "bqc_update_time": "2026-09-28 14:12:10"
+    },
+    {
+      "match_id": "2041741",
+      "date": "2026-09-28",
+      "match_time": "19:00:00",
+      "dayofweek": "周一",
+      "match_num": "1002",
+      "match_num_str": "周一002",
+      "league": "国际赛",
+      "league_id": "39",
+      "home_team": "韩国",
+      "away_team": "乌拉圭",
+      "home_team_id": "430",
+      "away_team_id": "414",
+      "match_status": "Selling",
+      "bqc_odds": {
+        "aa": "4.10",
+        "ac": "17.00",
+        "ab": "33.00",
+        "ca": "5.30",
+        "cc": "4.50",
+        "cb": "6.25",
+        "ba": "30.00",
+        "bc": "17.00",
+        "bb": "4.80"
+      },
+      "bqc_odds_api": {
+        "hh": "4.10",
+        "hd": "17.00",
+        "ha": "33.00",
+        "dh": "5.30",
+        "dd": "4.50",
+        "da": "6.25",
+        "ah": "30.00",
+        "ad": "17.00",
+        "aa": "4.80"
+      },
+      "bqc_update_time": "2026-09-28 14:59:02"
     }
   ],
   "change_log": [
@@ -820,6 +858,128 @@
             "aa": "4.60"
           },
           "bqc_update_time": "2026-09-27 22:01:44"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-09-28 15:10:48",
+      "changed": [],
+      "added": [
+        {
+          "match_id": "2041740",
+          "date": "2026-09-28",
+          "match_time": "18:25:00",
+          "dayofweek": "周一",
+          "match_num": "1001",
+          "match_num_str": "周一001",
+          "league": "国际赛",
+          "league_id": "39",
+          "home_team": "日本",
+          "away_team": "委内瑞拉",
+          "home_team_id": "438",
+          "away_team_id": "412",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "1.60",
+            "ac": "26.00",
+            "ab": "90.00",
+            "ca": "3.90",
+            "cc": "8.40",
+            "cb": "27.00",
+            "ba": "28.00",
+            "bc": "26.00",
+            "bb": "23.00"
+          },
+          "bqc_odds_api": {
+            "hh": "1.60",
+            "hd": "26.00",
+            "ha": "90.00",
+            "dh": "3.90",
+            "dd": "8.40",
+            "da": "27.00",
+            "ah": "28.00",
+            "ad": "26.00",
+            "aa": "23.00"
+          },
+          "bqc_update_time": "2026-09-28 14:12:10"
+        },
+        {
+          "match_id": "2041741",
+          "date": "2026-09-28",
+          "match_time": "19:00:00",
+          "dayofweek": "周一",
+          "match_num": "1002",
+          "match_num_str": "周一002",
+          "league": "国际赛",
+          "league_id": "39",
+          "home_team": "韩国",
+          "away_team": "乌拉圭",
+          "home_team_id": "430",
+          "away_team_id": "414",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "4.10",
+            "ac": "17.00",
+            "ab": "33.00",
+            "ca": "5.30",
+            "cc": "4.50",
+            "cb": "6.25",
+            "ba": "30.00",
+            "bc": "17.00",
+            "bb": "4.80"
+          },
+          "bqc_odds_api": {
+            "hh": "4.10",
+            "hd": "17.00",
+            "ha": "33.00",
+            "dh": "5.30",
+            "dd": "4.50",
+            "da": "6.25",
+            "ah": "30.00",
+            "ad": "17.00",
+            "aa": "4.80"
+          },
+          "bqc_update_time": "2026-09-28 14:59:02"
+        }
+      ],
+      "removed": [
+        {
+          "match_id": "2041739",
+          "date": "2026-09-28",
+          "match_time": "07:00:00",
+          "dayofweek": "周日",
+          "match_num": "7009",
+          "match_num_str": "周日009",
+          "league": "美职",
+          "league_id": "50",
+          "home_team": "哥伦布",
+          "away_team": "迈国际",
+          "home_team_id": "904",
+          "away_team_id": "2705",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "4.60",
+            "ac": "14.00",
+            "ab": "18.00",
+            "ca": "8.00",
+            "cc": "8.00",
+            "cb": "5.40",
+            "ba": "22.00",
+            "bc": "14.00",
+            "bb": "3.25"
+          },
+          "bqc_odds_api": {
+            "hh": "4.60",
+            "hd": "14.00",
+            "ha": "18.00",
+            "dh": "8.00",
+            "dd": "8.00",
+            "da": "5.40",
+            "ah": "22.00",
+            "ad": "14.00",
+            "aa": "3.25"
+          },
+          "bqc_update_time": "2026-09-27 21:51:20"
         }
       ]
     }
