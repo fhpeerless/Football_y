@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-09-28 00:51:50",
+  "generate_time": "2026-09-29 04:29:23",
   "period": "26192",
   "lottery_sale_endtime": "2026-09-29 22:00:00",
   "total_matches": 6,
@@ -612,13 +612,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 0,
+              "awayTeamId": 373,
               "awayTeamShortName": "法罗群岛",
               "fullCourtGoal": "1:0",
               "halfTimeGoal": "0:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 371,
               "homeTeamShortName": "爱沙尼亚",
               "matchDate": "2026-06-06",
               "matchId": 2509175,
@@ -3406,8 +3406,46 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 517643,
+              "personName": "N. Patterson",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 316548,
+              "personName": "索乌",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            },
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 329229,
+              "personName": "阿坎吉",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            }
+          ]
         }
       }
     },
@@ -4615,7 +4653,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 198026,
+              "personName": "艾里斯基",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            }
+          ]
         }
       }
     },
@@ -5903,7 +5954,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 362649,
+              "personName": "梅里诺",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            }
+          ],
           "away": []
         }
       }
@@ -5981,7 +6045,7 @@
               "halfTimeGoal": "1:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 0,
+              "homeTeamId": 541,
               "homeTeamShortName": "斯洛伐克",
               "matchDate": "2026-06-02",
               "matchId": 2518065,
@@ -7058,7 +7122,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 319751,
+              "personName": "A.扎鲁茨基",
+              "playerPositionCode": "Goalkeeper",
+              "playerPositionDesc": "守门员",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "0"
+            }
+          ]
         }
       }
     }
