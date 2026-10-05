@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-05 13:20:40",
+  "generate_time": "2026-10-05 22:25:47",
   "period": "26194",
   "lottery_sale_endtime": "2026-10-06 19:05:00",
   "total_matches": 6,
@@ -74,6 +74,38 @@
             }
           ]
         },
+        "巴勒斯坦": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "中国",
+              "awaysxname": "巴勒斯坦",
+              "homescore": 0,
+              "awayscore": 5,
+              "homehalfscore": 0,
+              "awayhalfscore": 3,
+              "matchdate": "2026-10-02",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴勒斯坦"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "塔吉克",
+              "awaysxname": "巴勒斯坦",
+              "homescore": 2,
+              "awayscore": 4,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-28",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "巴勒斯坦"
+            }
+          ]
+        },
         "马尔代夫": {
           "home_vs_opponent": [
             {
@@ -116,38 +148,6 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "马尔代夫"
-            }
-          ]
-        },
-        "巴勒斯坦": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "中国",
-              "awaysxname": "巴勒斯坦",
-              "homescore": 0,
-              "awayscore": 5,
-              "homehalfscore": 0,
-              "awayhalfscore": 3,
-              "matchdate": "2026-10-02",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "巴勒斯坦"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "塔吉克",
-              "awaysxname": "巴勒斯坦",
-              "homescore": 2,
-              "awayscore": 4,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-28",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "巴勒斯坦"
             }
           ]
         }
@@ -258,38 +258,6 @@
             }
           ]
         },
-        "葡萄牙": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "葡萄牙",
-              "awaysxname": "克罗地亚",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-07-03",
-              "tournamentShortName": "世界杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "葡萄牙"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "葡萄牙",
-              "awaysxname": "西班牙",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-07-07",
-              "tournamentShortName": "世界杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "葡萄牙"
-            }
-          ]
-        },
         "法国": {
           "home_vs_opponent": [
             {
@@ -319,38 +287,6 @@
               "result1": "平",
               "result2": "平",
               "_opponent": "法国"
-            }
-          ]
-        },
-        "比利时": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "克罗地亚",
-              "awaysxname": "比利时",
-              "homescore": 0,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-06-03",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "比利时"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "西班牙",
-              "awaysxname": "比利时",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-07-11",
-              "tournamentShortName": "世界杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "比利时"
             }
           ]
         },
@@ -396,6 +332,70 @@
               "result1": "平",
               "result2": "平",
               "_opponent": "英格兰"
+            }
+          ]
+        },
+        "比利时": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "克罗地亚",
+              "awaysxname": "比利时",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-06-03",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "比利时"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "西班牙",
+              "awaysxname": "比利时",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-07-11",
+              "tournamentShortName": "世界杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "比利时"
+            }
+          ]
+        },
+        "葡萄牙": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "葡萄牙",
+              "awaysxname": "克罗地亚",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-03",
+              "tournamentShortName": "世界杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "葡萄牙"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "葡萄牙",
+              "awaysxname": "西班牙",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-07-07",
+              "tournamentShortName": "世界杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "葡萄牙"
             }
           ]
         },
@@ -553,6 +553,70 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
+        "西班牙": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "英格兰",
+              "awaysxname": "西班牙",
+              "homescore": 2,
+              "awayscore": 3,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-09-27",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "西班牙"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "西班牙",
+              "awaysxname": "捷克",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-04",
+              "tournamentShortName": "欧国联",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "西班牙"
+            }
+          ]
+        },
+        "墨西哥": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "墨西哥",
+              "awaysxname": "英格兰",
+              "homescore": 2,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2026-07-06",
+              "tournamentShortName": "世界杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "墨西哥"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "捷克",
+              "awaysxname": "墨西哥",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-25",
+              "tournamentShortName": "世界杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "墨西哥"
+            }
+          ]
+        },
         "克罗地亚": {
           "home_vs_opponent": [
             {
@@ -621,70 +685,6 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "克罗地亚"
-            }
-          ]
-        },
-        "墨西哥": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "墨西哥",
-              "awaysxname": "英格兰",
-              "homescore": 2,
-              "awayscore": 3,
-              "homehalfscore": 1,
-              "awayhalfscore": 2,
-              "matchdate": "2026-07-06",
-              "tournamentShortName": "世界杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "墨西哥"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "捷克",
-              "awaysxname": "墨西哥",
-              "homescore": 0,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-06-25",
-              "tournamentShortName": "世界杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "墨西哥"
-            }
-          ]
-        },
-        "西班牙": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "英格兰",
-              "awaysxname": "西班牙",
-              "homescore": 2,
-              "awayscore": 3,
-              "homehalfscore": 2,
-              "awayhalfscore": 1,
-              "matchdate": "2026-09-27",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "西班牙"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "西班牙",
-              "awaysxname": "捷克",
-              "homescore": 3,
-              "awayscore": 1,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-04",
-              "tournamentShortName": "欧国联",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "西班牙"
             }
           ]
         },
@@ -794,115 +794,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 6,
       "common_opponent_data": {
-        "爱尔兰": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "卢森堡",
-              "awaysxname": "爱尔兰",
-              "homescore": 0,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2025-06-11",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "爱尔兰"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "爱尔兰",
-              "awaysxname": "保加利亚",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2025-03-24",
-              "tournamentShortName": "欧国联",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "爱尔兰"
-            },
-            {
-              "homesxname": "保加利亚",
-              "awaysxname": "爱尔兰",
-              "homescore": 1,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 2,
-              "matchdate": "2025-03-21",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "爱尔兰"
-            }
-          ]
-        },
-        "爱沙尼亚": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "爱沙尼亚",
-              "awaysxname": "卢森堡",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-04",
-              "tournamentShortName": "欧国联",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "爱沙尼亚"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "保加利亚",
-              "awaysxname": "爱沙尼亚",
-              "homescore": 0,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-30",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "爱沙尼亚"
-            }
-          ]
-        },
-        "白俄罗斯": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "白俄罗斯",
-              "awaysxname": "卢森堡",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2024-10-16",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "白俄罗斯"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "保加利亚",
-              "awaysxname": "白俄罗斯",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2024-11-19",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "白俄罗斯"
-            }
-          ]
-        },
         "北爱尔兰": {
           "home_vs_opponent": [
             {
@@ -961,6 +852,38 @@
             }
           ]
         },
+        "爱沙尼亚": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "爱沙尼亚",
+              "awaysxname": "卢森堡",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-04",
+              "tournamentShortName": "欧国联",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "爱沙尼亚"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "保加利亚",
+              "awaysxname": "爱沙尼亚",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-30",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "爱沙尼亚"
+            }
+          ]
+        },
         "冰岛": {
           "home_vs_opponent": [
             {
@@ -990,6 +913,83 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "冰岛"
+            }
+          ]
+        },
+        "白俄罗斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "白俄罗斯",
+              "awaysxname": "卢森堡",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2024-10-16",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "白俄罗斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "保加利亚",
+              "awaysxname": "白俄罗斯",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2024-11-19",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "白俄罗斯"
+            }
+          ]
+        },
+        "爱尔兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "卢森堡",
+              "awaysxname": "爱尔兰",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2025-06-11",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "爱尔兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "爱尔兰",
+              "awaysxname": "保加利亚",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2025-03-24",
+              "tournamentShortName": "欧国联",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "爱尔兰"
+            },
+            {
+              "homesxname": "保加利亚",
+              "awaysxname": "爱尔兰",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 2,
+              "matchdate": "2025-03-21",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "爱尔兰"
             }
           ]
         },
@@ -1149,38 +1149,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
-        "北马其顿": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "北马其顿",
-              "awaysxname": "苏格兰",
-              "homescore": 0,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-10-04",
-              "tournamentShortName": "欧国联",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "北马其顿"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "斯洛文尼",
-              "awaysxname": "北马其顿",
-              "homescore": 2,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-30",
-              "tournamentShortName": "欧国联",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "北马其顿"
-            }
-          ]
-        },
         "瑞士": {
           "home_vs_opponent": [
             {
@@ -1236,6 +1204,38 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "瑞士"
+            }
+          ]
+        },
+        "北马其顿": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "北马其顿",
+              "awaysxname": "苏格兰",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-10-04",
+              "tournamentShortName": "欧国联",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "北马其顿"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "斯洛文尼",
+              "awaysxname": "北马其顿",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-30",
+              "tournamentShortName": "欧国联",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "北马其顿"
             }
           ]
         },
@@ -1319,38 +1319,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
-        "波黑": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "瑞士",
-              "awaysxname": "波黑",
-              "homescore": 4,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-06-19",
-              "tournamentShortName": "世界杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "波黑"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "波黑",
-              "awaysxname": "北马其顿",
-              "homescore": 0,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-05-30",
-              "tournamentShortName": "国际赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "波黑"
-            }
-          ]
-        },
         "斯洛文尼": {
           "home_vs_opponent": [
             {
@@ -1406,6 +1374,38 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "斯洛文尼"
+            }
+          ]
+        },
+        "波黑": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "瑞士",
+              "awaysxname": "波黑",
+              "homescore": 4,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-06-19",
+              "tournamentShortName": "世界杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "波黑"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "波黑",
+              "awaysxname": "北马其顿",
+              "homescore": 0,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-30",
+              "tournamentShortName": "国际赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "波黑"
             }
           ]
         },
