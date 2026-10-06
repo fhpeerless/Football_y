@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-05 22:25:46",
+  "generate_time": "2026-10-07 02:20:03",
   "period": "26195",
   "lottery_sale_endtime": "2026-10-07 22:00:00",
   "total_matches": 6,
@@ -4730,7 +4730,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 16,
+              "injuryFlag": 0,
+              "personId": 670540,
+              "personName": "Victor",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 13,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 1,
+              "uniformNo": "41"
+            }
+          ],
           "away": []
         }
       }
@@ -6371,7 +6384,20 @@
         ],
         "injury": {
           "home": [],
-          "away": []
+          "away": [
+            {
+              "appearanceCnt": 24,
+              "injuryFlag": 0,
+              "personId": 684860,
+              "personName": "C. Gómez",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 22,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 1,
+              "uniformNo": "11"
+            }
+          ]
         }
       }
     },
@@ -6404,7 +6430,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 6,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
@@ -8585,7 +8611,7 @@
               "sportteryAwayTeamId": 0,
               "sportteryHomeTeamId": 0,
               "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
+              "sportteryTournamentId": 6,
               "teamMatchResult": "home",
               "totalTeamFullCourtGoalCnt": 0,
               "tournamentId": 84,
