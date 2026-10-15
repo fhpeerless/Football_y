@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-15 15:54:41",
+  "generate_time": "2026-10-16 00:02:32",
   "total_matches": 24,
   "matches": [
     {
@@ -129,7 +129,84 @@
       "common_opponents": [],
       "direct_match_info": null,
       "match_time": "00:45",
-      "injury_suspension": {}
+      "injury_suspension": {
+        "away": {
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 94078,
+              "personName": "默尼耶",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "12"
+            },
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 520146,
+              "personName": "布罗比",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "9"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 622608,
+              "personName": "R. Mundle",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "14"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 677631,
+              "personName": "H. Diarra",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "19"
+            }
+          ],
+          "sportteryTeamId": 60,
+          "teamId": 683,
+          "teamShortName": "桑德兰",
+          "uniformTeamId": 409
+        },
+        "home": {
+          "injuriesAndSuspensionsList": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 673344,
+              "personName": "Hugo Pérez",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "28"
+            }
+          ],
+          "sportteryTeamId": 1061,
+          "teamId": 1734,
+          "teamShortName": "托林斯",
+          "uniformTeamId": 1397
+        }
+      }
     },
     {
       "match_num": "4003",
@@ -2036,7 +2113,7 @@
           "home_vs_matches": [
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 0,
+              "awayTeamId": 1077,
               "awayTeamShortName": "墨胜利",
               "fullCourtGoal": "0:2",
               "halfTimeGoal": "0:1",
@@ -2116,13 +2193,13 @@
           "away_vs_matches": [
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 0,
+              "awayTeamId": 1077,
               "awayTeamShortName": "墨胜利",
               "fullCourtGoal": "0:0",
               "halfTimeGoal": "0:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 0,
+              "homeTeamId": 1686,
               "homeTeamShortName": "西悉尼",
               "matchDate": "2026-08-08",
               "matchId": 2605948,
@@ -4247,7 +4324,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 1917,
               "homeTeamShortName": "天狼星",
               "matchDate": "2026-06-26",
               "matchId": 2537292,
@@ -8507,7 +8584,7 @@
           "home_vs_matches": [
             {
               "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 0,
+              "awayTeamId": 750,
               "awayTeamShortName": "洛里昂",
               "fullCourtGoal": "2:1",
               "halfTimeGoal": "1:0",
@@ -8541,7 +8618,7 @@
               "halfTimeGoal": "2:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 0,
+              "homeTeamId": 750,
               "homeTeamShortName": "洛里昂",
               "matchDate": "2026-09-13",
               "matchId": 2529101,

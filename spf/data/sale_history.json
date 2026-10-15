@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-15 15:54:41",
+  "generate_time": "2026-10-16 00:02:32",
   "total_matches": 24,
   "matches": [
     {
@@ -1842,7 +1842,84 @@
           "uniformLeagueId": 23,
           "uniformMatchId": 2513024
         },
-        "injury_suspension": {},
+        "injury_suspension": {
+          "away": {
+            "injuriesAndSuspensionsList": [
+              {
+                "appearanceCnt": 1,
+                "injuryFlag": 1,
+                "personId": 94078,
+                "personName": "默尼耶",
+                "playerPositionCode": "Defender",
+                "playerPositionDesc": "后卫",
+                "startedMatchCnt": 0,
+                "substituteMatchCnt": 1,
+                "suspensionFlag": 0,
+                "uniformNo": "12"
+              },
+              {
+                "appearanceCnt": 1,
+                "injuryFlag": 1,
+                "personId": 520146,
+                "personName": "布罗比",
+                "playerPositionCode": "Forward",
+                "playerPositionDesc": "前锋",
+                "startedMatchCnt": 0,
+                "substituteMatchCnt": 1,
+                "suspensionFlag": 0,
+                "uniformNo": "9"
+              },
+              {
+                "appearanceCnt": 0,
+                "injuryFlag": 1,
+                "personId": 622608,
+                "personName": "R. Mundle",
+                "playerPositionCode": "Attacker",
+                "playerPositionDesc": "前锋",
+                "startedMatchCnt": 0,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 0,
+                "uniformNo": "14"
+              },
+              {
+                "appearanceCnt": 0,
+                "injuryFlag": 1,
+                "personId": 677631,
+                "personName": "H. Diarra",
+                "playerPositionCode": "Midfielder",
+                "playerPositionDesc": "中场",
+                "startedMatchCnt": 0,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 0,
+                "uniformNo": "19"
+              }
+            ],
+            "sportteryTeamId": 60,
+            "teamId": 683,
+            "teamShortName": "桑德兰",
+            "uniformTeamId": 409
+          },
+          "home": {
+            "injuriesAndSuspensionsList": [
+              {
+                "appearanceCnt": 0,
+                "injuryFlag": 1,
+                "personId": 673344,
+                "personName": "Hugo Pérez",
+                "playerPositionCode": "Defender",
+                "playerPositionDesc": "后卫",
+                "startedMatchCnt": 0,
+                "substituteMatchCnt": 0,
+                "suspensionFlag": 0,
+                "uniformNo": "28"
+              }
+            ],
+            "sportteryTeamId": 1061,
+            "teamId": 1734,
+            "teamShortName": "托林斯",
+            "uniformTeamId": 1397
+          }
+        },
         "match_result": {
           "away": {
             "matchList": [
@@ -2446,7 +2523,7 @@
                 "halfTimeGoal": "0:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "0",
-                "homeTeamId": 1061,
+                "homeTeamId": 0,
                 "homeTeamShortName": "托林斯",
                 "matchDate": "2026-09-12",
                 "matchId": 2556786,
@@ -2498,7 +2575,7 @@
                 "halfTimeGoal": "0:2",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "0",
-                "homeTeamId": 0,
+                "homeTeamId": 1061,
                 "homeTeamShortName": "托林斯",
                 "matchDate": "2026-08-30",
                 "matchId": 2556723,
@@ -2550,7 +2627,7 @@
                 "halfTimeGoal": "0:2",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "2",
-                "homeTeamId": 1061,
+                "homeTeamId": 0,
                 "homeTeamShortName": "托林斯",
                 "matchDate": "2026-08-16",
                 "matchId": 2556689,
@@ -2570,7 +2647,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "1",
-                "awayTeamId": 1061,
+                "awayTeamId": 0,
                 "awayTeamShortName": "托林斯",
                 "fullCourtGoal": "2:1",
                 "halfTimeGoal": "0:0",
@@ -4403,7 +4480,62 @@
       "home_team_id": "2484",
       "away_team_id": "675",
       "analysis_data": {
-        "match_head": {},
+        "match_head": {
+          "awayTeamId": 2028,
+          "awayTeamLogoPath": "//static.sporttery.cn/res_1_0/jcw/upload/mnjc/zq/675.png",
+          "awayTeamShortName": "皇家社会",
+          "fullCourtGoal": "",
+          "gameweek": "2",
+          "groupId": 0,
+          "groupName": "",
+          "homeTeamId": 266,
+          "homeTeamLogoPath": "//static.sporttery.cn/res_1_0/jcw/upload/mnjc/zq/2484.png",
+          "homeTeamShortName": "圣吉联合",
+          "matchDateTime": "2026-10-16 00:45",
+          "matchId": 2634041,
+          "matchNum": "周四004",
+          "phaseId": 48655,
+          "phaseName": "League Stage",
+          "seasonId": 15335,
+          "seasonName": "2026/2027",
+          "sportteryAwayTeamId": 675,
+          "sportteryHomeTeamId": 2484,
+          "sportteryMatchId": 2041978,
+          "sportteryTournamentId": 70,
+          "tournamentCnName": "欧罗巴联赛",
+          "tournamentCnShortName": "欧罗巴",
+          "tournamentId": 1103,
+          "uniformAwayTeamId": 248,
+          "uniformHomeTeamId": 1539,
+          "uniformLeagueId": 23,
+          "uniformMatchId": 2513026,
+          "wbsjStats": {
+            "away": {
+              "groupName": "",
+              "phaseName": "League Stage",
+              "ranking": "24",
+              "sAwayDrawMatchCnt": "0",
+              "sAwayLossGoalMatchCnt": "0",
+              "sAwayWinGoalMatchCnt": "0",
+              "sDrawMatchCnt": "0",
+              "sLossGoalMatchCnt": "1",
+              "sWinGoalMatchCnt": "0",
+              "seasonName": "2026/2027"
+            },
+            "home": {
+              "groupName": "",
+              "phaseName": "League Stage",
+              "ranking": "5",
+              "sDrawMatchCnt": "0",
+              "sHomeDrawMatchCnt": "0",
+              "sHomeLossGoalMatchCnt": "0",
+              "sHomeWinGoalMatchCnt": "0",
+              "sLossGoalMatchCnt": "0",
+              "sWinGoalMatchCnt": "1",
+              "seasonName": "2026/2027"
+            }
+          }
+        },
         "result_history": {
           "matchList": [],
           "statistics": {
@@ -6945,7 +7077,7 @@
                 "halfTimeGoal": "3:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "4",
-                "homeTeamId": 0,
+                "homeTeamId": 335,
                 "homeTeamShortName": "萨尔茨堡",
                 "matchDate": "2026-08-31",
                 "matchId": 2544181,
@@ -8390,7 +8522,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 2542,
                 "awayTeamShortName": "克拉约瓦",
                 "fullCourtGoal": "1:0",
                 "halfTimeGoal": "0:0",
@@ -8448,7 +8580,7 @@
                 "halfTimeGoal": "1:1",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "1",
-                "homeTeamId": 0,
+                "homeTeamId": 2542,
                 "homeTeamShortName": "克拉约瓦",
                 "matchDate": "2026-08-21",
                 "matchId": 2622789,
@@ -12778,7 +12910,7 @@
                 "halfTimeGoal": "",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "1",
-                "homeTeamId": 0,
+                "homeTeamId": 197,
                 "homeTeamShortName": "蒙彼利埃",
                 "matchDate": "2026-10-03",
                 "matchId": 2640431,
@@ -13681,7 +13813,7 @@
             "matchList": [
               {
                 "awayTeamFullCourtGoalCnt": "2",
-                "awayTeamId": 0,
+                "awayTeamId": 1276,
                 "awayTeamShortName": "格风暴",
                 "fullCourtGoal": "0:2",
                 "halfTimeGoal": "0:1",
@@ -14325,7 +14457,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 99,
                 "awayTeamShortName": "林肯城",
                 "fullCourtGoal": "4:0",
                 "halfTimeGoal": "1:0",
@@ -16876,7 +17008,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 269,
                 "awayTeamShortName": "布拉加",
                 "fullCourtGoal": "0:0",
                 "halfTimeGoal": "0:0",
@@ -16908,7 +17040,7 @@
                 "halfTimeGoal": "1:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "2",
-                "homeTeamId": 0,
+                "homeTeamId": 269,
                 "homeTeamShortName": "布拉加",
                 "matchDate": "2026-08-21",
                 "matchId": 2622792,
@@ -16928,7 +17060,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 269,
                 "awayTeamShortName": "布拉加",
                 "fullCourtGoal": "0:0",
                 "halfTimeGoal": "0:0",
@@ -16986,7 +17118,7 @@
                 "halfTimeGoal": "1:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "1",
-                "homeTeamId": 0,
+                "homeTeamId": 269,
                 "homeTeamShortName": "布拉加",
                 "matchDate": "2026-08-07",
                 "matchId": 2607274,
@@ -19836,13 +19968,13 @@
             "matchList": [
               {
                 "awayTeamFullCourtGoalCnt": "1",
-                "awayTeamId": 0,
+                "awayTeamId": 1135,
                 "awayTeamShortName": "中央海岸",
                 "fullCourtGoal": "5:1",
                 "halfTimeGoal": "",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "5",
-                "homeTeamId": 0,
+                "homeTeamId": 1686,
                 "homeTeamShortName": "西悉尼",
                 "matchDate": "2026-09-26",
                 "matchId": 2639106,
@@ -19888,13 +20020,13 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 1025286,
                 "awayTeamShortName": "麦克阿瑟",
                 "fullCourtGoal": "1:0",
                 "halfTimeGoal": "",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "1",
-                "homeTeamId": 0,
+                "homeTeamId": 1686,
                 "homeTeamShortName": "西悉尼",
                 "matchDate": "2026-08-22",
                 "matchId": 2628140,
@@ -19914,13 +20046,13 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "0",
-                "awayTeamId": 0,
+                "awayTeamId": 1077,
                 "awayTeamShortName": "墨胜利",
                 "fullCourtGoal": "0:0",
                 "halfTimeGoal": "0:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "0",
-                "homeTeamId": 0,
+                "homeTeamId": 1686,
                 "homeTeamShortName": "西悉尼",
                 "matchDate": "2026-08-08",
                 "matchId": 2605948,
@@ -20376,7 +20508,7 @@
             "matchList": [
               {
                 "awayTeamFullCourtGoalCnt": "2",
-                "awayTeamId": 0,
+                "awayTeamId": 1077,
                 "awayTeamShortName": "墨胜利",
                 "fullCourtGoal": "0:2",
                 "halfTimeGoal": "0:1",
@@ -23419,7 +23551,7 @@
                 "halfTimeGoal": "",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "1",
-                "homeTeamId": 0,
+                "homeTeamId": 1917,
                 "homeTeamShortName": "天狼星",
                 "matchDate": "2026-06-26",
                 "matchId": 2537292,
@@ -24713,7 +24845,7 @@
             "matchList": [
               {
                 "awayTeamFullCourtGoalCnt": "5",
-                "awayTeamId": 0,
+                "awayTeamId": 246,
                 "awayTeamShortName": "格罗宁根",
                 "fullCourtGoal": "1:5",
                 "halfTimeGoal": "1:2",
@@ -28951,7 +29083,7 @@
                 "halfTimeGoal": "2:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "3",
-                "homeTeamId": 0,
+                "homeTeamId": 170,
                 "homeTeamShortName": "法兰克福",
                 "matchDate": "2026-07-26",
                 "matchId": 2593273,
@@ -31418,7 +31550,7 @@
                 "halfTimeGoal": "2:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "2",
-                "homeTeamId": 0,
+                "homeTeamId": 750,
                 "homeTeamShortName": "洛里昂",
                 "matchDate": "2026-09-13",
                 "matchId": 2529101,
@@ -31620,7 +31752,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "1",
-                "awayTeamId": 0,
+                "awayTeamId": 476,
                 "awayTeamShortName": "罗德兹",
                 "fullCourtGoal": "1:1",
                 "halfTimeGoal": "",
@@ -31926,7 +32058,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "1",
-                "awayTeamId": 0,
+                "awayTeamId": 750,
                 "awayTeamShortName": "洛里昂",
                 "fullCourtGoal": "2:1",
                 "halfTimeGoal": "1:0",
@@ -33596,7 +33728,7 @@
                 "halfTimeGoal": "1:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "2",
-                "homeTeamId": 0,
+                "homeTeamId": 42,
                 "homeTeamShortName": "伯恩利",
                 "matchDate": "2026-10-14",
                 "matchId": 2541480,
@@ -33954,7 +34086,7 @@
               },
               {
                 "awayTeamFullCourtGoalCnt": "1",
-                "awayTeamId": 42,
+                "awayTeamId": 0,
                 "awayTeamShortName": "伯恩利",
                 "fullCourtGoal": "2:1",
                 "halfTimeGoal": "1:0",
@@ -36598,7 +36730,7 @@
                 "halfTimeGoal": "1:0",
                 "homeMatchResult": "",
                 "homeTeamFullCourtGoalCnt": "2",
-                "homeTeamId": 0,
+                "homeTeamId": 567,
                 "homeTeamShortName": "科林蒂安",
                 "matchDate": "2026-08-07",
                 "matchId": 2524076,
