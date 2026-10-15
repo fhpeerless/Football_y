@@ -103,6 +103,253 @@ def parse_date(date_str):
     except:
         return None
 
+def load_team_matches_by_period(period_str):
+    """从 result/{期数}期_历史交锋.json 读取每场比赛主客队各自的近期比赛记录。
+
+    返回 {场次字符串: {'home': [...], 'away': [...], 'home_team': str, 'away_team': str}}，
+    作为「无共同对手」时的兜底数据来源（每队通常各有最近 20 场）。
+    """
+    project_root = get_project_root()
+    period_clean = str(period_str).replace('期', '')
+    history_file = os.path.join(project_root, "result", f"{period_clean}期_历史交锋.json")
+    if not os.path.exists(history_file):
+        print(f"  警告: 未找到 {history_file}，无法使用近期战绩兜底")
+        return {}
+    try:
+        with open(history_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"  警告: 读取历史交锋数据失败: {e}")
+        return {}
+
+    result = {}
+    for match_info in data.get('14场对战信息', []):
+        match_num = str(match_info.get('场次', ''))
+        if not match_num:
+            continue
+        history_data = match_info.get('历史交锋数据', {}) or {}
+        home_matches = history_data.get('data', {}).get('home', {}).get('matches', []) if history_data else []
+        away_matches = history_data.get('data', {}).get('away', {}).get('matches', []) if history_data else []
+        result[match_num] = {
+            'home': home_matches,
+            'away': away_matches,
+            'home_team': match_info.get('主队', ''),
+            'away_team': match_info.get('客队', '')
+        }
+    return result
+
+def calculate_poisson_from_recent_form(home_matches, away_matches, home_team, away_team, current_date):
+    """无共同对手时的兜底：用两队各自的近期比赛数据估算攻防力并推导胜平负概率。
+
+    与 calculate_poisson_from_common_opponents 采用一致的加权/泊松/平局提升逻辑，
+    仅样本来源不同，确保「共同对手泊松」列不会因无共同对手而输出全 0（前端「待定」）。
+    """
+    HOME_ADVANTAGE = 1.10
+    DRAW_BOOST_MAX = 0.29
+    HALF_DRAW_BOOST_MAX = 0.20
+    LEAGUE_AVG_GOALS = 1.35
+    DEFAULT_LAMBDA = 1.35
+    MULTIPLICATIVE_POWER = 0.5
+    MIN_SAMPLE = 5
+
+    def team_stats(matches, team_name):
+        scored_w = conceded_w = weight_total = 0.0
+        when_home_scored_w = when_home_conceded_w = when_home_weight = 0.0
+        when_away_scored_w = when_away_conceded_w = when_away_weight = 0.0
+        half_scored_w = half_conceded_w = 0.0
+        count = 0
+        for match in (matches or []):
+            m_home = match.get('homesxname', '')
+            m_away = match.get('awaysxname', '')
+            home_score = match.get('homescore', 0)
+            away_score = match.get('awayscore', 0)
+            home_half_score = match.get('homehalfscore') or 0
+            away_half_score = match.get('awayhalfscore') or 0
+            if m_home == team_name:
+                scored, conceded = home_score, away_score
+                half_scored, half_conceded = home_half_score, away_half_score
+                is_home = True
+            elif m_away == team_name:
+                scored, conceded = away_score, home_score
+                half_scored, half_conceded = away_half_score, home_half_score
+                is_home = False
+            else:
+                continue
+            w = time_decay_weight(match.get('matchdate', ''), current_date)
+            if match.get('iscup', 0) == 1:
+                w *= 0.85
+            scored_w += scored * w
+            conceded_w += conceded * w
+            weight_total += w
+            half_scored_w += half_scored * w
+            half_conceded_w += half_conceded * w
+            count += 1
+            if is_home:
+                when_home_scored_w += scored * w
+                when_home_conceded_w += conceded * w
+                when_home_weight += w
+            else:
+                when_away_scored_w += scored * w
+                when_away_conceded_w += conceded * w
+                when_away_weight += w
+        if weight_total <= 0:
+            return None
+        return {
+            'count': count,
+            'attack': scored_w / weight_total,
+            'defense': conceded_w / weight_total,
+            'half_attack': half_scored_w / weight_total,
+            'half_defense': half_conceded_w / weight_total,
+            'home_attack': when_home_scored_w / when_home_weight if when_home_weight > 0 else scored_w / weight_total,
+            'away_attack': when_away_scored_w / when_away_weight if when_away_weight > 0 else scored_w / weight_total,
+            'home_defense': when_home_conceded_w / when_home_weight if when_home_weight > 0 else conceded_w / weight_total,
+            'away_defense': when_away_conceded_w / when_away_weight if when_away_weight > 0 else conceded_w / weight_total,
+            'has_home': when_home_weight > 0,
+            'has_away': when_away_weight > 0,
+        }
+
+    home_stats = team_stats(home_matches, home_team)
+    away_stats = team_stats(away_matches, away_team)
+
+    if home_stats is None and away_stats is None:
+        return {
+            '主队预期进球': 0, '客队预期进球': 0,
+            '胜概率': 0, '平概率': 0, '负概率': 0,
+            '半场主队预期进球': 0, '半场客队预期进球': 0,
+            '半场胜概率': 0, '半场平概率': 0, '半场负概率': 0,
+            '平均胜概率': 0, '平均平概率': 0, '平均负概率': 0,
+            '预测结果': None, '主队攻击力': 0, '主队防守力': 0, '客队攻击力': 0, '客队防守力': 0,
+            '详细计算数据': {'计算方法': '无可用比赛数据'}
+        }
+
+    if home_stats is None:
+        home_stats = dict(away_stats)
+    if away_stats is None:
+        away_stats = dict(home_stats)
+
+    home_attack = home_stats['home_attack'] if home_stats['has_home'] else home_stats['attack']
+    home_defense = home_stats['home_defense'] if home_stats['has_home'] else home_stats['defense']
+    away_attack = away_stats['away_attack'] if away_stats['has_away'] else away_stats['attack']
+    away_defense = away_stats['away_defense'] if away_stats['has_away'] else away_stats['defense']
+
+    home_count = home_stats['count']
+    away_count = away_stats['count']
+
+    home_attack_rel = home_attack / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    home_defense_rel = home_defense / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    away_attack_rel = away_attack / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+    away_defense_rel = away_defense / LEAGUE_AVG_GOALS if LEAGUE_AVG_GOALS > 0 else 1.0
+
+    home_factor = (home_attack_rel * away_defense_rel) ** MULTIPLICATIVE_POWER
+    away_factor = (away_attack_rel * home_defense_rel) ** MULTIPLICATIVE_POWER
+
+    lambda_home = home_factor * LEAGUE_AVG_GOALS * HOME_ADVANTAGE
+    lambda_away = away_factor * LEAGUE_AVG_GOALS
+
+    total_sample = home_count + away_count
+    if home_count < MIN_SAMPLE or away_count < MIN_SAMPLE:
+        shrinkage = total_sample / (total_sample + 8)
+        lambda_home = lambda_home * shrinkage + DEFAULT_LAMBDA * HOME_ADVANTAGE * (1 - shrinkage)
+        lambda_away = lambda_away * shrinkage + DEFAULT_LAMBDA * (1 - shrinkage)
+
+    lambda_home = max(0.3, min(lambda_home, 3.5))
+    lambda_away = max(0.3, min(lambda_away, 3.5))
+
+    home_win_prob, draw_prob, away_win_prob = calculate_win_draw_lose(lambda_home, lambda_away)
+
+    max_lambda = max(lambda_home, lambda_away, 0.01)
+    closeness = 1 - abs(lambda_home - lambda_away) / max_lambda
+    draw_boost = closeness * DRAW_BOOST_MAX
+    if home_win_prob + away_win_prob > 0:
+        home_transfer = home_win_prob * draw_boost
+        away_transfer = away_win_prob * draw_boost
+        draw_prob += home_transfer + away_transfer
+        home_win_prob -= home_transfer
+        away_win_prob -= away_transfer
+
+    # 半场
+    LEAGUE_AVG_HALF = LEAGUE_AVG_GOALS * 0.45
+    home_half_attack = home_stats['half_attack']
+    home_half_defense = home_stats['half_defense']
+    away_half_attack = away_stats['half_attack']
+    away_half_defense = away_stats['half_defense']
+
+    home_half_attack_rel = home_half_attack / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    home_half_defense_rel = home_half_defense / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    away_half_attack_rel = away_half_attack / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+    away_half_defense_rel = away_half_defense / LEAGUE_AVG_HALF if LEAGUE_AVG_HALF > 0 else 1.0
+
+    home_half_factor = (home_half_attack_rel * away_half_defense_rel) ** MULTIPLICATIVE_POWER
+    away_half_factor = (away_half_attack_rel * home_half_defense_rel) ** MULTIPLICATIVE_POWER
+
+    lambda_home_half = home_half_factor * LEAGUE_AVG_HALF * HOME_ADVANTAGE
+    lambda_away_half = away_half_factor * LEAGUE_AVG_HALF
+
+    if home_count < MIN_SAMPLE or away_count < MIN_SAMPLE:
+        half_shrinkage = total_sample / (total_sample + 8)
+        lambda_home_half = lambda_home_half * half_shrinkage + DEFAULT_LAMBDA * 0.45 * HOME_ADVANTAGE * (1 - half_shrinkage)
+        lambda_away_half = lambda_away_half * half_shrinkage + DEFAULT_LAMBDA * 0.45 * (1 - half_shrinkage)
+
+    lambda_home_half = max(0.1, min(lambda_home_half, 2.0))
+    lambda_away_half = max(0.1, min(lambda_away_half, 2.0))
+
+    half_home_win, half_draw, half_away_win = calculate_win_draw_lose(lambda_home_half, lambda_away_half)
+
+    half_max_lambda = max(lambda_home_half, lambda_away_half, 0.01)
+    half_closeness = 1 - abs(lambda_home_half - lambda_away_half) / half_max_lambda
+    half_draw_boost = half_closeness * HALF_DRAW_BOOST_MAX
+    if half_home_win + half_away_win > 0:
+        half_home_transfer = half_home_win * half_draw_boost
+        half_away_transfer = half_away_win * half_draw_boost
+        half_draw += half_home_transfer + half_away_transfer
+        half_home_win -= half_home_transfer
+        half_away_win -= half_away_transfer
+
+    avg_home_win = (home_win_prob + half_home_win) / 2.0
+    avg_draw = (draw_prob + half_draw) / 2.0
+    avg_away_win = (away_win_prob + half_away_win) / 2.0
+
+    probs = {'胜': avg_home_win, '平': avg_draw, '负': avg_away_win}
+    max_result = max(probs, key=probs.get)
+    result_map = {'胜': 3, '平': 1, '负': 0}
+
+    calculation_details = {
+        '计算方法': '近期战绩泊松兜底模型（无共同对手，使用两队各自近期比赛数据）',
+        '主队攻击力(场均进球)': round(home_stats['attack'], 3),
+        '主队防守力(场均失球)': round(home_stats['defense'], 3),
+        '客队攻击力(场均进球)': round(away_stats['attack'], 3),
+        '客队防守力(场均失球)': round(away_stats['defense'], 3),
+        '主场优势系数': HOME_ADVANTAGE,
+        '主队比赛样本数': home_count,
+        '客队比赛样本数': away_count,
+        '主队预期进球(lambda_home)': round(lambda_home, 3),
+        '客队预期进球(lambda_away)': round(lambda_away, 3),
+        '半场主队预期进球(lambda_home_half)': round(lambda_home_half, 3),
+        '半场客队预期进球(lambda_away_half)': round(lambda_away_half, 3)
+    }
+
+    return {
+        '主队预期进球': round(lambda_home, 3),
+        '客队预期进球': round(lambda_away, 3),
+        '胜概率': round(home_win_prob, 4),
+        '平概率': round(draw_prob, 4),
+        '负概率': round(away_win_prob, 4),
+        '半场主队预期进球': round(lambda_home_half, 3),
+        '半场客队预期进球': round(lambda_away_half, 3),
+        '半场胜概率': round(half_home_win, 4),
+        '半场平概率': round(half_draw, 4),
+        '半场负概率': round(half_away_win, 4),
+        '平均胜概率': round(avg_home_win, 4),
+        '平均平概率': round(avg_draw, 4),
+        '平均负概率': round(avg_away_win, 4),
+        '预测结果': result_map[max_result],
+        '主队攻击力': round(home_stats['attack'], 3),
+        '主队防守力': round(home_stats['defense'], 3),
+        '客队攻击力': round(away_stats['attack'], 3),
+        '客队防守力': round(away_stats['defense'], 3),
+        '详细计算数据': calculation_details
+    }
+
 def time_decay_weight(match_date_str, current_date, half_life_days=180):
     match_date = parse_date(match_date_str)
     if match_date is None:
@@ -463,6 +710,8 @@ def process_extracted_data(data, current_date):
 
     period_str = data.get('期数', '')
     odds_map = load_odds_for_period(period_str)
+    # 无共同对手时的兜底数据：各场比赛主客队各自的近期比赛记录
+    recent_matches_map = load_team_matches_by_period(period_str)
 
     print(f"开始处理 {len(matches_data)} 场比赛...")
 
@@ -487,7 +736,13 @@ def process_extracted_data(data, current_date):
         common_data = {k: v for k, v in match_data.items() if k != '_meta'}
 
         if not common_data:
-            print(f"  没有共同对手比赛数据")
+            # 没有共同对手：改用两队各自的近期战绩兜底（避免输出全 0 导致前端「待定」）
+            print(f"  没有共同对手比赛数据，改用两队近期战绩兜底")
+            recent = recent_matches_map.get(str(match_num), {})
+            poisson_result = calculate_poisson_from_recent_form(
+                recent.get('home', []), recent.get('away', []),
+                home_team, away_team, current_date
+            )
             result = {
                 '场次': match_num,
                 '联赛': league,
@@ -498,25 +753,25 @@ def process_extracted_data(data, current_date):
                 '比赛时间': match_date,
                 '计算基准日期': current_date,
                 '共同对手数': 0,
-                '主队预期进球': 0,
-                '客队预期进球': 0,
-                '胜概率': 0,
-                '平概率': 0,
-                '负概率': 0,
-                '半场主队预期进球': 0,
-                '半场客队预期进球': 0,
-                '半场胜概率': 0,
-                '半场平概率': 0,
-                '半场负概率': 0,
-                '平均胜概率': 0,
-                '平均平概率': 0,
-                '平均负概率': 0,
-                '预测结果': None,
-                '主队攻击力': 0,
-                '主队防守力': 0,
-                '客队攻击力': 0,
-                '客队防守力': 0,
-                '错误': '没有共同对手比赛数据'
+                '主队预期进球': poisson_result['主队预期进球'],
+                '客队预期进球': poisson_result['客队预期进球'],
+                '胜概率': poisson_result['胜概率'],
+                '平概率': poisson_result['平概率'],
+                '负概率': poisson_result['负概率'],
+                '半场主队预期进球': poisson_result['半场主队预期进球'],
+                '半场客队预期进球': poisson_result['半场客队预期进球'],
+                '半场胜概率': poisson_result['半场胜概率'],
+                '半场平概率': poisson_result['半场平概率'],
+                '半场负概率': poisson_result['半场负概率'],
+                '平均胜概率': poisson_result['平均胜概率'],
+                '平均平概率': poisson_result['平均平概率'],
+                '平均负概率': poisson_result['平均负概率'],
+                '预测结果': poisson_result['预测结果'],
+                '主队攻击力': poisson_result['主队攻击力'],
+                '主队防守力': poisson_result['主队防守力'],
+                '客队攻击力': poisson_result['客队攻击力'],
+                '客队防守力': poisson_result['客队防守力'],
+                '详细计算数据': poisson_result['详细计算数据']
             }
             results.append(result)
             continue

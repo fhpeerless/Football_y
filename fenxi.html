@@ -423,115 +423,6 @@
             border: 1px solid rgba(244, 67, 54, 0.3);
         }
 
-        /* AI 分析按钮 */
-        .ai-analyze-btn {
-            padding: 5px 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(0, 188, 212, 0.4);
-            background: rgba(0, 188, 212, 0.12);
-            color: #00bcd4;
-            font-size: 0.85em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-        .ai-analyze-btn:hover {
-            background: rgba(0, 188, 212, 0.25);
-            box-shadow: 0 0 8px rgba(0, 188, 212, 0.3);
-        }
-        .ai-analyze-btn:active {
-            transform: scale(0.96);
-        }
-
-        /* AI 分析结果区域 */
-        .ai-result {
-            margin-top: 12px;
-        }
-        .ai-loading {
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(0, 188, 212, 0.06);
-            border: 1px dashed rgba(0, 188, 212, 0.3);
-            color: #00bcd4;
-            text-align: center;
-            font-size: 0.9em;
-        }
-        .ai-error {
-            padding: 12px;
-            border-radius: 8px;
-            background: rgba(244, 67, 54, 0.08);
-            border: 1px solid rgba(244, 67, 54, 0.25);
-            color: #f44336;
-            font-size: 0.85em;
-        }
-        .ai-result-box {
-            padding: 14px;
-            border-radius: 8px;
-            background: rgba(156, 39, 176, 0.06);
-            border: 1px solid rgba(156, 39, 176, 0.25);
-        }
-        .ai-result-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-            color: #ce93d8;
-            margin-bottom: 12px;
-            font-size: 0.95em;
-        }
-        .ai-result-header .ai-weight-tag {
-            font-size: 0.75em;
-            font-weight: 400;
-            opacity: 0.7;
-        }
-        .ai-result-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-        .ai-result-item {
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            text-align: center;
-        }
-        .ai-result-item .ai-result-label {
-            font-size: 0.8em;
-            opacity: 0.6;
-            margin-bottom: 4px;
-        }
-        .ai-result-item .ai-result-pick {
-            font-size: 1.5em;
-            font-weight: 700;
-        }
-        .ai-result-item .ai-result-conf {
-            font-size: 0.8em;
-            opacity: 0.8;
-            margin-top: 2px;
-        }
-        .ai-result-item .ai-reason {
-            font-size: 0.75em;
-            opacity: 0.7;
-            margin-top: 6px;
-            text-align: left;
-            line-height: 1.5;
-        }
-        .ai-summary {
-            font-size: 0.82em;
-            opacity: 0.85;
-            line-height: 1.6;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .ai-meta {
-            font-size: 0.7em;
-            opacity: 0.5;
-            margin-top: 8px;
-            text-align: right;
-        }
-
         /* SPF 预测按钮 - 点击选中效果 */
         .spf-predict-section {
             display: flex;
@@ -899,47 +790,13 @@
         
         <!-- 顶级分类导航 -->
         <div class="tab-nav">
-            <button class="tab-btn active" data-tab="spf"><i class="fas fa-chart-bar"></i> 胜平负数据</button>
-            <button class="tab-btn" data-tab="f14"><i class="fas fa-futbol"></i> 14场分析</button>
+            <button class="tab-btn active" data-tab="f14"><i class="fas fa-futbol"></i> 14场分析</button>
             <button class="tab-btn" data-tab="bqc"><i class="fas fa-chart-pie"></i> 半全场数据</button>
         </div>
         
         <div class="container">
-        <!-- SPF 数据页面 -->
-        <div id="tab-spf" class="tab-content active">
-            <div class="spf-panel">
-                <h2 class="section-title"><i class="fas fa-handshake"></i> 共同对手分析</h2>
-                
-                <div class="form-group">
-                    <div class="btn-group" style="margin-top: 0;">
-                        <button id="loadCommonMatchBtn">
-                            <i class="fas fa-sync-alt"></i> 加载共同对手数据
-                        </button>
-                    </div>
-                    <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                        加载 spf/data/common_match.json 中的共同对手分析数据
-                    </p>
-                </div>
-                
-                <div class="progress-bar">
-                    <div class="progress-fill" id="spfProgressFill"></div>
-                </div>
-                
-                <div class="status" id="spfStatusMessage">
-                </div>
-            </div>
-            
-            <!-- 共同对手分析结果 -->
-            <div id="spfCommonSection" style="display: none;">
-                <div class="spf-panel">
-                    <h2 class="section-title"><i class="fas fa-list-alt"></i> 共同对手分析结果</h2>
-                    <div id="spfCommonBody"></div>
-                </div>
-            </div>
-        </div>
-        
         <!-- 14场分析页面（原内容） -->
-        <div id="tab-f14" class="tab-content">
+        <div id="tab-f14" class="tab-content active">
         <div class="main-content">
             <div class="control-panel">
                 <h2 class="section-title"><i class="fas fa-sliders-h"></i> 控制面板</h2>
@@ -983,12 +840,9 @@
                         <button id="downloadBtn" class="secondary">
                             <i class="fas fa-download"></i> 号码结果
                         </button>
-                        <button id="commonMatchesBtn" class="secondary">
-                            <i class="fas fa-handshake"></i> 共同对手
-                        </button>
                     </div>
                     <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
-                        将自动加载 ./14chang/result/{期数}期_web.json 文件
+                        将自动加载 ./14chang/result/{期数}期_web.json 文件，并合并 {期数}期_共同对手比赛.json
                     </p>
                 </div>
                 
@@ -1047,36 +901,13 @@
     </div>
 </div>  <!-- end .container -->
 
-<!-- ====== AI 分析密码弹窗 ====== -->
-<div id="aiPasswordModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.65); z-index:9999; align-items:center; justify-content:center; backdrop-filter: blur(3px);">
-    <div style="width: 350px; max-width: 92vw; background: linear-gradient(135deg, #1a237e, #311b92); border: 1px solid rgba(0,188,212,0.3); border-radius: 16px; padding: 28px 26px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
-        <div style="font-size: 1.15rem; font-weight: 700; color: #00bcd4; margin-bottom: 6px; text-align: center;">🤖 AI 智能分析</div>
-        <div style="font-size: 0.8em; opacity: 0.7; text-align: center; margin-bottom: 20px;">请输入访问密码，解锁后自动获取仓库 GitHub Token 并触发云端 AI 分析（无需手动设置 Token）</div>
-        <input id="aiPasswordInput" type="password" placeholder="请输入密码"
-               style="width:100%; padding:12px 14px; border-radius:8px; border:1px solid rgba(0,188,212,0.3); background:rgba(255,255,255,0.08); color:#fff; font-size:1rem; box-sizing:border-box;" />
-        <div style="margin-top:16px;">
-            <div style="font-size:0.85em; color:#bbdefb; margin-bottom:8px;">选择分析类型</div>
-            <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="spf" checked> 胜平负</label>
-                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="bqc"> 半全场</label>
-                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="bf"> 比分</label>
-                <label style="flex:1 1 42%; min-width:120px; display:flex; align-items:center; gap:6px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06); cursor:pointer; font-size:0.9em; color:#eee; box-sizing:border-box;"><input type="radio" name="aiAnalyzeType" value="jqs"> 总进球数</label>
-            </div>
-        </div>
-        <div id="aiPasswordError" style="display:none; color:#f44336; font-size:0.8em; margin-top:8px; text-align:center;"></div>
-        <div style="display:flex; gap:10px; margin-top:22px;">
-            <button onclick="closeAiModal()" style="flex:1; padding:11px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:#bbb; cursor:pointer; font-weight:600; font-size:0.95rem;">取消</button>
-            <button id="aiPasswordBtn" onclick="confirmAiPassword()" style="flex:1; padding:11px 0; border-radius:8px; border:none; background:linear-gradient(135deg,#00bcd4,#00838f); color:#fff; cursor:pointer; font-weight:700; font-size:0.95rem;">确认分析</button>
-        </div>
-    </div>
-</div>
-
     <script>
         // 全局变量
         let currentPeriod = '';
         let webData = null;
         let bqcAllData = null;
         let bqcCurrentPeriod = '';
+        let commonMatchData = null;   // 共同对手比赛数据（14chang/result/{期数}期_共同对手比赛.json）
         
         // DOM元素
         const periodInput = document.getElementById('periodInput');
@@ -1247,6 +1078,9 @@
                     updateProgress(100);
                     showStatus(`成功加载 ${data.计算结果.length} 场比赛数据`, 'success');
                     
+                    // 合并共同对手数据（同一期数的 共同对手比赛.json）
+                    await loadCommonMatchData(currentPeriod);
+                    
                     // 显示结果
                     displayResults();
                     
@@ -1282,9 +1116,138 @@
             return null;
         }
         
-
+        // 加载共同对手比赛数据（14chang/result/{期数}期_共同对手比赛.json，失败不影响主要流程）
+        async function loadCommonMatchData(period) {
+            commonMatchData = null;
+            if (!period) return null;
+            try {
+                const resp = await fetch(`./14chang/result/${period}期_共同对手比赛.json?t=${Date.now()}`);
+                if (!resp.ok) {
+                    console.warn(`未找到 ${period}期_共同对手比赛.json，跳过共同对手数据`);
+                    return null;
+                }
+                commonMatchData = await resp.json();
+                return commonMatchData;
+            } catch (e) {
+                console.warn('共同对手比赛数据加载失败:', e.message);
+                return null;
+            }
+        }
         
-
+        // 从共同对手比赛数据中，按场次取出某场比赛的记录
+        function getCommonMatchInfo(match) {
+            if (!commonMatchData) return null;
+            const map = commonMatchData['14场比赛共同对手比赛数据'];
+            if (!map) return null;
+            return map[String(match.场次)] || null;
+        }
+        
+        // 辅助：从 winningTeam 判断某支球队的赛果
+        function getResultForTeam(teamName, m) {
+            if (!m.winningTeam) return '-';
+            if (m.winningTeam === 'draw') return '平';
+            if (m.winningTeam === 'home') {
+                return (m.homeTeamShortName === teamName) ? '胜' : '负';
+            }
+            if (m.winningTeam === 'away') {
+                return (m.awayTeamShortName === teamName) ? '胜' : '负';
+            }
+            return '-';
+        }
+        
+        // 辅助：渲染一场比赛记录的行（用于共同对手比赛）
+        function renderMatchRow(m, highlightTeam, teamColor) {
+            const parts = (m.fullCourtGoal || '?:?').split(':');
+            const homeScore = parts[0] || '?';
+            const awayScore = parts[1] || '?';
+            const score = `${homeScore}-${awayScore}`;
+            
+            const halfParts = (m.halfTimeGoal || '').split(':');
+            const halfScore = (halfParts.length === 2) ? `${halfParts[0]}-${halfParts[1]}` : '-';
+            
+            const result = getResultForTeam(highlightTeam, m);
+            const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
+            
+            const homeHighlight = m.homeTeamShortName === highlightTeam ? `color:${teamColor};font-weight:600` : '';
+            const awayHighlight = m.awayTeamShortName === highlightTeam ? `color:${teamColor};font-weight:600` : '';
+            
+            return `<tr>
+                <td style="padding: 4px 6px;">${m.matchDate || ''}</td>
+                <td style="padding: 4px 6px; text-align: center; ${homeHighlight}">${m.homeTeamShortName || '-'}</td>
+                <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
+                <td style="padding: 4px 6px; text-align: center; color:#888; font-size:0.9em;">(${halfScore})</td>
+                <td style="padding: 4px 6px; text-align: center; ${awayHighlight}">${m.awayTeamShortName || '-'}</td>
+                <td style="padding: 4px 6px; text-align: center; color:${resultColor}; font-weight:600;">${result}</td>
+                <td style="padding: 4px 6px; text-align: center; font-size:0.85em; color:#aaa;">${m.tournamentShortName || '-'}</td>
+            </tr>`;
+        }
+        
+        // 渲染某场比赛的共同对手明细（主客队 vs 各共同对手的历史交锋记录）
+        function renderCommonOpponentDetail(match) {
+            const info = getCommonMatchInfo(match);
+            if (!info) return '';
+            const opponentNames = Object.keys(info).filter(k => k !== '_meta');
+            if (opponentNames.length === 0) return '';
+            
+            let html = `
+                <div style="margin-top: 30px; padding-top: 25px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
+                    <h5 style="color: #bbdefb; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-handshake"></i> 共同对手
+                        <span style="font-size: 0.8em; opacity: 0.7;">（${opponentNames.length} 个）</span>
+                    </h5>
+                    <div style="font-size: 0.9em; margin-bottom: 12px;">
+                        ${opponentNames.map(name => `<span style="display: inline-block; padding: 2px 10px; margin: 2px 4px; background: rgba(0,188,212,0.1); border-radius: 10px;">${name}</span>`).join('')}
+                    </div>
+                    <div style="margin-top: 10px;">
+            `;
+            
+            opponentNames.forEach(name => {
+                const opp = info[name] || {};
+                const homeMatches = opp.home_vs_opponent || [];
+                const awayMatches = opp.away_vs_opponent || [];
+                html += `<details style="margin-bottom: 8px;">
+                    <summary style="cursor: pointer; color: #4caf50; font-weight: 600; font-size: 0.9em;">${name}</summary>`;
+                
+                if (homeMatches.length > 0) {
+                    html += `<div style="margin: 8px 0 4px 16px; font-size: 0.85em;">
+                        <span style="color: #00bcd4;">${match.主队} vs ${name}:</span>
+                        <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.9em;">
+                            <tr style="background: rgba(0,188,212,0.08);">
+                                <th style="padding: 4px 6px; text-align: left;">日期</th>
+                                <th style="padding: 4px 6px; text-align: center;">主队</th>
+                                <th style="padding: 4px 6px; text-align: center;">全场</th>
+                                <th style="padding: 4px 6px; text-align: center;">半场</th>
+                                <th style="padding: 4px 6px; text-align: center;">客队</th>
+                                <th style="padding: 4px 6px; text-align: center;">结果</th>
+                                <th style="padding: 4px 6px; text-align: center;">赛事</th>
+                            </tr>`;
+                    homeMatches.forEach(m => { html += renderMatchRow(m, match.主队, '#00bcd4'); });
+                    html += `</table></div>`;
+                }
+                
+                if (awayMatches.length > 0) {
+                    html += `<div style="margin: 8px 0 4px 16px; font-size: 0.85em;">
+                        <span style="color: #ff9800;">${match.客队} vs ${name}:</span>
+                        <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.9em;">
+                            <tr style="background: rgba(255,152,0,0.08);">
+                                <th style="padding: 4px 6px; text-align: left;">日期</th>
+                                <th style="padding: 4px 6px; text-align: center;">主队</th>
+                                <th style="padding: 4px 6px; text-align: center;">全场</th>
+                                <th style="padding: 4px 6px; text-align: center;">半场</th>
+                                <th style="padding: 4px 6px; text-align: center;">客队</th>
+                                <th style="padding: 4px 6px; text-align: center;">结果</th>
+                                <th style="padding: 4px 6px; text-align: center;">赛事</th>
+                            </tr>`;
+                    awayMatches.forEach(m => { html += renderMatchRow(m, match.客队, '#ff9800'); });
+                    html += `</table></div>`;
+                }
+                
+                html += `</details>`;
+            });
+            
+            html += `</div></div>`;
+            return html;
+        }
         
         // 显示计算结果
         function displayResults() {
@@ -1511,162 +1474,16 @@
                             </div>
                         </div>
                         
-                        <!-- 详细数据部分 - 有间隔 -->
+                <!-- 详细数据部分（已隐藏） -->
+                        ${''/* 原「详细数据」区块已隐藏
                         <div style="margin-top: 30px; padding-top: 25px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
                             <h5 style="color: #bbdefb; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
                                 <i class="fas fa-chart-bar"></i> 详细数据
                             </h5>
+                        */}
+                        ${renderCommonOpponentDetail(match)}
+                        
                 `;
-                
-                // 显示详细数据
-                if (match.预测详细数据 && Object.keys(match.预测详细数据).length > 0) {
-                    html += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">`;
-                    
-                    // 基础数据
-                    if (match.预测详细数据.基础数据) {
-                        html += `
-                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">基础数据</h6>
-                                <div style="font-size: 0.9em;">
-                        `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.基础数据)) {
-                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                        <span style="opacity: 0.8;">${key}:</span>
-                                        <span>${value}</span>
-                                    </div>`;
-                        }
-                        html += `</div></div>`;
-                    }
-                    
-                    // 埃罗评分
-                    if (match.预测详细数据.埃罗评分) {
-                        html += `
-                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #00bcd4; margin-bottom: 10px; font-size: 0.9em;">埃罗评分</h6>
-                                <div style="font-size: 0.9em;">
-                        `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.埃罗评分)) {
-                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                        <span style="opacity: 0.8;">${key}:</span>
-                                        <span>${value}</span>
-                                    </div>`;
-                        }
-                        html += `</div></div>`;
-                    }
-                    
-                    // 权重统计
-                    if (match.预测详细数据.权重统计) {
-                        html += `
-                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #9c27b0; margin-bottom: 10px; font-size: 0.9em;">权重统计</h6>
-                                <div style="font-size: 0.9em;">
-                        `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.权重统计)) {
-                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                        <span style="opacity: 0.8;">${key}:</span>
-                                        <span>${value}</span>
-                                    </div>`;
-                        }
-                        html += `</div></div>`;
-                    }
-                    
-                    // 泊松推理
-                    if (match.预测详细数据.泊松推理) {
-                        html += `
-                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.9em;">泊松推理</h6>
-                                <div style="font-size: 0.9em;">
-                        `;
-                        const renderPoissonObject = (obj, indent = 0) => {
-                            let result = '';
-                            for (const [key, value] of Object.entries(obj)) {
-                                if (typeof value === 'object' && value !== null) {
-                                    result += `<div style="margin-left: ${indent * 10}px; margin-bottom: 5px;">
-                                                <span style="opacity: 0.8;">${key}:</span>
-                                            </div>`;
-                                    result += renderPoissonObject(value, indent + 1);
-                                } else {
-                                    result += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px; margin-left: ${indent * 10}px;">
-                                                <span style="opacity: 0.8;">${key}:</span>
-                                                <span>${value}</span>
-                                            </div>`;
-                                }
-                            }
-                            return result;
-                        };
-                        html += renderPoissonObject(match.预测详细数据.泊松推理);
-                        html += `</div></div>`;
-                    }
-                    
-                    // 攻防效率
-                    if (match.预测详细数据.攻防效率) {
-                        html += `
-                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #8e24aa; margin-bottom: 10px; font-size: 0.9em;">攻防效率</h6>
-                                <div style="font-size: 0.9em;">
-                        `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.攻防效率)) {
-                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                        <span style="opacity: 0.8;">${key}:</span>
-                                        <span>${value}</span>
-                                    </div>`;
-                        }
-                        html += `</div></div>`;
-                    }
-                    
-                    // 半全场节奏
-                    if (match.预测详细数据.半全场节奏) {
-                        html += `
-                            <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                <h6 style="color: #ff9800; margin-bottom: 10px; font-size: 0.9em;">半全场节奏</h6>
-                                <div style="font-size: 0.9em;">
-                        `;
-                        for (const [key, value] of Object.entries(match.预测详细数据.半全场节奏)) {
-                            html += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                                        <span style="opacity: 0.8;">${key}:</span>
-                                        <span>${value}</span>
-                                    </div>`;
-                        }
-                        html += `</div></div>`;
-                    }
-                    
-                    // 其他详细数据
-                    const otherSections = ['共同对手分析', '预期进球', '计算过程', '最终预测概率'];
-                    otherSections.forEach(section => {
-                        if (match.预测详细数据[section]) {
-                            html += `
-                                <div style="padding: 15px; background: rgba(255, 255, 255, 0.03); border-radius: 8px;">
-                                    <h6 style="color: #4caf50; margin-bottom: 10px; font-size: 0.9em;">${section}</h6>
-                                    <div style="font-size: 0.9em;">
-                            `;
-                            // 处理嵌套对象
-                            const renderObject = (obj, indent = 0) => {
-                                let result = '';
-                                for (const [key, value] of Object.entries(obj)) {
-                                    if (typeof value === 'object' && value !== null) {
-                                        result += `<div style="margin-left: ${indent * 10}px; margin-bottom: 5px;">
-                                                    <span style="opacity: 0.8;">${key}:</span>
-                                                </div>`;
-                                        result += renderObject(value, indent + 1);
-                                    } else {
-                                        result += `<div style="display: flex; justify-content: space-between; margin-bottom: 5px; margin-left: ${indent * 10}px;">
-                                                    <span style="opacity: 0.8;">${key}:</span>
-                                                    <span>${value}</span>
-                                                </div>`;
-                                    }
-                                }
-                                return result;
-                            };
-                            
-                            html += renderObject(match.预测详细数据[section]);
-                            html += `</div></div>`;
-                        }
-                    });
-                    
-                    html += `</div>`;
-                } else {
-                    html += `<p style="text-align: center; opacity: 0.7; padding: 20px;">无详细数据</p>`;
-                }
                 
                 html += `
                         </div>
@@ -1764,27 +1581,6 @@
             window.location.href = './14chang/list.html';
         });
         
-        commonMatchesBtn.addEventListener('click', () => {
-            const inputPeriod = periodInput.value.trim();
-            let periodForUrl = '';
-            if (inputPeriod) {
-                const periodMatch = inputPeriod.match(/\d+/);
-                if (periodMatch) {
-                    periodForUrl = periodMatch[0];
-                } else {
-                    periodForUrl = inputPeriod;
-                }
-            } else if (currentPeriod) {
-                periodForUrl = currentPeriod;
-            }
-            
-            if (periodForUrl) {
-                window.location.href = `./14chang/common_matches.html?period=${periodForUrl}`;
-            } else {
-                window.location.href = './14chang/common_matches.html';
-            }
-        });
-        
         // 比赛按钮跳转
         document.querySelectorAll('.match-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -1852,531 +1648,6 @@
             });
         });
         
-        // ========== SPF 共同对手数据逻辑 ==========
-        const loadCommonMatchBtn = document.getElementById('loadCommonMatchBtn');
-        const spfStatusMessage = document.getElementById('spfStatusMessage');
-        const spfProgressFill = document.getElementById('spfProgressFill');
-        const spfCommonSection = document.getElementById('spfCommonSection');
-        const spfCommonBody = document.getElementById('spfCommonBody');
-        
-        function showSpfStatus(message, type = 'info') {
-            spfStatusMessage.textContent = message;
-            spfStatusMessage.className = `status ${type}`;
-            setTimeout(() => {
-                spfStatusMessage.className = 'status';
-            }, type === 'error' ? 5000 : 3000);
-        }
-        
-        function updateSpfProgress(percent) {
-            spfProgressFill.style.width = `${percent}%`;
-        }
-        
-        // 加载共同对手数据
-        let oddsLookup = {}; // 赔率查找表，缓存赔率数据
-
-        async function loadCommonMatchData() {
-            showSpfStatus('正在加载共同对手数据...', 'info');
-            updateSpfProgress(20);
-            
-            // 同时加载赔率数据
-            try {
-                const oddsResp = await fetch(`./spf/data/onsale_spf.json?t=${Date.now()}`);
-                if (oddsResp.ok) {
-                    const oddsData = await oddsResp.json();
-                    // 以 home_team + '|' + away_team 为 key 建立查找表
-                    const lookup = {};
-                    oddsData.forEach(m => {
-                        const key = (m.home_team || '') + '|' + (m.away_team || '');
-                        lookup[key] = {
-                            spf: m.spf_odds || {},
-                            nspf: m.nspf_odds || {},
-                            goal_line: m.nspf_goal_line || '',
-                            match_num_str: m.match_num_str || ''
-                        };
-                    });
-                    oddsLookup = lookup;
-                }
-            } catch (e) {
-                // 赔率加载失败不影响主要数据加载
-                console.warn('赔率数据加载失败:', e.message);
-            }
-
-            // 加载半全场赔率数据
-            try {
-                const bqcResp = await fetch(`./spf/data/onsale_bqc.json?t=${Date.now()}`);
-                if (bqcResp.ok) {
-                    const bqcData = await bqcResp.json();
-                    bqcData.forEach(m => {
-                        const key = (m.home_team || '') + '|' + (m.away_team || '');
-                        if (!oddsLookup[key]) {
-                            oddsLookup[key] = {};
-                        }
-                        oddsLookup[key].bqc = m.bqc_odds || {};
-                        oddsLookup[key].bqc_update_time = m.bqc_update_time || '';
-                    });
-                }
-            } catch (e) {
-                console.warn('半全场赔率数据加载失败:', e.message);
-            }
-            
-            const url = `./spf/data/common_match.json?t=${Date.now()}`;
-            try {
-                const resp = await fetch(url);
-                if (!resp.ok) {
-                    throw new Error('common_match.json 不存在，请先运行 spf_fetch_history.py 生成数据');
-                }
-                const data = await resp.json();
-                updateSpfProgress(70);
-                
-                renderCommonMatchData(data);
-                spfCommonSection.style.display = 'block';
-                updateSpfProgress(100);
-                showSpfStatus(`成功加载 ${data.total_matches || 0} 场比赛的共同对手数据`, 'success');
-            } catch (e) {
-                updateSpfProgress(0);
-                showSpfStatus(`加载失败: ${e.message}`, 'error');
-            }
-        }
-        
-        // 辅助：从 winningTeam 判断某支球队的赛果
-        function getResultForTeam(teamName, m) {
-            if (!m.winningTeam) return '-';
-            if (m.winningTeam === 'draw') return '平';
-            if (m.winningTeam === 'home') {
-                return (m.homeTeamShortName === teamName) ? '胜' : '负';
-            }
-            if (m.winningTeam === 'away') {
-                return (m.awayTeamShortName === teamName) ? '胜' : '负';
-            }
-            return '-';
-        }
-        
-        // 辅助：渲染一场比赛记录的行 (用于共同对手和直接交锋)
-        function renderMatchRow(m, highlightTeam, teamColor) {
-            const parts = (m.fullCourtGoal || '?:?').split(':');
-            const homeScore = parts[0] || '?';
-            const awayScore = parts[1] || '?';
-            const score = `${homeScore}-${awayScore}`;
-            
-            const halfParts = (m.halfTimeGoal || '').split(':');
-            const halfScore = (halfParts.length === 2) ? `${halfParts[0]}-${halfParts[1]}` : '-';
-            
-            const result = getResultForTeam(highlightTeam, m);
-            const resultColor = result === '胜' ? '#4caf50' : result === '负' ? '#f44336' : '#ff9800';
-            
-            const homeHighlight = m.homeTeamShortName === highlightTeam ? `color:${teamColor};font-weight:600` : '';
-            const awayHighlight = m.awayTeamShortName === highlightTeam ? `color:${teamColor};font-weight:600` : '';
-            
-            return `<tr>
-                <td style="padding: 4px 6px;">${m.matchDate || ''}</td>
-                <td style="padding: 4px 6px; text-align: center; ${homeHighlight}">${m.homeTeamShortName || '-'}</td>
-                <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
-                <td style="padding: 4px 6px; text-align: center; color:#888; font-size:0.9em;">(${halfScore})</td>
-                <td style="padding: 4px 6px; text-align: center; ${awayHighlight}">${m.awayTeamShortName || '-'}</td>
-                <td style="padding: 4px 6px; text-align: center; color:${resultColor}; font-weight:600;">${result}</td>
-                <td style="padding: 4px 6px; text-align: center; font-size:0.85em; color:#aaa;">${m.tournamentShortName || '-'}</td>
-            </tr>`;
-        }
-        
-        // 赔率颜色辅助函数
-        function getOddsStyle(val) {
-            if (!val) return 'color: #757575;';
-            const num = parseFloat(val);
-            if (!num) return 'color: #757575;';
-            if (num <= 1.80) return 'color: #ff5722; font-weight: 700;';
-            if (num <= 2.50) return 'color: #ff9800; font-weight: 600;';
-            if (num <= 4.00) return 'color: #8bc34a;';
-            if (num <= 6.00) return 'color: #9e9e9e;';
-            return 'color: #757575;';
-        }
-
-        // 构建赔率网格（类似九宫格风格的三列网格）
-        function buildOddsGrid(title, items, styleFn) {
-            if (!items || items.length === 0) return '';
-            let html = `<div style="margin-top: 3px; padding-top: 3px; border-top: 1px solid rgba(255,255,255,0.04);">`;
-            html += `<span style="font-size: 0.65em; opacity: 0.4; display: block; margin-bottom: 2px;">${title}</span>`;
-            html += `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;">`;
-            items.forEach(item => {
-                const st = styleFn ? styleFn(item.val) : {};
-                const bg = st.bg || 'rgba(255,255,255,0.03)';
-                const color = st.color || '#9e9e9e';
-                const displayVal = item.val && !isNaN(parseFloat(item.val)) ? parseFloat(item.val).toFixed(2) : '-';
-                const outcomeAttr = item.outcome ? ` onclick="selectGridOutcome(this, '${item.outcome}')"` : '';
-                html += `<div class="grid-cell"${outcomeAttr} style="text-align: center; padding: 3px 1px; background:${bg}; border-radius: 2px; font-size: 0.65em; color:${color}; cursor:${item.outcome ? 'pointer' : 'default'};">${item.label}<br><span style="font-size: 1em;">${displayVal}</span></div>`;
-            });
-            html += `</div></div>`;
-            return html;
-        }
-
-        // 渲染单场比赛的赔率
-        function renderMatchOdds(homeTeam, awayTeam) {
-            const key = (homeTeam || '') + '|' + (awayTeam || '');
-            const odds = oddsLookup[key];
-            if (!odds) {
-                return '<div style="padding: 8px 12px; margin-top: 6px; font-size: 0.8em; opacity: 0.4; border-top: 1px solid rgba(255,255,255,0.05);">暂无赔率数据</div>';
-            }
-            
-            const spf = odds.spf || {};
-            const nspf = odds.nspf || {};
-            const goalLine = odds.goal_line || '';
-            
-            // 赔率颜色映射（与九宫格一致）
-            function getGridStyle(val) {
-                if (!val) return { bg: 'rgba(255,255,255,0.03)', color: '#9e9e9e' };
-                const num = parseFloat(val);
-                if (!num) return { bg: 'rgba(255,255,255,0.03)', color: '#9e9e9e' };
-                if (num <= 1.80) return { bg: 'rgba(255,87,34,0.15)', color: '#ff5722' };
-                if (num <= 2.50) return { bg: 'rgba(255,152,0,0.12)', color: '#ff9800' };
-                if (num <= 4.00) return { bg: 'rgba(139,195,74,0.1)', color: '#8bc34a' };
-                if (num <= 6.00) return { bg: 'rgba(158,158,158,0.08)', color: '#9e9e9e' };
-                return { bg: 'rgba(117,117,117,0.05)', color: '#757575' };
-            }
-            
-            const spfItems = [
-                { label: '胜', val: spf.win, outcome: 'win' },
-                { label: '平', val: spf.draw, outcome: 'draw' },
-                { label: '负', val: spf.lost, outcome: 'lose' },
-            ];
-            const nspfItems = [
-                { label: '胜', val: nspf.win, outcome: 'win' },
-                { label: '平', val: nspf.draw, outcome: 'draw' },
-                { label: '负', val: nspf.lost, outcome: 'lose' },
-            ];
-            
-            const spfHtml = buildOddsGrid('赔率', spfItems, getGridStyle);
-            const nspfTitle = goalLine ? `让球 (${goalLine})` : '让球';
-            const nspfHtml = buildOddsGrid(nspfTitle, nspfItems, getGridStyle);
-            const bqcHtml = buildBqcHtml(odds);
-            
-            return `
-                <div style="padding: 4px 12px 6px 12px; margin-top: 2px; border-top: 1px solid rgba(255,255,255,0.06);">
-                    ${spfHtml}
-                    ${nspfHtml}
-                    ${bqcHtml}
-                </div>`;
-        }
-        
-        // 构建半全场九宫格HTML
-        function buildBqcHtml(odds) {
-            const bqc = odds.bqc || {};
-            const bqcUpdate = odds.bqc_update_time || '';
-            if (Object.keys(bqc).length === 0) return '';
-            
-            const gridOrder = [
-                ['aa', 'ac', 'ab'],
-                ['ca', 'cc', 'cb'],
-                ['ba', 'bc', 'bb']
-            ];
-            const bqcLabels = {'aa':'胜胜','ac':'胜平','ab':'胜负','ca':'平胜','cc':'平平','cb':'平负','ba':'负胜','bc':'负平','bb':'负负'};
-            
-            let gridHtml = `<div style="margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.04);">`;
-            gridHtml += `<span style="font-size: 0.65em; opacity: 0.4; display: block; margin-bottom: 2px;">半全场 ${bqcUpdate ? '· '+bqcUpdate : ''}</span>`;
-            gridHtml += `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;">`;
-            
-            gridOrder.forEach(row => {
-                row.forEach(k => {
-                    const val = bqc[k];
-                    const label = bqcLabels[k] || k;
-                    const num = parseFloat(val);
-                    let color = '#9e9e9e';
-                    let bg = 'rgba(255,255,255,0.03)';
-                    if (!isNaN(num)) {
-                        if (num < 5) { color = '#4caf50'; bg = 'rgba(76,175,80,0.15)'; }
-                        else if (num < 10) { color = '#8bc34a'; bg = 'rgba(139,195,74,0.1)'; }
-                        else if (num < 20) { color = '#ff9800'; bg = 'rgba(255,152,0,0.08)'; }
-                        else { color = '#f44336'; bg = 'rgba(244,67,54,0.08)'; }
-                    }
-                    const displayVal = val && !isNaN(num) ? num.toFixed(2) : '-';
-                    gridHtml += `<div class="bqc-grid-cell" onclick="this.classList.toggle('bqc-selected')" style="text-align: center; padding: 2px 1px; background:${bg}; border-radius: 2px; font-size: 0.65em; color:${color}; cursor: pointer; user-select: none;">${label}<br><span style="font-size: 1em;">${displayVal}</span></div>`;
-                });
-            });
-            
-            gridHtml += `</div></div>`;
-            return gridHtml;
-        }
-
-        // 判断比赛是否已开赛：date 为 YYYY-MM-DD、match_time 为 HH:MM（均按北京时间）
-        function isMatchStarted(match) {
-            const date = match.date || '';
-            const time = match.match_time || '';
-            if (!date) return false;
-            const start = new Date(date + 'T' + (time || '00:00') + ':00+08:00');
-            if (isNaN(start.getTime())) return false;
-            return start.getTime() <= Date.now();
-        }
-
-        // 获取北京时间今天的日期字符串（YYYY-MM-DD）
-        function beijingTodayStr() {
-            const parts = new Intl.DateTimeFormat('zh-CN', {
-                timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit'
-            }).formatToParts(new Date());
-            const get = (type) => (parts.find(p => p.type === type) || {}).value || '';
-            return `${get('year')}-${get('month')}-${get('day')}`;
-        }
-
-        // 渲染共同对手数据
-        function renderCommonMatchData(data) {
-            const allMatches = data.matches || [];
-            // 过滤掉已经开赛的比赛
-            const matches = allMatches.filter(m => !isMatchStarted(m));
-            const filteredCount = allMatches.length - matches.length;
-            if (!matches || matches.length === 0) {
-                spfCommonBody.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">暂无未开赛的共同对手数据</p>';
-                return;
-            }
-            // 按比赛时间（日期+开赛时间）从早到晚排列
-            matches.sort((a, b) => {
-                const ta = (a.date || '') + ' ' + (a.match_time || '');
-                const tb = (b.date || '') + ' ' + (b.match_time || '');
-                return ta.localeCompare(tb);
-            });
-            
-            let html = `<p style="margin-bottom: 20px; opacity: 0.8;">生成时间: ${data.generate_time || '未知'} | 在售比赛数: ${matches.length} 场${filteredCount > 0 ? `（已过滤 ${filteredCount} 场已开赛比赛）` : ''}</p>`;
-            
-            matches.forEach((match, idx) => {
-                const count = match.common_opponent_count || 0;
-                const tagClass = count > 0 ? 'has-data' : 'no-data';
-                const tagText = count > 0 ? `共同对手: ${count} 队` : '无共同对手';
-                
-                // 相邻比赛之间的彩色分割线
-                if (idx > 0) {
-                    const hue = (idx * 47) % 360;
-                    html += `
-                        <div style="height: 2px; margin: 16px 0; border-radius: 2px; background: linear-gradient(90deg, transparent, hsl(${hue}, 80%, 60%), transparent);"></div>
-                    `;
-                }
-                
-                html += `
-                    <div class="spf-match-card">
-                        <div class="spf-match-header">
-                            <div>
-                                <h4 style="color: #00bcd4; margin-bottom: 5px;">
-                                    第${match.match_num || idx + 1}场 · ${match.league || '-'}
-                                </h4>
-                                <p style="opacity: 0.8; font-size: 0.9em;">${match.date || ''} ${match.match_time ? '<span style="color:#ff9800;">'+match.match_time+'</span>' : ''}</p>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 15px;">
-                                <span style="font-size: 0.9em; opacity: 0.8;">${match.home_team || ''} vs ${match.away_team || ''}</span>
-                                <span class="opponent-tag ${tagClass}">${tagText}</span>
-                                <button class="ai-analyze-btn" onclick="openAiAnalyze(this, ${idx})">🤖 AI分析</button>
-                            </div>
-                        </div>
-                        <!-- 赔率显示区域（可点击选中） -->
-                        ${renderMatchOdds(match.home_team, match.away_team)}
-                        <!-- AI 分析结果区域 -->
-                        <div class="ai-result" id="ai-result-${idx}"></div>
-                `;
-                
-                if (count > 0 && match.common_opponents && match.common_opponents.length > 0) {
-                    html += `<div style="padding: 10px; background: rgba(255,255,255,0.03); border-radius: 8px;">`;
-                    
-                    // 显示主客队各自比赛记录数
-                    html += `
-                        <div style="display: flex; gap: 20px; margin-bottom: 15px; font-size: 0.9em;">
-                            <span>🏠 ${match.home_team} 记录: <strong>${match.home_opponents_count || 0}</strong> 场</span>
-                            <span>✈️ ${match.away_team} 记录: <strong>${match.away_opponents_count || 0}</strong> 场</span>
-                        </div>
-                    `;
-                    
-                    // 显示共同对手标签
-                    const opponents = match.common_opponents;
-                    html += `<div style="font-size: 0.9em; margin-bottom: 12px;"><strong>共同对手:</strong> `;
-                    html += opponents.map(co => `<span style="display: inline-block; padding: 2px 10px; margin: 2px 4px; background: rgba(0,188,212,0.1); border-radius: 10px;">${co.team_name}</span>`).join('');
-                    html += `</div>`;
-                    
-                    // 显示每场共同对手的详细比赛记录
-                    html += `<div style="margin-top: 10px;">`;
-                    opponents.forEach(co => {
-                        html += `<details style="margin-bottom: 8px;">
-                            <summary style="cursor: pointer; color: #4caf50; font-weight: 600; font-size: 0.9em;">${co.team_name}</summary>`;
-                        
-                        // 主队 vs 共同对手
-                        if (co.home_vs_matches && co.home_vs_matches.length > 0) {
-                            html += `<div style="margin: 8px 0 4px 16px; font-size: 0.85em;">
-                                <span style="color: #00bcd4;">${match.home_team} vs ${co.team_name}:</span>
-                                <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.9em;">
-                                    <tr style="background: rgba(0,188,212,0.08);">
-                                        <th style="padding: 4px 6px; text-align: left;">日期</th>
-                                        <th style="padding: 4px 6px; text-align: center;">主队</th>
-                                        <th style="padding: 4px 6px; text-align: center;">全场</th>
-                                        <th style="padding: 4px 6px; text-align: center;">半场</th>
-                                        <th style="padding: 4px 6px; text-align: center;">客队</th>
-                                        <th style="padding: 4px 6px; text-align: center;">结果</th>
-                                        <th style="padding: 4px 6px; text-align: center;">赛事</th>
-                                    </tr>`;
-                            co.home_vs_matches.forEach(m => {
-                                html += renderMatchRow(m, match.home_team, '#00bcd4');
-                            });
-                            html += `</table></div>`;
-                        }
-                        
-                        // 客队 vs 共同对手
-                        if (co.away_vs_matches && co.away_vs_matches.length > 0) {
-                            html += `<div style="margin: 8px 0 4px 16px; font-size: 0.85em;">
-                                <span style="color: #ff9800;">${match.away_team} vs ${co.team_name}:</span>
-                                <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.9em;">
-                                    <tr style="background: rgba(255,152,0,0.08);">
-                                        <th style="padding: 4px 6px; text-align: left;">日期</th>
-                                        <th style="padding: 4px 6px; text-align: center;">主队</th>
-                                        <th style="padding: 4px 6px; text-align: center;">全场</th>
-                                        <th style="padding: 4px 6px; text-align: center;">半场</th>
-                                        <th style="padding: 4px 6px; text-align: center;">客队</th>
-                                        <th style="padding: 4px 6px; text-align: center;">结果</th>
-                                        <th style="padding: 4px 6px; text-align: center;">赛事</th>
-                                    </tr>`;
-                            co.away_vs_matches.forEach(m => {
-                                html += renderMatchRow(m, match.away_team, '#ff9800');
-                            });
-                            html += `</table></div>`;
-                        }
-                        
-                        html += `</details>`;
-                    });
-                    html += `</div>`;
-                    
-                    html += `</div>`;
-                } else {
-                    html += `<p style="font-size: 0.9em; opacity: 0.6; padding: 10px 0;">该场比赛未能匹配到共同对手数据</p>`;
-                }
-                
-                // ====== 直接交锋记录区块 ======
-                if (match.direct_match_info && match.direct_match_info.match_count > 0) {
-                    const dmi = match.direct_match_info;
-                    html += `
-                        <div style="margin-top: 12px; padding: 10px; background: rgba(156,39,176,0.08); border-radius: 8px; border: 1px solid rgba(156,39,176,0.2);">
-                            <div style="display: flex; gap: 20px; margin-bottom: 10px; font-size: 0.9em;">
-                                <span style="font-weight:600; color:#ce93d8;">⚔️ 直接交锋记录 (${dmi.match_count} 场)</span>
-                                <span style="color:#4caf50;">${match.home_team} 胜: <strong>${dmi.home_wins}</strong></span>
-                                <span style="color:#ff9800;">平: <strong>${dmi.draws}</strong></span>
-                                <span style="color:#f44336;">${match.away_team} 胜: <strong>${dmi.away_wins}</strong></span>
-                            </div>
-                            <table style="width:100%; border-collapse: collapse; font-size: 0.85em;">
-                                <tr style="background: rgba(156,39,176,0.1);">
-                                    <th style="padding: 4px 6px; text-align: left;">日期</th>
-                                    <th style="padding: 4px 6px; text-align: center;">主队</th>
-                                    <th style="padding: 4px 6px; text-align: center;">全场</th>
-                                    <th style="padding: 4px 6px; text-align: center;">半场</th>
-                                    <th style="padding: 4px 6px; text-align: center;">客队</th>
-                                    <th style="padding: 4px 6px; text-align: center;">结果</th>
-                                    <th style="padding: 4px 6px; text-align: center;">赛事</th>
-                                </tr>`;
-                    dmi.matches.forEach(m => {
-                        // 直接交锋中，我们关注主客队双方
-                        // 使用 match.home_team 作为高亮队伍来获取主队视角结果
-                        const parts = (m.fullCourtGoal || '?:?').split(':');
-                        const homeScore = parts[0] || '?';
-                        const awayScore = parts[1] || '?';
-                        const score = `${homeScore}-${awayScore}`;
-                        const halfParts = (m.halfTimeGoal || '').split(':');
-                        const halfScoreStr = (halfParts.length === 2) ? `${halfParts[0]}-${halfParts[1]}` : '-';
-                        
-                        const homeResult = getResultForTeam(match.home_team, m);
-                        const resultColor = homeResult === '胜' ? '#4caf50' : homeResult === '负' ? '#f44336' : '#ff9800';
-                        
-                        const homeHighlight = m.homeTeamShortName === match.home_team ? 'color:#00bcd4;font-weight:600' : (m.homeTeamShortName === match.away_team ? 'color:#ff9800;font-weight:600' : '');
-                        const awayHighlight = m.awayTeamShortName === match.home_team ? 'color:#00bcd4;font-weight:600' : (m.awayTeamShortName === match.away_team ? 'color:#ff9800;font-weight:600' : '');
-                        
-                        html += `<tr>
-                            <td style="padding: 4px 6px;">${m.matchDate || ''}</td>
-                            <td style="padding: 4px 6px; text-align: center; ${homeHighlight}">${m.homeTeamShortName || '-'}</td>
-                            <td style="padding: 4px 6px; text-align: center; font-weight:600;">${score}</td>
-                            <td style="padding: 4px 6px; text-align: center; color:#888; font-size:0.9em;">(${halfScoreStr})</td>
-                            <td style="padding: 4px 6px; text-align: center; ${awayHighlight}">${m.awayTeamShortName || '-'}</td>
-                            <td style="padding: 4px 6px; text-align: center; color:${resultColor}; font-weight:600;">${homeResult}</td>
-                            <td style="padding: 4px 6px; text-align: center; font-size:0.85em; color:#aaa;">${m.tournamentShortName || '-'}</td>
-                        </tr>`;
-                    });
-                    html += `</table></div>`;
-                }
-                
-                // ====== 伤停信息区块 ======
-                if (match.injury_suspension) {
-                    const inj = match.injury_suspension;
-                    const hasHomeInjuries = inj.home && inj.home.injuriesAndSuspensionsList && inj.home.injuriesAndSuspensionsList.length > 0;
-                    const hasAwayInjuries = inj.away && inj.away.injuriesAndSuspensionsList && inj.away.injuriesAndSuspensionsList.length > 0;
-                    
-                    if (hasHomeInjuries || hasAwayInjuries) {
-                        html += `
-                            <div style="margin-top: 12px; padding: 10px; background: rgba(233,30,99,0.06); border-radius: 8px; border: 1px solid rgba(233,30,99,0.15);">
-                                <div style="font-weight:600; color:#f48fb1; margin-bottom: 8px; font-size:0.95em;">🩹 伤停信息</div>`;
-                        
-                        // 主队伤停
-                        if (hasHomeInjuries) {
-                            html += `<div style="margin-bottom: 10px;">
-                                <span style="color:#00bcd4; font-weight:600; font-size:0.9em;">${inj.home.teamShortName || match.home_team}</span>
-                                <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.85em;">
-                                    <tr style="background: rgba(0,188,212,0.08);">
-                                        <th style="padding: 3px 6px; text-align: left;">球员</th>
-                                        <th style="padding: 3px 6px; text-align: center;">位置</th>
-                                        <th style="padding: 3px 6px; text-align: center;">号码</th>
-                                        <th style="padding: 3px 6px; text-align: center;">出场</th>
-                                        <th style="padding: 3px 6px; text-align: center;">状态</th>
-                                    </tr>`;
-                            inj.home.injuriesAndSuspensionsList.forEach(p => {
-                                const status = [];
-                                if (p.injuryFlag === 1) status.push('伤');
-                                if (p.suspensionFlag === 1) status.push('停');
-                                const statusText = status.length > 0 ? status.join('+') : '-';
-                                const statusColor = p.injuryFlag === 1 && p.suspensionFlag === 1 ? '#f44336' : p.injuryFlag === 1 ? '#ff9800' : '#e91e63';
-                                html += `<tr>
-                                    <td style="padding: 3px 6px;">${p.personName || '-'}</td>
-                                    <td style="padding: 3px 6px; text-align: center; color:#aaa;">${p.playerPositionDesc || '-'}</td>
-                                    <td style="padding: 3px 6px; text-align: center;">${p.uniformNo || '-'}</td>
-                                    <td style="padding: 3px 6px; text-align: center;">${p.appearanceCnt || 0}</td>
-                                    <td style="padding: 3px 6px; text-align: center; color:${statusColor}; font-weight:600;">${statusText}</td>
-                                </tr>`;
-                            });
-                            html += `</table></div>`;
-                        }
-                        
-                        // 客队伤停
-                        if (hasAwayInjuries) {
-                            html += `<div>
-                                <span style="color:#ff9800; font-weight:600; font-size:0.9em;">${inj.away.teamShortName || match.away_team}</span>
-                                <table style="width:100%; margin-top: 4px; border-collapse: collapse; font-size: 0.85em;">
-                                    <tr style="background: rgba(255,152,0,0.08);">
-                                        <th style="padding: 3px 6px; text-align: left;">球员</th>
-                                        <th style="padding: 3px 6px; text-align: center;">位置</th>
-                                        <th style="padding: 3px 6px; text-align: center;">号码</th>
-                                        <th style="padding: 3px 6px; text-align: center;">出场</th>
-                                        <th style="padding: 3px 6px; text-align: center;">状态</th>
-                                    </tr>`;
-                            inj.away.injuriesAndSuspensionsList.forEach(p => {
-                                const status = [];
-                                if (p.injuryFlag === 1) status.push('伤');
-                                if (p.suspensionFlag === 1) status.push('停');
-                                const statusText = status.length > 0 ? status.join('+') : '-';
-                                const statusColor = p.injuryFlag === 1 && p.suspensionFlag === 1 ? '#f44336' : p.injuryFlag === 1 ? '#ff9800' : '#e91e63';
-                                html += `<tr>
-                                    <td style="padding: 3px 6px;">${p.personName || '-'}</td>
-                                    <td style="padding: 3px 6px; text-align: center; color:#aaa;">${p.playerPositionDesc || '-'}</td>
-                                    <td style="padding: 3px 6px; text-align: center;">${p.uniformNo || '-'}</td>
-                                    <td style="padding: 3px 6px; text-align: center;">${p.appearanceCnt || 0}</td>
-                                    <td style="padding: 3px 6px; text-align: center; color:${statusColor}; font-weight:600;">${statusText}</td>
-                                </tr>`;
-                            });
-                            html += `</table></div>`;
-                        }
-                        
-                        html += `</div>`;
-                    }
-                }
-                
-                html += `</div>`;
-            });
-            
-            window._spfMatchesCache = matches;
-            spfCommonBody.innerHTML = html;
-            // 渲染完成后回填已保存的 AI 分析结果
-            backfillAiResults();
-        }
-        
-        // 赔率网格格子点击切换 - 点击变色选中，再点击取消
-        function selectGridOutcome(el, outcome) {
-            const cls = outcome === 'win' ? 'selected-win' : outcome === 'draw' ? 'selected-draw' : 'selected-lose';
-            el.classList.toggle(cls);
-        }
-        
         // 半全场 3/1/0 选择器 - 独立点选，可同时选中多个
         function selectHalfResult(btn) {
             const value = btn.dataset.bqcValue;
@@ -2384,13 +1655,7 @@
             btn.classList.toggle(cls);
         }
         
-        // 加载按钮事件
-        loadCommonMatchBtn.addEventListener('click', loadCommonMatchData);
-        
-        // 页面加载后自动加载共同对手数据
-        loadCommonMatchData();
-
-        // 页面加载后自动获取14场最新期数并加载数据
+        // 页面加载后自动获取14场最新期数并加载数据（含共同对手数据）
         setTimeout(() => {
             fetchCurrentPeriod();
         }, 100);
@@ -2501,6 +1766,15 @@
                 updateBqcProgress(0);
                 showBqcStatus(`加载失败: ${e.message}`, 'error');
             }
+        }
+        
+        // 获取北京时间今天的日期字符串（YYYY-MM-DD）
+        function beijingTodayStr() {
+            const parts = new Intl.DateTimeFormat('zh-CN', {
+                timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit'
+            }).formatToParts(new Date());
+            const get = (type) => (parts.find(p => p.type === type) || {}).value || '';
+            return `${get('year')}-${get('month')}-${get('day')}`;
         }
         
         // 渲染半全场数据
@@ -2853,413 +2127,6 @@
                 showBqcStatus('无法获取在售期数', 'error');
             }
         })();
-
-        // ========== AI 智能分析功能 ==========
-        // 方案B（密码派生密钥）：无硬编码主密钥，密钥由用户输入的密码经 PBKDF2 实时派生
-        const AI_CONFIG_PATH = './spf/ai_config.json';
-
-        let aiCfg = null;
-        let aiCryptoKey = null;
-
-        // 加载并缓存加密配置（密钥需在输入密码后派生，此处不派生）
-        async function loadAiConfig() {
-            if (aiCfg) return aiCfg;
-            const resp = await fetch(AI_CONFIG_PATH + '?t=' + Date.now());
-            if (!resp.ok) throw new Error('未找到 ai_config.json，请先运行 encrypt-ai-config 工作流生成加密配置');
-            aiCfg = await resp.json();
-            return aiCfg;
-        }
-
-        // 用输入的密码派生 AES-256-GCM 密钥：PBKDF2-SHA256 × iterations
-        // （与 Node 端 encrypt_ai_config.js 的 crypto.pbkdf2Sync 完全一致）
-        async function deriveAiKey(password) {
-            const kdf = aiCfg.kdf;
-            const salt = Uint8Array.from(atob(kdf.salt), c => c.charCodeAt(0));
-            const baseKey = await crypto.subtle.importKey(
-                'raw',
-                new TextEncoder().encode(password),
-                'PBKDF2',
-                false,
-                ['deriveKey']
-            );
-            return crypto.subtle.deriveKey(
-                { name: 'PBKDF2', hash: 'SHA-256', salt, iterations: kdf.iterations },
-                baseKey,
-                { name: 'AES-GCM', length: 256 },
-                false,
-                ['decrypt']
-            );
-        }
-
-        // 解密 {iv, tag, data} 三段式 AES-256-GCM 密文（与 encrypt_ai_config.js encrypt() 对称）
-        async function aesDecrypt(obj, key) {
-            const b64ToBytes = (b64) => Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-            const iv = b64ToBytes(obj.iv);
-            const tag = b64ToBytes(obj.tag);
-            const data = b64ToBytes(obj.data);
-            const ciphertext = new Uint8Array(data.length + tag.length);
-            ciphertext.set(data, 0);
-            ciphertext.set(tag, data.length);
-            const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext);
-            return new TextDecoder().decode(plain);
-        }
-
-        // 读取当前选中的分析类型（spf=胜平负 / bqc=半全场 / bf=比分 / jqs=总进球数）
-        function getSelectedAiAnalyzeType() {
-            const checked = document.querySelector('input[name="aiAnalyzeType"]:checked');
-            return checked ? checked.value : 'spf';
-        }
-
-        // 打开密码弹窗
-        function openAiAnalyze(btn, idx) {
-            window._aiTargetIdx = idx;
-            const modal = document.getElementById('aiPasswordModal');
-            const input = document.getElementById('aiPasswordInput');
-            input.value = '';
-            // 每次打开弹窗默认选中"胜平负"
-            const def = document.querySelector('input[name="aiAnalyzeType"][value="spf"]');
-            if (def) def.checked = true;
-            document.getElementById('aiPasswordError').style.display = 'none';
-            modal.style.display = 'flex';
-            setTimeout(() => input.focus(), 60);
-        }
-
-        function closeAiModal() {
-            document.getElementById('aiPasswordModal').style.display = 'none';
-        }
-
-        // 确认密码 -> 用密码派生密钥，解密 password_check 标记验证 -> 通过后触发分析
-        async function confirmAiPassword() {
-            const input = document.getElementById('aiPasswordInput').value;
-            const errEl = document.getElementById('aiPasswordError');
-            const btn = document.getElementById('aiPasswordBtn');
-            if (!input) { errEl.textContent = '请输入密码'; errEl.style.display = 'block'; return; }
-            btn.disabled = true;
-            btn.textContent = '验证中...';
-            try {
-                const cfg = await loadAiConfig();
-                aiCryptoKey = await deriveAiKey(input);
-                let marker;
-                try {
-                    marker = await aesDecrypt(cfg.password_check, aiCryptoKey);
-                } catch (e) {
-                    throw new Error('密码错误，请重试');
-                }
-                if (marker !== 'OK') throw new Error('密码错误，请重试');
-                // 密码验证通过后，自动解密 GitHub Token（由仓库 Secrets: GH_TOKEN 加密而来），
-                // 用于触发 AI 分析工作流 —— 无需在网页中手动填写/保存 Token
-                try {
-                    if (cfg.github_token) _ghTokenCache = await aesDecrypt(cfg.github_token, aiCryptoKey);
-                } catch (e) {
-                    _ghTokenCache = '';
-                }
-                window._aiAnalyzeType = getSelectedAiAnalyzeType();
-                closeAiModal();
-                await runAiAnalysis(window._aiTargetIdx);
-            } catch (e) {
-                aiCryptoKey = null;
-                errEl.textContent = e.message || '密码验证失败';
-                errEl.style.display = 'block';
-            } finally {
-                btn.disabled = false;
-                btn.textContent = '确认分析';
-            }
-        }
-
-        // 回车确认 / ESC 关闭
-        document.addEventListener('keydown', (e) => {
-            const modal = document.getElementById('aiPasswordModal');
-            if (!modal || modal.style.display !== 'flex') return;
-            if (e.key === 'Enter') confirmAiPassword();
-            if (e.key === 'Escape') closeAiModal();
-        });
-
-        // 主分析流程：密码验证通过后触发云端工作流，等待完成并读取结果
-        async function runAiAnalysis(idx) {
-            const resultEl = document.getElementById('ai-result-' + idx);
-            const match = (window._spfMatchesCache || [])[idx];
-            if (!resultEl || !match) return;
-
-            const home = match.home_team || '';
-            const away = match.away_team || '';
-            const typeLabel = { spf: '胜平负', bqc: '半全场', bf: '比分', jqs: '总进球数' }[window._aiAnalyzeType] || '胜平负';
-            resultEl.innerHTML = '<div class="ai-loading">🤖 正在提交云端分析任务（' + typeLabel + '）...</div>';
-            try {
-                // 1. 触发 GitHub Actions 工作流（云端调用 DeepSeek 分析）
-                await triggerAiWorkflow(idx);
-                resultEl.innerHTML = '<div class="ai-loading">🤖 工作流已启动，正在云端调用 DeepSeek 分析 ' + home + ' vs ' + away + '（' + typeLabel + '，约需 1~3 分钟，请耐心等待）...</div>';
-
-                // 2. 轮询等待本次触发的工作流完成（按触发时间过滤，避免命中历史运行），
-                //    实时通过回调显示工作流输出状态（排队中/运行中/成功/失败）
-                const cfg = getGhConfig();
-                const run = await waitAiWorkflow(cfg, 5 * 60 * 1000, Date.now(), (statusText) => {
-                    resultEl.innerHTML = '<div class="ai-loading">' + statusText + '</div>';
-                });
-                if (run.conclusion !== 'success') {
-                    const detail = await getRunFailureDetail(cfg, run.id);
-                    throw new Error('工作流执行失败（' + run.conclusion + '）' + (detail ? '：' + detail : '，请到 Actions 页面查看日志'));
-                }
-
-                // 3. 从仓库读取工作流保存的分析结果并渲染
-                resultEl.innerHTML = '<div class="ai-loading">🤖 分析完成，正在读取结果...</div>';
-                const ai = await fetchAiResultFromRepo(idx, match);
-                if (!ai) throw new Error('未找到本次比赛的分析结果文件 ' + matchResultPath(match.match_num));
-                renderAiResult(resultEl, ai);
-            } catch (e) {
-                resultEl.innerHTML = '<div class="ai-error">AI 分析失败: ' + (e.message || '未知错误') + '</div>';
-            }
-        }
-
-        // 渲染 AI 分析结果（按分析类型动态渲染：bqc=半全场 / bf=比分 / jqs=总进球数 / 默认=胜平负全场+半场）
-        function renderAiResult(resultEl, ai) {
-            const pickColor = (p) => p === '胜' ? '#4caf50' : p === '负' ? '#f44336' : '#ff9800';
-            // 兼容数组（两个结果）与旧对象（单个结果）两种格式
-            const box = (title, items, fallback) => {
-                const arr = Array.isArray(items) ? items : (items ? [items] : [fallback]);
-                const two = arr.length > 1;
-                return `
-                    <div class="ai-result-item">
-                        <div class="ai-result-label">${title}</div>
-                        ${arr.map((item, i) => `
-                            <div class="ai-result-pick" style="color:${pickColor(item.pick)}">${two ? (i === 0 ? '主推 ' : '次推 ') : ''}${item.pick}</div>
-                            <div class="ai-result-conf">把握度 ${item.confidence}%</div>
-                            <div class="ai-reason">${item.reason || ''}</div>`).join('')}
-                    </div>`;
-            };
-            // 依据 AI 返回的具体字段动态选择展示类型：
-            // 半全场 / 比分 / 总进球数 分别使用 bqc / bf / jqs 字段；缺省（或同时有 fulltime+halftime）按胜平负展示
-            let typeGrid = '';
-            if (ai && (ai.bqc !== undefined)) {
-                typeGrid = box('半全场预测', ai.bqc, { pick: '-', confidence: 0, reason: '' });
-            } else if (ai && (ai.bf !== undefined)) {
-                typeGrid = box('比分预测', ai.bf, { pick: '-', confidence: 0, reason: '' });
-            } else if (ai && (ai.jqs !== undefined)) {
-                typeGrid = box('总进球数', ai.jqs, { pick: '-', confidence: 0, reason: '' });
-            } else {
-                typeGrid = box('全场结果', ai && ai.fulltime, { pick: '-', confidence: 0, reason: '' }) +
-                           box('半场结果', ai && ai.halftime, { pick: '-', confidence: 0, reason: '' });
-            }
-            resultEl.innerHTML = `
-                <div class="ai-result-box">
-                    <div class="ai-result-header">
-                        <span>🤖 AI 智能分析结果</span>
-                        <span class="ai-weight-tag">共同对手 · 联网 综合分析</span>
-                    </div>
-                    <div class="ai-result-grid">
-                        ${typeGrid}
-                    </div>
-                    <div class="ai-summary">${(ai && ai.summary) || ''}</div>
-                    <div class="ai-meta">数据来源: DeepSeek · ${new Date().toLocaleTimeString()}</div>
-                </div>`;
-        }
-
-        // ========== GitHub 工作流触发与结果读取功能 ==========
-        // 说明：AI 分析由云端 GitHub Actions 工作流执行（spf_ai.yml），调用 DeepSeek 分析后将结果
-        //       保存回仓库 spf/data/deepseek_result 目录的 {match_num}ai_results.json（每场比赛对应一个独立结果文件，避免错乱）；
-        //       网页端仅负责触发工作流、轮询状态并读取对应比赛的结果展示。
-        // 每场比赛对应一个独立结果文件：spf/data/deepseek_result/{match_num}ai_results.json
-        function matchResultPath(match_num) { return 'spf/data/deepseek_result/' + String(match_num) + 'ai_results.json'; }
-        const GH_WORKFLOW_FILE = 'spf_ai.yml';
-        const GH_OWNER = 'fhpeerless';   // 仓库所有者（公开信息）
-        const GH_REPO = 'Football_y';    // 仓库名称（公开信息）
-        let _ghTokenCache = '';          // 密码验证通过后解密得到的 GitHub Token（仅内存缓存，不落盘）
-
-        // 读取 GitHub 配置：owner/repo 固定为当前仓库，token 来自 ai_config.json 的 github_token 字段。
-        // 该字段由 encrypt-ai-config 工作流用仓库 Secrets: GH_TOKEN 加密生成，网页端密码验证后自动解密获取，
-        // 无需在网页中手动填写/保存 Token。
-        function getGhConfig() {
-            return { owner: GH_OWNER, repo: GH_REPO, token: _ghTokenCache || '' };
-        }
-
-        // ---- 工作流触发与结果读取 ----
-        // token 可选：读取公开仓库内容不需要认证；触发工作流时（密码已解锁）必带 token
-        function ghHeaders(cfg) {
-            const headers = { 'Accept': 'application/vnd.github+json' };
-            if (cfg.token) headers['Authorization'] = 'Bearer ' + cfg.token;
-            return headers;
-        }
-
-        // 读取某场比赛的独立结果文件 {match_num}ai_results.json（位于 spf/data/deepseek_result/）。
-        // 优先用相对路径读取本地文件（与 common_match.json 一致，无 API 限额）；
-        // 本地没有（如云端工作流刚生成、本地未同步）时回退到 raw.githubusercontent.com 读取远程最新结果。
-        async function readMatchResultFromRepo(match_num) {
-            const cfg = getGhConfig();
-            if (!cfg.owner || !cfg.repo || !match_num) return { updated_at: '', results: [] };
-            const localUrl = `${matchResultPath(match_num)}?t=${Date.now()}`;
-            try {
-                const localResp = await fetch(localUrl);
-                if (localResp.ok) return parseAiResultJson(await localResp.text());
-            } catch (e) { /* 本地读取失败则回退远程 */ }
-            const url = `https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/main/${matchResultPath(match_num)}`;
-            const resp = await fetch(url);
-            if (resp.status === 404) return { updated_at: '', results: [] };
-            if (!resp.ok) throw new Error('读取远程结果失败 HTTP ' + resp.status);
-            return parseAiResultJson(await resp.text());
-        }
-
-        function parseAiResultJson(content) {
-            try {
-                const obj = JSON.parse(content);
-                if (Array.isArray(obj)) return { updated_at: '', results: obj };
-                return obj && Array.isArray(obj.results) ? obj : { updated_at: '', results: [] };
-            } catch (e) {
-                return { updated_at: '', results: [] };
-            }
-        }
-
-        // 触发云端 AI 分析工作流（workflow_dispatch，默认分支 main）
-        async function triggerAiWorkflow(idx) {
-            const cfg = getGhConfig();
-            if (!cfg.owner || !cfg.repo || !cfg.token) {
-                throw new Error('未获取到 GitHub Token，请先在仓库 Secrets 配置 GH_TOKEN，并运行 encrypt-ai-config 工作流重新生成 ai_config.json');
-            }
-            const match = (window._spfMatchesCache || [])[idx];
-            const inputs = {};
-            if (match.match_num) inputs.match_num = String(match.match_num);
-            if (match.home_team) inputs.home = match.home_team;
-            if (match.away_team) inputs.away = match.away_team;
-            // 分析类型：spf=胜平负 / bqc=半全场 / bf=比分 / jqs=总进球数（默认 spf）
-            inputs.analyze_type = window._aiAnalyzeType || 'spf';
-
-            const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/workflows/${GH_WORKFLOW_FILE}/dispatches`;
-            const resp = await fetch(url, {
-                method: 'POST',
-                headers: { ...ghHeaders(cfg), 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ref: 'main', inputs })
-            });
-            if (!resp.ok) {
-                const errText = await resp.text();
-                throw new Error('触发工作流失败 HTTP ' + resp.status + ' ' + errText.slice(0, 160));
-            }
-        }
-
-        // 轮询等待工作流运行完成，返回最近一次在 since 之后创建的 workflow_dispatch 运行记录；
-        // 轮询期间通过 onStatus(text) 实时回传工作流输出状态（排队中/运行中/成功/失败）
-        async function waitAiWorkflow(cfg, timeoutMs, since, onStatus) {
-            const started = Date.now();
-            const maxWait = timeoutMs || 5 * 60 * 1000; // 默认 5 分钟
-            const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/workflows/${GH_WORKFLOW_FILE}/runs?per_page=10&event=workflow_dispatch`;
-            let lastText = '';
-            while (Date.now() - started < maxWait) {
-                try {
-                    const resp = await fetch(url, { headers: ghHeaders(cfg) });
-                    if (resp.ok) {
-                        const data = await resp.json();
-                        const runs = (data.workflow_runs || []).filter(r => !since || new Date(r.created_at).getTime() >= since);
-                        if (runs.length > 0) {
-                            // runs 按创建时间倒序，取本次触发后创建的运行（最早的那条）
-                            const run = runs[runs.length - 1];
-                            let text = '';
-                            if (run.status === 'queued') {
-                                text = '⏳ 工作流已排队，等待 GitHub Runner 分配...';
-                            } else if (run.status === 'in_progress') {
-                                // 轮询 jobs API 获取当前正在执行的 step，区分"搜索阶段"与"DeepSeek 分析阶段"
-                                const stepName = await getActiveStepName(cfg, run.id);
-                                text = aiStageText(stepName);
-                            } else if (run.status === 'completed') {
-                                text = run.conclusion === 'success'
-                                    ? '✅ 工作流执行成功，正在读取结果...'
-                                    : '❌ 工作流执行失败（' + run.conclusion + '），正在获取失败详情...';
-                            }
-                            if (text && text !== lastText) {
-                                lastText = text;
-                                if (onStatus) onStatus(text);
-                            }
-                            if (run.status === 'completed') {
-                                return run;
-                            }
-                        }
-                    }
-                } catch (e) { /* 网络抖动则继续重试 */ }
-                await new Promise(r => setTimeout(r, 5000));
-            }
-            throw new Error('等待工作流超时（' + Math.round(maxWait / 1000) + ' 秒），请到 Actions 页面查看进度');
-        }
-
-        // 工作流失败时获取失败的 job/step 摘要，便于界面直接展示失败位置
-        async function getRunFailureDetail(cfg, runId) {
-            try {
-                const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/runs/${runId}/jobs`;
-                const resp = await fetch(url, { headers: ghHeaders(cfg) });
-                if (!resp.ok) return '';
-                const data = await resp.json();
-                const failed = [];
-                (data.jobs || []).forEach(job => {
-                    (job.steps || []).forEach(step => {
-                        if (step.conclusion && step.conclusion !== 'success' && step.conclusion !== 'skipped') {
-                            failed.push(`${job.name} → ${step.name}（${step.conclusion}）`);
-                        }
-                    });
-                });
-                return failed.join('；');
-            } catch (e) {
-                return '';
-            }
-        }
-
-        // 将当前正在执行的 step 名称映射为可读的"阶段"提示（搜索阶段 / DeepSeek 分析阶段 / 提交阶段）
-        function aiStageText(stepName) {
-            const typeLabel = { spf: '胜平负', bqc: '半全场', bf: '比分', jqs: '总进球数' }[window._aiAnalyzeType] || '胜平负';
-            if (!stepName) return '🔄 工作流运行中，请稍候...';
-            if (stepName.indexOf('提交联网搜索') !== -1) return '📤 正在保存并提交联网搜索结果...';
-            if (stepName.indexOf('联网搜索') !== -1) return '🔍 正在联网搜索（Tavily）：获取主客队战意、伤停、行程、经济等信息...';
-            if (stepName.indexOf('DeepSeek') !== -1) return '🧠 DeepSeek 正在综合分析（' + typeLabel + '，共同对手战绩 + 联网搜索信息交叉印证）...';
-            if (stepName.indexOf('提交 AI 分析') !== -1) return '📤 正在提交 AI 分析结果...';
-            return '🔄 工作流运行中：' + stepName + '...';
-        }
-
-        // 查询工作流当前正在执行的 step 名称（同一 job 内 step 按顺序执行，取最后一个 in_progress 的 step）
-        async function getActiveStepName(cfg, runId) {
-            try {
-                const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/actions/runs/${runId}/jobs`;
-                const resp = await fetch(url, { headers: ghHeaders(cfg) });
-                if (!resp.ok) return '';
-                const data = await resp.json();
-                for (const job of (data.jobs || [])) {
-                    if (job.status === 'in_progress') {
-                        const activeSteps = (job.steps || []).filter(s => s.status === 'in_progress');
-                        if (activeSteps.length > 0) return activeSteps[activeSteps.length - 1].name;
-                    }
-                }
-                return '';
-            } catch (e) {
-                return '';
-            }
-        }
-
-        // 工作流完成后，直接读取该场比赛的独立结果文件 {match_num}ai_results.json 并返回 ai 分析结果
-        async function fetchAiResultFromRepo(idx, match) {
-            const remote = await readMatchResultFromRepo(match.match_num);
-            const results = (remote && remote.results) || [];
-            const target = results.find(r =>
-                (r.match_num && String(r.match_num) === String(match.match_num)) ||
-                (r.home_team === match.home_team && r.away_team === match.away_team)
-            );
-            return target ? target.ai : null;
-        }
-
-        // 渲染完成后回填已保存的 AI 结果（每场比赛一个独立结果文件，逐场读取）
-        // 公开仓库读取无需 token：页面加载时即可自动显示工作流已保存的分析结果
-        async function backfillAiResults() {
-            const cfg = getGhConfig();
-            if (!cfg.owner || !cfg.repo) return;
-            const matches = window._spfMatchesCache || [];
-            if (matches.length === 0) return;
-            await Promise.all(matches.map(async (match, idx) => {
-                if (!match.match_num) return;
-                try {
-                    const remote = await readMatchResultFromRepo(match.match_num);
-                    const results = (remote && remote.results) || [];
-                    const r = results.find(x => x.ai && String(x.match_num) === String(match.match_num));
-                    if (r) {
-                        const el = document.getElementById('ai-result-' + idx);
-                        if (el) renderAiResult(el, r.ai);
-                    }
-                } catch (e) {
-                    console.warn('读取 AI 结果失败（不影响页面）:', e.message);
-                }
-            }));
-        }
 
     </script>
 </body>
