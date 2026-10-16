@@ -1,6 +1,6 @@
 {
   "match_date": "2026-10-16",
-  "updated_at": "2026-10-16 09:32:23",
+  "updated_at": "2026-10-16 15:23:30",
   "match_count": 1,
   "matches": [
     {
@@ -18,28 +18,28 @@
       "away_team_id": "1686",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "3.60",
+        "aa": "3.50",
         "ac": "13.00",
         "ab": "23.00",
-        "ca": "5.50",
-        "cc": "5.75",
-        "cb": "6.50",
+        "ca": "5.00",
+        "cc": "5.85",
+        "cb": "6.85",
         "ba": "20.00",
         "bc": "13.00",
-        "bb": "4.55"
+        "bb": "4.90"
       },
       "bqc_odds_api": {
-        "hh": "3.60",
+        "hh": "3.50",
         "hd": "13.00",
         "ha": "23.00",
-        "dh": "5.50",
-        "dd": "5.75",
-        "da": "6.50",
+        "dh": "5.00",
+        "dd": "5.85",
+        "da": "6.85",
         "ah": "20.00",
         "ad": "13.00",
-        "aa": "4.55"
+        "aa": "4.90"
       },
-      "bqc_update_time": "2026-10-15 13:27:15"
+      "bqc_update_time": "2026-10-16 12:40:04"
     }
   ],
   "change_log": [
@@ -1355,6 +1355,66 @@
           "bqc_update_time": "2026-10-15 20:19:12"
         }
       ]
+    },
+    {
+      "fetch_time": "2026-10-16 15:23:30",
+      "changed": [
+        {
+          "match_id": "2042003",
+          "match_num_str": "周五001",
+          "league": "澳超",
+          "home_team": "悉尼FC",
+          "away_team": "西悉尼",
+          "diff": {
+            "bqc_odds.aa": {
+              "old": "3.60",
+              "new": "3.50"
+            },
+            "bqc_odds.bb": {
+              "old": "4.55",
+              "new": "4.90"
+            },
+            "bqc_odds.ca": {
+              "old": "5.50",
+              "new": "5.00"
+            },
+            "bqc_odds.cb": {
+              "old": "6.50",
+              "new": "6.85"
+            },
+            "bqc_odds.cc": {
+              "old": "5.75",
+              "new": "5.85"
+            },
+            "bqc_odds_api.aa": {
+              "old": "4.55",
+              "new": "4.90"
+            },
+            "bqc_odds_api.da": {
+              "old": "6.50",
+              "new": "6.85"
+            },
+            "bqc_odds_api.dd": {
+              "old": "5.75",
+              "new": "5.85"
+            },
+            "bqc_odds_api.dh": {
+              "old": "5.50",
+              "new": "5.00"
+            },
+            "bqc_odds_api.hh": {
+              "old": "3.60",
+              "new": "3.50"
+            },
+            "bqc_update_time": {
+              "old": "2026-10-15 13:27:15",
+              "new": "2026-10-16 12:40:04"
+            }
+          }
+        }
+      ],
+      "added": [],
+      "removed": []
     }
   ]
 }
