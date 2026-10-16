@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-16 00:49:07",
+  "generate_time": "2026-10-17 00:30:15",
   "period": "26204",
   "lottery_sale_endtime": "2026-10-17 21:00:00",
   "total_matches": 6,
@@ -12,7 +12,18 @@
       "league": "英超",
       "home_team": "布伦特福德",
       "away_team": "利物浦",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.65",
+        "ac": "14.00",
+        "ab": "25.00",
+        "ca": "5.40",
+        "cc": "5.80",
+        "cb": "6.50",
+        "ba": "21.00",
+        "bc": "14.00",
+        "bb": "4.20",
+        "updatetime": "2026-10-16 09:42:06"
+      },
       "history": {
         "home": {
           "team": "布伦特福德",
@@ -846,13 +857,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "3",
-              "awayTeamId": 184,
+              "awayTeamId": 0,
               "awayTeamShortName": "摩纳哥",
               "fullCourtGoal": "2:3",
               "halfTimeGoal": "2:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 11,
+              "homeTeamId": 0,
               "homeTeamShortName": "利物浦",
               "matchDate": "2026-08-09",
               "matchId": 2525694,
@@ -924,13 +935,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 0,
+              "awayTeamId": 60,
               "awayTeamShortName": "桑德兰",
               "fullCourtGoal": "4:2",
               "halfTimeGoal": "1:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 0,
+              "homeTeamId": 11,
               "homeTeamShortName": "利物浦",
               "matchDate": "2026-07-26",
               "matchId": 2507184,
@@ -1576,7 +1587,18 @@
       "league": "英超",
       "home_team": "曼彻斯特城",
       "away_team": "伊普斯维奇",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.40",
+        "ac": "27.00",
+        "ab": "90.00",
+        "ca": "4.10",
+        "cc": "12.00",
+        "cb": "27.00",
+        "ba": "23.00",
+        "bc": "27.00",
+        "bb": "22.00",
+        "updatetime": "2026-10-16 09:42:06"
+      },
       "history": {
         "home": {
           "team": "曼彻斯特城",
@@ -2436,7 +2458,7 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 48,
+              "awayTeamId": 0,
               "awayTeamShortName": "伊普斯",
               "fullCourtGoal": "2:0",
               "halfTimeGoal": "",
@@ -2743,7 +2765,18 @@
       "league": "英超",
       "home_team": "纽卡斯尔联",
       "away_team": "阿斯顿维拉",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.00",
+        "ac": "14.00",
+        "ab": "28.00",
+        "ca": "5.20",
+        "cc": "6.20",
+        "cb": "7.25",
+        "ba": "20.00",
+        "bc": "14.00",
+        "bb": "5.00",
+        "updatetime": "2026-10-16 09:42:06"
+      },
       "history": {
         "home": {
           "team": "纽卡斯尔联",
@@ -4370,8 +4403,166 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 1,
+              "personId": 459219,
+              "personName": "J.拉姆西",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 0,
+              "uniformNo": "41"
+            },
+            {
+              "appearanceCnt": 2,
+              "injuryFlag": 1,
+              "personId": 525807,
+              "personName": "V.利弗拉门托",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "2"
+            },
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 1,
+              "personId": 546875,
+              "personName": "A.埃兰加",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 3,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "19"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 694531,
+              "personName": "E. Jaouen",
+              "playerPositionCode": "Goalkeeper",
+              "playerPositionDesc": "守门员",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "24"
+            },
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 1,
+              "personId": 700340,
+              "personName": "B. Touré",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 4,
+              "suspensionFlag": 0,
+              "uniformNo": "17"
+            },
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 1,
+              "personId": 878463,
+              "personName": "班巴",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 3,
+              "suspensionFlag": 0,
+              "uniformNo": "8"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 415585,
+              "personName": "贝利",
+              "playerPositionCode": "Attacker",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "31"
+            },
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 1,
+              "personId": 525926,
+              "personName": "马岑",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "22"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 540520,
+              "personName": "奥纳纳",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "24"
+            },
+            {
+              "appearanceCnt": 4,
+              "injuryFlag": 1,
+              "personId": 579195,
+              "personName": "M.鲁杰里",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 2,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 0,
+              "uniformNo": "13"
+            },
+            {
+              "appearanceCnt": 5,
+              "injuryFlag": 1,
+              "personId": 719715,
+              "personName": "G. Hemmings",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "53"
+            },
+            {
+              "appearanceCnt": 3,
+              "injuryFlag": 1,
+              "personId": 777192,
+              "personName": "J. Manzambi",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 2,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "44"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 865268,
+              "personName": "凯巴·西塞",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "48"
+            }
+          ]
         }
       }
     },
@@ -4383,7 +4574,18 @@
       "league": "德甲",
       "home_team": "汉堡",
       "away_team": "斯图加特",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "6.30",
+        "ac": "14.00",
+        "ab": "17.00",
+        "ca": "9.50",
+        "cc": "7.75",
+        "cb": "4.90",
+        "ba": "28.00",
+        "bc": "14.00",
+        "bb": "2.38",
+        "updatetime": "2026-10-16 09:42:06"
+      },
       "history": {
         "home": {
           "team": "汉堡",
@@ -6145,7 +6347,18 @@
       "league": "德甲",
       "home_team": "柏林联合",
       "away_team": "多特蒙德",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "8.50",
+        "ac": "17.00",
+        "ab": "20.00",
+        "ca": "12.00",
+        "cc": "7.50",
+        "cb": "4.40",
+        "ba": "39.00",
+        "bc": "17.00",
+        "bb": "2.00",
+        "updatetime": "2026-10-16 09:42:06"
+      },
       "history": {
         "home": {
           "team": "柏林联合",
@@ -7802,7 +8015,18 @@
       "league": "德甲",
       "home_team": "拜仁慕尼黑",
       "away_team": "莱比锡红牛",
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.40",
+        "ac": "22.00",
+        "ab": "60.00",
+        "ca": "4.75",
+        "cc": "16.00",
+        "cb": "26.00",
+        "ba": "16.00",
+        "bc": "22.00",
+        "bb": "17.00",
+        "updatetime": "2026-10-16 09:42:06"
+      },
       "history": {
         "home": {
           "team": "拜仁慕尼黑",
@@ -9429,8 +9653,46 @@
           }
         ],
         "injury": {
-          "home": [],
-          "away": []
+          "home": [
+            {
+              "appearanceCnt": 5,
+              "injuryFlag": 1,
+              "personId": 442556,
+              "personName": "迪亚斯",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "14"
+            }
+          ],
+          "away": [
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 427647,
+              "personName": "C. Baumgartner",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "14"
+            },
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 721528,
+              "personName": "F. Ouédraogo",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 1,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "8"
+            }
+          ]
         }
       }
     }
