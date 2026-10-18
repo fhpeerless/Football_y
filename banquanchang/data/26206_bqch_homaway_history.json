@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-17 23:25:45",
+  "generate_time": "2026-10-18 23:45:56",
   "period": "26206",
   "lottery_sale_endtime": "2026-10-19 22:00:00",
   "total_matches": 6,
@@ -238,13 +238,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "2",
-              "awayTeamId": 158,
+              "awayTeamId": 0,
               "awayTeamShortName": "霍芬海姆",
               "fullCourtGoal": "2:2",
               "halfTimeGoal": "2:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 19,
+              "homeTeamId": 0,
               "homeTeamShortName": "热刺",
               "matchDate": "2026-08-16",
               "matchId": 2546347,
@@ -264,13 +264,13 @@
             },
             {
               "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 158,
+              "awayTeamId": 0,
               "awayTeamShortName": "霍芬海姆",
               "fullCourtGoal": "3:0",
               "halfTimeGoal": "1:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 19,
+              "homeTeamId": 0,
               "homeTeamShortName": "热刺",
               "matchDate": "2026-08-15",
               "matchId": 2546346,
@@ -1164,7 +1164,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 6,
+              "injuryFlag": 0,
+              "personId": 396178,
+              "personName": "R. Bentancur",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 2,
+              "suspensionFlag": 1,
+              "uniformNo": "30"
+            }
+          ],
           "away": []
         }
       }
@@ -2383,7 +2396,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 6,
+              "injuryFlag": 0,
+              "personId": 737665,
+              "personName": "L. Lucchesi",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 6,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 1,
+              "uniformNo": "3"
+            }
+          ],
           "away": []
         }
       }
@@ -2446,7 +2472,7 @@
               "halfTimeGoal": "",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 130,
               "homeTeamShortName": "帕尔马",
               "matchDate": "2026-10-02",
               "matchId": 2640432,
