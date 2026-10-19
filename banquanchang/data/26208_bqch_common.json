@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-18 23:47:40",
+  "generate_time": "2026-10-20 03:47:08",
   "period": "26208",
   "lottery_sale_endtime": "2026-10-21 22:00:00",
   "total_matches": 6,
@@ -164,38 +164,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 3,
       "common_opponent_data": {
-        "维拉": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "拜仁",
-              "awaysxname": "维拉",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-08-07",
-              "tournamentShortName": "俱乐部赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "维拉"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "维拉",
-              "awaysxname": "阿森纳",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-01",
-              "tournamentShortName": "英超",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "维拉"
-            }
-          ]
-        },
         "巴黎圣曼": {
           "home_vs_opponent": [
             {
@@ -257,6 +225,38 @@
               "result1": "平",
               "result2": "平",
               "_opponent": "多特蒙德"
+            }
+          ]
+        },
+        "维拉": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "拜仁",
+              "awaysxname": "维拉",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-07",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "维拉"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "维拉",
+              "awaysxname": "阿森纳",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-01",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "维拉"
             }
           ]
         }
