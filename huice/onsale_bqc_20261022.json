@@ -1,84 +1,8 @@
 {
   "match_date": "2026-10-22",
-  "updated_at": "2026-10-21 20:07:56",
-  "match_count": 10,
+  "updated_at": "2026-10-22 01:28:13",
+  "match_count": 8,
   "matches": [
-    {
-      "match_id": "2042109",
-      "date": "2026-10-22",
-      "match_time": "00:45:00",
-      "dayofweek": "周三",
-      "match_num": "3004",
-      "match_num_str": "周三004",
-      "league": "欧冠",
-      "league_id": "69",
-      "home_team": "科莫",
-      "away_team": "曼联",
-      "home_team_id": "1040070",
-      "away_team_id": "13",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "3.40",
-        "ac": "13.00",
-        "ab": "23.00",
-        "ca": "5.40",
-        "cc": "6.25",
-        "cb": "7.00",
-        "ba": "21.00",
-        "bc": "13.00",
-        "bb": "4.40"
-      },
-      "bqc_odds_api": {
-        "hh": "3.40",
-        "hd": "13.00",
-        "ha": "23.00",
-        "dh": "5.40",
-        "dd": "6.25",
-        "da": "7.00",
-        "ah": "21.00",
-        "ad": "13.00",
-        "aa": "4.40"
-      },
-      "bqc_update_time": "2026-10-21 19:22:40"
-    },
-    {
-      "match_id": "2042110",
-      "date": "2026-10-22",
-      "match_time": "00:45:00",
-      "dayofweek": "周三",
-      "match_num": "3005",
-      "match_num_str": "周三005",
-      "league": "欧冠",
-      "league_id": "69",
-      "home_team": "里尔",
-      "away_team": "加拉塔萨",
-      "home_team_id": "180",
-      "away_team_id": "283",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "3.05",
-        "ac": "14.00",
-        "ab": "27.00",
-        "ca": "4.50",
-        "cc": "6.25",
-        "cb": "8.00",
-        "ba": "20.00",
-        "bc": "14.00",
-        "bb": "5.30"
-      },
-      "bqc_odds_api": {
-        "hh": "3.05",
-        "hd": "14.00",
-        "ha": "27.00",
-        "dh": "4.50",
-        "dd": "6.25",
-        "da": "8.00",
-        "ah": "20.00",
-        "ad": "14.00",
-        "aa": "5.30"
-      },
-      "bqc_update_time": "2026-10-21 11:12:08"
-    },
     {
       "match_id": "2042111",
       "date": "2026-10-22",
@@ -94,28 +18,28 @@
       "away_team_id": "506",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "5.85",
+        "aa": "6.10",
         "ac": "16.50",
-        "ab": "27.00",
-        "ca": "8.00",
-        "cc": "4.50",
-        "cb": "4.05",
-        "ba": "30.00",
+        "ab": "30.00",
+        "ca": "8.40",
+        "cc": "4.20",
+        "cb": "3.90",
+        "ba": "35.00",
         "bc": "16.50",
-        "bb": "3.36"
+        "bb": "3.40"
       },
       "bqc_odds_api": {
-        "hh": "5.85",
+        "hh": "6.10",
         "hd": "16.50",
-        "ha": "27.00",
-        "dh": "8.00",
-        "dd": "4.50",
-        "da": "4.05",
-        "ah": "30.00",
+        "ha": "30.00",
+        "dh": "8.40",
+        "dd": "4.20",
+        "da": "3.90",
+        "ah": "35.00",
         "ad": "16.50",
-        "aa": "3.36"
+        "aa": "3.40"
       },
-      "bqc_update_time": "2026-10-21 17:41:42"
+      "bqc_update_time": "2026-10-21 21:52:58"
     },
     {
       "match_id": "2042112",
@@ -360,28 +284,28 @@
       "away_team_id": "572",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "2.75",
+        "aa": "2.70",
         "ac": "17.50",
         "ab": "50.00",
-        "ca": "3.90",
+        "ca": "3.75",
         "cc": "4.15",
-        "cb": "10.00",
+        "cb": "11.00",
         "ba": "29.00",
         "bc": "17.50",
-        "bb": "8.00"
+        "bb": "8.60"
       },
       "bqc_odds_api": {
-        "hh": "2.75",
+        "hh": "2.70",
         "hd": "17.50",
         "ha": "50.00",
-        "dh": "3.90",
+        "dh": "3.75",
         "dd": "4.15",
-        "da": "10.00",
+        "da": "11.00",
         "ah": "29.00",
         "ad": "17.50",
-        "aa": "8.00"
+        "aa": "8.60"
       },
-      "bqc_update_time": "2026-10-21 19:37:03"
+      "bqc_update_time": "2026-10-21 20:44:27"
     }
   ],
   "change_log": [
@@ -1402,6 +1326,204 @@
       ],
       "added": [],
       "removed": []
+    },
+    {
+      "fetch_time": "2026-10-22 01:28:13",
+      "changed": [
+        {
+          "match_id": "2042111",
+          "match_num_str": "周三006",
+          "league": "西甲",
+          "home_team": "莱万特",
+          "away_team": "毕尔巴鄂",
+          "diff": {
+            "bqc_odds.aa": {
+              "old": "5.85",
+              "new": "6.10"
+            },
+            "bqc_odds.ab": {
+              "old": "27.00",
+              "new": "30.00"
+            },
+            "bqc_odds.ba": {
+              "old": "30.00",
+              "new": "35.00"
+            },
+            "bqc_odds.bb": {
+              "old": "3.36",
+              "new": "3.40"
+            },
+            "bqc_odds.ca": {
+              "old": "8.00",
+              "new": "8.40"
+            },
+            "bqc_odds.cb": {
+              "old": "4.05",
+              "new": "3.90"
+            },
+            "bqc_odds.cc": {
+              "old": "4.50",
+              "new": "4.20"
+            },
+            "bqc_odds_api.aa": {
+              "old": "3.36",
+              "new": "3.40"
+            },
+            "bqc_odds_api.ah": {
+              "old": "30.00",
+              "new": "35.00"
+            },
+            "bqc_odds_api.da": {
+              "old": "4.05",
+              "new": "3.90"
+            },
+            "bqc_odds_api.dd": {
+              "old": "4.50",
+              "new": "4.20"
+            },
+            "bqc_odds_api.dh": {
+              "old": "8.00",
+              "new": "8.40"
+            },
+            "bqc_odds_api.ha": {
+              "old": "27.00",
+              "new": "30.00"
+            },
+            "bqc_odds_api.hh": {
+              "old": "5.85",
+              "new": "6.10"
+            },
+            "bqc_update_time": {
+              "old": "2026-10-21 17:41:42",
+              "new": "2026-10-21 21:52:58"
+            }
+          }
+        },
+        {
+          "match_id": "2042118",
+          "match_num_str": "周三013",
+          "league": "解放者杯",
+          "home_team": "帕梅拉斯",
+          "away_team": "弗鲁米嫩",
+          "diff": {
+            "bqc_odds.aa": {
+              "old": "2.75",
+              "new": "2.70"
+            },
+            "bqc_odds.bb": {
+              "old": "8.00",
+              "new": "8.60"
+            },
+            "bqc_odds.ca": {
+              "old": "3.90",
+              "new": "3.75"
+            },
+            "bqc_odds.cb": {
+              "old": "10.00",
+              "new": "11.00"
+            },
+            "bqc_odds_api.aa": {
+              "old": "8.00",
+              "new": "8.60"
+            },
+            "bqc_odds_api.da": {
+              "old": "10.00",
+              "new": "11.00"
+            },
+            "bqc_odds_api.dh": {
+              "old": "3.90",
+              "new": "3.75"
+            },
+            "bqc_odds_api.hh": {
+              "old": "2.75",
+              "new": "2.70"
+            },
+            "bqc_update_time": {
+              "old": "2026-10-21 19:37:03",
+              "new": "2026-10-21 20:44:27"
+            }
+          }
+        }
+      ],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2042109",
+          "date": "2026-10-22",
+          "match_time": "00:45:00",
+          "dayofweek": "周三",
+          "match_num": "3004",
+          "match_num_str": "周三004",
+          "league": "欧冠",
+          "league_id": "69",
+          "home_team": "科莫",
+          "away_team": "曼联",
+          "home_team_id": "1040070",
+          "away_team_id": "13",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.40",
+            "ac": "13.00",
+            "ab": "23.00",
+            "ca": "5.40",
+            "cc": "6.25",
+            "cb": "7.00",
+            "ba": "21.00",
+            "bc": "13.00",
+            "bb": "4.40"
+          },
+          "bqc_odds_api": {
+            "hh": "3.40",
+            "hd": "13.00",
+            "ha": "23.00",
+            "dh": "5.40",
+            "dd": "6.25",
+            "da": "7.00",
+            "ah": "21.00",
+            "ad": "13.00",
+            "aa": "4.40"
+          },
+          "bqc_update_time": "2026-10-21 19:22:40"
+        },
+        {
+          "match_id": "2042110",
+          "date": "2026-10-22",
+          "match_time": "00:45:00",
+          "dayofweek": "周三",
+          "match_num": "3005",
+          "match_num_str": "周三005",
+          "league": "欧冠",
+          "league_id": "69",
+          "home_team": "里尔",
+          "away_team": "加拉塔萨",
+          "home_team_id": "180",
+          "away_team_id": "283",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.05",
+            "ac": "14.00",
+            "ab": "27.00",
+            "ca": "4.50",
+            "cc": "6.25",
+            "cb": "8.00",
+            "ba": "20.00",
+            "bc": "14.00",
+            "bb": "5.30"
+          },
+          "bqc_odds_api": {
+            "hh": "3.05",
+            "hd": "14.00",
+            "ha": "27.00",
+            "dh": "4.50",
+            "dd": "6.25",
+            "da": "8.00",
+            "ah": "20.00",
+            "ad": "14.00",
+            "aa": "5.30"
+          },
+          "bqc_update_time": "2026-10-21 11:12:08"
+        }
+      ]
     }
   ]
 }
