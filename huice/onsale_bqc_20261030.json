@@ -1,122 +1,8 @@
 {
   "match_date": "2026-10-30",
-  "updated_at": "2026-10-29 21:26:36",
-  "match_count": 7,
+  "updated_at": "2026-10-30 03:05:03",
+  "match_count": 4,
   "matches": [
-    {
-      "match_id": "2042318",
-      "date": "2026-10-30",
-      "match_time": "00:00:00",
-      "dayofweek": "周四",
-      "match_num": "4002",
-      "match_num_str": "周四002",
-      "league": "芬超",
-      "league_id": "2064839",
-      "home_team": "国际图尔",
-      "away_team": "赫尔辛基",
-      "home_team_id": "588",
-      "away_team_id": "297",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "3.75",
-        "ac": "13.00",
-        "ab": "29.00",
-        "ca": "4.85",
-        "cc": "4.65",
-        "cb": "7.30",
-        "ba": "24.00",
-        "bc": "13.00",
-        "bb": "5.00"
-      },
-      "bqc_odds_api": {
-        "hh": "3.75",
-        "hd": "13.00",
-        "ha": "29.00",
-        "dh": "4.85",
-        "dd": "4.65",
-        "da": "7.30",
-        "ah": "24.00",
-        "ad": "13.00",
-        "aa": "5.00"
-      },
-      "bqc_update_time": "2026-10-29 21:11:11"
-    },
-    {
-      "match_id": "2042319",
-      "date": "2026-10-30",
-      "match_time": "01:30:00",
-      "dayofweek": "周四",
-      "match_num": "4003",
-      "match_num_str": "周四003",
-      "league": "意甲",
-      "league_id": "40",
-      "home_team": "弗洛西诺",
-      "away_team": "莱切",
-      "home_team_id": "1303",
-      "away_team_id": "126",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "2.05",
-        "ac": "16.00",
-        "ab": "33.00",
-        "ca": "4.75",
-        "cc": "8.00",
-        "cb": "11.50",
-        "ba": "19.00",
-        "bc": "16.00",
-        "bb": "7.35"
-      },
-      "bqc_odds_api": {
-        "hh": "2.05",
-        "hd": "16.00",
-        "ha": "33.00",
-        "dh": "4.75",
-        "dd": "8.00",
-        "da": "11.50",
-        "ah": "19.00",
-        "ad": "16.00",
-        "aa": "7.35"
-      },
-      "bqc_update_time": "2026-10-29 21:19:33"
-    },
-    {
-      "match_id": "2042320",
-      "date": "2026-10-30",
-      "match_time": "01:30:00",
-      "dayofweek": "周四",
-      "match_num": "4004",
-      "match_num_str": "周四004",
-      "league": "瑞超",
-      "league_id": "58",
-      "home_team": "哈马比",
-      "away_team": "天狼星",
-      "home_team_id": "352",
-      "away_team_id": "1917",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "1.85",
-        "ac": "17.00",
-        "ab": "35.00",
-        "ca": "4.10",
-        "cc": "8.00",
-        "cb": "15.00",
-        "ba": "22.00",
-        "bc": "17.00",
-        "bb": "11.50"
-      },
-      "bqc_odds_api": {
-        "hh": "1.85",
-        "hd": "17.00",
-        "ha": "35.00",
-        "dh": "4.10",
-        "dd": "8.00",
-        "da": "15.00",
-        "ah": "22.00",
-        "ad": "17.00",
-        "aa": "11.50"
-      },
-      "bqc_update_time": "2026-10-29 19:28:30"
-    },
     {
       "match_id": "2042321",
       "date": "2026-10-30",
@@ -172,26 +58,26 @@
       "bqc_odds": {
         "aa": "3.45",
         "ac": "14.00",
-        "ab": "25.00",
+        "ab": "26.00",
         "ca": "5.75",
-        "cc": "5.75",
+        "cc": "5.60",
         "cb": "6.50",
         "ba": "23.00",
         "bc": "14.00",
-        "bb": "4.25"
+        "bb": "4.30"
       },
       "bqc_odds_api": {
         "hh": "3.45",
         "hd": "14.00",
-        "ha": "25.00",
+        "ha": "26.00",
         "dh": "5.75",
-        "dd": "5.75",
+        "dd": "5.60",
         "da": "6.50",
         "ah": "23.00",
         "ad": "14.00",
-        "aa": "4.25"
+        "aa": "4.30"
       },
-      "bqc_update_time": "2026-10-29 10:00:09"
+      "bqc_update_time": "2026-10-29 21:34:12"
     },
     {
       "match_id": "2042323",
@@ -606,6 +492,165 @@
       ],
       "added": [],
       "removed": []
+    },
+    {
+      "fetch_time": "2026-10-30 03:05:03",
+      "changed": [
+        {
+          "match_id": "2042322",
+          "match_num_str": "周四006",
+          "league": "意甲",
+          "home_team": "佛罗伦萨",
+          "away_team": "亚特兰大",
+          "diff": {
+            "bqc_odds.ab": {
+              "old": "25.00",
+              "new": "26.00"
+            },
+            "bqc_odds.bb": {
+              "old": "4.25",
+              "new": "4.30"
+            },
+            "bqc_odds.cc": {
+              "old": "5.75",
+              "new": "5.60"
+            },
+            "bqc_odds_api.aa": {
+              "old": "4.25",
+              "new": "4.30"
+            },
+            "bqc_odds_api.dd": {
+              "old": "5.75",
+              "new": "5.60"
+            },
+            "bqc_odds_api.ha": {
+              "old": "25.00",
+              "new": "26.00"
+            },
+            "bqc_update_time": {
+              "old": "2026-10-29 10:00:09",
+              "new": "2026-10-29 21:34:12"
+            }
+          }
+        }
+      ],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2042318",
+          "date": "2026-10-30",
+          "match_time": "00:00:00",
+          "dayofweek": "周四",
+          "match_num": "4002",
+          "match_num_str": "周四002",
+          "league": "芬超",
+          "league_id": "2064839",
+          "home_team": "国际图尔",
+          "away_team": "赫尔辛基",
+          "home_team_id": "588",
+          "away_team_id": "297",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.75",
+            "ac": "13.00",
+            "ab": "29.00",
+            "ca": "4.85",
+            "cc": "4.65",
+            "cb": "7.30",
+            "ba": "24.00",
+            "bc": "13.00",
+            "bb": "5.00"
+          },
+          "bqc_odds_api": {
+            "hh": "3.75",
+            "hd": "13.00",
+            "ha": "29.00",
+            "dh": "4.85",
+            "dd": "4.65",
+            "da": "7.30",
+            "ah": "24.00",
+            "ad": "13.00",
+            "aa": "5.00"
+          },
+          "bqc_update_time": "2026-10-29 21:11:11"
+        },
+        {
+          "match_id": "2042319",
+          "date": "2026-10-30",
+          "match_time": "01:30:00",
+          "dayofweek": "周四",
+          "match_num": "4003",
+          "match_num_str": "周四003",
+          "league": "意甲",
+          "league_id": "40",
+          "home_team": "弗洛西诺",
+          "away_team": "莱切",
+          "home_team_id": "1303",
+          "away_team_id": "126",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "2.05",
+            "ac": "16.00",
+            "ab": "33.00",
+            "ca": "4.75",
+            "cc": "8.00",
+            "cb": "11.50",
+            "ba": "19.00",
+            "bc": "16.00",
+            "bb": "7.35"
+          },
+          "bqc_odds_api": {
+            "hh": "2.05",
+            "hd": "16.00",
+            "ha": "33.00",
+            "dh": "4.75",
+            "dd": "8.00",
+            "da": "11.50",
+            "ah": "19.00",
+            "ad": "16.00",
+            "aa": "7.35"
+          },
+          "bqc_update_time": "2026-10-29 21:19:33"
+        },
+        {
+          "match_id": "2042320",
+          "date": "2026-10-30",
+          "match_time": "01:30:00",
+          "dayofweek": "周四",
+          "match_num": "4004",
+          "match_num_str": "周四004",
+          "league": "瑞超",
+          "league_id": "58",
+          "home_team": "哈马比",
+          "away_team": "天狼星",
+          "home_team_id": "352",
+          "away_team_id": "1917",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "1.85",
+            "ac": "17.00",
+            "ab": "35.00",
+            "ca": "4.10",
+            "cc": "8.00",
+            "cb": "15.00",
+            "ba": "22.00",
+            "bc": "17.00",
+            "bb": "11.50"
+          },
+          "bqc_odds_api": {
+            "hh": "1.85",
+            "hd": "17.00",
+            "ha": "35.00",
+            "dh": "4.10",
+            "dd": "8.00",
+            "da": "15.00",
+            "ah": "22.00",
+            "ad": "17.00",
+            "aa": "11.50"
+          },
+          "bqc_update_time": "2026-10-29 19:28:30"
+        }
+      ]
     }
   ]
 }
