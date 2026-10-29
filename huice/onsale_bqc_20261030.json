@@ -1,84 +1,8 @@
 {
   "match_date": "2026-10-30",
-  "updated_at": "2026-10-30 03:05:03",
-  "match_count": 4,
+  "updated_at": "2026-10-30 07:27:01",
+  "match_count": 2,
   "matches": [
-    {
-      "match_id": "2042321",
-      "date": "2026-10-30",
-      "match_time": "03:45:00",
-      "dayofweek": "周四",
-      "match_num": "4005",
-      "match_num_str": "周四005",
-      "league": "英联赛杯",
-      "league_id": "24",
-      "home_team": "埃弗顿",
-      "away_team": "纽卡斯尔",
-      "home_team_id": "9",
-      "away_team_id": "15",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "3.80",
-        "ac": "13.50",
-        "ab": "28.00",
-        "ca": "4.45",
-        "cc": "4.85",
-        "cb": "7.25",
-        "ba": "26.00",
-        "bc": "13.50",
-        "bb": "5.00"
-      },
-      "bqc_odds_api": {
-        "hh": "3.80",
-        "hd": "13.50",
-        "ha": "28.00",
-        "dh": "4.45",
-        "dd": "4.85",
-        "da": "7.25",
-        "ah": "26.00",
-        "ad": "13.50",
-        "aa": "5.00"
-      },
-      "bqc_update_time": "2026-10-29 20:27:22"
-    },
-    {
-      "match_id": "2042322",
-      "date": "2026-10-30",
-      "match_time": "03:45:00",
-      "dayofweek": "周四",
-      "match_num": "4006",
-      "match_num_str": "周四006",
-      "league": "意甲",
-      "league_id": "40",
-      "home_team": "佛罗伦萨",
-      "away_team": "亚特兰大",
-      "home_team_id": "122",
-      "away_team_id": "117",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "3.45",
-        "ac": "14.00",
-        "ab": "26.00",
-        "ca": "5.75",
-        "cc": "5.60",
-        "cb": "6.50",
-        "ba": "23.00",
-        "bc": "14.00",
-        "bb": "4.30"
-      },
-      "bqc_odds_api": {
-        "hh": "3.45",
-        "hd": "14.00",
-        "ha": "26.00",
-        "dh": "5.75",
-        "dd": "5.60",
-        "da": "6.50",
-        "ah": "23.00",
-        "ad": "14.00",
-        "aa": "4.30"
-      },
-      "bqc_update_time": "2026-10-29 21:34:12"
-    },
     {
       "match_id": "2042323",
       "date": "2026-10-30",
@@ -649,6 +573,89 @@
             "aa": "11.50"
           },
           "bqc_update_time": "2026-10-29 19:28:30"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-10-30 07:27:01",
+      "changed": [],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2042321",
+          "date": "2026-10-30",
+          "match_time": "03:45:00",
+          "dayofweek": "周四",
+          "match_num": "4005",
+          "match_num_str": "周四005",
+          "league": "英联赛杯",
+          "league_id": "24",
+          "home_team": "埃弗顿",
+          "away_team": "纽卡斯尔",
+          "home_team_id": "9",
+          "away_team_id": "15",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.80",
+            "ac": "13.50",
+            "ab": "28.00",
+            "ca": "4.45",
+            "cc": "4.85",
+            "cb": "7.25",
+            "ba": "26.00",
+            "bc": "13.50",
+            "bb": "5.00"
+          },
+          "bqc_odds_api": {
+            "hh": "3.80",
+            "hd": "13.50",
+            "ha": "28.00",
+            "dh": "4.45",
+            "dd": "4.85",
+            "da": "7.25",
+            "ah": "26.00",
+            "ad": "13.50",
+            "aa": "5.00"
+          },
+          "bqc_update_time": "2026-10-29 20:27:22"
+        },
+        {
+          "match_id": "2042322",
+          "date": "2026-10-30",
+          "match_time": "03:45:00",
+          "dayofweek": "周四",
+          "match_num": "4006",
+          "match_num_str": "周四006",
+          "league": "意甲",
+          "league_id": "40",
+          "home_team": "佛罗伦萨",
+          "away_team": "亚特兰大",
+          "home_team_id": "122",
+          "away_team_id": "117",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "3.45",
+            "ac": "14.00",
+            "ab": "26.00",
+            "ca": "5.75",
+            "cc": "5.60",
+            "cb": "6.50",
+            "ba": "23.00",
+            "bc": "14.00",
+            "bb": "4.30"
+          },
+          "bqc_odds_api": {
+            "hh": "3.45",
+            "hd": "14.00",
+            "ha": "26.00",
+            "dh": "5.75",
+            "dd": "5.60",
+            "da": "6.50",
+            "ah": "23.00",
+            "ad": "14.00",
+            "aa": "4.30"
+          },
+          "bqc_update_time": "2026-10-29 21:34:12"
         }
       ]
     }
