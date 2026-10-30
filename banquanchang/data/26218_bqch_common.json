@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-10-30 03:31:12",
+  "generate_time": "2026-10-31 03:08:32",
   "period": "26218",
   "lottery_sale_endtime": "2026-11-01 21:30:00",
   "total_matches": 6,
@@ -16,6 +16,38 @@
       "away_matches_count": 20,
       "common_opponent_count": 8,
       "common_opponent_data": {
+        "利兹联": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "利物浦",
+              "awaysxname": "利兹联",
+              "homescore": 2,
+              "awayscore": 4,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-03",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "利兹联"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "阿森纳",
+              "awaysxname": "利兹联",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-10",
+              "tournamentShortName": "英超",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "利兹联"
+            }
+          ]
+        },
         "诺丁汉": {
           "home_vs_opponent": [
             {
@@ -48,38 +80,6 @@
             }
           ]
         },
-        "切尔西": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "利物浦",
-              "awaysxname": "切尔西",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-10-29",
-              "tournamentShortName": "英联赛杯",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "切尔西"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "阿森纳",
-              "awaysxname": "切尔西",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-09-06",
-              "tournamentShortName": "英超",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "切尔西"
-            }
-          ]
-        },
         "布赖顿": {
           "home_vs_opponent": [
             {
@@ -109,6 +109,38 @@
               "result1": "胜",
               "result2": "负",
               "_opponent": "布赖顿"
+            }
+          ]
+        },
+        "伊普斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "伊普斯",
+              "awaysxname": "利物浦",
+              "homescore": 0,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-09-05",
+              "tournamentShortName": "英超",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "伊普斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "伊普斯",
+              "awaysxname": "阿森纳",
+              "homescore": 2,
+              "awayscore": 4,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-09-16",
+              "tournamentShortName": "英联赛杯",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "伊普斯"
             }
           ]
         },
@@ -157,67 +189,35 @@
             }
           ]
         },
-        "桑德兰": {
+        "切尔西": {
           "home_vs_opponent": [
             {
               "homesxname": "利物浦",
-              "awaysxname": "桑德兰",
-              "homescore": 4,
-              "awayscore": 2,
+              "awaysxname": "切尔西",
+              "homescore": 1,
+              "awayscore": 1,
               "homehalfscore": 1,
               "awayhalfscore": 1,
-              "matchdate": "2026-07-26",
-              "tournamentShortName": "俱乐部赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "桑德兰"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "桑德兰",
-              "awaysxname": "阿森纳",
-              "homescore": 0,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-13",
-              "tournamentShortName": "英超",
+              "matchdate": "2026-10-29",
+              "tournamentShortName": "英联赛杯",
               "result1": "平",
               "result2": "平",
-              "_opponent": "桑德兰"
-            }
-          ]
-        },
-        "利兹联": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "利物浦",
-              "awaysxname": "利兹联",
-              "homescore": 2,
-              "awayscore": 4,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-08-03",
-              "tournamentShortName": "俱乐部赛",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "利兹联"
+              "_opponent": "切尔西"
             }
           ],
           "away_vs_opponent": [
             {
               "homesxname": "阿森纳",
-              "awaysxname": "利兹联",
+              "awaysxname": "切尔西",
               "homescore": 2,
               "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-10",
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-09-06",
               "tournamentShortName": "英超",
               "result1": "胜",
               "result2": "负",
-              "_opponent": "利兹联"
+              "_opponent": "切尔西"
             }
           ]
         },
@@ -253,40 +253,51 @@
             }
           ]
         },
-        "伊普斯": {
+        "桑德兰": {
           "home_vs_opponent": [
             {
-              "homesxname": "伊普斯",
-              "awaysxname": "利物浦",
-              "homescore": 0,
+              "homesxname": "利物浦",
+              "awaysxname": "桑德兰",
+              "homescore": 4,
               "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2026-09-05",
-              "tournamentShortName": "英超",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "伊普斯"
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-07-26",
+              "tournamentShortName": "俱乐部赛",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "桑德兰"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "伊普斯",
+              "homesxname": "桑德兰",
               "awaysxname": "阿森纳",
-              "homescore": 2,
-              "awayscore": 4,
+              "homescore": 0,
+              "awayscore": 2,
               "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2026-09-16",
-              "tournamentShortName": "英联赛杯",
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-13",
+              "tournamentShortName": "英超",
               "result1": "平",
               "result2": "平",
-              "_opponent": "伊普斯"
+              "_opponent": "桑德兰"
             }
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "5.00",
+        "ac": "13.50",
+        "ab": "21.00",
+        "ca": "6.75",
+        "cc": "5.50",
+        "cb": "5.10",
+        "ba": "24.00",
+        "bc": "13.50",
+        "bb": "3.45",
+        "updatetime": "2026-10-30 09:35:21"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -550,35 +561,35 @@
       "away_matches_count": 20,
       "common_opponent_count": 5,
       "common_opponent_data": {
-        "沙尔克04": {
+        "勒沃库森": {
           "home_vs_opponent": [
             {
-              "homesxname": "柏林联合",
-              "awaysxname": "沙尔克04",
-              "homescore": 1,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-09-12",
+              "homesxname": "勒沃库森",
+              "awaysxname": "柏林联合",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-05",
               "tournamentShortName": "德甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "沙尔克04"
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "勒沃库森"
             }
           ],
           "away_vs_opponent": [
             {
               "homesxname": "科隆",
-              "awaysxname": "沙尔克04",
-              "homescore": 0,
-              "awayscore": 0,
+              "awaysxname": "勒沃库森",
+              "homescore": 1,
+              "awayscore": 2,
               "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-24",
+              "awayhalfscore": 1,
+              "matchdate": "2026-04-25",
               "tournamentShortName": "德甲",
               "result1": "平",
               "result2": "平",
-              "_opponent": "沙尔克04"
+              "_opponent": "勒沃库森"
             }
           ]
         },
@@ -659,35 +670,35 @@
             }
           ]
         },
-        "勒沃库森": {
+        "沙尔克04": {
           "home_vs_opponent": [
             {
-              "homesxname": "勒沃库森",
-              "awaysxname": "柏林联合",
-              "homescore": 4,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-05",
+              "homesxname": "柏林联合",
+              "awaysxname": "沙尔克04",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-09-12",
               "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "勒沃库森"
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "沙尔克04"
             }
           ],
           "away_vs_opponent": [
             {
               "homesxname": "科隆",
-              "awaysxname": "勒沃库森",
-              "homescore": 1,
-              "awayscore": 2,
+              "awaysxname": "沙尔克04",
+              "homescore": 0,
+              "awayscore": 0,
               "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-04-25",
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-24",
               "tournamentShortName": "德甲",
               "result1": "平",
               "result2": "平",
-              "_opponent": "勒沃库森"
+              "_opponent": "沙尔克04"
             }
           ]
         },
@@ -738,10 +749,155 @@
           "_is_direct_match": true
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "4.15",
+        "ac": "14.00",
+        "ab": "19.00",
+        "ca": "6.00",
+        "cc": "5.80",
+        "cb": "5.80",
+        "ba": "20.00",
+        "bc": "14.00",
+        "bb": "3.90",
+        "updatetime": "2026-10-30 09:35:21"
+      },
       "injury": {
-        "home": [],
-        "away": []
+        "home": [
+          {
+            "appearanceCnt": 6,
+            "injuryFlag": 0,
+            "personId": 359831,
+            "personName": "F. Uduokhai",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 6,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 1,
+            "uniformNo": "2"
+          },
+          {
+            "appearanceCnt": 6,
+            "injuryFlag": 1,
+            "personId": 359831,
+            "personName": "F. Uduokhai",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 6,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "2"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 419553,
+            "personName": "S. Nsoki",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "34"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 579566,
+            "personName": "A. Ilić",
+            "playerPositionCode": "Attacker",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "23"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 785537,
+            "personName": "A. Markgraf",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "3"
+          }
+        ],
+        "away": [
+          {
+            "appearanceCnt": 5,
+            "injuryFlag": 1,
+            "personId": 280199,
+            "personName": "斯科西里",
+            "playerPositionCode": "Midfielder",
+            "playerPositionDesc": "中场",
+            "startedMatchCnt": 3,
+            "substituteMatchCnt": 2,
+            "suspensionFlag": 0,
+            "uniformNo": "6"
+          },
+          {
+            "appearanceCnt": 4,
+            "injuryFlag": 1,
+            "personId": 452046,
+            "personName": "R. Ache",
+            "playerPositionCode": "Forward",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 2,
+            "substituteMatchCnt": 2,
+            "suspensionFlag": 0,
+            "uniformNo": "9"
+          },
+          {
+            "appearanceCnt": 2,
+            "injuryFlag": 1,
+            "personId": 469845,
+            "personName": "I.朗迪奇",
+            "playerPositionCode": "Forward",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 2,
+            "suspensionFlag": 0,
+            "uniformNo": "15"
+          },
+          {
+            "appearanceCnt": 3,
+            "injuryFlag": 1,
+            "personId": 512732,
+            "personName": "T. Dallinga",
+            "playerPositionCode": "Forward",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 2,
+            "substituteMatchCnt": 1,
+            "suspensionFlag": 0,
+            "uniformNo": "27"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 665800,
+            "personName": "R. van den Berg",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "33"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 804743,
+            "personName": "M. El Mala",
+            "playerPositionCode": "Forward",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "19"
+          }
+        ]
       },
       "h2h": [
         {
@@ -1002,6 +1158,160 @@
       "away_matches_count": 20,
       "common_opponent_count": 7,
       "common_opponent_data": {
+        "斯图加特": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "法兰克福",
+              "awaysxname": "斯图加特",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-05-16",
+              "tournamentShortName": "德甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "斯图加特"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "汉堡",
+              "awaysxname": "斯图加特",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-17",
+              "tournamentShortName": "德甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯图加特"
+            },
+            {
+              "homesxname": "斯图加特",
+              "awaysxname": "汉堡",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-12",
+              "tournamentShortName": "德甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "斯图加特"
+            }
+          ]
+        },
+        "多特蒙德": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "多特蒙德",
+              "awaysxname": "法兰克福",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-25",
+              "tournamentShortName": "德甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "多特蒙德"
+            },
+            {
+              "homesxname": "多特蒙德",
+              "awaysxname": "法兰克福",
+              "homescore": 3,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-09",
+              "tournamentShortName": "德甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "多特蒙德"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "多特蒙德",
+              "awaysxname": "汉堡",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-30",
+              "tournamentShortName": "德甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "多特蒙德"
+            }
+          ]
+        },
+        "莱红牛": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "莱红牛",
+              "awaysxname": "法兰克福",
+              "homescore": 6,
+              "awayscore": 0,
+              "homehalfscore": 4,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-11",
+              "tournamentShortName": "德甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莱红牛"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "莱红牛",
+              "awaysxname": "汉堡",
+              "homescore": 5,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-13",
+              "tournamentShortName": "德甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "莱红牛"
+            }
+          ]
+        },
+        "美因茨": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "美因茨",
+              "awaysxname": "法兰克福",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-09-12",
+              "tournamentShortName": "德甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "美因茨"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "汉堡",
+              "awaysxname": "美因茨",
+              "homescore": 0,
+              "awayscore": 5,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-09-06",
+              "tournamentShortName": "德甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "美因茨"
+            }
+          ]
+        },
         "弗赖堡": {
           "home_vs_opponent": [
             {
@@ -1066,160 +1376,6 @@
             }
           ]
         },
-        "多特蒙德": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "多特蒙德",
-              "awaysxname": "法兰克福",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-25",
-              "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "多特蒙德"
-            },
-            {
-              "homesxname": "多特蒙德",
-              "awaysxname": "法兰克福",
-              "homescore": 3,
-              "awayscore": 2,
-              "homehalfscore": 2,
-              "awayhalfscore": 1,
-              "matchdate": "2026-05-09",
-              "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "多特蒙德"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "多特蒙德",
-              "awaysxname": "汉堡",
-              "homescore": 2,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-08-30",
-              "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "多特蒙德"
-            }
-          ]
-        },
-        "美因茨": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "美因茨",
-              "awaysxname": "法兰克福",
-              "homescore": 1,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2026-09-12",
-              "tournamentShortName": "德甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "美因茨"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "汉堡",
-              "awaysxname": "美因茨",
-              "homescore": 0,
-              "awayscore": 5,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2026-09-06",
-              "tournamentShortName": "德甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "美因茨"
-            }
-          ]
-        },
-        "莱红牛": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "莱红牛",
-              "awaysxname": "法兰克福",
-              "homescore": 6,
-              "awayscore": 0,
-              "homehalfscore": 4,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-11",
-              "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "莱红牛"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "莱红牛",
-              "awaysxname": "汉堡",
-              "homescore": 5,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-13",
-              "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "莱红牛"
-            }
-          ]
-        },
-        "斯图加特": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "法兰克福",
-              "awaysxname": "斯图加特",
-              "homescore": 2,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2026-05-16",
-              "tournamentShortName": "德甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "斯图加特"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "汉堡",
-              "awaysxname": "斯图加特",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-17",
-              "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "斯图加特"
-            },
-            {
-              "homesxname": "斯图加特",
-              "awaysxname": "汉堡",
-              "homescore": 4,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-04-12",
-              "tournamentShortName": "德甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "斯图加特"
-            }
-          ]
-        },
         "直接对战(法兰克福 vs 汉堡)": {
           "home_vs_opponent": [
             {
@@ -1280,7 +1436,18 @@
           "_is_direct_match": true
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "2.05",
+        "ac": "16.00",
+        "ab": "38.00",
+        "ca": "4.45",
+        "cc": "7.50",
+        "cb": "11.50",
+        "ba": "19.00",
+        "bc": "16.00",
+        "bb": "8.50",
+        "updatetime": "2026-10-30 09:35:21"
+      },
       "injury": {
         "home": [],
         "away": []
@@ -1544,6 +1711,102 @@
       "away_matches_count": 20,
       "common_opponent_count": 5,
       "common_opponent_data": {
+        "佛罗伦萨": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "佛罗伦萨",
+              "awaysxname": "弗洛西诺",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 2,
+              "matchdate": "2026-08-30",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "佛罗伦萨"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "佛罗伦萨",
+              "awaysxname": "都灵",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-05",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "佛罗伦萨"
+            }
+          ]
+        },
+        "Carrarese": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "弗洛西诺",
+              "awaysxname": "Carrarese",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-04-25",
+              "tournamentShortName": "意乙",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "Carrarese"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "Carrarese",
+              "homescore": 1,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-16",
+              "tournamentShortName": "意大利杯",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "Carrarese"
+            }
+          ]
+        },
+        "科莫": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "弗洛西诺",
+              "awaysxname": "科莫",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-20",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "科莫"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "都灵",
+              "awaysxname": "科莫",
+              "homescore": 1,
+              "awayscore": 3,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-28",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "科莫"
+            }
+          ]
+        },
         "萨索洛": {
           "home_vs_opponent": [
             {
@@ -1602,70 +1865,6 @@
             }
           ]
         },
-        "佛罗伦萨": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "佛罗伦萨",
-              "awaysxname": "弗洛西诺",
-              "homescore": 0,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 2,
-              "matchdate": "2026-08-30",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "佛罗伦萨"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "佛罗伦萨",
-              "awaysxname": "都灵",
-              "homescore": 1,
-              "awayscore": 2,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-05",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "佛罗伦萨"
-            }
-          ]
-        },
-        "科莫": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "弗洛西诺",
-              "awaysxname": "科莫",
-              "homescore": 2,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-20",
-              "tournamentShortName": "意甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "科莫"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "都灵",
-              "awaysxname": "科莫",
-              "homescore": 1,
-              "awayscore": 3,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-28",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "科莫"
-            }
-          ]
-        },
         "尤文图斯": {
           "home_vs_opponent": [
             {
@@ -1697,44 +1896,86 @@
               "_opponent": "尤文图斯"
             }
           ]
-        },
-        "Carrarese": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "弗洛西诺",
-              "awaysxname": "Carrarese",
-              "homescore": 3,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-04-25",
-              "tournamentShortName": "意乙",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "Carrarese"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "都灵",
-              "awaysxname": "Carrarese",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-08-16",
-              "tournamentShortName": "意大利杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "Carrarese"
-            }
-          ]
         }
       },
       "bqc_odds": null,
       "injury": {
-        "home": [],
-        "away": []
+        "home": [
+          {
+            "appearanceCnt": 1,
+            "injuryFlag": 1,
+            "personId": 213124,
+            "personName": "F. Grillitsch",
+            "playerPositionCode": "Midfielder",
+            "playerPositionDesc": "中场",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 1,
+            "suspensionFlag": 0,
+            "uniformNo": "27"
+          }
+        ],
+        "away": [
+          {
+            "appearanceCnt": 2,
+            "injuryFlag": 1,
+            "personId": 95797,
+            "personName": "罗德里格斯",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 1,
+            "substituteMatchCnt": 1,
+            "suspensionFlag": 0,
+            "uniformNo": "13"
+          },
+          {
+            "appearanceCnt": 8,
+            "injuryFlag": 1,
+            "personId": 335207,
+            "personName": "R. Mandragora",
+            "playerPositionCode": "Midfielder",
+            "playerPositionDesc": "中场",
+            "startedMatchCnt": 6,
+            "substituteMatchCnt": 2,
+            "suspensionFlag": 0,
+            "uniformNo": "8"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 474734,
+            "personName": "伊斯雷尔",
+            "playerPositionCode": "Goalkeeper",
+            "playerPositionDesc": "守门员",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "81"
+          },
+          {
+            "appearanceCnt": 4,
+            "injuryFlag": 1,
+            "personId": 517643,
+            "personName": "N. Patterson",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 4,
+            "suspensionFlag": 0,
+            "uniformNo": "2"
+          },
+          {
+            "appearanceCnt": 5,
+            "injuryFlag": 1,
+            "personId": 810994,
+            "personName": "N. Fortini",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 4,
+            "substituteMatchCnt": 1,
+            "suspensionFlag": 0,
+            "uniformNo": "29"
+          }
+        ]
       },
       "h2h": [
         {
@@ -1839,67 +2080,35 @@
       "away_matches_count": 20,
       "common_opponent_count": 9,
       "common_opponent_data": {
-        "AC米兰": {
+        "阿雷佐": {
           "home_vs_opponent": [
             {
               "homesxname": "拉齐奥",
-              "awaysxname": "AC米兰",
+              "awaysxname": "阿雷佐",
               "homescore": 2,
-              "awayscore": 2,
-              "homehalfscore": 2,
+              "awayscore": 0,
+              "homehalfscore": 0,
               "awayhalfscore": 0,
-              "matchdate": "2026-09-13",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "AC米兰"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "AC米兰",
-              "awaysxname": "卡利亚里",
-              "homescore": 1,
-              "awayscore": 2,
-              "homehalfscore": 1,
-              "awayhalfscore": 1,
-              "matchdate": "2026-05-25",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "AC米兰"
-            }
-          ]
-        },
-        "蒙扎": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "拉齐奥",
-              "awaysxname": "蒙扎",
-              "homescore": 3,
-              "awayscore": 1,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-11",
-              "tournamentShortName": "意甲",
+              "matchdate": "2026-09-27",
+              "tournamentShortName": "俱乐部赛",
               "result1": "胜",
               "result2": "负",
-              "_opponent": "蒙扎"
+              "_opponent": "阿雷佐"
             }
           ],
           "away_vs_opponent": [
             {
-              "homesxname": "蒙扎",
-              "awaysxname": "卡利亚里",
-              "homescore": 4,
+              "homesxname": "卡利亚里",
+              "awaysxname": "阿雷佐",
+              "homescore": 1,
               "awayscore": 0,
               "homehalfscore": 1,
               "awayhalfscore": 0,
-              "matchdate": "2026-10-20",
-              "tournamentShortName": "意甲",
+              "matchdate": "2026-08-15",
+              "tournamentShortName": "意大利杯",
               "result1": "胜",
               "result2": "负",
-              "_opponent": "蒙扎"
+              "_opponent": "阿雷佐"
             }
           ]
         },
@@ -1932,102 +2141,6 @@
               "result1": "平",
               "result2": "平",
               "_opponent": "国际米兰"
-            }
-          ]
-        },
-        "罗马": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "罗马",
-              "awaysxname": "拉齐奥",
-              "homescore": 2,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-05-17",
-              "tournamentShortName": "意甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "罗马"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "罗马",
-              "awaysxname": "卡利亚里",
-              "homescore": 4,
-              "awayscore": 2,
-              "homehalfscore": 2,
-              "awayhalfscore": 1,
-              "matchdate": "2026-10-28",
-              "tournamentShortName": "意甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "罗马"
-            }
-          ]
-        },
-        "帕尔马": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "拉齐奥",
-              "awaysxname": "帕尔马",
-              "homescore": 2,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-25",
-              "tournamentShortName": "意甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "帕尔马"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "帕尔马",
-              "awaysxname": "卡利亚里",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-08-23",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "帕尔马"
-            }
-          ]
-        },
-        "尤文图斯": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "尤文图斯",
-              "awaysxname": "拉齐奥",
-              "homescore": 0,
-              "awayscore": 3,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-10-19",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "尤文图斯"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "卡利亚里",
-              "awaysxname": "尤文图斯",
-              "homescore": 1,
-              "awayscore": 1,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-12",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "尤文图斯"
             }
           ]
         },
@@ -2076,6 +2189,166 @@
             }
           ]
         },
+        "AC米兰": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "拉齐奥",
+              "awaysxname": "AC米兰",
+              "homescore": 2,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-09-13",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "AC米兰"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "AC米兰",
+              "awaysxname": "卡利亚里",
+              "homescore": 1,
+              "awayscore": 2,
+              "homehalfscore": 1,
+              "awayhalfscore": 1,
+              "matchdate": "2026-05-25",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "AC米兰"
+            }
+          ]
+        },
+        "帕尔马": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "拉齐奥",
+              "awaysxname": "帕尔马",
+              "homescore": 2,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-25",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "帕尔马"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "帕尔马",
+              "awaysxname": "卡利亚里",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 0,
+              "matchdate": "2026-08-23",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "帕尔马"
+            }
+          ]
+        },
+        "蒙扎": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "拉齐奥",
+              "awaysxname": "蒙扎",
+              "homescore": 3,
+              "awayscore": 1,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-11",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "蒙扎"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "蒙扎",
+              "awaysxname": "卡利亚里",
+              "homescore": 4,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-20",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "蒙扎"
+            }
+          ]
+        },
+        "罗马": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "罗马",
+              "awaysxname": "拉齐奥",
+              "homescore": 2,
+              "awayscore": 0,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-05-17",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗马"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "罗马",
+              "awaysxname": "卡利亚里",
+              "homescore": 4,
+              "awayscore": 2,
+              "homehalfscore": 2,
+              "awayhalfscore": 1,
+              "matchdate": "2026-10-28",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "罗马"
+            }
+          ]
+        },
+        "尤文图斯": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "尤文图斯",
+              "awaysxname": "拉齐奥",
+              "homescore": 0,
+              "awayscore": 3,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-10-19",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "尤文图斯"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "卡利亚里",
+              "awaysxname": "尤文图斯",
+              "homescore": 1,
+              "awayscore": 1,
+              "homehalfscore": 1,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-12",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "尤文图斯"
+            }
+          ]
+        },
         "乌迪内斯": {
           "home_vs_opponent": [
             {
@@ -2120,44 +2393,97 @@
               "_opponent": "乌迪内斯"
             }
           ]
-        },
-        "阿雷佐": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "拉齐奥",
-              "awaysxname": "阿雷佐",
-              "homescore": 2,
-              "awayscore": 0,
-              "homehalfscore": 0,
-              "awayhalfscore": 0,
-              "matchdate": "2026-09-27",
-              "tournamentShortName": "俱乐部赛",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "阿雷佐"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "卡利亚里",
-              "awaysxname": "阿雷佐",
-              "homescore": 1,
-              "awayscore": 0,
-              "homehalfscore": 1,
-              "awayhalfscore": 0,
-              "matchdate": "2026-08-15",
-              "tournamentShortName": "意大利杯",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "阿雷佐"
-            }
-          ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "1.95",
+        "ac": "19.00",
+        "ab": "45.00",
+        "ca": "4.15",
+        "cc": "6.25",
+        "cb": "13.00",
+        "ba": "22.00",
+        "bc": "19.00",
+        "bb": "11.00",
+        "updatetime": "2026-10-30 09:35:21"
+      },
       "injury": {
-        "home": [],
-        "away": []
+        "home": [
+          {
+            "appearanceCnt": 4,
+            "injuryFlag": 1,
+            "personId": 250530,
+            "personName": "A. Gudmundsson",
+            "playerPositionCode": "Forward",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 1,
+            "substituteMatchCnt": 3,
+            "suspensionFlag": 0,
+            "uniformNo": "80"
+          },
+          {
+            "appearanceCnt": 2,
+            "injuryFlag": 1,
+            "personId": 548615,
+            "personName": "N·罗维拉",
+            "playerPositionCode": "Midfielder",
+            "playerPositionDesc": "中场",
+            "startedMatchCnt": 2,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "6"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 610285,
+            "personName": "A.Furlanetto",
+            "playerPositionCode": "Goalkeeper",
+            "playerPositionDesc": "守门员",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "55"
+          }
+        ],
+        "away": [
+          {
+            "appearanceCnt": 8,
+            "injuryFlag": 1,
+            "personId": 274470,
+            "personName": "H. Winks",
+            "playerPositionCode": "Midfielder",
+            "playerPositionDesc": "中场",
+            "startedMatchCnt": 8,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "6"
+          },
+          {
+            "appearanceCnt": 2,
+            "injuryFlag": 1,
+            "personId": 596182,
+            "personName": "M. Felici",
+            "playerPositionCode": "Forward",
+            "playerPositionDesc": "前锋",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 2,
+            "suspensionFlag": 0,
+            "uniformNo": "17"
+          },
+          {
+            "appearanceCnt": 0,
+            "injuryFlag": 1,
+            "personId": 737628,
+            "personName": "R. Idrissi",
+            "playerPositionCode": "Defender",
+            "playerPositionDesc": "后卫",
+            "startedMatchCnt": 0,
+            "substituteMatchCnt": 0,
+            "suspensionFlag": 0,
+            "uniformNo": "3"
+          }
+        ]
       },
       "h2h": [
         {
@@ -2418,38 +2744,6 @@
       "away_matches_count": 20,
       "common_opponent_count": 4,
       "common_opponent_data": {
-        "弗洛西诺": {
-          "home_vs_opponent": [
-            {
-              "homesxname": "弗洛西诺",
-              "awaysxname": "尤文图斯",
-              "homescore": 0,
-              "awayscore": 1,
-              "homehalfscore": 0,
-              "awayhalfscore": 1,
-              "matchdate": "2026-08-24",
-              "tournamentShortName": "意甲",
-              "result1": "平",
-              "result2": "平",
-              "_opponent": "弗洛西诺"
-            }
-          ],
-          "away_vs_opponent": [
-            {
-              "homesxname": "那不勒斯",
-              "awaysxname": "弗洛西诺",
-              "homescore": 3,
-              "awayscore": 0,
-              "homehalfscore": 2,
-              "awayhalfscore": 0,
-              "matchdate": "2026-10-11",
-              "tournamentShortName": "意甲",
-              "result1": "胜",
-              "result2": "负",
-              "_opponent": "弗洛西诺"
-            }
-          ]
-        },
         "热那亚": {
           "home_vs_opponent": [
             {
@@ -2514,6 +2808,38 @@
             }
           ]
         },
+        "弗洛西诺": {
+          "home_vs_opponent": [
+            {
+              "homesxname": "弗洛西诺",
+              "awaysxname": "尤文图斯",
+              "homescore": 0,
+              "awayscore": 1,
+              "homehalfscore": 0,
+              "awayhalfscore": 1,
+              "matchdate": "2026-08-24",
+              "tournamentShortName": "意甲",
+              "result1": "平",
+              "result2": "平",
+              "_opponent": "弗洛西诺"
+            }
+          ],
+          "away_vs_opponent": [
+            {
+              "homesxname": "那不勒斯",
+              "awaysxname": "弗洛西诺",
+              "homescore": 3,
+              "awayscore": 0,
+              "homehalfscore": 2,
+              "awayhalfscore": 0,
+              "matchdate": "2026-10-11",
+              "tournamentShortName": "意甲",
+              "result1": "胜",
+              "result2": "负",
+              "_opponent": "弗洛西诺"
+            }
+          ]
+        },
         "塞尔塔": {
           "home_vs_opponent": [
             {
@@ -2547,7 +2873,18 @@
           ]
         }
       },
-      "bqc_odds": null,
+      "bqc_odds": {
+        "aa": "3.10",
+        "ac": "15.00",
+        "ab": "30.00",
+        "ca": "5.00",
+        "cc": "5.25",
+        "cb": "7.00",
+        "ba": "24.00",
+        "bc": "15.00",
+        "bb": "5.25",
+        "updatetime": "2026-10-30 09:35:21"
+      },
       "injury": {
         "home": [],
         "away": []
