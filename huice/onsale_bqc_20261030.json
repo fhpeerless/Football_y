@@ -1,46 +1,8 @@
 {
   "match_date": "2026-10-30",
-  "updated_at": "2026-10-30 07:27:01",
-  "match_count": 2,
+  "updated_at": "2026-10-30 10:46:01",
+  "match_count": 1,
   "matches": [
-    {
-      "match_id": "2042323",
-      "date": "2026-10-30",
-      "match_time": "08:30:00",
-      "dayofweek": "周四",
-      "match_num": "4007",
-      "match_num_str": "周四007",
-      "league": "巴甲",
-      "league_id": "6",
-      "home_team": "格雷米奥",
-      "away_team": "巴竞技",
-      "home_team_id": "791",
-      "away_team_id": "564",
-      "match_status": "Selling",
-      "bqc_odds": {
-        "aa": "4.15",
-        "ac": "15.00",
-        "ab": "30.00",
-        "ca": "5.50",
-        "cc": "4.50",
-        "cb": "5.60",
-        "ba": "29.00",
-        "bc": "15.00",
-        "bb": "4.35"
-      },
-      "bqc_odds_api": {
-        "hh": "4.15",
-        "hd": "15.00",
-        "ha": "30.00",
-        "dh": "5.50",
-        "dd": "4.50",
-        "da": "5.60",
-        "ah": "29.00",
-        "ad": "15.00",
-        "aa": "4.35"
-      },
-      "bqc_update_time": "2026-10-29 20:55:23"
-    },
     {
       "match_id": "2042355",
       "date": "2026-10-30",
@@ -56,28 +18,28 @@
       "away_team_id": "1055698",
       "match_status": "Selling",
       "bqc_odds": {
-        "aa": "4.15",
-        "ac": "14.00",
-        "ab": "21.00",
+        "aa": "4.25",
+        "ac": "14.50",
+        "ab": "23.00",
         "ca": "5.90",
-        "cc": "5.40",
-        "cb": "5.75",
-        "ba": "23.00",
-        "bc": "14.00",
+        "cc": "5.15",
+        "cb": "5.45",
+        "ba": "25.00",
+        "bc": "14.50",
         "bb": "4.00"
       },
       "bqc_odds_api": {
-        "hh": "4.15",
-        "hd": "14.00",
-        "ha": "21.00",
+        "hh": "4.25",
+        "hd": "14.50",
+        "ha": "23.00",
         "dh": "5.90",
-        "dd": "5.40",
-        "da": "5.75",
-        "ah": "23.00",
-        "ad": "14.00",
+        "dd": "5.15",
+        "da": "5.45",
+        "ah": "25.00",
+        "ad": "14.50",
         "aa": "4.00"
       },
-      "bqc_update_time": "2026-10-29 13:37:05"
+      "bqc_update_time": "2026-10-30 10:25:39"
     }
   ],
   "change_log": [
@@ -656,6 +618,121 @@
             "aa": "4.30"
           },
           "bqc_update_time": "2026-10-29 21:34:12"
+        }
+      ]
+    },
+    {
+      "fetch_time": "2026-10-30 10:46:01",
+      "changed": [
+        {
+          "match_id": "2042355",
+          "match_num_str": "周五001",
+          "league": "澳超",
+          "home_team": "布里斯班",
+          "away_team": "奥克兰FC",
+          "diff": {
+            "bqc_odds.aa": {
+              "old": "4.15",
+              "new": "4.25"
+            },
+            "bqc_odds.ab": {
+              "old": "21.00",
+              "new": "23.00"
+            },
+            "bqc_odds.ac": {
+              "old": "14.00",
+              "new": "14.50"
+            },
+            "bqc_odds.ba": {
+              "old": "23.00",
+              "new": "25.00"
+            },
+            "bqc_odds.bc": {
+              "old": "14.00",
+              "new": "14.50"
+            },
+            "bqc_odds.cb": {
+              "old": "5.75",
+              "new": "5.45"
+            },
+            "bqc_odds.cc": {
+              "old": "5.40",
+              "new": "5.15"
+            },
+            "bqc_odds_api.ad": {
+              "old": "14.00",
+              "new": "14.50"
+            },
+            "bqc_odds_api.ah": {
+              "old": "23.00",
+              "new": "25.00"
+            },
+            "bqc_odds_api.da": {
+              "old": "5.75",
+              "new": "5.45"
+            },
+            "bqc_odds_api.dd": {
+              "old": "5.40",
+              "new": "5.15"
+            },
+            "bqc_odds_api.ha": {
+              "old": "21.00",
+              "new": "23.00"
+            },
+            "bqc_odds_api.hd": {
+              "old": "14.00",
+              "new": "14.50"
+            },
+            "bqc_odds_api.hh": {
+              "old": "4.15",
+              "new": "4.25"
+            },
+            "bqc_update_time": {
+              "old": "2026-10-29 13:37:05",
+              "new": "2026-10-30 10:25:39"
+            }
+          }
+        }
+      ],
+      "added": [],
+      "removed": [
+        {
+          "match_id": "2042323",
+          "date": "2026-10-30",
+          "match_time": "08:30:00",
+          "dayofweek": "周四",
+          "match_num": "4007",
+          "match_num_str": "周四007",
+          "league": "巴甲",
+          "league_id": "6",
+          "home_team": "格雷米奥",
+          "away_team": "巴竞技",
+          "home_team_id": "791",
+          "away_team_id": "564",
+          "match_status": "Selling",
+          "bqc_odds": {
+            "aa": "4.15",
+            "ac": "15.00",
+            "ab": "30.00",
+            "ca": "5.50",
+            "cc": "4.50",
+            "cb": "5.60",
+            "ba": "29.00",
+            "bc": "15.00",
+            "bb": "4.35"
+          },
+          "bqc_odds_api": {
+            "hh": "4.15",
+            "hd": "15.00",
+            "ha": "30.00",
+            "dh": "5.50",
+            "dd": "4.50",
+            "da": "5.60",
+            "ah": "29.00",
+            "ad": "15.00",
+            "aa": "4.35"
+          },
+          "bqc_update_time": "2026-10-29 20:55:23"
         }
       ]
     }
