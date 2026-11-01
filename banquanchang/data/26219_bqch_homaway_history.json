@@ -1,5 +1,5 @@
 {
-  "generate_time": "2026-11-01 02:25:46",
+  "generate_time": "2026-11-01 21:08:02",
   "period": "26219",
   "lottery_sale_endtime": "2026-11-02 22:00:00",
   "total_matches": 6,
@@ -426,7 +426,7 @@
               "halfTimeGoal": "2:0",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "4",
-              "homeTeamId": 0,
+              "homeTeamId": 70,
               "homeTeamShortName": "布城",
               "matchDate": "2026-07-30",
               "matchId": 2540888,
@@ -3301,7 +3301,20 @@
           }
         ],
         "injury": {
-          "home": [],
+          "home": [
+            {
+              "appearanceCnt": 8,
+              "injuryFlag": 0,
+              "personId": 535804,
+              "personName": "K·托斯特维特",
+              "playerPositionCode": "Midfielder",
+              "playerPositionDesc": "中场",
+              "startedMatchCnt": 4,
+              "substituteMatchCnt": 4,
+              "suspensionFlag": 1,
+              "uniformNo": "42"
+            }
+          ],
           "away": []
         }
       }
@@ -6503,7 +6516,7 @@
               "halfTimeGoal": "1:1",
               "homeMatchResult": "",
               "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 0,
+              "homeTeamId": 1156,
               "homeTeamShortName": "奥莫尼亚",
               "matchDate": "2026-10-23",
               "matchId": 2634023,
