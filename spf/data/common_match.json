@@ -1,490 +1,7 @@
 {
-  "generate_time": "2026-11-04 19:47:20",
-  "total_matches": 12,
+  "generate_time": "2026-11-05 03:04:41",
+  "total_matches": 9,
   "matches": [
-    {
-      "match_num": "3002",
-      "league": "亚冠精英",
-      "home_team": "布里兰",
-      "away_team": "鹿岛鹿角",
-      "date": "2026-11-04",
-      "home_opponents_count": 15,
-      "away_opponents_count": 18,
-      "common_opponent_count": 1,
-      "common_opponents": [
-        {
-          "team_name": "大阪钢巴",
-          "home_vs_count": 1,
-          "away_vs_count": 1,
-          "home_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 1667,
-              "awayTeamShortName": "布里兰",
-              "fullCourtGoal": "1:1",
-              "halfTimeGoal": "0:1",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 549,
-              "homeTeamShortName": "大阪钢巴",
-              "matchDate": "2026-10-28",
-              "matchId": 2626221,
-              "seasonId": 15030,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 2042301,
-              "sportteryTournamentId": 1,
-              "teamMatchResult": "draw",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 75,
-              "tournamentShortName": "亚冠精英",
-              "uniformAwayTeamId": 1952,
-              "uniformHomeTeamId": 478,
-              "uniformLeagueId": 41,
-              "winningTeam": "draw"
-            }
-          ],
-          "away_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 549,
-              "awayTeamShortName": "大阪钢巴",
-              "fullCourtGoal": "2:0",
-              "halfTimeGoal": "1:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 551,
-              "homeTeamShortName": "鹿岛鹿角",
-              "matchDate": "2026-10-09",
-              "matchId": 2531783,
-              "seasonId": 14253,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
-              "teamMatchResult": "home",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 50,
-              "tournamentShortName": "日职",
-              "uniformAwayTeamId": 478,
-              "uniformHomeTeamId": 515,
-              "uniformLeagueId": 28,
-              "winningTeam": "home"
-            }
-          ]
-        }
-      ],
-      "direct_match_info": null,
-      "match_time": "20:15",
-      "injury_suspension": {
-        "away": {
-          "injuriesAndSuspensionsList": [],
-          "sportteryTeamId": 551,
-          "teamId": 1324,
-          "teamShortName": "鹿岛鹿角",
-          "uniformTeamId": 515
-        },
-        "home": {
-          "injuriesAndSuspensionsList": [
-            {
-              "appearanceCnt": 1,
-              "injuryFlag": 1,
-              "personId": 189114,
-              "personName": "U. Radaković",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 1,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "25"
-            }
-          ],
-          "sportteryTeamId": 1667,
-          "teamId": 6181,
-          "teamShortName": "布里兰",
-          "uniformTeamId": 1952
-        }
-      }
-    },
-    {
-      "match_num": "3003",
-      "league": "欧罗巴",
-      "home_team": "雷恩",
-      "away_team": "奥林匹亚",
-      "date": "2026-11-04",
-      "home_opponents_count": 19,
-      "away_opponents_count": 18,
-      "common_opponent_count": 2,
-      "common_opponents": [
-        {
-          "team_name": "克里特",
-          "home_vs_count": 1,
-          "away_vs_count": 1,
-          "home_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 2077234,
-              "awayTeamShortName": "克里特",
-              "fullCourtGoal": "2:1",
-              "halfTimeGoal": "0:1",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "2",
-              "homeTeamId": 188,
-              "homeTeamShortName": "雷恩",
-              "matchDate": "2026-10-16",
-              "matchId": 2633955,
-              "seasonId": 15335,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
-              "teamMatchResult": "home",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 1103,
-              "tournamentShortName": "欧罗巴",
-              "uniformAwayTeamId": 57534,
-              "uniformHomeTeamId": 333,
-              "uniformLeagueId": 23,
-              "winningTeam": "home"
-            }
-          ],
-          "away_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 2077234,
-              "awayTeamShortName": "克里特",
-              "fullCourtGoal": "0:1",
-              "halfTimeGoal": "0:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 286,
-              "homeTeamShortName": "奥林匹亚",
-              "matchDate": "2026-09-13",
-              "matchId": 2585068,
-              "seasonId": 15405,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 0,
-              "sportteryTournamentId": 0,
-              "teamMatchResult": "away",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 148,
-              "tournamentShortName": "希超",
-              "uniformAwayTeamId": 57534,
-              "uniformHomeTeamId": 384,
-              "uniformLeagueId": 1994,
-              "winningTeam": ""
-            }
-          ]
-        },
-        {
-          "team_name": "马赛",
-          "home_vs_count": 2,
-          "away_vs_count": 1,
-          "home_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "0",
-              "awayTeamId": 182,
-              "awayTeamShortName": "马赛",
-              "fullCourtGoal": "1:0",
-              "halfTimeGoal": "0:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "1",
-              "homeTeamId": 188,
-              "homeTeamShortName": "雷恩",
-              "matchDate": "2026-09-12",
-              "matchId": 2529099,
-              "seasonId": 15575,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 2041394,
-              "sportteryTournamentId": 32,
-              "teamMatchResult": "home",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 81,
-              "tournamentShortName": "法甲",
-              "uniformAwayTeamId": 280,
-              "uniformHomeTeamId": 333,
-              "uniformLeagueId": 74,
-              "winningTeam": "home"
-            },
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 188,
-              "awayTeamShortName": "雷恩",
-              "fullCourtGoal": "3:1",
-              "halfTimeGoal": "2:0",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "3",
-              "homeTeamId": 182,
-              "homeTeamShortName": "马赛",
-              "matchDate": "2026-05-18",
-              "matchId": 2355302,
-              "seasonId": 13416,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 2039813,
-              "sportteryTournamentId": 32,
-              "teamMatchResult": "away",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 81,
-              "tournamentShortName": "法甲",
-              "uniformAwayTeamId": 333,
-              "uniformHomeTeamId": 280,
-              "uniformLeagueId": 74,
-              "winningTeam": "home"
-            }
-          ],
-          "away_vs_matches": [
-            {
-              "awayTeamFullCourtGoalCnt": "1",
-              "awayTeamId": 286,
-              "awayTeamShortName": "奥林匹亚",
-              "fullCourtGoal": "0:1",
-              "halfTimeGoal": "0:1",
-              "homeMatchResult": "",
-              "homeTeamFullCourtGoalCnt": "0",
-              "homeTeamId": 182,
-              "homeTeamShortName": "马赛",
-              "matchDate": "2026-10-16",
-              "matchId": 2634034,
-              "seasonId": 15335,
-              "sportteryAwayTeamId": 0,
-              "sportteryHomeTeamId": 0,
-              "sportteryMatchId": 2041983,
-              "sportteryTournamentId": 70,
-              "teamMatchResult": "home",
-              "totalTeamFullCourtGoalCnt": 0,
-              "tournamentId": 1103,
-              "tournamentShortName": "欧罗巴",
-              "uniformAwayTeamId": 384,
-              "uniformHomeTeamId": 280,
-              "uniformLeagueId": 23,
-              "winningTeam": ""
-            }
-          ]
-        }
-      ],
-      "direct_match_info": null,
-      "match_time": "23:30",
-      "injury_suspension": {
-        "away": {
-          "injuriesAndSuspensionsList": [
-            {
-              "appearanceCnt": 3,
-              "injuryFlag": 1,
-              "personId": 372303,
-              "personName": "P. Retsos",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 3,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "45"
-            }
-          ],
-          "sportteryTeamId": 286,
-          "teamId": 1040,
-          "teamShortName": "奥林匹亚",
-          "uniformTeamId": 384
-        },
-        "home": {
-          "injuriesAndSuspensionsList": [
-            {
-              "appearanceCnt": 3,
-              "injuryFlag": 1,
-              "personId": 191560,
-              "personName": "桑巴",
-              "playerPositionCode": "Goalkeeper",
-              "playerPositionDesc": "守门员",
-              "startedMatchCnt": 3,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "30"
-            },
-            {
-              "appearanceCnt": 2,
-              "injuryFlag": 1,
-              "personId": 540473,
-              "personName": "E. Lepaul",
-              "playerPositionCode": "Forward",
-              "playerPositionDesc": "前锋",
-              "startedMatchCnt": 2,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "9"
-            }
-          ],
-          "sportteryTeamId": 188,
-          "teamId": 893,
-          "teamShortName": "雷恩",
-          "uniformTeamId": 333
-        }
-      }
-    },
-    {
-      "match_num": "3004",
-      "league": "欧冠",
-      "home_team": "费内巴切",
-      "away_team": "利物浦",
-      "date": "2026-11-05",
-      "home_opponents_count": 17,
-      "away_opponents_count": 19,
-      "common_opponent_count": 0,
-      "common_opponents": [],
-      "direct_match_info": null,
-      "match_time": "01:45",
-      "injury_suspension": {
-        "away": {
-          "injuriesAndSuspensionsList": [
-            {
-              "appearanceCnt": 2,
-              "injuryFlag": 1,
-              "personId": 453104,
-              "personName": "弗林蓬",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 1,
-              "substituteMatchCnt": 1,
-              "suspensionFlag": 0,
-              "uniformNo": "30"
-            },
-            {
-              "appearanceCnt": 3,
-              "injuryFlag": 1,
-              "personId": 459276,
-              "personName": "R. Araújo",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 3,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "33"
-            },
-            {
-              "appearanceCnt": 0,
-              "injuryFlag": 1,
-              "personId": 499173,
-              "personName": "亚罗什",
-              "playerPositionCode": "Goalkeeper",
-              "playerPositionDesc": "守门员",
-              "startedMatchCnt": 0,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "56"
-            },
-            {
-              "appearanceCnt": 0,
-              "injuryFlag": 1,
-              "personId": 624582,
-              "personName": "H. Ekitike",
-              "playerPositionCode": "Attacker",
-              "playerPositionDesc": "前锋",
-              "startedMatchCnt": 0,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "22"
-            },
-            {
-              "appearanceCnt": 0,
-              "injuryFlag": 1,
-              "personId": 632251,
-              "personName": "C.布拉德利",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 0,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "12"
-            },
-            {
-              "appearanceCnt": 0,
-              "injuryFlag": 1,
-              "personId": 780973,
-              "personName": "G. Leoni",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 0,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "15"
-            }
-          ],
-          "sportteryTeamId": 11,
-          "teamId": 663,
-          "teamShortName": "利物浦",
-          "uniformTeamId": 361
-        },
-        "home": {
-          "injuriesAndSuspensionsList": [
-            {
-              "appearanceCnt": 3,
-              "injuryFlag": 1,
-              "personId": 182930,
-              "personName": "阿克",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 3,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "15"
-            },
-            {
-              "appearanceCnt": 5,
-              "injuryFlag": 1,
-              "personId": 320586,
-              "personName": "阿森西奥",
-              "playerPositionCode": "Midfielder",
-              "playerPositionDesc": "中场",
-              "startedMatchCnt": 3,
-              "substituteMatchCnt": 2,
-              "suspensionFlag": 0,
-              "uniformNo": "10"
-            },
-            {
-              "appearanceCnt": 3,
-              "injuryFlag": 1,
-              "personId": 501819,
-              "personName": "M.格林伍德",
-              "playerPositionCode": "Forward",
-              "playerPositionDesc": "前锋",
-              "startedMatchCnt": 3,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "11"
-            },
-            {
-              "appearanceCnt": 3,
-              "injuryFlag": 1,
-              "personId": 627694,
-              "personName": "J.奥斯特沃尔德",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 3,
-              "substituteMatchCnt": 0,
-              "suspensionFlag": 0,
-              "uniformNo": "24"
-            },
-            {
-              "appearanceCnt": 1,
-              "injuryFlag": 1,
-              "personId": 773917,
-              "personName": "K. Peprah Oppong",
-              "playerPositionCode": "Defender",
-              "playerPositionDesc": "后卫",
-              "startedMatchCnt": 0,
-              "substituteMatchCnt": 1,
-              "suspensionFlag": 0,
-              "uniformNo": "21"
-            }
-          ],
-          "sportteryTeamId": 311,
-          "teamId": 2212,
-          "teamShortName": "费内巴切",
-          "uniformTeamId": 844
-        }
-      }
-    },
     {
       "match_num": "3005",
       "league": "欧冠",
@@ -736,6 +253,18 @@
               "substituteMatchCnt": 0,
               "suspensionFlag": 0,
               "uniformNo": "9"
+            },
+            {
+              "appearanceCnt": 1,
+              "injuryFlag": 1,
+              "personId": 730583,
+              "personName": "M. Finkgräfe",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "35"
             }
           ],
           "sportteryTeamId": 1619,
@@ -1523,6 +1052,18 @@
               "substituteMatchCnt": 1,
               "suspensionFlag": 0,
               "uniformNo": "36"
+            },
+            {
+              "appearanceCnt": 0,
+              "injuryFlag": 1,
+              "personId": 918905,
+              "personName": "里德尔",
+              "playerPositionCode": "Defender",
+              "playerPositionDesc": "后卫",
+              "startedMatchCnt": 0,
+              "substituteMatchCnt": 0,
+              "suspensionFlag": 0,
+              "uniformNo": "42"
             }
           ],
           "sportteryTeamId": 140,
@@ -2838,6 +2379,18 @@
               "substituteMatchCnt": 6,
               "suspensionFlag": 0,
               "uniformNo": "45"
+            },
+            {
+              "appearanceCnt": 10,
+              "injuryFlag": 1,
+              "personId": 519280,
+              "personName": "L. Tolaj",
+              "playerPositionCode": "Forward",
+              "playerPositionDesc": "前锋",
+              "startedMatchCnt": 9,
+              "substituteMatchCnt": 1,
+              "suspensionFlag": 0,
+              "uniformNo": "9"
             },
             {
               "appearanceCnt": 3,
