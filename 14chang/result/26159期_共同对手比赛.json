@@ -1,0 +1,668 @@
+{
+  "期数": "26159期",
+  "计算基准日期": "2026-11-04",
+  "数据说明": "主队和客队与共同对手的比赛记录（仅提取，不计算实力分）",
+  "14场比赛共同对手比赛数据": {
+    "1": {
+      "凯尔特人": {
+        "home_vs_opponent": [
+          {
+            "result1": "平",
+            "result2": "赢",
+            "result3": "大",
+            "homeid": 926,
+            "awayid": 210,
+            "homescore": 2,
+            "awayscore": 2,
+            "league_id": 306,
+            "win": 2.28,
+            "draw": 3.49,
+            "lost": 2.66,
+            "iscup": 1,
+            "homestanding": 0,
+            "awaystanding": 0,
+            "status": 5,
+            "matchdate": "2026-07-25",
+            "fid": 1424010,
+            "homesxname": "凯尔特人",
+            "awaysxname": "AC米兰",
+            "simplegbname": "球会友谊",
+            "seasonid": 19525,
+            "homehalfscore": 2,
+            "awayhalfscore": 0,
+            "handicapball": 3.0,
+            "handicapline": "-0.25",
+            "handicaplinename": "平手/半球",
+            "cornernum": 6,
+            "hcornernum": 3,
+            "acornernum": 3
+          }
+        ],
+        "away_vs_opponent": [
+          {
+            "result1": "胜",
+            "result2": "赢",
+            "result3": "大",
+            "homeid": 926,
+            "awayid": 798,
+            "homescore": 1,
+            "awayscore": 3,
+            "league_id": 63,
+            "win": 1.69,
+            "draw": 3.99,
+            "lost": 4.6,
+            "iscup": 1,
+            "homestanding": 21,
+            "awaystanding": 16,
+            "status": 5,
+            "matchdate": "2026-09-18",
+            "fid": 1479967,
+            "homesxname": "凯尔特人",
+            "awaysxname": "费伦茨瓦罗斯",
+            "simplegbname": "欧罗巴",
+            "seasonid": 20000,
+            "homehalfscore": 1,
+            "awayhalfscore": 2,
+            "handicapball": 3.0,
+            "handicapline": "-0.75",
+            "handicaplinename": "半球/一球",
+            "cornernum": 14,
+            "hcornernum": 11,
+            "acornernum": 3
+          }
+        ]
+      },
+      "_meta": {
+        "主队": "AC米兰",
+        "客队": "费伦茨瓦罗斯",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 1,
+        "联赛": "欧罗巴",
+        "主队排名": "24",
+        "客队排名": "04"
+      }
+    },
+    "2": {
+      "_meta": {
+        "主队": "安德莱赫特",
+        "客队": "萨尔茨堡红牛",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 2,
+        "联赛": "欧罗巴",
+        "主队排名": "22",
+        "客队排名": "21"
+      }
+    },
+    "3": {
+      "里昂": {
+        "home_vs_opponent": [
+          {
+            "result1": "负",
+            "result2": "输",
+            "result3": "大",
+            "homeid": 997,
+            "awayid": 516,
+            "homescore": 3,
+            "awayscore": 2,
+            "league_id": 63,
+            "win": 2.58,
+            "draw": 3.56,
+            "lost": 2.53,
+            "iscup": 1,
+            "homestanding": 13,
+            "awaystanding": 2,
+            "status": 5,
+            "matchdate": "2026-10-16",
+            "fid": 1480063,
+            "homesxname": "里昂",
+            "awaysxname": "水晶宫",
+            "simplegbname": "欧罗巴",
+            "seasonid": 20000,
+            "homehalfscore": 2,
+            "awayhalfscore": 0,
+            "handicapball": 3.0,
+            "handicapline": "0",
+            "handicaplinename": "平手",
+            "cornernum": 8,
+            "hcornernum": 5,
+            "acornernum": 3
+          }
+        ],
+        "away_vs_opponent": [
+          {
+            "result1": "胜",
+            "result2": "赢",
+            "result3": "小",
+            "homeid": 1869,
+            "awayid": 997,
+            "homescore": 3,
+            "awayscore": 0,
+            "league_id": 63,
+            "win": 1.73,
+            "draw": 4.19,
+            "lost": 4.14,
+            "iscup": 1,
+            "homestanding": 31,
+            "awaystanding": 11,
+            "status": 5,
+            "matchdate": "2026-10-23",
+            "fid": 1480007,
+            "homesxname": "霍芬海姆",
+            "awaysxname": "里昂",
+            "simplegbname": "欧罗巴",
+            "seasonid": 20000,
+            "homehalfscore": 1,
+            "awayhalfscore": 0,
+            "handicapball": 3.25,
+            "handicapline": "-0.75",
+            "handicaplinename": "半球/一球",
+            "cornernum": 20,
+            "hcornernum": 11,
+            "acornernum": 9
+          }
+        ]
+      },
+      "热刺": {
+        "home_vs_opponent": [
+          {
+            "result1": "负",
+            "result2": "输",
+            "result3": "小",
+            "homeid": 1238,
+            "awayid": 516,
+            "homescore": 2,
+            "awayscore": 0,
+            "league_id": 106,
+            "win": 1.64,
+            "draw": 4.1,
+            "lost": 4.91,
+            "iscup": 0,
+            "homestanding": 14,
+            "awaystanding": 18,
+            "status": 5,
+            "matchdate": "2026-11-01",
+            "fid": 1420557,
+            "homesxname": "热刺",
+            "awaysxname": "水晶宫",
+            "simplegbname": "英超",
+            "seasonid": 19906,
+            "homehalfscore": 1,
+            "awayhalfscore": 0,
+            "handicapball": 2.75,
+            "handicapline": "-0.75",
+            "handicaplinename": "半球/一球",
+            "cornernum": 19,
+            "hcornernum": 19,
+            "acornernum": 0
+          }
+        ],
+        "away_vs_opponent": [
+          {
+            "result1": "平",
+            "result2": "",
+            "result3": "",
+            "homeid": 1238,
+            "awayid": 1869,
+            "homescore": 2,
+            "awayscore": 2,
+            "league_id": 306,
+            "win": 1.87,
+            "draw": 3.64,
+            "lost": 3.53,
+            "iscup": 1,
+            "homestanding": 0,
+            "awaystanding": 0,
+            "status": 5,
+            "matchdate": "2026-08-16",
+            "fid": 1472330,
+            "homesxname": "热刺",
+            "awaysxname": "霍芬海姆",
+            "simplegbname": "球会友谊",
+            "seasonid": 19525,
+            "homehalfscore": 2,
+            "awayhalfscore": 1,
+            "handicapball": "",
+            "handicapline": "",
+            "handicaplinename": "",
+            "cornernum": 8,
+            "hcornernum": 2,
+            "acornernum": 6
+          },
+          {
+            "result1": "负",
+            "result2": "输",
+            "result3": "走",
+            "homeid": 1238,
+            "awayid": 1869,
+            "homescore": 3,
+            "awayscore": 0,
+            "league_id": 306,
+            "win": 1.85,
+            "draw": 3.73,
+            "lost": 3.49,
+            "iscup": 1,
+            "homestanding": 0,
+            "awaystanding": 0,
+            "status": 5,
+            "matchdate": "2026-08-15",
+            "fid": 1427496,
+            "homesxname": "热刺",
+            "awaysxname": "霍芬海姆",
+            "simplegbname": "球会友谊",
+            "seasonid": 19525,
+            "homehalfscore": 1,
+            "awayhalfscore": 0,
+            "handicapball": 3.0,
+            "handicapline": "-0.5",
+            "handicaplinename": "半球",
+            "cornernum": 6,
+            "hcornernum": 2,
+            "acornernum": 4
+          }
+        ]
+      },
+      "贝西克塔斯": {
+        "home_vs_opponent": [
+          {
+            "result1": "平",
+            "result2": "输",
+            "result3": "大",
+            "homeid": 688,
+            "awayid": 516,
+            "homescore": 2,
+            "awayscore": 2,
+            "league_id": 63,
+            "win": 2.79,
+            "draw": 3.63,
+            "lost": 2.35,
+            "iscup": 1,
+            "homestanding": 7,
+            "awaystanding": 18,
+            "status": 5,
+            "matchdate": "2026-10-23",
+            "fid": 1479939,
+            "homesxname": "贝西克塔斯",
+            "awaysxname": "水晶宫",
+            "simplegbname": "欧罗巴",
+            "seasonid": 20000,
+            "homehalfscore": 1,
+            "awayhalfscore": 0,
+            "handicapball": 3.0,
+            "handicapline": "+0.25",
+            "handicaplinename": "受平手/半球",
+            "cornernum": 4,
+            "hcornernum": 1,
+            "acornernum": 3
+          }
+        ],
+        "away_vs_opponent": [
+          {
+            "result1": "负",
+            "result2": "输",
+            "result3": "大",
+            "homeid": 1869,
+            "awayid": 688,
+            "homescore": 2,
+            "awayscore": 3,
+            "league_id": 63,
+            "win": 1.85,
+            "draw": 3.91,
+            "lost": 3.74,
+            "iscup": 1,
+            "homestanding": 30,
+            "awaystanding": 9,
+            "status": 5,
+            "matchdate": "2026-10-16",
+            "fid": 1480009,
+            "homesxname": "霍芬海姆",
+            "awaysxname": "贝西克塔斯",
+            "simplegbname": "欧罗巴",
+            "seasonid": 20000,
+            "homehalfscore": 0,
+            "awayhalfscore": 0,
+            "handicapball": 3.25,
+            "handicapline": "-0.5",
+            "handicaplinename": "半球",
+            "cornernum": 12,
+            "hcornernum": 7,
+            "acornernum": 5
+          }
+        ]
+      },
+      "_meta": {
+        "主队": "水晶宫",
+        "客队": "霍芬海姆",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 3,
+        "联赛": "欧罗巴",
+        "主队排名": "15",
+        "客队排名": "23"
+      }
+    },
+    "4": {
+      "_meta": {
+        "主队": "利勒斯特罗姆",
+        "客队": "比尔森",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 4,
+        "联赛": "欧罗巴",
+        "主队排名": "31",
+        "客队排名": "33"
+      }
+    },
+    "5": {
+      "_meta": {
+        "主队": "奈梅亨",
+        "客队": "奥莫尼亚",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 5,
+        "联赛": "欧罗巴",
+        "主队排名": "20",
+        "客队排名": "11"
+      }
+    },
+    "6": {
+      "贝蒂斯": {
+        "home_vs_opponent": [
+          {
+            "result1": "负",
+            "result2": "输",
+            "result3": "小",
+            "homeid": 673,
+            "awayid": 885,
+            "homescore": 1,
+            "awayscore": 0,
+            "league_id": 93,
+            "win": 2.12,
+            "draw": 3.42,
+            "lost": 3.39,
+            "iscup": 0,
+            "homestanding": 12,
+            "awaystanding": 15,
+            "status": 5,
+            "matchdate": "2026-08-22",
+            "fid": 1427950,
+            "homesxname": "贝蒂斯",
+            "awaysxname": "皇家社会",
+            "simplegbname": "西甲",
+            "seasonid": 19947,
+            "homehalfscore": 0,
+            "awayhalfscore": 0,
+            "handicapball": 2.5,
+            "handicapline": "-0.25",
+            "handicaplinename": "平手/半球",
+            "cornernum": 9,
+            "hcornernum": 4,
+            "acornernum": 5
+          }
+        ],
+        "away_vs_opponent": [
+          {
+            "result1": "负",
+            "result2": "输",
+            "result3": "大",
+            "homeid": 673,
+            "awayid": 997,
+            "homescore": 4,
+            "awayscore": 0,
+            "league_id": 306,
+            "win": 2.38,
+            "draw": 3.45,
+            "lost": 2.54,
+            "iscup": 1,
+            "homestanding": 0,
+            "awaystanding": 0,
+            "status": 5,
+            "matchdate": "2026-07-30",
+            "fid": 1458006,
+            "homesxname": "贝蒂斯",
+            "awaysxname": "里昂",
+            "simplegbname": "球会友谊",
+            "seasonid": 19525,
+            "homehalfscore": 2,
+            "awayhalfscore": 0,
+            "handicapball": 3.0,
+            "handicapline": "0",
+            "handicaplinename": "平手",
+            "cornernum": 0,
+            "hcornernum": 0,
+            "acornernum": 0
+          }
+        ]
+      },
+      "图卢兹": {
+        "home_vs_opponent": [
+          {
+            "result1": "负",
+            "result2": "",
+            "result3": "",
+            "homeid": 1233,
+            "awayid": 885,
+            "homescore": 2,
+            "awayscore": 1,
+            "league_id": 306,
+            "win": 2.55,
+            "draw": 3.36,
+            "lost": 2.45,
+            "iscup": 1,
+            "homestanding": 0,
+            "awaystanding": 0,
+            "status": 5,
+            "matchdate": "2026-08-01",
+            "fid": 1459288,
+            "homesxname": "图卢兹",
+            "awaysxname": "皇家社会",
+            "simplegbname": "球会友谊",
+            "seasonid": 19525,
+            "homehalfscore": 2,
+            "awayhalfscore": 1,
+            "handicapball": "",
+            "handicapline": "",
+            "handicaplinename": "",
+            "cornernum": 0,
+            "hcornernum": 0,
+            "acornernum": 0
+          }
+        ],
+        "away_vs_opponent": [
+          {
+            "result1": "胜",
+            "result2": "赢",
+            "result3": "小",
+            "homeid": 1233,
+            "awayid": 997,
+            "homescore": 0,
+            "awayscore": 2,
+            "league_id": 107,
+            "win": 2.44,
+            "draw": 3.43,
+            "lost": 2.88,
+            "iscup": 0,
+            "homestanding": 6,
+            "awaystanding": 11,
+            "status": 5,
+            "matchdate": "2026-08-23",
+            "fid": 1415084,
+            "homesxname": "图卢兹",
+            "awaysxname": "里昂",
+            "simplegbname": "法甲",
+            "seasonid": 19835,
+            "homehalfscore": 0,
+            "awayhalfscore": 0,
+            "handicapball": 2.5,
+            "handicapline": "-0.25",
+            "handicaplinename": "平手/半球",
+            "cornernum": 11,
+            "hcornernum": 6,
+            "acornernum": 5
+          }
+        ]
+      },
+      "_meta": {
+        "主队": "皇家社会",
+        "客队": "里昂",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 6,
+        "联赛": "欧罗巴",
+        "主队排名": "14",
+        "客队排名": "12"
+      }
+    },
+    "7": {
+      "_meta": {
+        "主队": "布拉格斯巴达",
+        "客队": "伯恩茅斯",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 7,
+        "联赛": "欧罗巴",
+        "主队排名": "16",
+        "客队排名": "03"
+      }
+    },
+    "8": {
+      "_meta": {
+        "主队": "索非亚列夫斯基",
+        "客队": "雅盖隆",
+        "比赛时间": "2026-11-06 01:45",
+        "场次": 8,
+        "联赛": "欧罗巴",
+        "主队排名": "17",
+        "客队排名": "27"
+      }
+    },
+    "9": {
+      "_meta": {
+        "主队": "阿尔克马尔",
+        "客队": "尤文",
+        "比赛时间": "2026-11-06 04:00",
+        "场次": 9,
+        "联赛": "欧罗巴",
+        "主队排名": "10",
+        "客队排名": "07"
+      }
+    },
+    "10": {
+      "_meta": {
+        "主队": "本菲卡",
+        "客队": "波兹南莱赫",
+        "比赛时间": "2026-11-06 04:00",
+        "场次": 10,
+        "联赛": "欧罗巴",
+        "主队排名": "01",
+        "客队排名": "32"
+      }
+    },
+    "11": {
+      "_meta": {
+        "主队": "凯尔特人",
+        "客队": "贝西克塔斯",
+        "比赛时间": "2026-11-06 04:00",
+        "场次": 11,
+        "联赛": "欧罗巴",
+        "主队排名": "35",
+        "客队排名": "08"
+      }
+    },
+    "12": {
+      "皇家社会": {
+        "home_vs_opponent": [
+          {
+            "result1": "平",
+            "result2": "赢",
+            "result3": "小",
+            "homeid": 885,
+            "awayid": 457,
+            "homescore": 0,
+            "awayscore": 0,
+            "league_id": 93,
+            "win": 1.79,
+            "draw": 3.72,
+            "lost": 4.41,
+            "iscup": 0,
+            "homestanding": 13,
+            "awaystanding": 17,
+            "status": 5,
+            "matchdate": "2026-09-04",
+            "fid": 1428040,
+            "homesxname": "皇家社会",
+            "awaysxname": "塞尔塔",
+            "simplegbname": "西甲",
+            "seasonid": 19947,
+            "homehalfscore": 0,
+            "awayhalfscore": 0,
+            "handicapball": 2.75,
+            "handicapline": "-0.75",
+            "handicaplinename": "半球/一球",
+            "cornernum": 14,
+            "hcornernum": 11,
+            "acornernum": 3
+          }
+        ],
+        "away_vs_opponent": [
+          {
+            "result1": "平",
+            "result2": "走",
+            "result3": "小",
+            "homeid": 2112,
+            "awayid": 885,
+            "homescore": 1,
+            "awayscore": 1,
+            "league_id": 63,
+            "win": 2.52,
+            "draw": 3.6,
+            "lost": 2.56,
+            "iscup": 1,
+            "homestanding": 5,
+            "awaystanding": 22,
+            "status": 5,
+            "matchdate": "2026-10-16",
+            "fid": 1480132,
+            "homesxname": "圣吉罗斯",
+            "awaysxname": "皇家社会",
+            "simplegbname": "欧罗巴",
+            "seasonid": 20000,
+            "homehalfscore": 0,
+            "awayhalfscore": 0,
+            "handicapball": 2.75,
+            "handicapline": "0",
+            "handicaplinename": "平手",
+            "cornernum": 6,
+            "hcornernum": 4,
+            "acornernum": 2
+          }
+        ]
+      },
+      "_meta": {
+        "主队": "塞尔塔",
+        "客队": "圣吉罗斯",
+        "比赛时间": "2026-11-06 04:00",
+        "场次": 12,
+        "联赛": "欧罗巴",
+        "主队排名": "25",
+        "客队排名": "06"
+      }
+    },
+    "13": {
+      "_meta": {
+        "主队": "勒沃库森",
+        "客队": "马赛",
+        "比赛时间": "2026-11-06 04:00",
+        "场次": 13,
+        "联赛": "欧罗巴",
+        "主队排名": "02",
+        "客队排名": "34"
+      }
+    },
+    "14": {
+      "_meta": {
+        "主队": "桑德兰",
+        "客队": "萨格勒布迪纳摩",
+        "比赛时间": "2026-11-06 04:00",
+        "场次": 14,
+        "联赛": "欧罗巴",
+        "主队排名": "09",
+        "客队排名": "18"
+      }
+    }
+  }
+}
