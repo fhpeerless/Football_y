@@ -1,19 +1,20 @@
 name: a_14场数据加分析
   
-on:
-  schedule:
-    # 北京时间 11:00, 13:00, 16:00, 17:00, 18:00, 19:00, 20:00, 次日2:00 执行
-    # GitHub Actions 使用 UTC 时间，北京时间 = UTC+8
-    # 北京 11:00 = UTC 3:00, 13:00 = UTC 5:00, 16:00 = UTC 8:00, 17:00 = UTC 9:00
-    # 北京 18:00 = UTC 10:00, 19:00 = UTC 11:00, 20:00 = UTC 12:00, 次日2:00 = UTC 18:00
-    # cron 格式: 分 时 日 月 星期 (UTC 时间)
-    - cron: '0 3,5,8,9,10,11,12,18 * * *'
-  workflow_dispatch:  # 允许手动触发
-    inputs:
-      period:
-        description: '期数 (可选)'
-        required: false
-        type: string
+# ===== 已临时停用（2026-11-05），恢复时删除本段各行行首的 "# " =====
+# on:
+#   schedule:
+#     # 北京时间 11:00, 13:00, 16:00, 17:00, 18:00, 19:00, 20:00, 次日2:00 执行
+#     # GitHub Actions 使用 UTC 时间，北京时间 = UTC+8
+#     # 北京 11:00 = UTC 3:00, 13:00 = UTC 5:00, 16:00 = UTC 8:00, 17:00 = UTC 9:00
+#     # 北京 18:00 = UTC 10:00, 19:00 = UTC 11:00, 20:00 = UTC 12:00, 次日2:00 = UTC 18:00
+#     # cron 格式: 分 时 日 月 星期 (UTC 时间)
+#     - cron: '0 3,5,8,9,10,11,12,18 * * *'
+#   workflow_dispatch:  # 允许手动触发
+#     inputs:
+#       period:
+#         description: '期数 (可选)'
+#         required: false
+#         type: string
 
 jobs:
   check-and-process:

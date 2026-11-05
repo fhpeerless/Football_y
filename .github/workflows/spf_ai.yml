@@ -1,33 +1,34 @@
 name: c_SPF_AI_分析
 
-on:
-  workflow_dispatch:
-    inputs:
-      match_num:
-        description: '比赛编号（match_num）'
-        required: false
-        default: ''
-        type: string
-      home:
-        description: '主队名称'
-        required: false
-        default: ''
-        type: string
-      away:
-        description: '客队名称'
-        required: false
-        default: ''
-        type: string
-      analyze_type:
-        description: '分析类型'
-        required: false
-        default: 'spf'
-        type: choice
-        options:
-          - spf
-          - bqc
-          - bf
-          - jqs
+# ===== 已临时停用（2026-11-05），恢复时删除本段各行行首的 "# " =====
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       match_num:
+#         description: '比赛编号（match_num）'
+#         required: false
+#         default: ''
+#         type: string
+#       home:
+#         description: '主队名称'
+#         required: false
+#         default: ''
+#         type: string
+#       away:
+#         description: '客队名称'
+#         required: false
+#         default: ''
+#         type: string
+#       analyze_type:
+#         description: '分析类型'
+#         required: false
+#         default: 'spf'
+#         type: choice
+#         options:
+#           - spf
+#           - bqc
+#           - bf
+#           - jqs
 
 jobs:
   ai-analysis:

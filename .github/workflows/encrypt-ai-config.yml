@@ -1,24 +1,25 @@
 name: c_加密ai配置
 
-on:
-  workflow_dispatch:
-    inputs:
-      password:
-        description: '访问密码（留空则使用 Secret: AI_PASSWORD）'
-        required: false
-        type: string
-      deepseek_key:
-        description: 'DeepSeek API Key（留空则使用 Secret: DEEPSEEK_API_KEY）'
-        required: false
-        type: string
-      search_key:
-        description: 'Tavily 搜索 Key（可选，留空则使用 Secret: TAVILY_API_KEY）'
-        required: false
-        type: string
-      gh_token:
-        description: 'GitHub Token（可选，留空则使用 Secret: GH_TOKEN，用于网页触发 AI 分析工作流）'
-        required: false
-        type: string
+# ===== 已临时停用（2026-11-05），恢复时删除本段各行行首的 "# " =====
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       password:
+#         description: '访问密码（留空则使用 Secret: AI_PASSWORD）'
+#         required: false
+#         type: string
+#       deepseek_key:
+#         description: 'DeepSeek API Key（留空则使用 Secret: DEEPSEEK_API_KEY）'
+#         required: false
+#         type: string
+#       search_key:
+#         description: 'Tavily 搜索 Key（可选，留空则使用 Secret: TAVILY_API_KEY）'
+#         required: false
+#         type: string
+#       gh_token:
+#         description: 'GitHub Token（可选，留空则使用 Secret: GH_TOKEN，用于网页触发 AI 分析工作流）'
+#         required: false
+#         type: string
 
 jobs:
   encrypt-ai-config:

@@ -1,11 +1,12 @@
 name: 获取大乐透历史开奖数据
 
-on:
-  schedule:
-    # 每 3 天执行一次（UTC 00:00，北京时间 08:00）
-    # cron 不支持 66 小时，每 3 天（72 小时）是最接近的方案
-    - cron: '0 0 */3 * *'
-  workflow_dispatch:
+# ===== 已临时停用（2026-11-05），恢复时删除本段各行行首的 "# " =====
+# on:
+#   schedule:
+#     # 每 3 天执行一次（UTC 00:00，北京时间 08:00）
+#     # cron 不支持 66 小时，每 3 天（72 小时）是最接近的方案
+#     - cron: '0 0 */3 * *'
+#   workflow_dispatch:
 
 jobs:
   fetch-lottery-data:

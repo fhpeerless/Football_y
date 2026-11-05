@@ -1,10 +1,11 @@
 name: d_半全场主客队在售赔率采集
 
-on:
-  schedule:
-    # 北京时间 00:30 ~ 23:30 每小时一次 (UTC = BJT-8，整点偏移不影响小时分布，UTC 同为每小时第30分)
-    - cron: '30 * * * *'
-  workflow_dispatch:
+# ===== 已临时停用（2026-11-05），恢复时删除本段各行行首的 "# " =====
+# on:
+#   schedule:
+#     # 北京时间 00:30 ~ 23:30 每小时一次 (UTC = BJT-8，整点偏移不影响小时分布，UTC 同为每小时第30分)
+#     - cron: '30 * * * *'
+#   workflow_dispatch:
 
 jobs:
   collect-bqc-data:

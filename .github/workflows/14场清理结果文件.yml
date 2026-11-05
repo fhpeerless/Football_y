@@ -1,7 +1,8 @@
 name: a_清理旧14场的结果文件
 
-on:
-  workflow_dispatch:
+# ===== 已临时停用（2026-11-05），恢复时删除本段各行行首的 "# " =====
+# on:
+#   workflow_dispatch:
 
 jobs:
   cleanup:
